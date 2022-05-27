@@ -1,0 +1,28 @@
+Entity Creation Process
+
+1) Add Entity Properties to instances (prepare instances for components)
+2) Default Initialize all components on object (load component structs with default values)
+3) Deserailize values into component
+4) Apply level overidden values
+4) Call Create Component Code
+
+
+game: {
+	eventer,
+	worlds: [
+		{
+			eventer,
+			systems:[
+				{
+					system methods
+				}
+			],
+			instances,
+		}
+	]
+}
+
+igor command
+C:\Users\test\AppData\Roaming\GameMakerStudio2\reesedrjones_69440
+C:\ProgramData\GameMakerStudio2\Cache\runtimes\runtime-2022.3.0.497\bin\Igor.exe
+
