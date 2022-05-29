@@ -1,2 +1,0 @@
-/// @description EndStep
-RunComponentStepMethod("EndStep");

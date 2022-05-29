@@ -18,7 +18,7 @@ var instanceLayerName = "Instances";
 	rectLayout.right = 0.2;
 	rectLayout.top = 0.2;
 */
-
+/*
 for (var i = 0; i < 20; i +=1 ) {
 	var xxx = random(1920);
 	var yyy = random(1080);
@@ -38,8 +38,15 @@ for (var i = 0; i < 20; i +=1 ) {
 	world.entity.SetImageAngle(wall, random(360));
 	world.entity.SetImageScale(wall, wd / MASK_RESOLUTION, hg / MASK_RESOLUTION);
 }
+*/
 
+
+/*
 var playerInst = world.entity.InstanceCreateLayer(obj_solid_dynamic, 900, 540, instanceLayerName);
 world.entity.AddComponent(playerInst, KinematicMovement);
 world.kinematicMovement.SetDirectionAngle(playerInst, 45);
 world.kinematicMovement.SetSpeed(playerInst, 20);
+*/
+var newInst = {};
+
+world.entity.RegisterEntity(newInst);

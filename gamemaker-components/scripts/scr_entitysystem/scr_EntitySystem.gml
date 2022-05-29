@@ -1,14 +1,9 @@
 #macro ENTITY_INITIAL_ID 100
-#macro MASK_SIZE_POWER 6
-#macro MASK_RESOLUTION 64
 
 function Entity(_ref) : Component(_ref) constructor {
 	entityId = undefined;
 	components = [];
 	entityIsDestroyed = false;
-	
-	//TODO It may be a bad idea for the entity to store itself in the list of components but we are doin it.
-	array_push(components, self);
 }
 
 function EntitySystem(_world) : ComponentSystem(_world) constructor {
@@ -17,31 +12,35 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 	nextInstanceId = ENTITY_INITIAL_ID;
 	componentRemoveQueue = [];
 	instanceRemoveQueue = [];
-	
-	function SystemStart() {
-		//TODO MAKE THIS INSTANCES MAP HAVE ALL WORLDS and OBJ_GAME
-		instances[? EntityId.Game] = instance_find(obj_game, 0);
-		instances[? world.entityId] = world;
-	}
-	
+
 	function RegisterEntity(_ref, _id = undefined) {
 		if(is_undefined(_id)) {
 			_id = GetNewEntityId();
 		} else if ( ds_map_exists(instances, _id) ) {
 			throw String("Instance with id '", _id, "' already exists.");
 		}
-		
+
 		_ref.world = world;
 		instances[? _id] = _ref;
+
+		var addComponents = true;
+		if ( is_struct(_ref) ) {
+			addComponents = !variable_struct_exists(_ref, "components");
+		} else {
+			addComponents = !variable_instance_exists(_ref, "components");
+		}
 		
-		var entityComponent = new Entity(_ref);
-		entityComponent.entityId = _id;
-		_ref.components = {entity: entityComponent};
+		if(addComponents) {
+			_ref.components = {};
+		}
 		
-		AddComponent(_id, Eventer)
+		if( !variable_struct_exists( _ref.components , "entity")) {
+			AddComponent(_id, Entity);
+			_ref.components.entity.entityId = _id;
+		}
 		
-		//TODO INSTANCE CREATE CODE
-		
+		//TODO INSTANCE CREATE CODE ??
+
 		return _id;
 	}
 			
@@ -86,6 +85,9 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 	}
 
 	//TODO Use Component Name?
+	/// @desc AddComponent adds the component to the entity with the specified id.
+	/// @param {Real} _entityId The id of the entity to add a component to.
+	/// @param {function} _component The component constructor to use.
 	function AddComponent(_entityId, _component) {
 		
 		//Ensure entity exists
@@ -93,6 +95,11 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 		if(!entityRef) {
 			show_debug_message(String("Tried to add component '", _component, "' to non existant instance with id: ", _entityId));
 			return;	
+		}
+		
+		var componentName = script_get_name(_component);
+		if(!is_undefined(entityRef.components[$ componentName])) {
+			throw String("Component with name: ", componentName, " has already been added");	
 		}
 		
 		//Create the component
@@ -142,6 +149,7 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 		array_push(componentRemoveQueue, componentToRemove);
 	}
 
+	RegisterSystemEvent(ES_SYSTEM_STEP);
 	function SystemStep() {
 		//Delete queued for deletion components
 		var componentCount = array_length(componentRemoveQueue);

@@ -1,2 +1,0 @@
-/// @description
-RunComponentDrawMethod("DrawGuiEnd");

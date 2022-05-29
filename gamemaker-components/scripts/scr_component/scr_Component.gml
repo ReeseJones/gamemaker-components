@@ -1,3 +1,5 @@
+/// @desc Component is the base class for all components.
+/// @param {Struct} _ref A reference to which thing this component is bound to.
 function Component(_ref) constructor {
 	name = string_lowercase_first(instanceof(self));
 	entityRef = _ref;
@@ -12,6 +14,28 @@ function Component(_ref) constructor {
 	}
 }
 
+
+#macro ES_SYSTEM_START "systemStart"
+#macro ES_SYSTEM_CLEANUP "systemCleanup"
+#macro ES_SYSTEM_STEP "systemStep"
+
+#macro ES_CREATE "create"
+#macro ES_DESTROY "destroy"
+#macro ES_CLEANUP "cleanup"
+
+#macro ES_BEGIN_STEP "beginStep"
+#macro ES_STEP "step"
+#macro ES_END_STEP "endStep"
+
+#macro ES_DRAW_BEGIN "drawBegin"
+#macro ES_DRAW "draw"
+#macro ES_DRAW_END "drawEnd"
+#macro ES_DRAW_GUI_BEGIN "drawGuiBegin"
+#macro ES_DRAW_GUI "drawGui"
+#macro ES_DRAW_GUI_END "drawGuiEnd"
+
+/// @desc ComponentSystem is the base class for all systems which manage a component type. Worlds have systems which add behavior.
+/// @param {Struct.World} _world description
 function ComponentSystem(_world) constructor {
 	name = string_lowercase_first(instanceof(self));
 	//Run update of this entire system
@@ -41,7 +65,8 @@ function ComponentSystem(_world) constructor {
 		//TODO: dt should be fixed for step, double check that it is.
 	}
 	
-	
+	/// @desc Create is called after a component has been initialized.
+	/// @param {Struct.Component} _component description
 	function Create(_component) {
 		//Runs after all values have been deserialized
 		//Or after a component has been dynamically added.
@@ -145,7 +170,7 @@ function ComponentSystem(_world) constructor {
 		}
 	}
 	
-	static RegisterSystemEvent = function RegisterSystemEvent(_method) {
-		
+	static RegisterSystemEvent = function RegisterSystemEvent(_entitySystemEvent) {
+		array_push(world.systemEventSubscribers[$ _entitySystemEvent], self);
 	}
 }

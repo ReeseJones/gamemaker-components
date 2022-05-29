@@ -1,9 +1,8 @@
 enum EntityId {
-	Game = 0,
+	Game = -42,
+	World0 = 0,
 	World1 = 1,
 	World2 = 2,
-	World3 = 3,
-	World4 = 4
 	//Everything below starting entityId could be a world id (except for 0 reserved for game)
 }
 
@@ -118,8 +117,9 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 			event: newEvent,
 		});
 	}
-		
-	function EndStep(_eventer) {
+	
+	RegisterSystemEvent(ES_END_STEP);
+	function EndStep(_eventer, _dt) {
 		//Swap the buffer into the main queue and process all events
 		var queueSwap = _eventer.eventQueue;
 		_eventer.eventQueue = _eventer.eventQueueBuffer;

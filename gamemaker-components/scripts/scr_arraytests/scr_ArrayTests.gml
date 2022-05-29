@@ -1,4 +1,4 @@
-TagScript(ArrayTests, tag_unit_test);
+TagScript(ArrayTests, [tag_unit_test]);
 function ArrayTests() {
 	return [
 		new TestCase("Array concat should combine two arrays into the original array without issue", function() {

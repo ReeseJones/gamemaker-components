@@ -35,6 +35,7 @@ function array_join(_array, _seperator = "") {
 		joinedValues += string(_array[@i]) + _seperator;
 	}
 	var seperatorLength = string_length(_seperator);
+	var joinedValuesLength = string_length(joinedValues);
 	var stringDeleteIndex =  1 + joinedValuesLength - seperatorLength;
 	return string_delete(joinedValues, stringDeleteIndex, seperatorLength);
 }
@@ -150,7 +151,13 @@ function array_concat(_arrayA, _arrayB, _arrayDest = undefined) {
 	return _arrayDest;
 }
 
-function array_map(_array, _method, _context = undefined, _destArray = undefined) {
+///@desc array_map iterates every element of an array and transforms it using method to destArray
+///@param {array} _array
+///@param {Function} _method
+///@param {Mixed|Undefined} _context
+///@param {array} _destArray
+///@return {Array<Mixed>}
+function array_map(_array, _method, _context = undefined, _destArray = []) {
 	var arrayLength = array_length(_array);
 	if( !is_array(_destArray) ) {
 		_destArray = array_create(arrayLength);	

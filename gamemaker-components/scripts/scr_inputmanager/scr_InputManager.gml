@@ -59,7 +59,8 @@ enum ActionInput {
 }
 
 function InputManager(_inputDeviceManager) constructor {
-	keyboardCheckMethod = os_type == os_windows ? keyboard_check_direct : keyboard_check;
+	//@member {Function} which method is used for checking keys
+	keyboardCheckMethod = (os_type == os_windows) ? keyboard_check_direct : keyboard_check;
 	bindings = ds_map_create();
 	inputDeviceManager = _inputDeviceManager;
 	ds_map_add_map(bindings, InputType.MouseAndKeyboard, ds_map_create());
@@ -108,8 +109,8 @@ function InputManager(_inputDeviceManager) constructor {
 	}
 	
 	function CheckAllDeviceInput() {
-		var static deviceArray = [];
-		var static gamepadBindingsArray = [];
+		static deviceArray = [];
+		static gamepadBindingsArray = [];
 		
 		var devices = inputDeviceManager.GetAllDevices(deviceArray);
 		var deviceCount = array_length(devices);
@@ -291,6 +292,10 @@ function input_manager_create(_inputDeviceManager) {
 	return new InputManager(_inputDeviceManager);	
 }
 
+/**
+ * @desc Destroys an input manager
+ * @param {Struct.InputManager} _inputManager
+ */
 function input_manager_destroy(_inputManager) {
 	ds_map_destroy(_inputManager.bindings);
 	ds_map_destroy(_inputManager.functionsMap);

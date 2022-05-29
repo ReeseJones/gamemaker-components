@@ -1,12 +1,15 @@
+/// @desc EntityTree component creates a tree like relationship between entities.
+/// @param {Struct} _entityRef A reference to the struct or game object that this entity represents.
 function EntityTree(_entityRef) : Component(_entityRef) constructor {
 	parent = undefined;
 	children = [];
 }
 
 function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
-	
+
 	childTraversalQueue = ds_queue_create();
 	
+	RegisterSystemEvent(ES_SYSTEM_CLEANUP);
 	function SystemCleanup() {
 		ds_queue_destroy(childTraversalQueue);
 	}
@@ -37,7 +40,6 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
 				
 			array_push(otherEntityTree.children, _childEntityId);
 		}
-		
 		
 		var oldParentRef = entity.GetRef(childEntityTree.parent);
 		if(oldParentRef) {
@@ -149,5 +151,4 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
 		var entityId = _entityTree.GetEntityId();
 		DisconnectFromTree(entityId);
 	}
-
 }

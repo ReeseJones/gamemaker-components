@@ -11,10 +11,7 @@
     "path": "sprites/spr_mask_circle/spr_mask_circle.yy",
   },
   "persistent": false,
-  "parentObjectId": {
-    "name": "obj_entity",
-    "path": "objects/obj_entity/obj_entity.yy",
-  },
+  "parentObjectId": null,
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,

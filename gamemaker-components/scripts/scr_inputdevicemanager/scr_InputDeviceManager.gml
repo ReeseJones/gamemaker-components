@@ -64,6 +64,10 @@ function input_device_manager_create() {
 	return new InputDeviceManager();	
 }
 
+/**
+ * @desc Destroys an input device manager
+ * @param {Struct.InputDeviceManager} _inputDeviceManager
+ */
 function input_device_manager_destroy(_inputDeviceManager) {
 	delete _inputDeviceManager;
 }

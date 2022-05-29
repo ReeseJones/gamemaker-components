@@ -5,7 +5,7 @@ function RectangleLayout(_instance) : Component(_instance) constructor {
 	right = 0;
 }
 
-function RectangleLayoutSystem() : ComponentSystem() constructor {
+function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
 	
 	function EndStep(_rectLayout, _dt) {
 		var inst = _rectLayout.instance;

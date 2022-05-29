@@ -7,7 +7,7 @@ function RectangleSizing(_instance) : Component(_instance) constructor {
 	debugCol = make_color_rgb(random(255), random(255), random(255));
 }
 
-function RectangleSizingSystem() : ComponentSystem() constructor {
+function RectangleSizingSystem(_world) : ComponentSystem(_world) constructor {
 	function DrawGui(_component, _dt) {
 		if(_component.debug) {
 			draw_set_color(_component.debugCol);

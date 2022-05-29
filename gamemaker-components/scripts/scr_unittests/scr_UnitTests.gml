@@ -5,7 +5,7 @@
 	after = _after
 }
 
-TagScript(GetAllScripts, tag_command);
+TagScript(GetAllScripts, [tag_command]);
 function GetAllScripts() {
 	static allScripts = tag_get_asset_ids(tag_script, asset_script);
 	array_foreach(allScripts, function(scrIndex) {
@@ -15,7 +15,7 @@ function GetAllScripts() {
 	return allScripts;
 }
 
-TagScript(RunAllUnitTets, tag_command);
+TagScript(RunAllUnitTets, [tag_command]);
 function RunAllUnitTets() {
 	var unitTests = GetScriptIds(tag_unit_test);
 	var allTests = [];
@@ -47,7 +47,7 @@ function RunAllUnitTets() {
 		return {
 			description: _testCase.description,
 			passed: passed,
-			error: passed ? "" : newError,
+			error: passed ? "" : String(newError),
 			toString: function toString() {
 				var passText = passed ? "PASSED: " : "FAILED: ";
 				passText += description;

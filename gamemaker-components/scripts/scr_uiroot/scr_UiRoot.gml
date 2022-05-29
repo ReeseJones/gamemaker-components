@@ -3,7 +3,7 @@ function UiRoot(_instance) : Component(_instance) constructor {
 	cameraId = 0;
 }
 
-function UiRootSystem() : ComponentSystem() constructor {
+function UiRootSystem(_world) : ComponentSystem(_world) constructor {
 	
 	function BeginStep(_uiRoot, _dt) {
 		var rectSize = _uiRoot.instance.components.rectangleSizing;
