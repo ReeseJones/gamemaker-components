@@ -6,7 +6,7 @@
     "path": "folders/Scripts/Testing.yy",
   },
   "resourceVersion": "1.0",
-  "name": "scr_UnitTests",
+  "name": "scr_SpecCreation",
   "tags": [],
   "resourceType": "GMScript",
 }

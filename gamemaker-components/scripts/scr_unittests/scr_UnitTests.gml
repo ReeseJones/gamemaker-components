@@ -1,18 +1,13 @@
- function TestCase(_description, _test, _before = undefined, _after = undefined) constructor {
+ /// @desc Test case holds unit test data
+/// @param {string} _description The description of this unit test
+/// @param {Function} _test The function which runs the test code
+/// @param {Function} [_before] The function which sets up data in the test instance before the test is ran.
+/// @param {Function} [_after] The function which tears down data in the test instsance after the test is ran.
+function TestCase(_description, _test, _before = undefined, _after = undefined) constructor {
 	description = _description;
 	test = _test;
 	before = _before
 	after = _after
-}
-
-TagScript(GetAllScripts, [tag_command]);
-function GetAllScripts() {
-	static allScripts = tag_get_asset_ids(tag_script, asset_script);
-	array_foreach(allScripts, function(scrIndex) {
-		show_debug_message(script_get_name(scrIndex));
-		
-	});
-	return allScripts;
 }
 
 TagScript(RunAllUnitTets, [tag_command]);
@@ -22,8 +17,8 @@ function RunAllUnitTets() {
 
 	var testScriptCount = array_length(unitTests);
 	for(var i = 0; i < testScriptCount; i += 1) {
-		var methodBinding = method(undefined, unitTests[i]);
-		array_concat(allTests, methodBinding(), allTests);
+		var func = unitTests[i]
+		array_concat(allTests, func(), allTests);
 	}
 	
 	var testResults = array_map(allTests, function(_testCase) {

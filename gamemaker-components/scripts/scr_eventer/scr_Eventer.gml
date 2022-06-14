@@ -3,7 +3,7 @@ enum EntityId {
 	World0 = 0,
 	World1 = 1,
 	World2 = 2,
-	//Everything below starting entityId could be a world id (except for 0 reserved for game)
+	//Everything below starting entityId could be a world id (except for id reserved for game)
 }
 
 function EventSubscription(_entityId, _funcName, _componentName) constructor {
@@ -139,27 +139,35 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 					var subscriptionData = subscribers[i];
 					
 					//Clean up subscriptions to things which no longer point to entities
-					var inst = entity.GetRef(subscriptionData.entityId);
-					if(!inst) {
+					var entityRef = entity.GetRef(subscriptionData.entityId);
+					if(!entityRef) {
 						array_delete_fast(subscribers, i);
 						delete subscriptionData;
 						continue;
 					}
-					
-					var func;
+
+					var func, instanceRef;
+					instanceRef = entityRef;
 					if(subscriptionData.componentName) {
-						func = world[$ subscriptionData.componentName][$ subscriptionData.funcName];
+						instanceRef = world[$ subscriptionData.componentName];
+						func = instanceRef[$ subscriptionData.funcName];
+					} else if(is_struct(entityRef)) {
+						func = variable_struct_get(entityRef, subscriptionData.funcName);
 					} else {
-						func = variable_instance_get(inst, subscriptionData.funcName);
+						func = variable_instance_get(entityRef, subscriptionData.funcName);
 					}
-					func(event);
+					
+					//callbacks are called with the scope of their own instance.
+					with(instanceRef) {
+						func(event);
+					}
 				}
 			}
-			if(debug) {
+		
+			if(_eventer.debug) {
 				show_debug_message(String("Entity: ", _eventer.GetEntityId(), " Event: ", EventName(event.eventType)));
 			}
 		}
-		
 	}
 	
 	function Cleanup(_eventer) {

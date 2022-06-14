@@ -1,5 +1,47 @@
 #macro ENTITY_INITIAL_ID 100
 
+function AddDetachedComponent(_ref, _component) {
+	//Ensure entity exists
+	var entityRef = _ref
+	if(!entityRef) {
+		show_debug_message(String("Tried to add component '", _component, "' to non existant instance with id: ", _ref));
+		return;	
+	}
+	
+	var isStruct = is_struct(entityRef);
+	var addComponents = false;
+	if(isStruct) {
+		if(!variable_struct_exists(entityRef, "components")) {
+			addComponents = true;
+		}
+	} else {
+		if(!variable_instance_exists(entityRef, "components")) {
+			addComponents = true;	
+		}
+	}
+	
+	if(addComponents) {
+		entityRef.components = {};	
+	}
+
+	var componentName = script_get_name(_component);
+	if(!is_undefined(entityRef.components[$ componentName])) {
+		throw String("Component with name: ", componentName, " has already been added");
+	}
+
+	//Create the component
+	var newComponent = new _component(entityRef);
+	
+	//Add it into the component map of the entity
+	entityRef.components[$ newComponent.name] = newComponent;
+	
+	//Add it into the list of components this entity has
+	array_push(entityRef.components.entity.components, newComponent);
+		
+
+	return newComponent;
+}
+
 function Entity(_ref) : Component(_ref) constructor {
 	entityId = undefined;
 	components = [];
@@ -47,7 +89,7 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 	function EntityDestroy(_entityId) {
 		if (_entityId < ENTITY_INITIAL_ID) {
 			//Less than ENTITY_INITIAL_ID are reserverd for WORLD ids.
-			throw(String("Entity id invalid for deletion: ", _entityId));	
+			throw(String("Entity id invalid for deletion: ", _entityId, ". Worlds and  game id may not be destroyed."));	
 		}
 		var entityRef = GetRef(_entityId);
 		if(!entityRef) {
@@ -58,6 +100,7 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 		var entityComp = entityRef.components.entity;
 		entityComp.entityIsDestroyed = true;
 		
+		//TODO: entity component array IS used for destruction! May need to reconsider this later.
 		var comps = entityComp.components;
 		var componentCount = array_length(comps);
 		for(var i = 0; i < componentCount; i += 1) {
@@ -149,8 +192,26 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 		array_push(componentRemoveQueue, componentToRemove);
 	}
 
+	RegisterSystemEvent(ES_SYSTEM_CLEANUP);
+	function SystemCleanup() {
+
+		var entityCount = array_length(componentList);
+		for(var i = 0; i < entityCount; i += 1) {
+			EntityDestroy(componentList[i].entityId);
+		}
+		
+		RunCleanupSweep();
+		
+		ds_map_destroy(instances);
+		instances = undefined;
+	}
+
 	RegisterSystemEvent(ES_SYSTEM_STEP);
 	function SystemStep() {
+		RunCleanupSweep();
+	}
+	
+	function RunCleanupSweep() {
 		//Delete queued for deletion components
 		var componentCount = array_length(componentRemoveQueue);
 		var modifiedSystems = {};
@@ -176,11 +237,12 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 			array_remove_first(entityComp.components, component);
 			//Delete from entities component map
 			variable_struct_remove(entityRef.components, component.name);
+			//clear the components entity reference
 			component.entityRef = undefined;
 			//Mark system components as dirty
 			system.componentsDirty = true;
-			//TODO: Can we actually delete this? Still in array list of system.
-			//delete component;
+			//Component is disconnected from entity but still lives in the system update
+			//list. The system will clean out dirty components later at the end of the method.
 		}
 		array_resize(componentRemoveQueue, 0);
 
@@ -189,16 +251,17 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
 		for(var i = 0; i < instanceCount; i += 1) {
 			var entityId = instanceRemoveQueue[i];
 			var entityRef = GetRef(entityId);
+			//Removing the entity from the entity map. (no longer will be found in the world)
 			ds_map_delete(instances, entityId);
-			//TODO: dont actually delete entities... could be struct or obj?
-			//instance_destroy(inst, false);
+
+			//Clean up entity component structures and clear the world.
 			delete entityRef.components;
 			entityRef.components = undefined;
 			entityRef.world = undefined;
 		}
 		array_resize(instanceRemoveQueue, 0);
 		
-		//cleanup entity component arrays for systems
+		//Cleanup entity component arrays for systems
 		var systemCount = array_length(systemsThatNeedCleaned);
 		for(var i = 0; i < systemCount; i += 1) {
 			var syst = systemsThatNeedCleaned[i];

@@ -1,7 +1,26 @@
+function ScrapeAnonFunctionLocation(_method) {
+	var searchTerm = "gml_GlobalScript_";
+	var searchTermLength = string_length(searchTerm)
+	var scrName = script_get_name(_method);
+	var strLen = string_length(scrName);
+	var namePos = string_last_pos(searchTerm, scrName);
+
+	if(namePos == 0) {
+		return "OOPS DAISY";	
+	}
+	
+	var count = strLen - namePos - searchTermLength + 1;
+	return string_copy(scrName, namePos + searchTermLength, count);
+}
+
 function GetDebugCallstackString() {
 	var callStack = debug_get_callstack();
-	array_shift(callStack, 2);
-	return "\n" + array_join(callStack, "\n");
+	var callSite = callStack[2];
+	var colIndex = string_pos(":", callSite);
+	var strLen = string_length(callSite);
+	var copyCount = strLen - colIndex;
+	var lineNumber = string_copy(callSite, colIndex + 1, copyCount);
+	return "\nLine number: " + lineNumber;
 }
 
 function MatcherArraysEqual(_a, _b) {
@@ -45,5 +64,21 @@ function MatcherValueEqual(_a, _b) {
 	
 	if(_a != _b) {
 		throw String("_a is not equal to _b. _a is ", _a, " and _b is ", _b) + callbackString;
+	}
+}
+
+function MatcherIsArray(_a) {
+	var callbackString = GetDebugCallstackString();
+	
+	if(!is_array(_a)) {
+		throw String("_a is not an array. _a is ", _a) + callbackString;
+	}
+}
+
+function MatcherIsDefined(_a) {
+	var callbackString = GetDebugCallstackString();
+	
+	if(is_undefined(_a)) {
+		throw String("_a is undefined.") + callbackString;
 	}
 }

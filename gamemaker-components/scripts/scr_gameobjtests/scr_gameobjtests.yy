@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Testing",
-    "path": "folders/Scripts/Testing.yy",
+    "name": "Game",
+    "path": "folders/Scripts/Game.yy",
   },
   "resourceVersion": "1.0",
-  "name": "scr_UnitTests",
+  "name": "scr_GameObjTests",
   "tags": [],
   "resourceType": "GMScript",
 }

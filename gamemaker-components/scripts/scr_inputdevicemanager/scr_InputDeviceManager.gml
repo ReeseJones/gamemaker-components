@@ -4,7 +4,7 @@ function InputDeviceManager() constructor {
 	
 	function UpdateAvailableDevices() {
 		var deviceCount = gamepad_get_device_count();
-		show_debug_message("Updating Available Devices: " + string(deviceCount));
+		//show_debug_message("Updating Available Devices: " + string(deviceCount));
 		for(var i = 0; i < deviceCount; i += 1) {
 			if(gamepad_is_connected(i)) {
 				var isFree = DeviceIsAllocated(i);

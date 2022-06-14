@@ -21,7 +21,12 @@ function String(values) {
 	var concatString = "";
 	
 	for(var i = 0; i < argument_count; i += 1) {
-		concatString += string(argument[i]);	
+		if(is_string(argument[i])) {
+			concatString += argument[i];
+		} else {
+			concatString += string(argument[i]);
+		}
+			
 	}
 	
 	return concatString;

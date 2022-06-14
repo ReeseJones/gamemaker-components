@@ -28,3 +28,4 @@ C:\ProgramData\GameMakerStudio2\Cache\runtimes\runtime-2022.3.0.497\bin\Igor.exe
 
 TODO:
 Allow Systems to Subscribe to Game and World Events
+Let worlds use mock time progression for testing purposes

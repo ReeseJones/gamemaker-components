@@ -1,17 +1,16 @@
-
 function SystemEventSubscribers() constructor {	
-		systemStart = [];
-		systemStep = [];
-		systemCleanup = [];
-		beginStep = [];
-		step = [];
-		endStep = [];
-		drawBegin = [];
-		draw = [];
-		drawEnd = [];
-		drawGuiBegin = [];
-		drawGui = [];
-		drawGuiEnd = [];
+	systemStart = [];
+	systemStep = [];
+	systemCleanup = [];
+	beginStep = [];
+	step = [];
+	endStep = [];
+	drawBegin = [];
+	draw = [];
+	drawEnd = [];
+	drawGuiBegin = [];
+	drawGui = [];
+	drawGuiEnd = [];
 }
 
 
@@ -32,6 +31,11 @@ function World(_id, _worldSystems) constructor {
 	entitySystems = [];
 	systemEventSubscribers = new SystemEventSubscribers();
 	worldSystemDependencies = [];
+	
+	components = {
+		entity: new Entity(self)	
+	};
+	components.entity.entityId = entityId;
 
 	
 	function SetTickRate(_fps) {
@@ -40,6 +44,20 @@ function World(_id, _worldSystems) constructor {
 		if(ticksPerSecond > 0) {
 			tickDt = 1 / ticksPerSecond;
 		}
+	}
+	
+	function Cleanup() {
+		var cleanupCount = array_length(systemEventSubscribers.systemCleanup);
+		for(var i = 0; i < cleanupCount; i += 1) {
+			var system = systemEventSubscribers.systemCleanup[i];
+			system.SystemCleanup();
+		}
+		
+		delete systemEventSubscribers;
+		systemEventSubscribers = undefined;
+		entitySystems = undefined;
+		worldSystemDependencies = undefined;
+		entityId = undefined;
 	}
 	
 	function Step() {
@@ -228,6 +246,7 @@ function World(_id, _worldSystems) constructor {
 	}
 	
 	function InitializeWorldSystems(_worldSystems) {
+		_worldSystems = array_concat(_worldSystems, [], []);
 		//Auto added world systems
 		array_push(_worldSystems, 
 			[Entity, EntitySystem, []],
@@ -289,9 +308,10 @@ function World(_id, _worldSystems) constructor {
 		
 		worldSystemDependencies = _worldSystems;
 		
-		//TODO: Words register themselves and the game instance. But worlds do not know other worlds ATM.
 		entity.RegisterEntity(obj_game.id, EntityId.Game);
 		entity.RegisterEntity(self, entityId);
+		
+		AddDetachedComponent(self, Eventer);
 	
 		//All dependencies are wired and we call the start code on the systems.
 		var systemCount = array_length(systemEventSubscribers.systemStart);
@@ -303,5 +323,10 @@ function World(_id, _worldSystems) constructor {
 		
 	}
 	
+	function toString() {
+		return String("WorldID: ", entityId);
+	}
+	
 	InitializeWorldSystems(_worldSystems);
+	
 }

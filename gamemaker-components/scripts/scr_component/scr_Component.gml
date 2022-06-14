@@ -10,7 +10,7 @@ function Component(_ref) constructor {
 	componentIsDestroyed = false;
 	
 	static GetEntityId = function() {
-		return entityRef.components.entity.id;
+		return entityRef.components.entity.entityId;
 	}
 }
 
@@ -172,5 +172,9 @@ function ComponentSystem(_world) constructor {
 	
 	static RegisterSystemEvent = function RegisterSystemEvent(_entitySystemEvent) {
 		array_push(world.systemEventSubscribers[$ _entitySystemEvent], self);
+	}
+	
+	function toString() {
+		return String(name, "\nenabled: ", enabled, "\nvisible: ", visible, "\nworldId: ", world.entityId, "\nComponent Count: ", array_length(componentList));
 	}
 }

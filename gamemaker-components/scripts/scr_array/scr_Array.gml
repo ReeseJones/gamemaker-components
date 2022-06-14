@@ -188,3 +188,13 @@ function array_shift(_array, _length = 1) {
 	array_resize(_array, newLength);
 	return shiftedValues;
 }
+
+function array_contains(_array, _value) {
+	var arrayLength = array_length(_array);
+	for(var i = 0; i < arrayLength; i += 1) {
+		if(_array[@ i] == _value) {
+			return true;	
+		}
+	}
+	return false;
+}
