@@ -13,18 +13,13 @@ function WorldTests() {
 					world = game.CreateWorld();
 				});
 				AfterEach(function() {
-					//Do destroy world.
 					game.DestroyWorld(world.entityId);
-
 				});
 				It("Should be able to create a game and load an empty world without crashing.", function() {
-
+					MatcherIsDefined(world);
 				});
-				It("should have obj_game registered as an entity. And the world itself.", function() {
-					var gameObj = world.entity.GetRef(EntityId.Game);
+				It("should have a reference to itself using GetRef and the world ID.", function() {
 					var selfWorld = world.entity.GetRef(world.entityId);
-					
-					MatcherValueEqual(gameObj, game);
 					MatcherValueEqual(world, selfWorld);
 				});
 			});

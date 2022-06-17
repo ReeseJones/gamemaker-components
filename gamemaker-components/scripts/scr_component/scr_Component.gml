@@ -35,7 +35,7 @@ function Component(_ref) constructor {
 #macro ES_DRAW_GUI_END "drawGuiEnd"
 
 /// @desc ComponentSystem is the base class for all systems which manage a component type. Worlds have systems which add behavior.
-/// @param {Struct.World} _world description
+/// @param {Struct.World} _world The world which this System operates in.
 function ComponentSystem(_world) constructor {
 	name = string_lowercase_first(instanceof(self));
 	//Run update of this entire system

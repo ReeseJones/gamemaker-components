@@ -1,14 +1,10 @@
 /// @description Game Creation Code
 
-entityId = EntityId.Game;
 inputDeviceManager = input_device_manager_create();
 inputManager = input_manager_create(inputDeviceManager);
 worldsMap = ds_map_create();
 worlds = [];
-components = {
-	entity: new Entity(self)
-};
-components.entity.entityId = entityId;
+
 
 // Create pool of ids.
 worldIdPool = array_create(ENTITY_INITIAL_ID, 0);
@@ -16,14 +12,11 @@ for(var i = 0; i < ENTITY_INITIAL_ID; i += 1) {
 	worldIdPool[i] = i;	
 }
 
-AddDetachedComponent(self, Eventer);
-
 function DestroyWorld(_worldId) {
 	var worldRef = GetWorldRef(_worldId);
 	
 	if(is_undefined(worldRef)) {
 		throw("Tried to delete a world which does not exist.");
-		return;
 	}
 	
 	//Mark that this world is being destroyed.
@@ -35,8 +28,6 @@ function CreateWorld(_worldSystems = []) {
 	var newWorld = new World(newWorldId, _worldSystems);
 	array_push(worlds, newWorld);
 	worldsMap[? newWorldId] = newWorld;
-	
-	LinkWorlds(newWorld);
 	
 	return newWorld;
 }
@@ -57,15 +48,13 @@ function GetNewWorldId() {
 }
 
 function UpdateWorlds() {
-	//TODO: Flush Queued Game Events
-	
-	//Update World Simulations
 	var worldCount = array_length(worlds);
 	for(var i = 0; i < worldCount; i += 1) {
 		var world  = worlds[i];
 		world.Step();
 	}
 	CleanupDestroyedWorlds();
+
 }
 
 function DrawWorlds() {
@@ -92,7 +81,6 @@ function CleanupDestroyedWorlds() {
 	while(i > -1) {
 		var world = worlds[i];
 		if(world.components.entity.entityIsDestroyed) {
-			RemoveRefFromWorlds(world.components.entity.entityId);
 			world.Cleanup();
 			worlds[i] = worlds[swapIndex];
 			swapIndex -= 1;
@@ -104,31 +92,4 @@ function CleanupDestroyedWorlds() {
 	if(destroyedWorlds) {
 		array_resize(worlds, listLength);
 	}
-}
-
-function LinkWorlds(_world) {
-	array_foreach(worlds, function(world) {
-		//Worlds shoulds not register on themselves (they already do on creation)
-		if(world != worldRef) {
-			//register new world on existing worlds.
-			world.entity.RegisterEntity(worldRef, worldRef.entityId);
-			//add existing world to new world.
-			worldRef.entity.RegisterEntity(world, world.entityId);
-		}
-	}, {
-		worldRef: _world,
-	});
-}
-
-function RemoveRefFromWorlds(_entityId) {
-	array_foreach(worlds, function(world) {
-		//basically just unlisting the ref for the world.
-		//Only intended to remove world/game_obj references.
-		//Not intended for use with regular entities.
-		if(!world.components.entity.entityIsDestroyed) {
-			ds_map_delete(world.entity.instances, entityId);
-		}
-	}, {
-		entityId: _entityId
-	});
 }

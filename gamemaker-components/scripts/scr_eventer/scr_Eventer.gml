@@ -149,6 +149,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 					var func, instanceRef;
 					instanceRef = entityRef;
 					if(subscriptionData.componentName) {
+						//grabbing system reference from the world
 						instanceRef = world[$ subscriptionData.componentName];
 						func = instanceRef[$ subscriptionData.funcName];
 					} else if(is_struct(entityRef)) {

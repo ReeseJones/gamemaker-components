@@ -308,7 +308,6 @@ function World(_id, _worldSystems) constructor {
 		
 		worldSystemDependencies = _worldSystems;
 		
-		entity.RegisterEntity(obj_game.id, EntityId.Game);
 		entity.RegisterEntity(self, entityId);
 		
 		AddDetachedComponent(self, Eventer);

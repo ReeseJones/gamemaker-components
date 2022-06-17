@@ -17,6 +17,7 @@
     {"id":{"name":"test_obj","path":"objects/test_obj/test_obj.yy",},"order":17,},
     {"id":{"name":"scr_SpecCreation","path":"scripts/scr_SpecCreation/scr_SpecCreation.yy",},"order":2,},
     {"id":{"name":"scr_TagNames","path":"scripts/scr_TagNames/scr_TagNames.yy",},"order":0,},
+    {"id":{"name":"scr_DebugPositions","path":"scripts/scr_DebugPositions/scr_DebugPositions.yy",},"order":8,},
     {"id":{"name":"obj_game","path":"objects/obj_game/obj_game.yy",},"order":5,},
     {"id":{"name":"obj_test_inst","path":"objects/obj_test_inst/obj_test_inst.yy",},"order":8,},
     {"id":{"name":"scr_TestComp","path":"scripts/scr_TestComp/scr_TestComp.yy",},"order":9,},
@@ -117,7 +118,7 @@
   ],
   "IncludedFiles": [],
   "MetaData": {
-    "IDEVersion": "2022.5.0.8",
+    "IDEVersion": "2022.5.1.16",
   },
   "resourceVersion": "1.5",
   "name": "gamemaker-components",

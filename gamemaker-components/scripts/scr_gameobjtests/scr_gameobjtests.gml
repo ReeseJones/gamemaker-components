@@ -8,17 +8,9 @@ function ObjGameTests() {
 			AfterEach(function(){
 				instance_destroy(obj_game);
 			});
-			It("Game should have entity id 'EntityId.Game'", function() {
-				MatcherValueEqual(game.entityId, EntityId.Game);
-			});
 			It("It should create a pool of ids to assign to worlds up to ENTITY_INITIAL_ID", function() {
 				var idPoolLength = array_length(game.worldIdPool);
 				MatcherValueEqual(idPoolLength, ENTITY_INITIAL_ID);
-			});
-			It("It should add the event to itself on creation.", function() {
-				MatcherIsDefined(game.components.eventer);
-				var compName = instanceof(game.components.eventer);
-				MatcherValueEqual(compName, "Eventer");
 			});
 			It("WorldExists should return false if a world does not exist.", function() {
 				MatcherValueEqual(game.WorldExists(3), false);
@@ -55,7 +47,7 @@ function ObjGameTests() {
 						}
 					});
 				});
-				It("all worlds should have a reference to all other worlds.", function() {
+				It("all worlds should have a reference to themeslves.", function() {
 					var worldCount = 5;
 					var worlds = [];
 					
@@ -65,21 +57,17 @@ function ObjGameTests() {
 					
 					for(var i = 0; i < worldCount; i += 1) {
 						var curWorld = worlds[i];
-						for(var j = 0; j < worldCount; j += 1) {
-							var checkWorld = worlds[j];
-							
-							var worldRef = curWorld.entity.GetRef(checkWorld.entityId);
-							MatcherValueEqual(worldRef, checkWorld);
-						}
+						var checkRef = curWorld.entity.GetRef(curWorld.entityId);
+						MatcherValueEqual(curWorld, checkRef);
 					}
 				});
 			});
 			
 			Describe("UpdateWorlds - ", function() {
-				BeforeEach(function(){
+				BeforeEach(function() {
 					
 				});
-				It("it should dispatch any events queued on the game first, then update the worlds", function(){
+				It("it should dispatch any events queued on the game first, then update the worlds", function() {
 					
 				});
 			});
