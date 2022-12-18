@@ -18,14 +18,42 @@ function EventData(_world, _eventEmitterId, _eventType, _data) constructor {
 	data = _data;
 };
 
-function Eventer(_instance) : Component(_instance) constructor {
-	eventMap = {};
-	eventQueue = ds_queue_create();
-	eventQueueBuffer = ds_queue_create();
-	debug = false;
+
+function SubscriptionMap() constructor {
+	subscriptions = {};
+	
+	static GetEventSubscribers = function GetEventSubscribers(_emitterId, _eventType) {
+		if(!variable_struct_exists(subscriptions, _emitterId)) {
+			return undefined;	
+		}
+		var _emitterEventMap = subscriptions[$ _emitterId];
+		if(!variable_struct_exists(_emitterEventMap, _eventType)) {
+			return undefined;	
+		}
+		//Returns array of subscriberIds for this emitter and event.
+		return _emitterEventMap[$ _eventType];		
+	};
+	
+	static AddEventSubscriber = function AddEventSubscriber(_emitterId, _eventType, _listenerId) {
+		if(!variable_struct_exists(subscriptions, _emitterId)) {
+			return undefined;	
+		}
+		var _emitterEventMap = subscriptions[$ _emitterId];
+		if(!variable_struct_exists(_emitterEventMap, _eventType)) {
+			return undefined;	
+		}
+		//Returns array of subscriberIds for this emitter and event.
+		return _emitterEventMap[$ _eventType];	
+	}
 }
 
-function EventerSystem(_world) : ComponentSystem(_world) constructor {
+function EventSystem(_world) constructor {
+	world = _world;
+	eventSequenceQueue = ds_priority_create();
+	/*
+		map of emitter Id to eventType subscribers
+	*/
+	subscriberMap = {};
 	
 	function SubscribeToEvent(_targetEntityId, _eventType, _subscriberEntityId, _funcName, _componentName) {
 		var targetEntity = entity.GetRef(_targetEntityId);

@@ -73,7 +73,9 @@ function World(_id, _worldSystems) constructor {
 		if( secondsSinceLastTick >= secondsPerTick ) {
 			tickProgress = 0;
 			secondsSinceLastTick -= secondsPerTick;
-			
+
+			//Dispatch World Events
+
 			//System Step
 			var systemCount = array_length(systemEventSubscribers.systemStep);
 			for(var i = 0; i < systemCount; i += 1) {

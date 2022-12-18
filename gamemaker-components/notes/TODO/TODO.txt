@@ -1,0 +1,5 @@
+1) Test events in world
+	- Determine new event system file (answer - scr_EventSystem - component-less event system)
+	- Finish Implementation of EventSystem which needs
+		- finished subscription map helper subclass
+		- 

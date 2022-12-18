@@ -85,8 +85,6 @@ function VisitAllTestSuites(_testSuite, _beforeStack = [], _afterStack = [], _de
 				}, self);
 			}, testContext);
 			
-			
-			
 			var desc = array_join(_descriptionStack) + spec.description;
 			var passed = false;
 			var newError = undefined;

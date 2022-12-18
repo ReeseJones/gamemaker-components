@@ -1,3 +1,7 @@
+/*
+	Courtesy of YellowAfterlife
+*/
+
 #macro __FILE__ debug_get_callstack_file(debug_get_callstack(), 0)
 #macro __LINE__ debug_get_callstack_line(debug_get_callstack(), 0)
 #macro __POS__  debug_get_callstack_pos (debug_get_callstack(), 0)
