@@ -1,5 +1,5 @@
-var eventType = async_load[? "event_type"];
-switch(eventType) {
+var _eventType = async_load[? "event_type"];
+switch(_eventType) {
 	case "gamepad discovered":
 	case "gamepad lost":
 		inputDeviceManager.UpdateAvailableDevices();
@@ -10,5 +10,5 @@ switch(eventType) {
 	case "user sign in failed":
 	case "user signed out":
 	default:
-		show_debug_message("Unhandled system event: " + eventType);
+		show_debug_message("Unhandled system event: " + _eventType);
 }

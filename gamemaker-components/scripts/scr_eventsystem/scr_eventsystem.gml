@@ -4,12 +4,11 @@ enum EntityId {
 	//Everything below starting entityId could be a world id (except for id reserved for game)
 }
 
-function EventSubscription(_entityId, _funcName, _componentName) constructor {
-	entityId = _entityId;
-	funcName =_funcName;
-	componentName = _componentName;
-};
 
+/// @desc EventData holds the the information of an emitted event type which has helper references, event info and data
+/// @param {Real} _world the id of listener who is wiating for a specific event type.
+/// @param {String} _funcName The name of the function to call when the event type is emitted
+/// @param {String} _componentName The name of the component which holds the function to call.
 function EventData(_world, _eventEmitterId, _eventType, _data) constructor {
 	world = _world
 	eventEmitterId = _eventEmitterId;
@@ -19,81 +18,54 @@ function EventData(_world, _eventEmitterId, _eventType, _data) constructor {
 };
 
 
-function SubscriptionMap() constructor {
-	subscriptions = {};
+function EventSystem(_world) : ComponentSystem(_world) constructor {
 	
-	static GetEventSubscribers = function GetEventSubscribers(_emitterId, _eventType) {
-		if(!variable_struct_exists(subscriptions, _emitterId)) {
-			return undefined;	
-		}
-		var _emitterEventMap = subscriptions[$ _emitterId];
-		if(!variable_struct_exists(_emitterEventMap, _eventType)) {
-			return undefined;	
-		}
-		//Returns array of subscriberIds for this emitter and event.
-		return _emitterEventMap[$ _eventType];		
-	};
-	
-	static AddEventSubscriber = function AddEventSubscriber(_emitterId, _eventType, _listenerId) {
-		if(!variable_struct_exists(subscriptions, _emitterId)) {
-			return undefined;	
-		}
-		var _emitterEventMap = subscriptions[$ _emitterId];
-		if(!variable_struct_exists(_emitterEventMap, _eventType)) {
-			return undefined;	
-		}
-		//Returns array of subscriberIds for this emitter and event.
-		return _emitterEventMap[$ _eventType];	
-	}
-}
-
-function EventSystem(_world) constructor {
-	world = _world;
 	eventSequenceQueue = ds_priority_create();
+	//TODO: Create subsriber map data structure
 	/*
 		map of emitter Id to eventType subscribers
 	*/
 	subscriberMap = {};
 	
 	function SubscribeToEvent(_targetEntityId, _eventType, _subscriberEntityId, _funcName, _componentName) {
-		var targetEntity = entity.GetRef(_targetEntityId);
-		var targetEventer = targetEntity.components.eventer;
-		var eventSubscribers = targetEventer.eventMap[$ _eventType];
-		if(!is_array(eventSubscribers)) {
-			eventSubscribers = [];
-			eventMap[$ _eventType] = eventSubscribers;
+		var _targetEntity = entity.GetRef(_targetEntityId);
+		var _targetEventer = _targetEntity.components.eventer;
+		var _eventSubscribers = _targetEventer.eventMap[$ _eventType];
+		if(!is_array(_eventSubscribers)) {
+			_eventSubscribers = [];
+			eventMap[$ _eventType] = _eventSubscribers;
 		}
 		
 		var eventSubscription = new EventSubscription(_subscriberEntityId, _funcName, _componentName);
-		array_push(eventSubscribers, eventSubscription);
+		array_push(_eventSubscribers, eventSubscription);
 	}
 	
 	function UnSubscribeFromEvent(_targetEntityId, _eventType, _entityId) {
 		//TODO entity.GetRef has special case for world and game events
-		var targetEntity = entity.GetRef(_targetEntityId);
-		//TODO which means that targetEntity could be a struct or game obj. but it has to have its eventer under components.
-		var targetEventer = targetEntity.components.eventer;
+		var _targetEntity = entity.GetRef(_targetEntityId);
+		//TODO which means that _targetEntity could be a struct or game obj. but it has to have its eventer under components.
+		var _targetEventer = _targetEntity.components.eventer;
 
-		var eventSubscribers = targetEventer.eventMap[$ _eventType];
-		if(!is_array(eventSubscribers)) {
+		var _eventSubscribers = _targetEventer.eventMap[$ _eventType];
+		if(!is_array(_eventSubscribers)) {
 			throw String("Entity with id ",  _targetEntityId, " has no subscribers to event ", _eventType, ". Failed to unsusbscribe.");
 		}
 		
-		var listLength = array_length(eventSubscribers);
+		var listLength = array_length(_eventSubscribers);
 		var i = listLength - 1;
 		var swapIndex = i;
 		while(i > -1) {
-			var eventSubscriber = eventSubscribers[i];
+			var eventSubscriber = _eventSubscribers[i];
 			if(eventSubscriber.entityId == _entityId) {
 				delete eventSubscriber;
-				eventSubscribers[i] = eventSubscribers[swapIndex];
+				_eventSubscribers[i] = _eventSubscribers[swapIndex];
 				swapIndex -= 1;
 				listLength -=1;
 			}
 			i -= 1;
 		}
 	
-		array_resize(eventSubscribers, listLength);
+		array_resize(_eventSubscribers, listLength);
 	}
 	
 	function QueueEvent(_entityId, _eventType, _eventData) {

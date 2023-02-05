@@ -1,12 +1,11 @@
 {
-  "isDnD": false,
+  "resourceType": "GMScript",
+  "resourceVersion": "1.0",
+  "name": "scr_NearestDistanceToEllipse",
   "isCompatibility": false,
+  "isDnD": false,
   "parent": {
     "name": "Utility",
     "path": "folders/Scripts/Utility.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "scr_NearestDistanceToEllipse",
-  "tags": [],
-  "resourceType": "GMScript",
 }

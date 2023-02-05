@@ -1,3 +1,4 @@
+/*
 enum EntityId {
 	Game = -42,
 	World0 = 0,
@@ -169,6 +170,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 		}
 	}
 	
+	
 	function Cleanup(_eventer) {
 		delete _eventer.eventMap;
 		_eventer.eventMap = undefined;
@@ -178,3 +180,5 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 		_eventer.eventQueueBuffer = undefined;
 	}
 }
+*/
+
