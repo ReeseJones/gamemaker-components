@@ -57,7 +57,7 @@ function ObjGameTests() {
 					
 					for(var i = 0; i < worldCount; i += 1) {
 						var curWorld = worlds[i];
-						var checkRef = curWorld.entity.GetRef(curWorld.entityId);
+						var checkRef = curWorld.entity.getRef(curWorld.entityId);
 						matcher_value_equal(curWorld, checkRef);
 					}
 				});

@@ -7,7 +7,7 @@ function RectangleLayout(_instance) : Component(_instance) constructor {
 
 function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
 	
-	function EndStep(_rectLayout, _dt) {
+	function endStep(_rectLayout, _dt) {
 		var inst = _rectLayout.instance;
 		var rectSizing = inst.components.rectangleSizing;
 		var entityTree = inst.components.entityTree;
@@ -17,7 +17,7 @@ function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
 		if(!entityTree.parent) {
 			return;	
 		}
-		var parent = entity.GetRef(entityTree.parent);
+		var parent = entity.getRef(entityTree.parent);
 		if(!parent) {
 			return;	
 		}

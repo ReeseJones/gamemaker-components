@@ -51,15 +51,15 @@ function ComponentSystem(_world) constructor {
     componentList = [];
     componentsDirty = false;
     
-    function systemStart() {
+    static systemStart = function system_start() {
         //Called after all systems are registered to the world.
     }
 
-    function systemCleanup() {
+    static systemCleanup = function system_cleanup() {
         //Called when the world is destroyed.
     }
 
-    function systemStep() {
+    static systemStep = function system_step() {
         //Called once per each step of updating the world.
         //Note this happens only when the world state progresses.
         //This happens at most only the specified ticksPerSecond
@@ -68,9 +68,9 @@ function ComponentSystem(_world) constructor {
         //TODO: dt should be fixed for step, double check that it is.
     }
 
-    /// @desc OnCreate is called after a component has been initialized.
+    /// @desc onCreate is called after a component has been initialized.
     /// @param {Struct.Component} _component description
-    function OnCreate(_component) {
+    static onCreate = function on_create(_component) {
         //Runs after all values have been deserialized
         //Or after a component has been dynamically added.
     }
@@ -78,17 +78,16 @@ function ComponentSystem(_world) constructor {
     //The step functions happen once per world simulation update.
     //The dt these are passed is a fixed time based on the intended
     //number of frames per second the world simulates at.
-
-    function BeginStep(_component, _dt) {
+    static beginStep = function begin_step(_component, _dt) {
         //Runs in the world step phase. Before step and endStep
     }
     
-    function Step(_component, _dt) {
-        //Runs in the world step phase. After BeginStep and before endStep
+    static step = function step(_component, _dt) {
+        //Runs in the world step phase. After beginStep and before endStep
     }
     
-    function EndStep(_component, _dt) {
-        //Runs in the world step phase. After BeginStep and Step
+    static endStep = function end_step(_component, _dt) {
+        //Runs in the world step phase. After beginStep and Step
     }
 
     //All draw Methods happen at the the maximum FPS the game can run.
@@ -96,32 +95,32 @@ function ComponentSystem(_world) constructor {
     //the delta time passed to the draw functions is a percentage of
     //the elapsed current world step. A number from 0 - 1
 
-    function DrawBegin(_component, _dt) {
+    static drawBegin = function draw_begin(_component, _dt) {
         
     }
 
-    function Draw(_component, _dt) {
+    static draw = function draw(_component, _dt) {
     
     }
     
-    function DrawEnd(_component, _dt) {
+    static drawEnd = function draw_end(_component, _dt) {
     
     }
     
-    function DrawGuiBegin(_component, _dt) {
+    static drawGuiBegin = function draw_gui_begin(_component, _dt) {
     
     }
     
-    function DrawGui(_component, _dt) {
+    static drawGui = function draw_gui(_component, _dt) {
     
     }
     
-    function DrawGuiEnd(_component, _dt) {
+    static drawGuiEnd = function draw_gui_end(_component, _dt) {
     
     }
 
-    function Destroy(_component) {
-        // When RemoveComponent is called the destroy code runs immdiately.
+    static destroy = function destroy(_component) {
+        // When removeComponent is called the destroy code runs immdiately.
         // When an entity is destroyed and its components are removed this code also runs.
         
         //The component/entity is immidately marked as destroyed, but will not be cleaned up until
@@ -131,49 +130,49 @@ function ComponentSystem(_world) constructor {
         // some resources/assets/references alive until cleanup.
     }
 
-    function Cleanup(_component) {
-        // Similar to Destroy except this code runs after all the step events when the entities
+    static cleanup = function cleanup(_component) {
+        // Similar to destroy except this code runs after all the step events when the entities
         // and components are removed from the world and systems. Should be used to clean up
         // resources that the component allocated that are not automatically cleaned up.
     }
     
     //TODO: Figure out how world/system/entity/component serilization will work.
     
-    function SerializeBinary(_component, _buffer) {
+    static serializeBinary = function serialize_binary(_component, _buffer) {
         
     }
     
-    function SerializeJson(_component, _buffer) {
+    static serializeJson = function serialize_json(_component, _buffer) {
         
     }
     
-    function DeserializeBinary(_component, _buffer) {
+    static deserializeBinary = function deserialize_binary(_component, _buffer) {
         
     }
     
-    function DeserializeJson(_component, _buffer) {
+    static deserializeJson = function deserialize_json(_component, _buffer) {
         
     }
     
-    function CleanComponentList() {
+    static cleanComponentList = function clean_component_list() {
         if(componentsDirty) {
             componentsDirty = false;
-            var listLength = array_length(componentList);
-            var i = listLength - 1;
-            var swapIndex = i;
+            var _listLength = array_length(componentList);
+            var i = _listLength - 1;
+            var _swapIndex = i;
             while(i > -1) {
                 if(componentList[i].componentIsDestroyed) {
-                    componentList[i] = componentList[swapIndex];
-                    swapIndex -= 1;
-                    listLength -=1;
+                    componentList[i] = componentList[_swapIndex];
+                    _swapIndex -= 1;
+                    _listLength -=1;
                 }
                 i -= 1;
             }
-            array_resize(componentList, listLength);
+            array_resize(componentList, _listLength);
         }
     }
     
-    static RegisterSystemEvent = function RegisterSystemEvent(_entitySystemEvent) {
+    static registerSystemEvent = function register_system_event(_entitySystemEvent) {
         array_push(world.systemEventSubscribers[$ _entitySystemEvent], self);
     }
     

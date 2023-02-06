@@ -4,11 +4,11 @@ function TestComp(_instance) : Component(_instance) constructor {
 
 function TestCompSystem(_world) : ComponentSystem(_world) constructor {
 	
-	function OnCreate(_component) {
+	function onCreate(_component) {
 		show_debug_message("TestComponent Created!");
 	}
 	
-	function Step(_component, _dt) {
+	function step(_component, _dt) {
 		_component.timer += 1;
 		
 		if(_component.timer % 60 == 0) {
@@ -16,7 +16,7 @@ function TestCompSystem(_world) : ComponentSystem(_world) constructor {
 		}
 		
 		if(_component.timer > 180) {
-			//entity.EntityDestroy(_component.getEntityId());
+			//entity.entityDestroy(_component.getEntityId());
 		}
 		
 		var rectSize = _component.instance.components.rectangleSizing;
@@ -27,11 +27,11 @@ function TestCompSystem(_world) : ComponentSystem(_world) constructor {
 		}
 	}
 	
-	function Destroy(_component) {
+	function destroy(_component) {
 		show_debug_message("TestComponent Destroyed!");
 	}
 	
-	function Cleanup(_component) {
+	function cleanup(_component) {
 		show_debug_message("TestComponent Cleaned up!");
 	}
 	

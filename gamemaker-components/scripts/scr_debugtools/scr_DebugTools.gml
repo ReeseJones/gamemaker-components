@@ -22,7 +22,7 @@ function DebugToolsSystem(_world) : ComponentSystem(_world) constructor {
         
         if(mouse_check_button(mb_right)) {
             var _playerInst = world.entity.InstanceCreateLayer(obj_solid_dynamic, 900, 540, "Instances");
-            world.entity.AddComponent(_playerInst, KinematicMovement);
+            world.entity.addComponent(_playerInst, KinematicMovement);
             world.kinematicMovement.SetDirectionAngle(_playerInst, 45);
             world.kinematicMovement.SetSpeed(_playerInst, 20);
         }

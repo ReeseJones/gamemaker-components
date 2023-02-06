@@ -18,8 +18,8 @@ function world_tests() {
 				it("Should be able to create a game and load an empty world without crashing.", function() {
 					matcher_is_defined(world);
 				});
-				it("should have a reference to itself using GetRef and the world ID.", function() {
-					var selfWorld = world.entity.GetRef(world.entityId);
+				it("should have a reference to itself using getRef and the world ID.", function() {
+					var selfWorld = world.entity.getRef(world.entityId);
 					matcher_value_equal(world, selfWorld);
 				});
 			});

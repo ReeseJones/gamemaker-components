@@ -51,7 +51,7 @@ function UpdateWorlds() {
 	var worldCount = array_length(worlds);
 	for(var i = 0; i < worldCount; i += 1) {
 		var world  = worlds[i];
-		world.Step();
+		world.step();
 	}
 	CleanupDestroyedWorlds();
 
@@ -61,7 +61,7 @@ function DrawWorlds() {
 	var worldCount = array_length(worlds);
 	for(var i = 0; i < worldCount; i += 1) {
 		var world  = worlds[i];
-		world.Draw();
+		world.draw();
 	}
 }
 
@@ -69,7 +69,7 @@ function DrawWorldGuis() {
 	var worldCount = array_length(worlds);
 	for(var i = 0; i < worldCount; i += 1) {
 		var world  = worlds[i];
-		world.DrawGui();
+		world.drawGui();
 	}	
 }
 
@@ -81,7 +81,7 @@ function CleanupDestroyedWorlds() {
 	while(i > -1) {
 		var world = worlds[i];
 		if(world.components.entity.entityIsDestroyed) {
-			world.Cleanup();
+			world.cleanup();
 			worlds[i] = worlds[swapIndex];
 			swapIndex -= 1;
 			listLength -=1;

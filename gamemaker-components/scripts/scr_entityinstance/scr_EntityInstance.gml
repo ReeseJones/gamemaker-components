@@ -49,7 +49,7 @@ function EntityInstance(_instance) : Component(_instance) constructor {
 function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     
     /*
-    function OnCreate(_entityInst) {
+    function onCreate(_entityInst) {
         //Mask and Bounding Box
         _entityInst.maskIndex = instance.mask_index;
     
@@ -64,7 +64,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     */
     
     function SetSize(_entityId, _xWidth, _yHeight) {
-        var _entityRef = entity.GetRef(_entityId);
+        var _entityRef = entity.getRef(_entityId);
         var _eInst = _entityRef.components.entityInstance;
         _eInst.maskWidth = _xWidth;
         _eInst.maskHeight = _yHeight;
@@ -74,7 +74,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     }
     
     function SetImageAngle(_entityId, _rotationDegrees) {
-        var _entityRef = entity.GetRef(_entityId);
+        var _entityRef = entity.getRef(_entityId);
         var _eInst = _entityRef.components.entityInstance;
         _eInst.imageAngle = _rotationDegrees;
         //TODO forward to inst props?
@@ -82,7 +82,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     }
     
     function SetImageScale(_entityId, _xScale, _yScale) {
-        var _entityRef = entity.GetRef(_entityId);
+        var _entityRef = entity.getRef(_entityId);
         var _eInst = _entityRef.components.entityInstance;
         _eInst.imageXscale = _xScale;
         _eInst.imageYscale = _yScale;
@@ -90,7 +90,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     }
     
     /*
-    function BeginStep(_entity, _dt) {
+    function beginStep(_entity, _dt) {
         var inst = _entity.instance;
         
         inst.visible = _entity.visible;
@@ -124,7 +124,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     */
     
     /*
-    function DrawEnd(_entityInst, _dt) {
+    function drawEnd(_entityInst, _dt) {
         var inst = _entityInst.instance;
         var xx = inst.x
         var yy = inst.y
@@ -147,7 +147,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
     */
     
     /*
-    function Draw(_entityInst, _dt) {
+    function draw(_entityInst, _dt) {
         var inst = _entityInst.instance;
         var xx = lerp(_entityInst.xPrevious, _entityInst.x, _dt);
         var yy = lerp(_entityInst.yPrevious, _entityInst.y, _dt);

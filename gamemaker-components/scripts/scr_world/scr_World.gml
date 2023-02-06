@@ -46,7 +46,7 @@ function World(_id, _worldSystems) constructor {
         }
     }
     
-    function Cleanup() {
+    function cleanup() {
         var cleanupCount = array_length(systemEventSubscribers.systemCleanup);
         for(var i = 0; i < cleanupCount; i += 1) {
             var system = systemEventSubscribers.systemCleanup[i];
@@ -60,7 +60,7 @@ function World(_id, _worldSystems) constructor {
         entityId = undefined;
     }
     
-    function Step() {
+    function step() {
         if(ticksPerSecond < 0) {
             return;    
         }
@@ -95,7 +95,7 @@ function World(_id, _worldSystems) constructor {
                     for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                         var component = components[componentIndex];
                         if(component.enabled) {
-                            system.BeginStep(component ,tickDt);
+                            system.beginStep(component ,tickDt);
                         }
                     }
                 }
@@ -111,13 +111,13 @@ function World(_id, _worldSystems) constructor {
                     for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                         var component = components[componentIndex];
                         if(component.enabled) {
-                            system.Step(component ,tickDt);
+                            system.step(component ,tickDt);
                         }
                     }
                 }
             }
             
-            //Component EndStep
+            //Component endStep
             systemCount = array_length(systemEventSubscribers.endStep);
             for(var i = 0; i < systemCount; i += 1) {
                 var system = systemEventSubscribers.endStep[i];
@@ -127,7 +127,7 @@ function World(_id, _worldSystems) constructor {
                     for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                         var component = components[componentIndex];
                         if(component.enabled) {
-                            system.EndStep(component ,tickDt);
+                            system.endStep(component ,tickDt);
                         }
                     }
                 }
@@ -147,7 +147,7 @@ function World(_id, _worldSystems) constructor {
                 for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                     var component = components[componentIndex];
                     if(component.visible) {
-                        system.DrawBegin(component ,tickProgress);
+                        system.drawBegin(component ,tickProgress);
                     }
                 }
             }
@@ -162,7 +162,7 @@ function World(_id, _worldSystems) constructor {
                 for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                     var component = components[componentIndex];
                     if(component.visible) {
-                        system.Draw(component ,tickProgress);
+                        system.draw(component ,tickProgress);
                     }
                 }
             }
@@ -177,14 +177,14 @@ function World(_id, _worldSystems) constructor {
                 for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                     var component = components[componentIndex];
                     if(component.visible) {
-                        system.DrawEnd(component ,tickProgress);
+                        system.drawEnd(component ,tickProgress);
                     }
                 }
             }
         }
     }
     
-    function DrawGui() {
+    function drawGui() {
         var systemCount = array_length(systemEventSubscribers.drawGuiBegin);
         for(var i = 0; i < systemCount; i += 1) {
             var system = systemEventSubscribers.drawGuiBegin[i];
@@ -194,7 +194,7 @@ function World(_id, _worldSystems) constructor {
                 for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                     var component = components[componentIndex];
                     if(component.visible) {
-                        system.DrawGuiBegin(component ,tickProgress);
+                        system.drawGuiBegin(component ,tickProgress);
                     }
                 }
             }
@@ -209,7 +209,7 @@ function World(_id, _worldSystems) constructor {
                 for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                     var component = components[componentIndex];
                     if(component.visible) {
-                        system.DrawGui(component ,tickProgress);
+                        system.drawGui(component ,tickProgress);
                     }
                 }
             }
@@ -224,7 +224,7 @@ function World(_id, _worldSystems) constructor {
                 for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
                     var component = components[componentIndex];
                     if(component.visible) {
-                        system.DrawGuiEnd(component ,tickProgress);
+                        system.drawGuiEnd(component ,tickProgress);
                     }
                 }
             }
@@ -310,7 +310,7 @@ function World(_id, _worldSystems) constructor {
         
         worldSystemDependencies = _worldSystems;
         
-        entity.RegisterEntity(self, entityId);
+        entity.registerEntity(self, entityId);
         
         add_detached_component(self, Eventer);
     

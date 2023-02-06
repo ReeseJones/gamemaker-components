@@ -5,7 +5,7 @@ function UiRoot(_instance) : Component(_instance) constructor {
 
 function UiRootSystem(_world) : ComponentSystem(_world) constructor {
 	
-	function BeginStep(_uiRoot, _dt) {
+	function beginStep(_uiRoot, _dt) {
 		var rectSize = _uiRoot.instance.components.rectangleSizing;
 		rectSize.x = 0;
 		rectSize.y = 0;
@@ -13,7 +13,7 @@ function UiRootSystem(_world) : ComponentSystem(_world) constructor {
 		rectSize.height = display_get_gui_height();
 	}
 	
-	function DrawGui(_component, _dt) {
+	function drawGui(_component, _dt) {
 		if(_component.debug) {
 			draw_set_color(_component.debugCol);
 			draw_rectangle(_component.x, _component.y, _component.x + _component.width, _component.y + _component.height, true);

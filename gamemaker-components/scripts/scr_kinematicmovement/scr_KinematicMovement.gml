@@ -19,13 +19,13 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 	}
 	
 	function SetSpeed(_entityId, _speed) {
-		var inst = entity.GetRef(_entityId);
+		var inst = entity.getRef(_entityId);
 		var km = inst.components.kinematicMovement;
 		km.speed = _speed;
 	}
 	
 	function SetDirectionVector(_entityId, _x, _y) {
-		var inst = entity.GetRef(_entityId);
+		var inst = entity.getRef(_entityId);
 		var km = inst.components.kinematicMovement;
 		var length = sqrt(_x*_x + _y*_y);
 		km.direction.x = _x / length;
@@ -33,7 +33,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 	}
 	
 	function SetDirectionAngle(_entityId, _angleDegrees) {
-		var inst = entity.GetRef(_entityId);
+		var inst = entity.getRef(_entityId);
 		var km = inst.components.kinematicMovement;
 		var angleInRads = degtorad(_angleDegrees);
 		km.direction.x = cos(angleInRads);
@@ -41,7 +41,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 		km.direction.y = -sin(angleInRads);
 	}
 	
-	function OnCreate(_km) {
+	function onCreate(_km) {
 		with(_km.instance) {
 			show_debug_message("Testing start collisions");
 			var _list = ds_list_create();
@@ -57,7 +57,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 		}
 	}
 	
-	function Step(_km, _dt) {
+	function step(_km, _dt) {
 		array_resize(_km.debugCollisionsPoints, 0 );
 		array_resize(_km.debugReflectionVector, 0 );
 		var tempEntityList = entityCollisionList;
@@ -132,7 +132,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 		inst.y = entityComp.y;
 	}
 	
-	function Draw(_km, _dt) {
+	function draw(_km, _dt) {
 		var inst = _km.instance;
 		var entityComp = inst.components.entity;
 		var xx = lerp(entityComp.xPrevious, entityComp.x, _dt);

@@ -29,7 +29,7 @@ function Eventer(_instance) : Component(_instance) constructor {
 function EventerSystem(_world) : ComponentSystem(_world) constructor {
 	
 	function SubscribeToEvent(_targetEntityId, _eventType, _subscriberEntityId, _funcName, _componentName) {
-		var targetEntity = entity.GetRef(_targetEntityId);
+		var targetEntity = entity.getRef(_targetEntityId);
 		var targetEventer = targetEntity.components.eventer;
 		var eventSubscribers = targetEventer.eventMap[$ _eventType];
 		if(!is_array(eventSubscribers)) {
@@ -42,8 +42,8 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 	}
 	
 	function UnSubscribeFromEvent(_targetEntityId, _eventType, _entityId) {
-		//TODO entity.GetRef has special case for world and game events
-		var targetEntity = entity.GetRef(_targetEntityId);
+		//TODO entity.getRef has special case for world and game events
+		var targetEntity = entity.getRef(_targetEntityId);
 		//TODO which means that targetEntity could be a struct or game obj. but it has to have its eventer under components.
 		var targetEventer = targetEntity.components.eventer;
 
@@ -70,7 +70,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 	}
 	
 	function QueueEvent(_entityId, _eventType, _eventData) {
-		var inst = entity.GetRef(_entityId);
+		var inst = entity.getRef(_entityId);
 		if(!inst) {
 			show_debug_message(String("Could not find entity ", _entityId, "'s instance."));
 			return;
@@ -81,7 +81,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 	
 	//Requires Entity Tree
 	function QueueEventDown(_entityId, _eventType, _eventData) {
-		var inst = entity.GetRef(_entityId);
+		var inst = entity.getRef(_entityId);
 		if(!inst) {
 			show_debug_message(String("Could not find entity ", _entityId, "'s instance."));
 			return;	
@@ -100,7 +100,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 	
 	//Requires Entity Tree
 	function QueueEventUp(_entityId, _eventType, _eventData) {
-		var inst = entity.GetRef(_entityId);
+		var inst = entity.getRef(_entityId);
 		if(!inst) {
 			show_debug_message(String("Could not find entity ", _entityId, "'s instance."));
 			return;	
@@ -117,8 +117,8 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 		});
 	}
 	
-	RegisterSystemEvent(ES_END_STEP);
-	function EndStep(_eventer, _dt) {
+	registerSystemEvent(ES_END_STEP);
+	function endStep(_eventer, _dt) {
 		//Swap the buffer into the main queue and process all events
 		var queueSwap = _eventer.eventQueue;
 		_eventer.eventQueue = _eventer.eventQueueBuffer;
@@ -130,7 +130,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 		while( !ds_queue_empty(eventQueue) ) {
 			var event = ds_queue_dequeue(eventQueue);
 			var subscribers = eventMap[$ event.eventType];
-			event.entityRef = entity.GetRef(event.eventEmitterId);
+			event.entityRef = entity.getRef(event.eventEmitterId);
 
 			if(is_array(subscribers)) {	
 				var subscriberCount = array_length(subscribers);
@@ -138,7 +138,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 					var subscriptionData = subscribers[i];
 					
 					//Clean up subscriptions to things which no longer point to entities
-					var entityRef = entity.GetRef(subscriptionData.entityId);
+					var entityRef = entity.getRef(subscriptionData.entityId);
 					if(!entityRef) {
 						array_delete_fast(subscribers, i);
 						delete subscriptionData;
@@ -171,7 +171,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 	}
 	
 	
-	function Cleanup(_eventer) {
+	function cleanup(_eventer) {
 		delete _eventer.eventMap;
 		_eventer.eventMap = undefined;
 		ds_queue_destroy(_eventer.eventQueue);

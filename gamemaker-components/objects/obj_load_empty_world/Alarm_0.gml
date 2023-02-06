@@ -3,15 +3,15 @@ var world = obj_game.LoadEmptyWorld();
 var instanceLayerName = "Instances";
 /*
 	var newEntity = world.entity.CreateEntityDefault(200, 200, instanceLayerName);
-	world.entity.AddComponent(newEntity, TestComp);
-	world.entity.AddComponent(newEntity, EntityTree);
-	world.entity.AddComponent(newEntity, RectangleSizing);
-	world.entity.AddComponent(newEntity, RectangleLayout);
+	world.entity.addComponent(newEntity, TestComp);
+	world.entity.addComponent(newEntity, EntityTree);
+	world.entity.addComponent(newEntity, RectangleSizing);
+	world.entity.addComponent(newEntity, RectangleLayout);
 
 	var newEntityTwo = world.entity.CreateEntityDefault(200, 200, instanceLayerName);
-	var entTreeComp =  world.entity.AddComponent(newEntityTwo, EntityTree);
-					   world.entity.AddComponent(newEntityTwo, RectangleSizing);
-	var rectLayout =   world.entity.AddComponent(newEntityTwo, RectangleLayout);
+	var entTreeComp =  world.entity.addComponent(newEntityTwo, EntityTree);
+					   world.entity.addComponent(newEntityTwo, RectangleSizing);
+	var rectLayout =   world.entity.addComponent(newEntityTwo, RectangleLayout);
 
 	world.entityTree.SetParent(entTreeComp, newEntity);
 	rectLayout.left = 0.2;
@@ -43,10 +43,10 @@ for (var i = 0; i < 20; i +=1 ) {
 
 /*
 var playerInst = world.entity.InstanceCreateLayer(obj_solid_dynamic, 900, 540, instanceLayerName);
-world.entity.AddComponent(playerInst, KinematicMovement);
+world.entity.addComponent(playerInst, KinematicMovement);
 world.kinematicMovement.SetDirectionAngle(playerInst, 45);
 world.kinematicMovement.SetSpeed(playerInst, 20);
 */
 var newInst = {};
 
-world.entity.RegisterEntity(newInst);
+world.entity.registerEntity(newInst);

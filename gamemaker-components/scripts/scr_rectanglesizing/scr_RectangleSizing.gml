@@ -8,7 +8,7 @@ function RectangleSizing(_instance) : Component(_instance) constructor {
 }
 
 function RectangleSizingSystem(_world) : ComponentSystem(_world) constructor {
-	function DrawGui(_component, _dt) {
+	function drawGui(_component, _dt) {
 		if(_component.debug) {
 			draw_set_color(_component.debugCol);
 			draw_rectangle(_component.x, _component.y, _component.x + _component.width, _component.y + _component.height, true);
