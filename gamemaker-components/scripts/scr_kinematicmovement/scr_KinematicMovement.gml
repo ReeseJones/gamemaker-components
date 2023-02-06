@@ -10,11 +10,11 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 	
 	entityCollisionList = undefined;	
 	
-	function SystemStart() {
+	function systemStart() {
 		entityCollisionList = ds_list_create();
 	}
 	
-	function SystemCleanup() {
+	function systemCleanup() {
 		ds_list_destroy(entityCollisionList);
 	}
 	
@@ -41,7 +41,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 		km.direction.y = -sin(angleInRads);
 	}
 	
-	function Create(_km) {
+	function OnCreate(_km) {
 		with(_km.instance) {
 			show_debug_message("Testing start collisions");
 			var _list = ds_list_create();
@@ -80,7 +80,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
 		var yIterationAmount = yOffset / iterations;
 		var foilMoveAccumulator = {x: 0, y: 0};
 		
-		var entityId = _km.GetEntityId();
+		var entityId = _km.getEntityId();
 		
 		//TODO: TEMP CODE: Point towards mouse
 		var dir = point_direction(entityComp.x, entityComp.y, mouse_x, mouse_y);

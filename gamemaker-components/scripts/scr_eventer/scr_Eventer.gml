@@ -165,7 +165,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 			}
 		
 			if(_eventer.debug) {
-				show_debug_message(String("Entity: ", _eventer.GetEntityId(), " Event: ", EventName(event.eventType)));
+				show_debug_message(String("Entity: ", _eventer.getEntityId(), " Event: ", EventName(event.eventType)));
 			}
 		}
 	}

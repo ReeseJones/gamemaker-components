@@ -21,7 +21,7 @@ function EventData(_world, _eventEmitterId, _eventType, _data) constructor {
 function EventSystem(_world) : ComponentSystem(_world) constructor {
 	
 	eventSequenceQueue = ds_priority_create();
-	//TODO: Create subsriber map data structure
+	//TODO: OnCreate subsriber map data structure
 	/*
 		map of emitter Id to eventType subscribers
 	*/
@@ -164,7 +164,7 @@ function EventSystem(_world) : ComponentSystem(_world) constructor {
 			}
 		
 			if(_eventer.debug) {
-				show_debug_message(String("Entity: ", _eventer.GetEntityId(), " Event: ", EventName(event.eventType)));
+				show_debug_message(String("Entity: ", _eventer.getEntityId(), " Event: ", EventName(event.eventType)));
 			}
 		}
 	}

@@ -10,7 +10,7 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
 	childTraversalQueue = ds_queue_create();
 	
 	RegisterSystemEvent(ES_SYSTEM_CLEANUP);
-	function SystemCleanup() {
+	function systemCleanup() {
 		ds_queue_destroy(childTraversalQueue);
 	}
 	
@@ -148,7 +148,7 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
 	
 	//TODO Cleanup events??!?
 	function Cleanup(_entityTree) { 
-		var entityId = _entityTree.GetEntityId();
+		var entityId = _entityTree.getEntityId();
 		DisconnectFromTree(entityId);
 	}
 }

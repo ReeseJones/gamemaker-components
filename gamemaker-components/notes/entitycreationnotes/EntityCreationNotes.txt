@@ -4,7 +4,7 @@ Entity Creation Process
 2) Default Initialize all components on object (load component structs with default values)
 3) Deserailize values into component
 4) Apply level overidden values
-4) Call Create Component Code
+4) Call OnCreate Component Code
 
 
 game: {

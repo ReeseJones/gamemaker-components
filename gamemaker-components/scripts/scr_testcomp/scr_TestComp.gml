@@ -4,7 +4,7 @@ function TestComp(_instance) : Component(_instance) constructor {
 
 function TestCompSystem(_world) : ComponentSystem(_world) constructor {
 	
-	function Create(_component) {
+	function OnCreate(_component) {
 		show_debug_message("TestComponent Created!");
 	}
 	
@@ -16,7 +16,7 @@ function TestCompSystem(_world) : ComponentSystem(_world) constructor {
 		}
 		
 		if(_component.timer > 180) {
-			//entity.EntityDestroy(_component.GetEntityId());
+			//entity.EntityDestroy(_component.getEntityId());
 		}
 		
 		var rectSize = _component.instance.components.rectangleSizing;
