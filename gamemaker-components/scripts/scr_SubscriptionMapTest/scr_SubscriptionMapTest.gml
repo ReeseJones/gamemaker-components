@@ -1,14 +1,14 @@
-TagScript(scr_SubscriptionMapTest, [tag_unit_test_spec]);
+tag_script(scr_SubscriptionMapTest, [TAG_UNIT_TEST_SPEC]);
 function scr_SubscriptionMapTest() {
 	return [
-		Describe("Subscription Map", function() {
-			BeforeEach(function() {
+		describe("Subscription Map", function() {
+			before_each(function() {
 				subscriptionMap = new SubscriptionMap();
 			});
-			AfterEach(function() {
+			after_each(function() {
 				delete subscriptionMap;
 			});
-			Describe("add event subscribers", function () {
+			describe("add event subscribers", function () {
 			
 			});
 		})

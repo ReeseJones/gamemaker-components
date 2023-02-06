@@ -10,15 +10,15 @@ function TestCase(_description, _test, _before = undefined, _after = undefined) 
 	after = _after
 }
 
-TagScript(RunAllUnitTets, [tag_command]);
+tag_script(RunAllUnitTets, [TAG_COMMAND]);
 function RunAllUnitTets() {
-	var unitTests = GetScriptIds(tag_unit_test);
+	var unitTests = get_script_ids(TAG_UNIT_TEST);
 	var allTests = [];
 
 	var testScriptCount = array_length(unitTests);
 	for(var i = 0; i < testScriptCount; i += 1) {
 		var func = unitTests[i]
-		array_concat(allTests, func(), allTests);
+		array_concat_ext(allTests, func(), allTests);
 	}
 	
 	var testResults = array_map(allTests, function(_testCase) {

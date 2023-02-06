@@ -1,3 +1,3 @@
 /// @description Insert description here
 RunAllUnitTets();
-RunAllSpecs();
+run_all_specs();

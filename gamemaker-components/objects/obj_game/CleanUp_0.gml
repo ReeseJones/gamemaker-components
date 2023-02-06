@@ -1,8 +1,8 @@
 /// @description Cleanup
-var worldCount = array_length(worlds);
-for(var i = 0; i < worldCount; i += 1 ) {
-	var world = worlds[i];
-	DestroyWorld(world.entityId);
+var _worldCount = array_length(worlds);
+for(var i = 0; i < _worldCount; i += 1 ) {
+	var _world = worlds[i];
+	DestroyWorld(_world.entityId);
 }
 CleanupDestroyedWorlds();
 

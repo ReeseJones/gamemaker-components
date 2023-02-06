@@ -46,15 +46,15 @@ function InputDeviceManager() constructor {
 	}
 	
 	function DeviceIsAvailable(_deviceIndex) {
-		return array_find_index(availableDevices, _deviceIndex) != -1;
+		return array_find_index_by_value(availableDevices, _deviceIndex) != -1;
 	}
 	
 	function DeviceIsAllocated(_deviceIndex) {
-		return array_find_index(allocatedDevices, _deviceIndex) != -1;
+		return array_find_index_by_value(allocatedDevices, _deviceIndex) != -1;
 	}
 	
 	function GetAllDevices(_arrayDest) {
-		return array_concat(availableDevices, allocatedDevices, _arrayDest);
+		return array_concat_ext(availableDevices, allocatedDevices, _arrayDest);
 	}
 	
 	UpdateAvailableDevices();

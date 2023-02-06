@@ -1,26 +1,26 @@
-TagScript(WorldTests, [tag_unit_test_spec]);
-function WorldTests() {
+tag_script(world_tests, [TAG_UNIT_TEST_SPEC]);
+function world_tests() {
 	return [
-		Describe("Worlds - ", function() {
-			BeforeEach(function() {
+		describe("Worlds - ", function() {
+			before_each(function() {
 				game = instance_create_depth(0, 0, 0, obj_game);
 			});
-			AfterEach(function() {
+			after_each(function() {
 				instance_destroy(game);
 			});
-			Describe("Creation: ", function() {
-				BeforeEach(function() {
+			describe("Creation: ", function() {
+				before_each(function() {
 					world = game.CreateWorld();
 				});
-				AfterEach(function() {
+				after_each(function() {
 					game.DestroyWorld(world.entityId);
 				});
-				It("Should be able to create a game and load an empty world without crashing.", function() {
-					MatcherIsDefined(world);
+				it("Should be able to create a game and load an empty world without crashing.", function() {
+					matcher_is_defined(world);
 				});
-				It("should have a reference to itself using GetRef and the world ID.", function() {
+				it("should have a reference to itself using GetRef and the world ID.", function() {
 					var selfWorld = world.entity.GetRef(world.entityId);
-					MatcherValueEqual(world, selfWorld);
+					matcher_value_equal(world, selfWorld);
 				});
 			});
 		})

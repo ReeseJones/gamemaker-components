@@ -248,7 +248,7 @@ function World(_id, _worldSystems) constructor {
 	}
 	
 	function InitializeWorldSystems(_worldSystems) {
-		_worldSystems = array_concat(_worldSystems, [], []);
+		_worldSystems = array_concat_ext(_worldSystems, [], []);
 		//Auto added world systems
 		array_push(_worldSystems, 
 			[Entity, EntitySystem, []],
