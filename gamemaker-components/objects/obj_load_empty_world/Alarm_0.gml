@@ -13,7 +13,7 @@ var instanceLayerName = "Instances";
 					   world.entity.addComponent(newEntityTwo, RectangleSizing);
 	var rectLayout =   world.entity.addComponent(newEntityTwo, RectangleLayout);
 
-	world.entityTree.SetParent(entTreeComp, newEntity);
+	world.entityTree.setParent(entTreeComp, newEntity);
 	rectLayout.left = 0.2;
 	rectLayout.right = 0.2;
 	rectLayout.top = 0.2;

@@ -18,6 +18,8 @@ function array_deep_copy(_value) {
             if(is_struct(_propVal)) {
                 _copiedValue = struct_deep_copy(_propVal);
             } else if(is_array(_propVal) ) {
+                // Is any value
+                // Feather disable once GM1043
                 _copiedValue = array_deep_copy(_propVal);
             } else {
                 _copiedValue = _propVal;
@@ -189,5 +191,7 @@ function array_shift(_array, _length = 1) {
         _array[i - _length] = _array[i];
     }
     array_resize(_array, _newLength);
+    //TODO: Delete once better typings
+    // Feather disable once GM1045
     return _shiftedValues;
 }

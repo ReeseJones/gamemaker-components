@@ -1,3 +1,5 @@
+// Feather disable GM2017
+
 /// @desc EntityTree component creates a tree like relationship between entities.
 /// @param {Struct} _entityRef A reference to the struct or game object that this entity represents.
 function EntityTree(_entityRef) : Component(_entityRef) constructor {
@@ -8,147 +10,165 @@ function EntityTree(_entityRef) : Component(_entityRef) constructor {
 function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
 
     childTraversalQueue = ds_queue_create();
-    
+
     registerSystemEvent(ES_SYSTEM_CLEANUP);
-    function systemCleanup() {
+    static systemCleanup = function system_cleanup() {
         ds_queue_destroy(childTraversalQueue);
     }
-    
-    function SetParent(_childEntityId, _parentEntityId) {
-        var childEntityRef = entity.getRef(_childEntityId);
-        var parentEntityRef = _parentEntityId ? entity.getRef(_parentEntityId) : undefined;
+
+
+/// @function        setParent(childEntityId, parentEntityId)
+/// @description     Sets the parent of an entity making it part of an entity tree
+/// @param {Real}    _childEntityId Id of the entity to be a child.
+/// @param {Real}    _parentEntityId Id of the entity to be a parent.
+    static setParent = function set_parent(_childEntityId, _parentEntityId) {
+        var _childEntityRef = entity.getRef(_childEntityId);
+        var _parentEntityRef = _parentEntityId ? entity.getRef(_parentEntityId) : undefined;
         
         if(_childEntityId == _parentEntityId) {
             throw("Cannot parent entity to itself");    
         }
         
-        if(is_undefined(childEntityRef)) {
+        if(is_undefined(_childEntityRef)) {
             throw String("Child with id ", _childEntityId , " does not exist for setting the parent of");    
         }
         
-        var childEntityTree = childEntityRef.components.entityTree;
+        var _childEntityTree = _childEntityRef.components.entityTree;
         
-        if(!childEntityTree) {
+        if(!_childEntityTree) {
             throw String("Child with id ", _childEntityId, " does not have an entity tree component.");    
         }
 
-        if(parentEntityRef) {
-            var otherEntityTree = parentEntityRef.components.entityTree;
-            if(!otherEntityTree) {
+        if(_parentEntityRef) {
+            var _otherEntityTree = _parentEntityRef.components.entityTree;
+            if(!_otherEntityTree) {
                 throw(String("Entity with id ", _parentEntityId, " does not have EntityTree component and cant be set as a parent."));
             }
                 
-            array_push(otherEntityTree.children, _childEntityId);
+            array_push(_otherEntityTree.children, _childEntityId);
         }
         
-        var oldParentRef = entity.getRef(childEntityTree.parent);
-        if(oldParentRef) {
-            array_remove_first(oldParentRef.components.entityTree.children, _childEntityId);
+        var _oldParentRef = entity.getRef(_childEntityTree.parent);
+        if(_oldParentRef) {
+            array_remove_first(_oldParentRef.components.entityTree.children, _childEntityId);
         }
 
-        childEntityTree.parent = _parentEntityId;
+        _childEntityTree.parent = _parentEntityId;
     }
-    
-    function AddChild(_entityId, _childEntityId) {
-        SetParent(_childEntityId, _entityId);
-    }
-    
-    //Removes entity from the tree
-    function DisconnectFromTree(_entityId) {
-        var entityRef = entity.getRef(_entityId);
 
-        if(is_undefined(entityRef)) {
-            throw String("Entity with id ", entityRef , " does not exist for DisconnectFromTree.");    
+/// @function        addChild(_entityId, _childEntityId)
+/// @description     Adds a child to an entity tree
+/// @param {Real}    _entityId Parent entity id.
+/// @param {Real}    _childEntityId Child entity id.
+    static addChild = function add_child(_entityId, _childEntityId) {
+        setParent(_childEntityId, _entityId);
+    }
+    
+/// @function       disconnectFromTree(entityId)
+/// @description    Removes an entity from the entity tree that it is in.
+/// @param {Real}   _entityId Entity Id to remove the entity tree that its in.
+    static disconnectFromTree = function disconnect_from_tree(_entityId) {
+        var _entityRef = entity.getRef(_entityId);
+
+        if(is_undefined(_entityRef)) {
+            throw String("Entity with id ", _entityRef , " does not exist for disconnectFromTree.");    
         }
         
-        var entityTreeComp = entityRef.components.entityTree;
+        var _entityTreeComp = _entityRef.components.entityTree;
         
-        if(is_undefined(entityTreeComp)) {
-            throw String("Entity with id ", entityRef , " does not have an entity tree component, and cannot be dissconnected from the tree.");
+        if(is_undefined(_entityTreeComp)) {
+            throw String("Entity with id ", _entityRef , " does not have an entity tree component, and cannot be dissconnected from the tree.");
         }
         
         //Disconnect parent
-        var parentRef = entity.getRef(entityTreeComp.parent);        
-        if(parentRef) {
-            var parentEntityTree = parentRef.components.entityTree;
-            if(is_undefined(parentEntityTree)) {
+        var _parentRef = entity.getRef(_entityTreeComp.parent);        
+        if(_parentRef) {
+            var _parentEntityTree = _parentRef.components.entityTree;
+            if(is_undefined(_parentEntityTree)) {
                 throw String("While disconnecting ", _entityId, " from the tree, parent had no entityTreeComponent");    
             }
-            array_remove_first(parentEntityTree.children, _entityId);
+            array_remove_first(_parentEntityTree.children, _entityId);
         }
         //Disconnect children
-        array_foreach(entityTreeComp.children, function(_entityId) {
-            var entityRef = entity.getRef(_entityId);
-            entityRef.components.entityTree.parent = undefined;
+        array_foreach(_entityTreeComp.children, function(_entityId) {
+            var _entityRef = entity.getRef(_entityId);
+            _entityRef.components.entityTree.parent = undefined;
         });
         
-        entityTreeComp.parent = undefined;
-        array_resize(entityTreeComp.children, 0);
+        _entityTreeComp.parent = undefined;
+        array_resize(_entityTreeComp.children, 0);
     }
     
     
-    //callback(entityRef, entityId)
-    function ForeachEntityDown(_entityId, _callback, _skipSelf = false, _context = undefined) {
+/// @function           foreachEntityDown(_entityId, _callback, _skipSelf = false)
+/// @description        Runs callback on each entity in the tree.
+/// @param {Real}       _entityId Starting entity from which to traverse down
+/// @param {Function}   _callback Method which is called on each entity. callback(entity, entityId)
+/// @param {Bool}       _skipSelf Whether to include the root entity in the traversal
+    static foreachEntityDown = function foreach_entity_down(_entityId, _callback, _skipSelf = false) {
         ds_queue_clear(childTraversalQueue);
-        if(_context) {
-            _callback = method(_context, _callback);    
-        }
         
-        var queueEntity = function(_entityId) {
+        var _queueEntity = method({queue: childTraversalQueue}, function(_entityId) {
             ds_queue_enqueue(queue, _entityId);
-        };
-        
-        var entityRef = entity.getRef(_entityId);
-        var entityTree = entityRef.components.entityTree;
+        });
+
+        var _entityRef = entity.getRef(_entityId);
+        var _entityTree = _entityRef.components.entityTree;
         if(_skipSelf) {
-            array_foreach(entityTree.children, queueEntity, {queue: childTraversalQueue});
+            array_foreach(_entityTree.children, _queueEntity);
         } else {
             ds_queue_enqueue(childTraversalQueue, _entityId);
         }
         
         while(!ds_queue_empty(childTraversalQueue)) {
-            var currentEntityId = ds_queue_dequeue(childTraversalQueue);
-            var currentRef = entity.getRef(currentEntityId);
-            var currentEntityTree = currentRef.components.entityTree;
-            if(currentEntityTree) {
-                array_foreach(currentEntityTree.children, queueEntity, {queue: childTraversalQueue});
-                _callback(currentRef, currentEntityId);
+            var _currentEntityId = ds_queue_dequeue(childTraversalQueue);
+            var _currentRef = entity.getRef(_currentEntityId);
+            var _currentEntityTree = _currentRef.components.entityTree;
+            if(_currentEntityTree) {
+                array_foreach(_currentEntityTree.children, _queueEntity);
+                _callback(_currentRef, _currentEntityId);
             }
         }
     }
-    
-    function ForeachEntityUp(_entityId, _callback, _skipSelf = false, _context = undefined) {
-        if(_context) {
-            _callback = method(_context, _callback);    
-        }
-        
-        var entityRef = entity.getRef(_entityId);
-        var entityTree = entityRef.components.entityTree;
+
+/// @function           foreachEntityUp(_entityId, _callback, _skipSelf = false)
+/// @description        Runs a callback on each entity traversing up the tree.
+/// @param {Real}       _entityId Starting entity from which to traverse down
+/// @param {Function}   _callback Method which is called on each entity. callback(entity, entityId)
+/// @param {Bool}       _skipSelf Whether to include the root entity in the traversal
+    static foreachEntityUp = function foreach_entity_up(_entityId, _callback, _skipSelf = false) {
+        var _entityRef = entity.getRef(_entityId);
+        var _entityTree = _entityRef.components.entityTree;
         if(_skipSelf) {
-            _entityId = entityTree.parent;
+            _entityId = _entityTree.parent;
         }
         
         while(_entityId) {
-            var currentEntity = entity.getRef(_entityId);
-            var currentEntityTree = currentEntity.components.entityTree;
-            if(currentEntityTree) {
-                _callback(currentEntity, _entityId);
-                _entityId = currentEntityTree.parent;
+            var _currentEntity = entity.getRef(_entityId);
+            var _currentEntityTree = _currentEntity.components.entityTree;
+            if(_currentEntityTree) {
+                _callback(_currentEntity, _entityId);
+                _entityId = _currentEntityTree.parent;
             } else {
                 _entityId = undefined;
             }
         }
     }
     
-    function EntityDestroyTree(_entityId) {
-        ForeachEntityDown(_entityId, function(_entityRef, _entityId) {
+/// @function       entityDestroyTree(entityId)
+/// @description    Marks every entity starting with EntityId and down for destruction. Anything above lives.
+/// @param {Real}   _entityId Entity Id to remove the entity tree that its in.
+    static entityDestroyTree = function entity_destroy_tree(_entityId) {
+        foreachEntityDown(_entityId, function(_entityRef, _entityId) {
             entity.entityDestroy(_entityId);
         });
     }
     
-    //TODO Cleanup events??!?
-    function cleanup(_entityTree) { 
-        var entityId = _entityTree.getEntityId();
-        DisconnectFromTree(entityId);
+/// @function       cleanup(entityTree)
+/// @description    ComponentSystem cleanup event. Removes entities from the trees they are in.
+/// @param {Struct.EntityTree}   _entityTree component to be cleaned up.
+    static cleanup = function cleanup(_entityTree) { 
+        var _entityId = _entityTree.getEntityId();
+        disconnectFromTree(entityId);
     }
 }

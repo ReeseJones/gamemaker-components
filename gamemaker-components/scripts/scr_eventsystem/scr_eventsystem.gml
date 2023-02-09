@@ -87,7 +87,7 @@ function EventSystem(_world) : ComponentSystem(_world) constructor {
 		}
 		var newEvent = new EventData(world, _entityId, _eventType, _eventData);
 		
-		entityTree.ForeachEntityDown(_entityId, function(_inst) {
+		entityTree.foreachEntityDown(_entityId, function(_inst) {
 			var currentEventer = _inst.components.eventer;
 			if(currentEventer) {
 				ds_queue_enqueue(currentEventer.eventQueueBuffer, event);
@@ -106,7 +106,7 @@ function EventSystem(_world) : ComponentSystem(_world) constructor {
 		}
 		var newEvent = new EventData(world, _entityId, _eventType, _eventData);
 		
-		entityTree.ForeachEntityUp(_entityId, function(_inst) {
+		entityTree.foreachEntityUp(_entityId, function(_inst) {
 			var currentEventer = _inst.components.eventer;
 			if(currentEventer) {
 				ds_queue_enqueue(currentEventer.eventQueueBuffer, event);

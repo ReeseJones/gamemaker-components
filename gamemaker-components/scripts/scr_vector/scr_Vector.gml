@@ -1,134 +1,134 @@
 function vector2d_create_normal(_x, _y) {
-	var length = sqrt(_x*_x + _y*_y);
-	return {
-		x: _x / length,
-		y: _y / length
-	};
+    var _length = sqrt(_x*_x + _y*_y);
+    return {
+        x: _x / _length,
+        y: _y / _length
+    };
 }
 
-function vector2d_normalize(v) {
-	var length = sqrt(v.x*v.x + v.y*v.y);
-	return {
-		x: v.x / length,
-		y: v.y / length
-	};
+function vector2d_normalize(_v) {
+    var _length = sqrt(_v.x*_v.x + _v.y*_v.y);
+    return {
+        x: _v.x / _length,
+        y: _v.y / _length
+    };
 }
 
-function vector2d_inplace_normalize(v) {
-	var length = sqrt(v.x*v.x + v.y*v.y);
-	v.x /= length;
-	v.y /= length;
-	return v;
+function vector2d_inplace_normalize(_v) {
+    var _length = sqrt(_v.x*_v.x + _v.y*_v.y);
+    _v.x /= _length;
+    _v.y /= _length;
+    return _v;
 }
 
-//Return the vector of v1 plus v2
-function vector2d_add(v1, v2) {
-	return {
-		x: v1.x + v2.x,
-		y: v1.y + v2.y
-	};
+//Return the vector of _v1 plus _v2
+function vector2d_add(_v1, _v2) {
+    return {
+        x: _v1.x + _v2.x,
+        y: _v1.y + _v2.y
+    };
 }
 
-//Add v2 to v1
-function vector2d_inplace_add(v1, v2) {
-	v1.x += v2.x;
-	v1.y += v2.y;
-	return v1;
+//Add _v2 to _v1
+function vector2d_inplace_add(_v1, _v2) {
+    _v1.x += _v2.x;
+    _v1.y += _v2.y;
+    return _v1;
 }
 
-//Subtract v2 from v1
-function vector2d_subtract(v1, v2) {
-	return {
-		x: v1.x - v2.x,
-		y: v1.y - v2.y
-	}
+//Subtract _v2 from _v1
+function vector2d_subtract(_v1, _v2) {
+    return {
+        x: _v1.x - _v2.x,
+        y: _v1.y - _v2.y
+    }
 }
 
-//Subtract v2 from v1
-function vector2d_inplace_subtract(v1, v2) {
-	 v1.x -= v2.x;
-	 v1.y -= v2.y;
-	 return v1;
+//Subtract _v2 from _v1
+function vector2d_inplace_subtract(_v1, _v2) {
+     _v1.x -= _v2.x;
+     _v1.y -= _v2.y;
+     return _v1;
 }
 
-function vector2d_dot_product(v1, v2) {
-	return (v1.x * v2.x) + (v1.y * v2.y);	
+function vector2d_dot_product(_v1, _v2) {
+    return (_v1.x * _v2.x) + (_v1.y * _v2.y);
 }
 
-function vector2d_scale(v, s) {
-	return {
-		x: v.x * s,
-		y: v.y * s
-	}
+function vector2d_scale(_v, _s) {
+    return {
+        x: _v.x * _s,
+        y: _v.y * _s
+    }
 }
 
-function vector2d_inplace_scale(v, s) {
-	v.x *= s;
-	v.y *= s;
-	return v;
+function vector2d_inplace_scale(_v, _s) {
+    _v.x *= _s;
+    _v.y *= _s;
+    return _v;
 }
 
-//return the vector pointing from p1 to p2 normalized
-function vector2d_direction_normalized(p1, p2) {
-	var diff = vector2d_subtract(p2, p1);
-	vector2d_inplace_normalize(diff);
-	return diff;
+//return the vector pointing from _p1 to _p2 normalized
+function vector2d_direction_normalized(_p1, _p2) {
+    var _diff = vector2d_subtract(_p2, _p1);
+    vector2d_inplace_normalize(_diff);
+    return _diff;
 }
 
 function vector2d_rotate(_v1, _angleDegrees) {
-	var rads = degtorad(_angleDegrees);
-	var cs, sn;
-	cs = cos(rads);
-	sn = sin(rads);
-	return {
-		x: _v1.x * cs - _v1.y * sn,
-		y: _v1.x * sn + _v1.y * cs
-	}
+    var _rads = degtorad(_angleDegrees);
+    var _cs, _sn;
+    _cs = cos(_rads);
+    _sn = sin(_rads);
+    return {
+        x: _v1.x * _cs - _v1.y * _sn,
+        y: _v1.x * _sn + _v1.y * _cs
+    }
 }
 
 function vector2d_inplace_rotate(_v1, _angleDegrees) {
-	var rads = degtorad(_angleDegrees);
-	var cs, sn;
-	cs = cos(rads);
-	sn = sin(rads);
-	var xx = _v1.x * cs - _v1.y * sn;
-	var yy = _v1.x * sn + _v1.y * cs;
-	_v1.x = xx;
-	_v1.y = yy;
-	return _v1;
+    var _rads = degtorad(_angleDegrees);
+    var _cs, _sn;
+    _cs = cos(_rads);
+    _sn = sin(_rads);
+    var _xx = _v1.x * _cs - _v1.y * _sn;
+    var _yy = _v1.x * _sn + _v1.y * _cs;
+    _v1.x = _xx;
+    _v1.y = _yy;
+    return _v1;
 }
 
 function vector2d_rotate_around(_v1, _p1, _angleDegrees) {
-	var rads = degtorad(_angleDegrees);
-	var cs, sn;
-	cs = cos(rads);
-	sn = sin(rads);
-	_v1 = { x: _v1.x, y: _v1.y };
-	vector2d_inplace_subtract(_v1, _p1);
-	return {
-		x: (_v1.x * cs - _v1.y * sn) + _p1.x,
-		y: (_v1.x * sn + _v1.y * cs) + _p1.y
-	}
+    var _rads = degtorad(_angleDegrees);
+    var _cs, _sn;
+    _cs = cos(_rads);
+    _sn = sin(_rads);
+    _v1 = { x: _v1.x, y: _v1.y };
+    vector2d_inplace_subtract(_v1, _p1);
+    return {
+        x: (_v1.x * _cs - _v1.y * _sn) + _p1.x,
+        y: (_v1.x * _sn + _v1.y * _cs) + _p1.y
+    }
 }
 
 //Warning: Must use normalized vectors
 //Normal points up out of surface.
 function vector2d_reflect(_v1, _n) {
-	var dotProd = vector2d_dot_product(_v1, _n);
-	var scaledN = vector2d_scale(_n, 2 * dotProd);
-	return vector2d_subtract(_v1, scaledN);
+    var _dotProd = vector2d_dot_product(_v1, _n);
+    var _scaledN = vector2d_scale(_n, 2 * _dotProd);
+    return vector2d_subtract(_v1, _scaledN);
 }
 
 //Warning: n must be normalized.
 function vector2d_mirror(_v1, _n) {
-	var projectedVector = vector2d_project(_v1, _n);
-	var u = vector2d_subtract(projectedVector, _v1);
-	return vector2d_add(_v1, vector2d_scale(u, 2));
+    var _projectedVector = vector2d_project(_v1, _n);
+    var _u = vector2d_subtract(_projectedVector, _v1);
+    return vector2d_add(_v1, vector2d_scale(_u, 2));
 }
 
-//project v1 onto v2
+//project _v1 onto _v2
 function vector2d_project(_v1, _v2) {
-	var d1 = vector2d_dot_product(_v1, _v2);
-	var d2 = vector2d_dot_product(_v2, _v2);
-	return vector2d_scale(_v2, d1 / d2);
+    var _d1 = vector2d_dot_product(_v1, _v2);
+    var _d2 = vector2d_dot_product(_v2, _v2);
+    return vector2d_scale(_v2, _d1 / _d2);
 }
