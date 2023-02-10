@@ -8,7 +8,7 @@ CleanupDestroyedWorlds();
 
 input_manager_destroy(inputManager);
 inputManager = undefined;
-input_device_manager_destroy(inputDeviceManager);
+delete inputDeviceManager;
 inputDeviceManager = undefined;
 
 ds_map_destroy(worldsMap);

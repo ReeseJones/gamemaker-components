@@ -112,7 +112,7 @@ function InputManager(_inputDeviceManager) constructor {
 		static deviceArray = [];
 		static gamepadBindingsArray = [];
 		
-		var devices = inputDeviceManager.GetAllDevices(deviceArray);
+		var devices = inputDeviceManager.getAllDevices(deviceArray);
 		var deviceCount = array_length(devices);
 		for(var i = 0; i < deviceCount; i += 1) {
 			var deviceIndex = devices[i];

@@ -1,77 +1,77 @@
-tag_script(ObjGameTests, [TAG_UNIT_TEST_SPEC]);
-function ObjGameTests() {
-	return [
-		describe("obj_game - ", function() {
-			before_each(function(){
-				game = instance_create_depth(0,0,0, obj_game);
-			});
-			after_each(function(){
-				instance_destroy(obj_game);
-			});
-			it("it should create a pool of ids to assign to worlds up to ENTITY_INITIAL_ID", function() {
-				var idPoolLength = array_length(game.worldIdPool);
-				matcher_value_equal(idPoolLength, ENTITY_INITIAL_ID);
-			});
-			it("WorldExists should return false if a world does not exist.", function() {
-				matcher_value_equal(game.WorldExists(3), false);
-			});
-			it("WorldExists should return a world ref if a world exists.", function() {
-				var world = game.CreateWorld();
-				matcher_value_equal(game.WorldExists(world.entityId), true);
-			});
-			
-			describe("DestroyWorld - ", function() {
-				before_each(function(){
-					world = game.CreateWorld();
-				});
-				it("it should throw if no world with that id is in the game", function(){
-					matcher_should_throw(function() {
-						game.DestroyWorld("fakeId");
-					});
-				});
-				it("it should mark the world's entity componet as is destroyed.", function(){
-					game.DestroyWorld(world.entityId);
-					matcher_value_equal(world.components.entity.entityIsDestroyed, true);
-				});
-			});
-			
-			describe("CreateWorld - ", function() {
-				it("it should return an instance of world", function() {
-					var world = game.CreateWorld();
-					matcher_value_equal(instanceof(world), "World");
-				});
-				it("it should throw if there are no world ids left", function() {
-					matcher_should_throw( function() {
-						for(var i = 0; i <= ENTITY_INITIAL_ID; i += 1) {
-							game.CreateWorld();
-						}
-					});
-				});
-				it("all worlds should have a reference to themeslves.", function() {
-					var worldCount = 5;
-					var worlds = [];
-					
-					for(var i = 0; i < worldCount; i += 1) {
-						array_push(worlds, game.CreateWorld());	
-					}
-					
-					for(var i = 0; i < worldCount; i += 1) {
-						var curWorld = worlds[i];
-						var checkRef = curWorld.entity.getRef(curWorld.entityId);
-						matcher_value_equal(curWorld, checkRef);
-					}
-				});
-			});
-			
-			describe("UpdateWorlds - ", function() {
-				before_each(function() {
-					
-				});
-				it("it should dispatch any events queued on the game first, then update the worlds", function() {
-					
-				});
-			});
-		})
-	];
+tag_script(obj_game_tests, [TAG_UNIT_TEST_SPEC]);
+function obj_game_tests() {
+    return [
+        describe("obj_game - ", function() {
+            before_each(function() {
+                gameInstance = instance_create_depth(0,0,0, obj_game);
+            });
+            after_each(function(){
+                instance_destroy(obj_game);
+            });
+            it("it should create a pool of ids to assign to worlds up to ENTITY_INITIAL_ID", function() {
+                var _idPoolLength = array_length(gameInstance.worldIdPool);
+                matcher_value_equal(_idPoolLength, ENTITY_INITIAL_ID);
+            });
+            it("WorldExists should return false if a world does not exist.", function() {
+                matcher_value_equal(gameInstance.WorldExists(3), false);
+            });
+            it("WorldExists should return a world ref if a world exists.", function() {
+                var _world = gameInstance.CreateWorld();
+                matcher_value_equal(gameInstance.WorldExists(_world.entityId), true);
+            });
+            
+            describe("DestroyWorld - ", function() {
+                before_each( function() {
+                    world = gameInstance.CreateWorld();
+                });
+                it("it should throw if no world with that id is in the game", function() {
+                    matcher_should_throw( function() {
+                        gameInstance.DestroyWorld("fakeId");
+                    });
+                });
+                it("it should mark the world's entity componet as is destroyed.", function() {
+                    gameInstance.DestroyWorld(world.entityId);
+                    matcher_is_true(world.components.entity.entityIsDestroyed);
+                });
+            });
+            
+            describe("CreateWorld - ", function() {
+                it("it should return an instance of world", function() {
+                    var _world = gameInstance.CreateWorld();
+                    matcher_is_true(is_instanceof(_world, World));
+                });
+                it("it should throw if there are no world ids left", function() {
+                    matcher_should_throw( function() {
+                        for(var i = 0; i <= ENTITY_INITIAL_ID; i += 1) {
+                            gameInstance.CreateWorld();
+                        }
+                    });
+                });
+                it("all worlds should have a reference to themeslves.", function() {
+                    var _worldCount = 5;
+                    var _worlds = [];
+                    
+                    for(var i = 0; i < _worldCount; i += 1) {
+                        array_push(_worlds, gameInstance.CreateWorld());    
+                    }
+                    
+                    for(var i = 0; i < _worldCount; i += 1) {
+                        var _curWorld = _worlds[i];
+                        var _checkRef = _curWorld.entity.getRef(_curWorld.entityId);
+                        matcher_value_equal(_curWorld, _checkRef);
+                    }
+                });
+            });
+            
+            describe("UpdateWorlds - ", function() {
+                before_each(function() {
+                    
+                });
+                it("it should dispatch any events queued on the game first, then update the worlds", function() {
+                    
+                });
+            });
+        })
+    ];
 }
 

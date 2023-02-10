@@ -131,7 +131,7 @@ function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
         var rot = _entityInst.imageAngle;
             
         //get the rotated bounding box world positions
-        var bbox = RectGetRotated(xx, yy, _entityInst.maskWidth / 2, _entityInst.maskHeight / 2, rot);
+        var bbox = rect_get_rotated(xx, yy, _entityInst.maskWidth / 2, _entityInst.maskHeight / 2, rot);
         
         draw_line_width(bbox.tl.x, bbox.tl.y, bbox.br.x, bbox.br.y, 3);
         

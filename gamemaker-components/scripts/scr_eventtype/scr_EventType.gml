@@ -1,53 +1,52 @@
-//Find: ^([a-zA-Z0-9]*),?$
-//Replace: names[? EventType.$1] = "$1";
-
-enum EventType {
-	InstanceCreated,
-	InstanceDestroyed,
-	InstanceAddedComponent,
-	InstanceRemovedComponent,
-	ActionPauseGame,
-	ActionMove,
-	ActionShoot,
-	ActionShootSecondary,
-	ActionThrowGrenade,
-	ActionJump,
-	ActionUseEquipment,
-	ActionToggleInventory,
-	ActionNextWeapon,
-	ActionPreviousWeapon,
-	ActionCrouch,
-	ActionLook,
-	InputAny,
-	GamepadConnected,
-	GamepadDisconnected,
-	WorldCreated,
+enum EVENT_TYPE {
+    INSTANCE_CREATED,
+    INSTANCE_DESTROYED,
+    INSTANCE_ADDED_COMPONENT,
+    INSTANCE_REMOVED_COMPONENT,
+    ACTION_PAUSE_GAME,
+    ACTION_MOVE,
+    ACTION_SHOOT,
+    ACTION_SHOOT_SECONDARY,
+    ACTION_JUMP,
+    ACTION_USE_EQUIPMENT,
+    ACTION_TOGGLE_INVENTORY,
+    ACTION_NEXT_WEAPON,
+    ACTION_PREVIOUS_WEAPON,
+    ACTION_CROUCH,
+    ACTION_LOOK,
+    INPUT_ANY,
+    GAMEPAD_CONNECTED,
+    GAMEPAD_DISCONNECTED,
+    WORLD_CREATED,
 }
 
-global.EventTypeName = ds_map_create();
+global.eventTypeNameMap = ds_map_create();
 
-var names = global.EventTypeName;
-ds_map_set(names, EventType.InstanceCreated, "InstanceCreated");
-names[? EventType.InstanceDestroyed] = "InstanceDestroyed";
-names[? EventType.InstanceAddedComponent] = "InstanceAddedComponent";
-names[? EventType.InstanceRemovedComponent] = "InstanceRemovedComponent";
-names[? EventType.ActionPauseGame] = "ActionPauseGame";
-names[? EventType.ActionMove] = "ActionMove";
-names[? EventType.ActionShoot] = "ActionShoot";
-names[? EventType.ActionShootSecondary] = "ActionShootSecondary";
-names[? EventType.ActionThrowGrenade] = "ActionThrowGrenade";
-names[? EventType.ActionJump] = "ActionJump";
-names[? EventType.ActionUseEquipment] = "ActionUseEquipment";
-names[? EventType.ActionToggleInventory] = "ActionToggleInventory";
-names[? EventType.ActionNextWeapon] = "ActionNextWeapon";
-names[? EventType.ActionPreviousWeapon] = "ActionPreviousWeapon";
-names[? EventType.ActionCrouch] = "ActionCrouch";
-names[? EventType.ActionLook] = "ActionLook";
-names[? EventType.InputAny] = "InputAny";
-names[? EventType.GamepadConnected] = "GamepadConnected";
-names[? EventType.GamepadDisconnected] = "GamepadDisconnected";
+global.eventTypeNameMap[? EVENT_TYPE.INSTANCE_CREATED] = "INSTANCE_CREATED";
+global.eventTypeNameMap[? EVENT_TYPE.INSTANCE_DESTROYED] = "INSTANCE_DESTROYED";
+global.eventTypeNameMap[? EVENT_TYPE.INSTANCE_ADDED_COMPONENT] = "INSTANCE_ADDED_COMPONENT";
+global.eventTypeNameMap[? EVENT_TYPE.INSTANCE_REMOVED_COMPONENT] = "INSTANCE_REMOVED_COMPONENT";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_PAUSE_GAME] = "ACTION_PAUSE_GAME";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_MOVE] = "ACTION_MOVE";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_SHOOT] = "ACTION_SHOOT";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_SHOOT_SECONDARY] = "ACTION_SHOOT_SECONDARY";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_JUMP] = "ACTION_JUMP";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_USE_EQUIPMENT] = "ACTION_USE_EQUIPMENT";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_TOGGLE_INVENTORY] = "ACTION_TOGGLE_INVENTORY";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_NEXT_WEAPON] = "ACTION_NEXT_WEAPON";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_PREVIOUS_WEAPON] = "ACTION_PREVIOUS_WEAPON";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_CROUCH] = "ACTION_CROUCH";
+global.eventTypeNameMap[? EVENT_TYPE.ACTION_LOOK] = "ACTION_LOOK";
+global.eventTypeNameMap[? EVENT_TYPE.INPUT_ANY] = "INPUT_ANY";
+global.eventTypeNameMap[? EVENT_TYPE.GAMEPAD_CONNECTED] = "GAMEPAD_CONNECTED";
+global.eventTypeNameMap[? EVENT_TYPE.GAMEPAD_DISCONNECTED] = "GAMEPAD_DISCONNECTED";
+global.eventTypeNameMap[? EVENT_TYPE.WORLD_CREATED] = "WORLD_CREATED";
 
-
-function EventName(_eventType) {
-	return 	global.EventTypeName[?_eventType];
+tag_script(event_name);
+/// @function event_name(eventType)
+/// @desc Returns the name of an EVENT_TYPE
+/// @param {Real} _eventType The EventType constant to get the string name of
+/// @return {String}
+function event_name(_eventType) {
+    return global.eventTypeNameMap[?_eventType];
 }

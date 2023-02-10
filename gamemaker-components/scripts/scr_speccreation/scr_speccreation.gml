@@ -18,7 +18,7 @@ function TestSuite() constructor {
 /// @desc describe a set of spec definitions.
 /// @param {string} _description description
 /// @param {function} _specDefinitions A function which describes the specs.
-/// @returns {struct} Returns the test suite this describe created
+/// @returns {Struct.TestSuite} Returns the test suite this describe created
 function describe(_description, _specDefinitions) {    
     var _testSuite = new TestSuite();
     var _suiteBinding = method(_testSuite, _specDefinitions);

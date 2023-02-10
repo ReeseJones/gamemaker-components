@@ -12,7 +12,7 @@ var yy = inst.y
 var rot = image_angle;
 			
 //get the rotated bounding box world positions
-var bbox = RectGetRotated(xx, yy, 16, 64, -rot);
+var bbox = rect_get_rotated(xx, yy, 16, 64, -rot);
 		
 draw_set_color(c_lime);
 draw_line_width(bbox.tl.x, bbox.tl.y, bbox.br.x, bbox.br.y, 3);

@@ -26,15 +26,15 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
         var _parentEntityRef = _parentEntityId ? entity.getRef(_parentEntityId) : undefined;
         
         if(_childEntityId == _parentEntityId) {
-            throw("Cannot parent entity to itself");    
+            throw("Cannot parent entity to itself");
         }
-        
+
         if(is_undefined(_childEntityRef)) {
             throw String("Child with id ", _childEntityId , " does not exist for setting the parent of");    
         }
-        
+
         var _childEntityTree = _childEntityRef.components.entityTree;
-        
+
         if(!_childEntityTree) {
             throw String("Child with id ", _childEntityId, " does not have an entity tree component.");    
         }
@@ -44,10 +44,10 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
             if(!_otherEntityTree) {
                 throw(String("Entity with id ", _parentEntityId, " does not have EntityTree component and cant be set as a parent."));
             }
-                
+
             array_push(_otherEntityTree.children, _childEntityId);
         }
-        
+
         var _oldParentRef = entity.getRef(_childEntityTree.parent);
         if(_oldParentRef) {
             array_remove_first(_oldParentRef.components.entityTree.children, _childEntityId);

@@ -47,7 +47,7 @@ function NearestPointOnInstance(_startPos, _inst) {
 			var yy = instEntity.y;
 			
 			//get the rotated bounding box world positions
-			var bbox = RectGetRotated(xx, yy, halfWidth, halfHeight, rot);
+			var bbox = rect_get_rotated(xx, yy, halfWidth, halfHeight, rot);
 			
 			//rotate them around origin back to be axis aligned
 			vector2d_inplace_rotate( bbox.tl, rot);
