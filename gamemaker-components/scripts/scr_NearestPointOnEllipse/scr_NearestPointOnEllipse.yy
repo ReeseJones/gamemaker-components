@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_NearestDistanceToEllipse",
+  "name": "scr_NearestPointOnEllipse",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

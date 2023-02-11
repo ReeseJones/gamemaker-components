@@ -6,7 +6,7 @@ for(var i = 0; i < _worldCount; i += 1 ) {
 }
 CleanupDestroyedWorlds();
 
-input_manager_destroy(inputManager);
+delete inputManager;
 inputManager = undefined;
 delete inputDeviceManager;
 inputDeviceManager = undefined;

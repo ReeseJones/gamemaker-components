@@ -1,7 +1,7 @@
 /// @description Game Creation Code
 
 inputDeviceManager = new InputDeviceManager();
-inputManager = input_manager_create(inputDeviceManager);
+inputManager = new InputManager(inputDeviceManager);
 worldsMap = ds_map_create();
 worlds = [];
 

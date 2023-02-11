@@ -3,7 +3,7 @@
 function InputDeviceManager() constructor 
 {
     allocatedDevices = [];
-    availableDevices = [DeviceIndex.MouseAndKeyboard];
+    availableDevices = [DEVICE_INDEX.MOUSE_AND_KEYBOARD];
     
     static updateAvailableDevices = function update_available_devices() {
         var _deviceCount = gamepad_get_device_count();

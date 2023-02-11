@@ -1,303 +1,300 @@
-enum DeviceIndex {
-	MouseAndKeyboard = -1,
-	//The rest are gamepads 0 to n
-	Gamepad0 = 0,
-	Gamepad1 = 1,
-	Gamepad2 = 2,
-	Gamepad3 = 3,
-	Gamepad4 = 4,
-	Gamepad5 = 5,
-	Gamepad6 = 6,
-	Gamepad7 = 7,
-	Gamepad8 = 8,
-	Gamepad9 = 9
+//TODO: Remove disable once better name checking
+// Feather disable GM2017
+enum DEVICE_INDEX {
+    MOUSE_AND_KEYBOARD = -1,
+    //The rest are gamepads 0 to n
+    GAMPEPAD0 = 0,
+    GAMPEPAD1 = 1,
+    GAMPEPAD2 = 2,
+    GAMPEPAD3 = 3,
+    GAMPEPAD4 = 4,
+    GAMPEPAD5 = 5,
+    GAMPEPAD6 = 6,
+    GAMPEPAD7 = 7,
+    GAMPEPAD8 = 8,
+    GAMPEPAD9 = 9
 }
 
-enum InputType {
-	MouseAndKeyboard,
-	Gamepad
+enum INPUT_TYPE {
+    MOUSE_AND_KEYBOARD,
+    GAMEPAD
 }
 
-enum BindingType {
-	KeyboardKey,
-	MouseButton,
-	MouseWheel,
-	GamepadButton,
-	GamepadAxis
+enum BINDING_TYPE {
+    KEYBOARD_KEY,
+    MOUSE_BUTTON,
+    MOUSE_WHEEL,
+    GAMEPAD_BUTTON,
+    GAMEPAD_AXIS
 }
 
-enum MouseWheelDirection {
-	Up,
-	Down
+enum MOUSE_WHEEL_DIRECTION {
+    UP,
+    DOWN
 }
 
-enum ButtonPressType {
-	Held,
-	Press,
-	Release
+enum BUTTON_PRESS_TYPE {
+    HELD,
+    PRESS,
+    RELEASE
 }
 
-enum ActionInput {
-	MoveUp,
-	MoveDown,
-	MoveLeft,
-	MoveRight,
-	MoveHorizontal,
-	MoveVertical,
-	Shoot,
-	ShootSecondary,
-	ThrowGrenade,
-	Jump,
-	UseEquipment,
-	ToggleInventory,
-	Pause,
-	NextWeapon,
-	PreviousWeapon,
-	Crouch,
-	LookVertical,
-	LookHorizontal
+enum ACTION_INPUT {
+    MOVE_UP,
+    MOVE_DOWN,
+    MOVE_LEFT,
+    MOVE_RIGHT,
+    MOVE_HORIZONTAL,
+    MOVE_VERTICAL,
+    SHOOT,
+    SHOOT_SECONDARY,
+    THROW_GRENADE,
+    JUMP,
+    USE_EQUIPMENT,
+    TOGGLE_INVENTORY,
+    PAUSE,
+    NEXT_WEAPON,
+    PREVIOUS_WEAPON,
+    CROUCH,
+    LOOK_VERTICAL,
+    LOOK_HORIZONTAL,
+    ACTIONS_COUNT,
 }
+
+//TODO CONVERT FROM ARRAYS TO STRUCTS
 
 function InputManager(_inputDeviceManager) constructor {
-	//@member {Function} which method is used for checking keys
-	keyboardCheckMethod = (os_type == os_windows) ? keyboard_check_direct : keyboard_check;
-	bindings = ds_map_create();
-	inputDeviceManager = _inputDeviceManager;
-	ds_map_add_map(bindings, InputType.MouseAndKeyboard, ds_map_create());
-	ds_map_add_map(bindings, InputType.Gamepad, ds_map_create());
-	
-	functionsMap = ds_map_create();
-	ds_map_add_map(functionsMap, ButtonPressType.Held, ds_map_create());
-	ds_map_add_map(functionsMap, ButtonPressType.Press, ds_map_create());
-	ds_map_add_map(functionsMap, ButtonPressType.Release, ds_map_create());
-	
-	function GetInputTypeFromDeviceIndex(_deviceIndex) {
-		return	_deviceIndex == DeviceIndex.MouseAndKeyboard 
-		? InputType.MouseAndKeyboard
-		: InputType.Gamepad;
-	}
-	
-	function CheckPressed(_deviceIndex, _actionInput) {
-		var inputType = GetInputTypeFromDeviceIndex(_deviceIndex)
-		var actionInputMap = bindings[? inputType];
-		var actionSetting = actionInputMap[? _actionInput];
-		var checkMethod = functionsMap[? ButtonPressType.Press][? actionSetting.type];
-		return checkMethod(_deviceIndex, actionSetting.value);
-	}
-	
-	function CheckReleased(_deviceIndex, _actionInput) {
-		var inputType = GetInputTypeFromDeviceIndex(_deviceIndex)
-		var actionInputMap = bindings[? inputType];
-		var actionSetting = actionInputMap[? _actionInput];
-		var checkMethod = functionsMap[? ButtonPressType.Release][? actionSetting.type];
-		return checkMethod(_deviceIndex, actionSetting.value);
-	}
-	
-	function CheckHeld(_deviceIndex, _actionInput) {
-		var inputType = GetInputTypeFromDeviceIndex(_deviceIndex)
-		var actionInputMap = bindings[? inputType];
-		var actionSetting = actionInputMap[? _actionInput];
-		var checkMethod = functionsMap[? ButtonPressType.Held][? actionSetting.type];
-		return checkMethod(_deviceIndex, actionSetting.value);
-	}
-	
-	function ReadAxis(_deviceIndex, _actionInput) {
-		var inputType = GetInputTypeFromDeviceIndex(_deviceIndex)
-		var actionInputMap = bindings[? inputType];
-		var actionSetting = actionInputMap[? _actionInput];
-		return gamepad_axis_value(_deviceIndex, actionSetting.value);
-	}
-	
-	function CheckAllDeviceInput() {
-		static deviceArray = [];
-		static gamepadBindingsArray = [];
-		
-		var devices = inputDeviceManager.getAllDevices(deviceArray);
-		var deviceCount = array_length(devices);
-		for(var i = 0; i < deviceCount; i += 1) {
-			var deviceIndex = devices[i];
-			
-			if(deviceIndex == DeviceIndex.MouseAndKeyboard) {
-				if(keyboard_check_pressed(vk_anykey)
-				|| device_mouse_check_button_pressed(0, mb_any)) {
-					return DeviceIndex.MouseAndKeyboard;	
-				}
-			} else {
-				var gamepadBindings = bindings[? InputType.Gamepad];
-				var gamepadActions = ds_map_keys_to_array(gamepadBindings, gamepadBindingsArray);
-				var actionCount = array_length(gamepadActions);
-		
-				for(var j = 0; j < actionCount; j += 1) {
-					var actionSetting = gamepadBindings[? gamepadActions[j]];
-					if(actionSetting.type == BindingType.GamepadButton) {
-						var isPressed = gamepad_button_check_pressed(deviceIndex, actionSetting.value);
-						if(isPressed) {
-							return deviceIndex;	
-						}
-					}
-				}
-			}
-		}
-		
-		//no device input detected
-		return undefined;
-	}
-	
-	function InitializeFunctionMap() {
-		var heldMap = functionsMap[? ButtonPressType.Held];
-		var pressMap = functionsMap[? ButtonPressType.Press];
-		var releaseMap = functionsMap[? ButtonPressType.Release];
-		
-		heldMap[? BindingType.KeyboardKey] = function(_device, _key) { return keyboardCheckMethod(_key); };
-		heldMap[? BindingType.MouseButton] = device_mouse_check_button;
-		heldMap[? BindingType.GamepadButton] = gamepad_button_check;
-		heldMap[? BindingType.MouseWheel] = function(_device, _key) { return _key == MouseWheelDirection.Up ? mouse_wheel_up() : mouse_wheel_down() };
-		
-		pressMap[? BindingType.KeyboardKey] = function(_device, _key) { return keyboard_check_pressed(_key); };
-		pressMap[? BindingType.MouseButton] = device_mouse_check_button_pressed;
-		pressMap[? BindingType.GamepadButton] = gamepad_button_check_pressed;
-		pressMap[? BindingType.MouseWheel] = function(_device, _key) { return _key == MouseWheelDirection.Up ? mouse_wheel_up() : mouse_wheel_down() };
-		
-		releaseMap[? BindingType.KeyboardKey] = function(_device, _key) { return keyboard_check_released(_key); };
-		releaseMap[? BindingType.MouseButton] = device_mouse_check_button_released;
-		releaseMap[? BindingType.GamepadButton] = gamepad_button_check_released;
-		releaseMap[? BindingType.MouseWheel] = function() { return false };
-	}
-	
-	function InitializeBindings() {
-		var keyboardBindings = bindings[? InputType.MouseAndKeyboard];
-		var gamepadBindings = bindings[? InputType.Gamepad];
-	
-		keyboardBindings[? ActionInput.Crouch] = {
-			type: BindingType.KeyboardKey,
-			value: vk_control
-		};
-		keyboardBindings[? ActionInput.UseEquipment] = {
-			type: BindingType.KeyboardKey,
-			value:  ord("Q")
-		};
-		keyboardBindings[? ActionInput.Jump] = {
-			type: BindingType.KeyboardKey,
-			value:  vk_space
-		};
-		keyboardBindings[? ActionInput.MoveDown] = {
-			type: BindingType.KeyboardKey,
-			value:  ord("S")
-		};
-		keyboardBindings[? ActionInput.MoveLeft] = {
-			type: BindingType.KeyboardKey,
-			value:  ord("A")
-		};
-		keyboardBindings[? ActionInput.MoveRight] = {
-			type: BindingType.KeyboardKey,
-			value:  ord("D")
-		};
-		keyboardBindings[? ActionInput.MoveUp] = {
-			type: BindingType.KeyboardKey,
-			value: ord("W")
-		};
-		keyboardBindings[? ActionInput.Shoot] = {
-			type: BindingType.MouseButton,
-			value: mb_left
-		};
-		keyboardBindings[? ActionInput.ShootSecondary] = {
-			type: BindingType.MouseButton,
-			value: mb_right
-		};
-		keyboardBindings[? ActionInput.ThrowGrenade] = {
-			type: BindingType.KeyboardKey,
-			value: ord("G")
-		};
-		keyboardBindings[? ActionInput.ToggleInventory] = {
-			type: BindingType.KeyboardKey,
-			value: ord("T")
-		};
-		keyboardBindings[? ActionInput.NextWeapon] = {
-			type: BindingType.MouseWheel,
-			value: MouseWheelDirection.Up
-		};
-		keyboardBindings[? ActionInput.PreviousWeapon] = {
-			type: BindingType.MouseWheel,
-			value: MouseWheelDirection.Down
-		};
-		keyboardBindings[? ActionInput.Pause] = {
-			type: BindingType.KeyboardKey,
-			value: vk_escape
-		};
-	
-		//Gamepad Bindings
-		gamepadBindings[? ActionInput.Crouch] = {
-			type: BindingType.GamepadButton,
-			value: gp_stickl
-		};
-		gamepadBindings[? ActionInput.UseEquipment] = {
-			type: BindingType.GamepadButton,
-			value:  gp_face3
-		};
-		gamepadBindings[? ActionInput.Jump] = {
-			type: BindingType.GamepadButton,
-			value:  gp_face1
-		};
-		gamepadBindings[? ActionInput.MoveVertical] = {
-			type: BindingType.GamepadAxis,
-			value:  gp_axislv
-		};
-		gamepadBindings[? ActionInput.MoveHorizontal] = {
-			type: BindingType.GamepadAxis,
-			value:  gp_axislh
-		};
-		gamepadBindings[? ActionInput.Shoot] = {
-			type: BindingType.GamepadButton,
-			value: gp_shoulderrb
-		};
-		gamepadBindings[? ActionInput.ShootSecondary] = {
-			type: BindingType.GamepadButton,
-			value: gp_shoulderlb
-		};
-		gamepadBindings[? ActionInput.ThrowGrenade] = {
-			type: BindingType.GamepadButton,
-			value: gp_shoulderl
-		};
-		gamepadBindings[? ActionInput.ToggleInventory] = {
-			type: BindingType.GamepadButton,
-			value: gp_select
-		};
-		gamepadBindings[? ActionInput.NextWeapon] = {
-			type: BindingType.GamepadButton,
-			value: gp_padu
-		};
-		gamepadBindings[? ActionInput.PreviousWeapon] = {
-			type: BindingType.GamepadButton,
-			value: gp_padd
-		};
-		gamepadBindings[? ActionInput.LookVertical] = {
-			type: BindingType.GamepadAxis,
-			value: gp_axisrv
-		};
-		gamepadBindings[? ActionInput.LookHorizontal] = {
-			type: BindingType.GamepadAxis,
-			value: gp_axisrh
-		};
-		gamepadBindings[? ActionInput.Pause] = {
-			type: BindingType.GamepadButton,
-			value: gp_start
-		};
-	}
-		
-	InitializeFunctionMap();
-	InitializeBindings();
-}
+    //TODO Remove once better type checking
+    // Feather disable once GM1063
+    keyboardCheckMethod = (os_type == os_windows) ? keyboard_check_direct : keyboard_check;
+    inputDeviceManager = _inputDeviceManager;
 
-function input_manager_create(_inputDeviceManager) {
-	return new InputManager(_inputDeviceManager);	
-}
+    bindings = []
+    bindings[INPUT_TYPE.MOUSE_AND_KEYBOARD] = [];
+    bindings[INPUT_TYPE.GAMEPAD] = [];
 
-/**
- * @desc Destroys an input manager
- * @param {Struct.InputManager} _inputManager
- */
-function input_manager_destroy(_inputManager) {
-	ds_map_destroy(_inputManager.bindings);
-	ds_map_destroy(_inputManager.functionsMap);
-	delete _inputManager;
+    functionsMap = [];
+    functionsMap[BUTTON_PRESS_TYPE.HELD] = [];
+    functionsMap[BUTTON_PRESS_TYPE.PRESS] = [];
+    functionsMap[BUTTON_PRESS_TYPE.RELEASE] = [];
+
+/// @function        getInputTypeFromDeviceIndex(_deviceIndex)
+/// @param {Real}    _deviceIndex
+/// @return {Real}
+    static getInputTypeFromDeviceIndex = function get_input_type_from_device_index(_deviceIndex) {
+        return _deviceIndex == DEVICE_INDEX.MOUSE_AND_KEYBOARD 
+        ? INPUT_TYPE.MOUSE_AND_KEYBOARD
+        : INPUT_TYPE.GAMEPAD;
+    }
+
+    static checkPressed = function check_pressed(_deviceIndex, _actionInput) {
+        var _inputType = getInputTypeFromDeviceIndex(_deviceIndex)
+        var _actionInputMap = bindings[_inputType];
+        var _actionSetting = _actionInputMap[_actionInput];
+        var _checkMethod = functionsMap[BUTTON_PRESS_TYPE.PRESS][_actionSetting.type];
+        return _checkMethod(_deviceIndex, _actionSetting.value);
+    }
+    
+    static checkReleased = function check_released(_deviceIndex, _actionInput) {
+        var _inputType = getInputTypeFromDeviceIndex(_deviceIndex)
+        var _actionInputMap = bindings[_inputType];
+        var _actionSetting = _actionInputMap[_actionInput];
+        var _checkMethod = functionsMap[BUTTON_PRESS_TYPE.RELEASE][_actionSetting.type];
+        return _checkMethod(_deviceIndex, _actionSetting.value);
+    }
+    
+    static checkHeld = function check_held(_deviceIndex, _actionInput) {
+        var _inputType = getInputTypeFromDeviceIndex(_deviceIndex)
+        var _actionInputMap = bindings[_inputType];
+        var _actionSetting = _actionInputMap[_actionInput];
+        var _checkMethod = functionsMap[BUTTON_PRESS_TYPE.HELD][_actionSetting.type];
+        return _checkMethod(_deviceIndex, _actionSetting.value);
+    }
+    
+    static readAxis = function read_axis(_deviceIndex, _actionInput) {
+        var _inputType = getInputTypeFromDeviceIndex(_deviceIndex)
+        var _actionInputMap = bindings[_inputType];
+        var _actionSetting = _actionInputMap[_actionInput];
+        return gamepad_axis_value(_deviceIndex, _actionSetting.value);
+    }
+
+/// @function        checkAllDeviceInput()
+/// @return {Real} return the DEVICE_INDEX from which input was detected first.
+    static checkAllDeviceInput = function check_all_device_input() {
+        var _devices = inputDeviceManager.getAllDevices();
+        var _deviceCount = array_length(_devices);
+        for(var i = 0; i < _deviceCount; i += 1) {
+            var _deviceIndex = _devices[i];
+            
+            if(_deviceIndex == DEVICE_INDEX.MOUSE_AND_KEYBOARD) {
+                if(keyboard_check_pressed(vk_anykey)
+                || device_mouse_check_button_pressed(0, mb_any)) {
+                    return DEVICE_INDEX.MOUSE_AND_KEYBOARD;
+                }
+            } else {
+                var _gamepadBindings = array_filter(bindings[INPUT_TYPE.GAMEPAD], is_defined);
+                var _actionCount = array_length(_gamepadBindings);
+
+                for(var j = 0; j < _actionCount; j += 1) {
+                    var _actionSetting = _gamepadBindings[j];
+                    if(_actionSetting.type == BINDING_TYPE.GAMEPAD_BUTTON) {
+                        var _isPressed = gamepad_button_check_pressed(_deviceIndex, _actionSetting.value);
+                        if(_isPressed) {
+                            return _deviceIndex;
+                        }
+                    }
+                }
+            }
+        }
+
+        //no device input detected
+        return undefined;
+    }
+    
+    static initializeFunctionMap = function initialize_function_map() {
+        var _heldMap = functionsMap[BUTTON_PRESS_TYPE.HELD];
+        var _pressMap = functionsMap[BUTTON_PRESS_TYPE.PRESS];
+        var _releaseMap = functionsMap[BUTTON_PRESS_TYPE.RELEASE];
+
+        //TODO: Remove disable once type checking is good.
+        // Feather disable GM1043
+        _heldMap[BINDING_TYPE.KEYBOARD_KEY] = function(_device, _key) { return keyboardCheckMethod(_key); };
+        _heldMap[BINDING_TYPE.MOUSE_BUTTON] = device_mouse_check_button;
+        _heldMap[BINDING_TYPE.GAMEPAD_BUTTON] = gamepad_button_check;
+        _heldMap[BINDING_TYPE.MOUSE_WHEEL] = function(_device, _key) { return _key == MOUSE_WHEEL_DIRECTION.UP ? mouse_wheel_up() : mouse_wheel_down() };
+        
+        _pressMap[BINDING_TYPE.KEYBOARD_KEY] = function(_device, _key) { return keyboard_check_pressed(_key); };
+        _pressMap[BINDING_TYPE.MOUSE_BUTTON] = device_mouse_check_button_pressed;
+        _pressMap[BINDING_TYPE.GAMEPAD_BUTTON] = gamepad_button_check_pressed;
+        _pressMap[BINDING_TYPE.MOUSE_WHEEL] = function(_device, _key) { return _key == MOUSE_WHEEL_DIRECTION.UP ? mouse_wheel_up() : mouse_wheel_down() };
+        
+        _releaseMap[BINDING_TYPE.KEYBOARD_KEY] = function(_device, _key) { return keyboard_check_released(_key); };
+        _releaseMap[BINDING_TYPE.MOUSE_BUTTON] = device_mouse_check_button_released;
+        _releaseMap[BINDING_TYPE.GAMEPAD_BUTTON] = gamepad_button_check_released;
+        _releaseMap[BINDING_TYPE.MOUSE_WHEEL] = function() { return false };
+        // Feather restore GM1043
+    }
+    
+    static initializeBindings = function initialize_bindings() {
+        var _keyboardBindings = bindings[INPUT_TYPE.MOUSE_AND_KEYBOARD];
+        var _gamepadBindings = bindings[INPUT_TYPE.GAMEPAD];
+    
+        _keyboardBindings[ACTION_INPUT.CROUCH] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value: vk_control
+        };
+        _keyboardBindings[ACTION_INPUT.USE_EQUIPMENT] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value:  ord("Q")
+        };
+        _keyboardBindings[ACTION_INPUT.JUMP] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value:  vk_space
+        };
+        _keyboardBindings[ACTION_INPUT.MOVE_DOWN] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value:  ord("S")
+        };
+        _keyboardBindings[ACTION_INPUT.MOVE_LEFT] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value:  ord("A")
+        };
+        _keyboardBindings[ACTION_INPUT.MOVE_RIGHT] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value:  ord("D")
+        };
+        _keyboardBindings[ACTION_INPUT.MOVE_UP] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value: ord("W")
+        };
+        _keyboardBindings[ACTION_INPUT.SHOOT] = {
+            type: BINDING_TYPE.MOUSE_BUTTON,
+            value: mb_left
+        };
+        _keyboardBindings[ACTION_INPUT.SHOOT_SECONDARY] = {
+            type: BINDING_TYPE.MOUSE_BUTTON,
+            value: mb_right
+        };
+        _keyboardBindings[ACTION_INPUT.THROW_GRENADE] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value: ord("G")
+        };
+        _keyboardBindings[ACTION_INPUT.TOGGLE_INVENTORY] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value: ord("T")
+        };
+        _keyboardBindings[ACTION_INPUT.NEXT_WEAPON] = {
+            type: BINDING_TYPE.MOUSE_WHEEL,
+            value: MOUSE_WHEEL_DIRECTION.UP
+        };
+        _keyboardBindings[ACTION_INPUT.PREVIOUS_WEAPON] = {
+            type: BINDING_TYPE.MOUSE_WHEEL,
+            value: MOUSE_WHEEL_DIRECTION.DOWN
+        };
+        _keyboardBindings[ACTION_INPUT.PAUSE] = {
+            type: BINDING_TYPE.KEYBOARD_KEY,
+            value: vk_escape
+        };
+    
+        //GAMEPAD Bindings
+        _gamepadBindings[ACTION_INPUT.CROUCH] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_stickl
+        };
+        _gamepadBindings[ACTION_INPUT.USE_EQUIPMENT] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value:  gp_face3
+        };
+        _gamepadBindings[ACTION_INPUT.JUMP] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value:  gp_face1
+        };
+        _gamepadBindings[ACTION_INPUT.MOVE_VERTICAL] = {
+            type: BINDING_TYPE.GAMEPAD_AXIS,
+            value:  gp_axislv
+        };
+        _gamepadBindings[ACTION_INPUT.MOVE_HORIZONTAL] = {
+            type: BINDING_TYPE.GAMEPAD_AXIS,
+            value:  gp_axislh
+        };
+        _gamepadBindings[ACTION_INPUT.SHOOT] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_shoulderrb
+        };
+        _gamepadBindings[ACTION_INPUT.SHOOT_SECONDARY] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_shoulderlb
+        };
+        _gamepadBindings[ACTION_INPUT.THROW_GRENADE] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_shoulderl
+        };
+        _gamepadBindings[ACTION_INPUT.TOGGLE_INVENTORY] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_select
+        };
+        _gamepadBindings[ACTION_INPUT.NEXT_WEAPON] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_padu
+        };
+        _gamepadBindings[ACTION_INPUT.PREVIOUS_WEAPON] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_padd
+        };
+        _gamepadBindings[ACTION_INPUT.LOOK_VERTICAL] = {
+            type: BINDING_TYPE.GAMEPAD_AXIS,
+            value: gp_axisrv
+        };
+        _gamepadBindings[ACTION_INPUT.LOOK_HORIZONTAL] = {
+            type: BINDING_TYPE.GAMEPAD_AXIS,
+            value: gp_axisrh
+        };
+        _gamepadBindings[ACTION_INPUT.PAUSE] = {
+            type: BINDING_TYPE.GAMEPAD_BUTTON,
+            value: gp_start
+        };
+    }
+
+    initializeFunctionMap();
+    initializeBindings();
 }
