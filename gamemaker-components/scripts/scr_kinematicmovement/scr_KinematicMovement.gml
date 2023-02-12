@@ -108,7 +108,7 @@ function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
                         array_push(_km.debugCollisionsPoints, _nearestPointOnInst);
                         vector2d_inplace_add(_avgDirection, vector2d_subtract(_entityComp, _nearestPointOnInst));
                     }
-                    show_debug_message(String(random(1), "Collision Count: ", _collisionCount));
+                    show_debug_message(string_join("", random(1), "Collision Count: ", _collisionCount));
                     var _reverseDirection = vector2d_normalize(_avgDirection);
                     //rotated vector for perpindicular collision normal
                     var _collisionNormal = { x: _reverseDirection.y, y: -_reverseDirection.x };

@@ -6,7 +6,7 @@ function scrape_anon_function_location(_method) {
     var _namePos = string_last_pos(_searchTerm, _scrName);
 
     if(_namePos == 0) {
-        return "OOPS DAISY";    
+        return "OOPS DAISY";
     }
     
     var _count = _strLen - _namePos - _searchTermLength + 1;
@@ -33,10 +33,10 @@ function matcher_arrays_equal(_a, _b) {
         throw "Arrays not equal: _b is not an array." + _callbackString;
     }
     if(array_length(_a) != array_length(_b)) {
-        throw String("Arrays not equal: _a is different length than _b. _a is ", _a, " and _b is ", _b) + _callbackString;
+        throw string_join("", "Arrays not equal: _a is different length than _b. _a is ", _a, " and _b is ", _b, _callbackString);
     }
     if(!array_equals(_a, _b)) {
-        throw String("Arrays not equal: _a is different than _b. _a is ", _a, " and _b is ", _b) + _callbackString;
+        throw string_join("", "Arrays not equal: _a is different than _b. _a is ", _a, " and _b is ", _b, _callbackString);
     }
 }
 
@@ -63,7 +63,7 @@ function matcher_value_equal(_a, _b) {
     var _callbackString = get_debug_callstack_string();
     
     if(_a != _b) {
-        throw String("_a is not equal to _b. _a is ", _a, " and _b is ", _b) + _callbackString;
+        throw string_join("", "_a is not equal to _b. _a is ", _a, " and _b is ", _b, _callbackString);
     }
 }
 
@@ -71,15 +71,15 @@ function matcher_is_array(_a) {
     var _callbackString = get_debug_callstack_string();
     
     if(!is_array(_a)) {
-        throw String("_a is not an array. _a is ", _a) + _callbackString;
+        throw string_join("", "_a is not an array. _a is ", _a, _callbackString);
     }
 }
 
 function matcher_is_defined(_a) {
     var _callbackString = get_debug_callstack_string();
-    
+
     if(is_undefined(_a)) {
-        throw String("_a is undefined.") + _callbackString;
+        throw "_a is undefined." + _callbackString;
     }
 }
 
@@ -87,7 +87,7 @@ function matcher_is_true(_a) {
     var _callbackString = get_debug_callstack_string();
     
     if(_a != true) {
-        throw String("_a is not true.") + _callbackString;
+        throw "_a is not true." + _callbackString;
     }
 }
 

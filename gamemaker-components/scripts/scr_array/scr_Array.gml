@@ -182,7 +182,7 @@ function array_shift(_array, _length = 1) {
     var _arrayLength = array_length(_array);
     var _newLength = _arrayLength - _length;
     if(_length > _arrayLength) {
-        throw String("Attmped to shift array with length(", _arrayLength, ")", " (", _length , ") elements. Cannot shift greater than array length.");    
+        throw string_join("", "Attmped to shift array with length(", _arrayLength, ")", " (", _length , ") elements. Cannot shift greater than array length.");    
     }
     
     var _shiftedValues = array_create(_length);

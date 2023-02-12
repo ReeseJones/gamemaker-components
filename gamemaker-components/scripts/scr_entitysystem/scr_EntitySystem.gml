@@ -5,10 +5,10 @@ function add_detached_component(_ref, _component) {
     //Ensure entity exists
     var _entityRef = _ref
     if(!_entityRef) {
-        show_debug_message(String("Tried to add component '", _component, "' to non existant instance with id: ", _ref));
-        return;    
+        show_debug_message(string_join("", "Tried to add component '", _component, "' to non existant instance with id: ", _ref));
+        return;
     }
-    
+
     var _isStruct = is_struct(_entityRef);
     var _addComponents = false;
     if(_isStruct) {
@@ -27,7 +27,7 @@ function add_detached_component(_ref, _component) {
 
     var _componentName = script_get_name(_component);
     if(!is_undefined(_entityRef.components[$ _componentName])) {
-        throw String("Component with name: ", _componentName, " has already been added");
+        throw string_join("", "Component with name: ", _componentName, " has already been added");
     }
 
     //onCreate the component
@@ -60,7 +60,7 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         if(is_undefined(_id)) {
             _id = getNewEntityId();
         } else if ( ds_map_exists(instances, _id) ) {
-            throw String("Instance with id '", _id, "' already exists.");
+            throw string_join("", "Instance with id '", _id, "' already exists.");
         }
 
         _ref.world = world;
@@ -90,11 +90,11 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
     static entityDestroy = function entity_destroy(_entityId) {
         if (_entityId < ENTITY_INITIAL_ID) {
             //Less than ENTITY_INITIAL_ID are reserverd for WORLD ids.
-            throw(String("Entity id invalid for deletion: ", _entityId, ". Worlds and  game id may not be destroyed."));    
+            throw(string_join("", "Entity id invalid for deletion: ", _entityId, ". Worlds and  game id may not be destroyed."));    
         }
         var _entityRef = getRef(_entityId);
         if(!_entityRef) {
-            show_debug_message(String("Tried to delete id ", _entityId, " but no entity was found."));
+            show_debug_message(string_join("", "Tried to delete id ", _entityId, " but no entity was found."));
             return;
         }
         
@@ -137,13 +137,13 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         //Ensure entity exists
         var _entityRef = getRef(_entityId);
         if(!_entityRef) {
-            show_debug_message(String("Tried to add component '", _component, "' to non existant instance with id: ", _entityId));
+            show_debug_message(string_join("", "Tried to add component '", _component, "' to non existant instance with id: ", _entityId));
             return;    
         }
         
         var _componentName = script_get_name(_component);
         if(!is_undefined(_entityRef.components[$ _componentName])) {
-            throw String("Component with name: ", _componentName, " has already been added");    
+            throw string_join("", "Component with name: ", _componentName, " has already been added");    
         }
         
         //Create the component
@@ -171,12 +171,12 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
     static removeComponent = function remove_component(_entityId, _componentName)  {
         var _entityRef = getRef(_entityId);
         if(!_entityRef) {
-            show_debug_message(String("Tried from remove component '", _componentName,"' from non existant instance with id: ", _entityId));
+            show_debug_message(string_join("", "Tried from remove component '", _componentName,"' from non existant instance with id: ", _entityId));
             return;    
         }
         var _componentToRemove = _entityRef.components[$ _componentName];
         if(!_componentToRemove) {
-            show_debug_message(String("Tried from remove component '", _componentName,"' from instance with id: ", _entityId, " which did not have this component."));
+            show_debug_message(string_join("", "Tried from remove component '", _componentName,"' from instance with id: ", _entityId, " which did not have this component."));
             return;    
         }
         

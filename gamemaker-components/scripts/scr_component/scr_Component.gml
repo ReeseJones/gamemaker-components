@@ -177,6 +177,6 @@ function ComponentSystem(_world) constructor {
     }
     
     function toString() {
-        return String(name, "\nenabled: ", enabled, "\nvisible: ", visible, "\nworldId: ", world.entityId, "\nComponent Count: ", array_length(componentList));
+        return string_join("", name, "\nenabled: ", enabled, "\nvisible: ", visible, "\nworldId: ", world.entityId, "\nComponent Count: ", array_length(componentList));
     }
 }

@@ -7,12 +7,14 @@ function SpecDescription(_description, _spec) constructor {
 }
 
 function TestSuite() constructor {
+    // Feather disable GM2017
     description = "";
     tests = [];
     befores = [];
     afters = [];
     children = [];
     scriptLocation = "";
+    // Feather restore GM2017
 }
 
 /// @desc describe a set of spec definitions.

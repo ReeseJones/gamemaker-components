@@ -1,4 +1,6 @@
 function SystemEventSubscribers() constructor {    
+
+    // Feather disable GM2017
     systemStart = [];
     systemStep = [];
     systemCleanup = [];
@@ -11,6 +13,7 @@ function SystemEventSubscribers() constructor {
     drawGuiBegin = [];
     drawGui = [];
     drawGuiEnd = [];
+    // Feather restore GM2017
 }
 
 
@@ -18,27 +21,26 @@ function SystemEventSubscribers() constructor {
 /// @param {Real} _id the id of this world.
 /// @param {Array<Array>} _worldSystems An array of Component Systems to bind to this world.
 function World(_id, _worldSystems) constructor {
+    // Feather disable GM2017
     entityId = _id;
-    
+
     worldSequence = 0;
     ticksPerSecond = 10;
     secondsSinceLastTick = 0;
     tickProgress = 0;
     tickDt = 1 / ticksPerSecond;
-    
-    //These systems add behavior to the world.
-    ///@member {Array<Struct.ComponentSystem>}
+
     entitySystems = [];
     systemEventSubscribers = new SystemEventSubscribers();
     worldSystemDependencies = [];
     
     components = {
-        entity: new Entity(self)    
+        entity: new Entity(self)
     };
     components.entity.entityId = entityId;
-
+    // Feather restore GM2017
     
-    function SetTickRate(_fps) {
+    static setTickRate = function set_tick_rate(_fps) {
         ticksPerSecond = round(clamp(_fps, 0, 120));
     
         if(ticksPerSecond > 0) {
@@ -46,11 +48,11 @@ function World(_id, _worldSystems) constructor {
         }
     }
     
-    function cleanup() {
-        var cleanupCount = array_length(systemEventSubscribers.systemCleanup);
-        for(var i = 0; i < cleanupCount; i += 1) {
-            var system = systemEventSubscribers.systemCleanup[i];
-            system.systemCleanup();
+    static cleanup = function cleanup() {
+        var _cleanupCount = array_length(systemEventSubscribers.systemCleanup);
+        for(var i = 0; i < _cleanupCount; i += 1) {
+            var _system = systemEventSubscribers.systemCleanup[i];
+            _system.systemCleanup();
         }
         
         delete systemEventSubscribers;
@@ -60,74 +62,74 @@ function World(_id, _worldSystems) constructor {
         entityId = undefined;
     }
     
-    function step() {
+    static step = function step() {
         if(ticksPerSecond < 0) {
-            return;    
+            return;
         }
 
-        var secondsPerTick = (1 / ticksPerSecond);
-        var secondsSinceLastStep = delta_time / MICROSECONDS_PER_SECOND;
-        secondsSinceLastTick += secondsSinceLastStep;
-        tickProgress = secondsSinceLastTick / secondsPerTick;
+        var _secondsPerTick = (1 / ticksPerSecond);
+        var _secondsSinceLastStep = delta_time / MICROSECONDS_PER_SECOND;
+        secondsSinceLastTick += _secondsSinceLastStep;
+        tickProgress = secondsSinceLastTick / _secondsPerTick;
         
-        if( secondsSinceLastTick >= secondsPerTick ) {
+        if( secondsSinceLastTick >= _secondsPerTick ) {
             tickProgress = 0;
-            secondsSinceLastTick -= secondsPerTick;
+            secondsSinceLastTick -= _secondsPerTick;
 
             //Dispatch World Events
 
             //System Step
-            var systemCount = array_length(systemEventSubscribers.systemStep);
-            for(var i = 0; i < systemCount; i += 1) {
-                var system = systemEventSubscribers.systemStep[i];
-                if(system.enabled) {
-                    system.systemStep(tickDt);
+            var _systemCount = array_length(systemEventSubscribers.systemStep);
+            for(var i = 0; i < _systemCount; i += 1) {
+                var _system = systemEventSubscribers.systemStep[i];
+                if(_system.enabled) {
+                    _system.systemStep(tickDt);
                 }
             }
             
             //Component Begin Step
-            systemCount = array_length(systemEventSubscribers.beginStep);
-            for(var i = 0; i < systemCount; i += 1) {
-                var system = systemEventSubscribers.beginStep[i];
-                if(system.enabled) {
-                    var components = system.componentList;
-                    var componentCount = array_length(components);
-                    for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                        var component = components[componentIndex];
-                        if(component.enabled) {
-                            system.beginStep(component ,tickDt);
+            _systemCount = array_length(systemEventSubscribers.beginStep);
+            for(var i = 0; i < _systemCount; i += 1) {
+                var _system = systemEventSubscribers.beginStep[i];
+                if(_system.enabled) {
+                    var _components = _system.componentList;
+                    var _componentCount = array_length(_components);
+                    for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                        var _component = _components[_componentIndex];
+                        if(_component.enabled) {
+                            _system.beginStep(_component ,tickDt);
                         }
                     }
                 }
             }
             
             //Component Step
-            systemCount = array_length(systemEventSubscribers.step);
-            for(var i = 0; i < systemCount; i += 1) {
-                var system = systemEventSubscribers.step[i];
-                if(system.enabled) {
-                    var components = system.componentList;
-                    var componentCount = array_length(components);
-                    for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                        var component = components[componentIndex];
-                        if(component.enabled) {
-                            system.step(component ,tickDt);
+            _systemCount = array_length(systemEventSubscribers.step);
+            for(var i = 0; i < _systemCount; i += 1) {
+                var _system = systemEventSubscribers.step[i];
+                if(_system.enabled) {
+                    var _components = _system.componentList;
+                    var _componentCount = array_length(_components);
+                    for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                        var _component = _components[_componentIndex];
+                        if(_component.enabled) {
+                            _system.step(_component ,tickDt);
                         }
                     }
                 }
             }
             
             //Component endStep
-            systemCount = array_length(systemEventSubscribers.endStep);
-            for(var i = 0; i < systemCount; i += 1) {
-                var system = systemEventSubscribers.endStep[i];
-                if(system.enabled) {
-                    var components = system.componentList;
-                    var componentCount = array_length(components);
-                    for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                        var component = components[componentIndex];
-                        if(component.enabled) {
-                            system.endStep(component ,tickDt);
+            _systemCount = array_length(systemEventSubscribers.endStep);
+            for(var i = 0; i < _systemCount; i += 1) {
+                var _system = systemEventSubscribers.endStep[i];
+                if(_system.enabled) {
+                    var _components = _system.componentList;
+                    var _componentCount = array_length(_components);
+                    for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                        var _component = _components[_componentIndex];
+                        if(_component.enabled) {
+                            _system.endStep(_component ,tickDt);
                         }
                     }
                 }
@@ -136,102 +138,102 @@ function World(_id, _worldSystems) constructor {
             worldSequence += 1;
         }
     }
-    
-    function Draw() {
-        var systemCount = array_length(systemEventSubscribers.drawBegin);
-        for(var i = 0; i < systemCount; i += 1) {
-            var system = systemEventSubscribers.drawBegin[i];
-            if(system.visible) {
-                var components = system.componentList;
-                var componentCount = array_length(components);
-                for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                    var component = components[componentIndex];
-                    if(component.visible) {
-                        system.drawBegin(component ,tickProgress);
+
+    static draw = function draw() {
+        var _systemCount = array_length(systemEventSubscribers.drawBegin);
+        for(var i = 0; i < _systemCount; i += 1) {
+            var _system = systemEventSubscribers.drawBegin[i];
+            if(_system.visible) {
+                var _components = _system.componentList;
+                var _componentCount = array_length(_components);
+                for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                    var _component = _components[_componentIndex];
+                    if(_component.visible) {
+                        _system.drawBegin(_component ,tickProgress);
                     }
                 }
             }
         }
         
-        systemCount = array_length(systemEventSubscribers.draw);
-        for(var i = 0; i < systemCount; i += 1) {
-            var system = systemEventSubscribers.draw[i];
-            if(system.visible) {
-                var components = system.componentList;
-                var componentCount = array_length(components);
-                for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                    var component = components[componentIndex];
-                    if(component.visible) {
-                        system.draw(component ,tickProgress);
+        _systemCount = array_length(systemEventSubscribers.draw);
+        for(var i = 0; i < _systemCount; i += 1) {
+            var _system = systemEventSubscribers.draw[i];
+            if(_system.visible) {
+                var _components = _system.componentList;
+                var _componentCount = array_length(_components);
+                for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                    var _component = _components[_componentIndex];
+                    if(_component.visible) {
+                        _system.draw(_component ,tickProgress);
                     }
                 }
             }
         }
         
-        systemCount = array_length(systemEventSubscribers.drawEnd);
-        for(var i = 0; i < systemCount; i += 1) {
-            var system = systemEventSubscribers.drawEnd[i];
-            if(system.visible) {
-                var components = system.componentList;
-                var componentCount = array_length(components);
-                for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                    var component = components[componentIndex];
-                    if(component.visible) {
-                        system.drawEnd(component ,tickProgress);
+        _systemCount = array_length(systemEventSubscribers.drawEnd);
+        for(var i = 0; i < _systemCount; i += 1) {
+            var _system = systemEventSubscribers.drawEnd[i];
+            if(_system.visible) {
+                var _components = _system.componentList;
+                var _componentCount = array_length(_components);
+                for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                    var _component = _components[_componentIndex];
+                    if(_component.visible) {
+                        _system.drawEnd(_component ,tickProgress);
                     }
                 }
             }
         }
     }
     
-    function drawGui() {
-        var systemCount = array_length(systemEventSubscribers.drawGuiBegin);
-        for(var i = 0; i < systemCount; i += 1) {
-            var system = systemEventSubscribers.drawGuiBegin[i];
-            if(system.visible) {
-                var components = system.componentList;
-                var componentCount = array_length(components);
-                for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                    var component = components[componentIndex];
-                    if(component.visible) {
-                        system.drawGuiBegin(component ,tickProgress);
+    static drawGui = function draw_gui() {
+        var _systemCount = array_length(systemEventSubscribers.drawGuiBegin);
+        for(var i = 0; i < _systemCount; i += 1) {
+            var _system = systemEventSubscribers.drawGuiBegin[i];
+            if(_system.visible) {
+                var _components = _system.componentList;
+                var _componentCount = array_length(_components);
+                for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                    var _component = _components[_componentIndex];
+                    if(_component.visible) {
+                        _system.drawGuiBegin(_component ,tickProgress);
                     }
                 }
             }
         }
         
-        systemCount = array_length(systemEventSubscribers.drawGui);
-        for(var i = 0; i < systemCount; i += 1) {
-            var system = systemEventSubscribers.drawGui[i];
-            if(system.visible) {
-                var components = system.componentList;
-                var componentCount = array_length(components);
-                for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                    var component = components[componentIndex];
-                    if(component.visible) {
-                        system.drawGui(component ,tickProgress);
+        _systemCount = array_length(systemEventSubscribers.drawGui);
+        for(var i = 0; i < _systemCount; i += 1) {
+            var _system = systemEventSubscribers.drawGui[i];
+            if(_system.visible) {
+                var _components = _system.componentList;
+                var _componentCount = array_length(_components);
+                for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                    var _component = _components[_componentIndex];
+                    if(_component.visible) {
+                        _system.drawGui(_component ,tickProgress);
                     }
                 }
             }
         }
         
-        systemCount = array_length(systemEventSubscribers.drawGuiEnd);
-        for(var i = 0; i < systemCount; i += 1) {
-            var system = systemEventSubscribers.drawGuiEnd[i];
-            if(system.visible) {
-                var components = system.componentList;
-                var componentCount = array_length(components);
-                for(var componentIndex = 0; componentIndex < componentCount; componentIndex += 1) {
-                    var component = components[componentIndex];
-                    if(component.visible) {
-                        system.drawGuiEnd(component ,tickProgress);
+        _systemCount = array_length(systemEventSubscribers.drawGuiEnd);
+        for(var i = 0; i < _systemCount; i += 1) {
+            var _system = systemEventSubscribers.drawGuiEnd[i];
+            if(_system.visible) {
+                var _components = _system.componentList;
+                var _componentCount = array_length(_components);
+                for(var _componentIndex = 0; _componentIndex < _componentCount; _componentIndex += 1) {
+                    var _component = _components[_componentIndex];
+                    if(_component.visible) {
+                        _system.drawGuiEnd(_component ,tickProgress);
                     }
                 }
             }
         }
     }
     
-    function DebugDraw() {
+    static debugDraw = function debug_draw() {
         /// @description Debug Draw
         var debugText = [
         "FPS: " + string(fps),
@@ -244,10 +246,10 @@ function World(_id, _worldSystems) constructor {
         "Instance Count: " + string(instance_count)
         ];
         debugText = array_join(debugText, "\n");
-        draw_text(32, 32, debugText);        
+        draw_text(32, 32, debugText);
     }
     
-    function InitializeWorldSystems(_worldSystems) {
+    static initializeWorldSystems = function initialize_world_systems(_worldSystems) {
         _worldSystems = array_concat_ext(_worldSystems, [], []);
         //Auto added world systems
         array_push(_worldSystems, 
@@ -272,7 +274,7 @@ function World(_id, _worldSystems) constructor {
         
             var componentName = string_lowercase_first(script_get_name(componentConstructor));
             if( variable_struct_exists(selfRef, componentName) ) {
-                var msg = String("System with name ", componentName, " could not be registered because this variable name is already in use on the world.");
+                var msg = string_join("", "System with name ", componentName, " could not be registered because this variable name is already in use on the world.");
                 throw(msg);
             }
             
@@ -300,34 +302,34 @@ function World(_id, _worldSystems) constructor {
                 if(variable_struct_exists(selfRef, depName)) {
                     sysMetadata.system[$ depName] = selfRef[$ depName];
                 } else {
-                    throw(String("System " , sysMetadata.system.name ," could not find dep with name ", depName));    
+                    throw(string_join("", "System " , sysMetadata.system.name ," could not find dep with name ", depName));
                 }
             }
         }
     
         ds_queue_destroy(systemDependencyQueue);
         systemDependencyQueue = undefined;
-        
+
         worldSystemDependencies = _worldSystems;
-        
+
         entity.registerEntity(self, entityId);
-        
+
         add_detached_component(self, Eventer);
-    
+
         //All dependencies are wired and we call the start code on the systems.
-        var systemCount = array_length(systemEventSubscribers.systemStart);
-        for(var i = 0; i < systemCount; i += 1) {
+        var _systemCount = array_length(systemEventSubscribers.systemStart);
+        for(var i = 0; i < _systemCount; i += 1) {
             var sys = systemEventSubscribers.systemStart[i];
             sys.systemStart();    
         }
         
         
     }
-    
+
     function toString() {
-        return String("WorldID: ", entityId);
+        return string_join("WorldID: ", entityId);
     }
     
-    InitializeWorldSystems(_worldSystems);
+    initializeWorldSystems(_worldSystems);
     
 }

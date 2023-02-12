@@ -30,19 +30,19 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
         }
 
         if(is_undefined(_childEntityRef)) {
-            throw String("Child with id ", _childEntityId , " does not exist for setting the parent of");    
+            throw string_join("", "Child with id ", _childEntityId , " does not exist for setting the parent of");    
         }
 
         var _childEntityTree = _childEntityRef.components.entityTree;
 
         if(!_childEntityTree) {
-            throw String("Child with id ", _childEntityId, " does not have an entity tree component.");    
+            throw string_join("", "Child with id ", _childEntityId, " does not have an entity tree component.");    
         }
 
         if(_parentEntityRef) {
             var _otherEntityTree = _parentEntityRef.components.entityTree;
             if(!_otherEntityTree) {
-                throw(String("Entity with id ", _parentEntityId, " does not have EntityTree component and cant be set as a parent."));
+                throw(string_join("", "Entity with id ", _parentEntityId, " does not have EntityTree component and cant be set as a parent."));
             }
 
             array_push(_otherEntityTree.children, _childEntityId);
@@ -71,13 +71,13 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
         var _entityRef = entity.getRef(_entityId);
 
         if(is_undefined(_entityRef)) {
-            throw String("Entity with id ", _entityRef , " does not exist for disconnectFromTree.");    
+            throw string_join("", "Entity with id ", _entityRef , " does not exist for disconnectFromTree.");    
         }
         
         var _entityTreeComp = _entityRef.components.entityTree;
         
         if(is_undefined(_entityTreeComp)) {
-            throw String("Entity with id ", _entityRef , " does not have an entity tree component, and cannot be dissconnected from the tree.");
+            throw string_join("", "Entity with id ", _entityRef , " does not have an entity tree component, and cannot be dissconnected from the tree.");
         }
         
         //Disconnect parent
@@ -85,7 +85,7 @@ function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
         if(_parentRef) {
             var _parentEntityTree = _parentRef.components.entityTree;
             if(is_undefined(_parentEntityTree)) {
-                throw String("While disconnecting ", _entityId, " from the tree, parent had no entityTreeComponent");    
+                throw string_join("", "While disconnecting ", _entityId, " from the tree, parent had no entityTreeComponent");    
             }
             array_remove_first(_parentEntityTree.children, _entityId);
         }

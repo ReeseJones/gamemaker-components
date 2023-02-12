@@ -4,60 +4,60 @@
 /// @param {Function} [_before] The function which sets up data in the test instance before the test is ran.
 /// @param {Function} [_after] The function which tears down data in the test instsance after the test is ran.
 function TestCase(_description, _test, _before = undefined, _after = undefined) constructor {
-	description = _description;
-	test = _test;
-	before = _before
-	after = _after
+    description = _description;
+    test = _test;
+    before = _before
+    after = _after
 }
 
-tag_script(RunAllUnitTets, [TAG_COMMAND]);
-function RunAllUnitTets() {
-	var unitTests = get_script_ids(TAG_UNIT_TEST);
-	var allTests = [];
+tag_script(run_all_unit_tests, [TAG_COMMAND]);
+function run_all_unit_tests() {
+    var _unitTests = get_script_ids(TAG_UNIT_TEST);
+    var _allTests = [];
 
-	var testScriptCount = array_length(unitTests);
-	for(var i = 0; i < testScriptCount; i += 1) {
-		var func = unitTests[i]
-		array_concat_ext(allTests, func(), allTests);
-	}
-	
-	var testResults = array_map(allTests, function(_testCase) {
-		var passed = false;
-		var newError = undefined;
-		if(is_method(_testCase.before)) {
-			_testCase.before();
-		}
-		try {
-			_testCase.test();
-			passed = true;
-		}
-		catch(_error) {
-			passed = false;
-			newError = _error;
-		}
-		if(is_method(_testCase.after)) {
-			_testCase.after();
-		}
-		
-		return {
-			description: _testCase.description,
-			passed: passed,
-			error: passed ? "" : String(newError),
-			toString: function toString() {
-				var passText = passed ? "PASSED: " : "FAILED: ";
-				passText += description;
-				if(string_length(error) > 0) {
-					passText += "\n" + error;
-				}
-				return passText;
-			}
-		};
-	});
-	
-	var testCount = array_length(testResults);
-	for(var i = 0; i < testCount; i += 1) {
-		show_debug_message(String(testResults[i]));
-	}
-	
-	return testResults;
+    var _testScriptCount = array_length(_unitTests);
+    for(var i = 0; i < _testScriptCount; i += 1) {
+        var _func = _unitTests[i]
+        array_concat_ext(_allTests, _func(), _allTests);
+    }
+    
+    var _testResults = array_map(_allTests, function(_testCase) {
+        var _passed = false;
+        var _newError = undefined;
+        if(is_method(_testCase.before)) {
+            _testCase.before();
+        }
+        try {
+            _testCase.test();
+            _passed = true;
+        }
+        catch(_error) {
+            _passed = false;
+            _newError = _error;
+        }
+        if(is_method(_testCase.after)) {
+            _testCase.after();
+        }
+        
+        return {
+            description: _testCase.description,
+            passed: _passed,
+            error: _passed ? "" : string(_newError),
+            toString: function toString() {
+                var _passText = passed ? "PASSED: " : "FAILED: ";
+                _passText += description;
+                if(string_length(error) > 0) {
+                    _passText += "\n" + error;
+                }
+                return passText;
+            }
+        };
+    });
+
+    var _testCount = array_length(_testResults);
+    for(var i = 0; i < _testCount; i += 1) {
+        show_debug_message(string(_testResults[i]));
+    }
+
+    return _testResults;
 }
