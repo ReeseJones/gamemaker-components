@@ -16,15 +16,15 @@ function nearest_point_on_instance(_startPos, _inst) {
     switch(_instEntity.spriteIndex) {
         case spr_obj_solid: {
             _startPos = vector2d_rotate_around(_startPos, _instEntity, _rot);
-            
+
             var _dir = vector2d_direction_normalized(_instEntity, _startPos);
             _dir.x *= _halfWidth;
             _dir.y *= _halfHeight;
-            
+
             vector2d_inplace_add(_nearestPoint, _dir);
             vector2d_inplace_add(_nearestPoint, _instEntity);
             return vector2d_rotate_around(_nearestPoint, _instEntity, -_rot);
-            
+
             /*
             return nearest_point_on_ellipse(
                 _startPos.x,

@@ -1,8 +1,8 @@
-function ReliableSequenceGreaterThan( s1, s2) {
-	return ( ( s1 > s2 ) && ( s1 - s2 <= 32768 ) ) || 
-           ( ( s1 < s2 ) && ( s2 - s1  > 32768 ) );
+function reliable_sequence_greater_than( _s1, _s2) {
+	return ( ( _s1 > _s2 ) && ( _s1 - _s2 <= 32768 ) ) || 
+           ( ( _s1 < _s2 ) && ( _s2 - _s1  > 32768 ) );
 }
 
-function ReliableSequenceLessThan(s1, s2) {
-	return ReliableSequenceGreaterThan(s2, s1);
+function reliable_sequence_less_than(_s1, _s2) {
+	return reliable_sequence_greater_than(_s2, _s1);
 }
