@@ -49,7 +49,7 @@ function run_all_unit_tests() {
                 if(string_length(error) > 0) {
                     _passText += "\n" + error;
                 }
-                return passText;
+                return _passText;
             }
         };
     });

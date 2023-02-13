@@ -29,7 +29,7 @@ function createWorld(_worldSystems = []) {
     array_push(worlds, _newWorld);
     worldsMap[? _newWorldId] = _newWorld;
 
-    return newWorld;
+    return _newWorld;
 }
 
 function getWorldRef(_worldId) {
