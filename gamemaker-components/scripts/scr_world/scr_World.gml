@@ -185,7 +185,8 @@ function World(_id, _worldSystems) constructor {
             }
         }
     }
-    
+
+    // Feather disable once GM2017
     static drawGui = function draw_gui() {
         var _systemCount = array_length(systemEventSubscribers.drawGuiBegin);
         for(var i = 0; i < _systemCount; i += 1) {
@@ -235,7 +236,7 @@ function World(_id, _worldSystems) constructor {
     
     static debugDraw = function debug_draw() {
         /// @description Debug Draw
-        var debugText = [
+        var _debugText = [
         "FPS: " + string(fps),
         "Real FPS: " + string(fps_real),
         "World Sequence: " + string(worldSequence),
@@ -245,91 +246,87 @@ function World(_id, _worldSystems) constructor {
         "Tick Progress: " + string(tickProgress),
         "Instance Count: " + string(instance_count)
         ];
-        debugText = array_join(debugText, "\n");
-        draw_text(32, 32, debugText);
+        _debugText = array_join(_debugText, "\n");
+        draw_text(32, 32, _debugText);
     }
-    
+
     static initializeWorldSystems = function initialize_world_systems(_worldSystems) {
+        //Make copy of input array
         _worldSystems = array_concat_ext(_worldSystems, [], []);
         //Auto added world systems
+        //takes Component, Component System, and System Dependencies
         array_push(_worldSystems, 
             [Entity, EntitySystem, []],
-            [Eventer, EventerSystem, [EntityTree]],
             [EntityTree, EntityTreeSystem, []]
         );
     
-        var selfRef = self;
-        var systemDependencyQueue = ds_queue_create();
+        var _selfRef = self;
+        var _systemDependencyQueue = ds_queue_create();
         
-        var systemsCount = array_length(_worldSystems);
-        for(var i = 0; i < systemsCount; i += 1) {
-            var systemRegistration = _worldSystems[i];
+        var _systemsCount = array_length(_worldSystems);
+        for(var i = 0; i < _systemsCount; i += 1) {
+            var _systemRegistration = _worldSystems[i];
             
-            var componentConstructor = systemRegistration[0];
-            var systemConstructor = systemRegistration[1];
-            var componentDependencies = systemRegistration[2];
+            var _componentConstructor = _systemRegistration[0];
+            var _systemConstructor = _systemRegistration[1];
+            var _componentDependencies = _systemRegistration[2];
             
             //auto add these system dependencies to all systems added to the world.
-            array_push(componentDependencies, Entity, Eventer, EntityTree);
+            array_push(_componentDependencies, Entity, EntityTree);
         
-            var componentName = string_lowercase_first(script_get_name(componentConstructor));
-            if( variable_struct_exists(selfRef, componentName) ) {
-                var msg = string_join("", "System with name ", componentName, " could not be registered because this variable name is already in use on the world.");
-                throw(msg);
+            var _componentName = string_lowercase_first(script_get_name(_componentConstructor));
+            if( variable_struct_exists(_selfRef, _componentName) ) {
+                var _msg = string_join("", "System with name ", _componentName, " could not be registered because this variable name is already in use on the world.");
+                throw(_msg);
             }
             
             //Create and add the system to the world
-            var newSystem = new systemConstructor(selfRef);
-            selfRef[$ componentName] = newSystem;
-            array_push(entitySystems, newSystem);
+            var _newSystem = new _systemConstructor(_selfRef);
+            _selfRef[$ _componentName] = _newSystem;
+            array_push(entitySystems, _newSystem);
 
             //Queue this system to have its dependencies wired so they can reference each other.
-            ds_queue_enqueue(systemDependencyQueue, {
-                system: newSystem,
-                dependencies: array_map(componentDependencies, function(_dep) {
+            ds_queue_enqueue(_systemDependencyQueue, {
+                system: _newSystem,
+                dependencies: array_map(_componentDependencies, function(_dep) {
                     return string_lowercase_first(script_get_name(_dep));
                 })
             });
         }
 
         //Iterate through all the systems to wire up their dependencies.
-        while( !ds_queue_empty(systemDependencyQueue) ) {
-            var sysMetadata = ds_queue_dequeue(systemDependencyQueue);
-            var numOfDeps = array_length(sysMetadata.dependencies);
+        while( !ds_queue_empty(_systemDependencyQueue) ) {
+            var _sysMetadata = ds_queue_dequeue(_systemDependencyQueue);
+            var _numOfDeps = array_length(_sysMetadata.dependencies);
             
-            for(var j = 0; j < numOfDeps; j += 1) {
-                var depName = sysMetadata.dependencies[j];
-                if(variable_struct_exists(selfRef, depName)) {
-                    sysMetadata.system[$ depName] = selfRef[$ depName];
+            for(var j = 0; j < _numOfDeps; j += 1) {
+                var _depName = _sysMetadata.dependencies[j];
+                if(variable_struct_exists(_selfRef, _depName)) {
+                    _sysMetadata.system[$ _depName] = _selfRef[$ _depName];
                 } else {
-                    throw(string_join("", "System " , sysMetadata.system.name ," could not find dep with name ", depName));
+                    throw(string_join("", "System " , _sysMetadata.system.name ," could not find dep with name ", _depName));
                 }
             }
         }
-    
-        ds_queue_destroy(systemDependencyQueue);
-        systemDependencyQueue = undefined;
+
+        ds_queue_destroy(_systemDependencyQueue);
+        _systemDependencyQueue = undefined;
 
         worldSystemDependencies = _worldSystems;
 
         entity.registerEntity(self, entityId);
 
-        add_detached_component(self, Eventer);
-
         //All dependencies are wired and we call the start code on the systems.
         var _systemCount = array_length(systemEventSubscribers.systemStart);
         for(var i = 0; i < _systemCount; i += 1) {
-            var sys = systemEventSubscribers.systemStart[i];
-            sys.systemStart();    
+            var _sys = systemEventSubscribers.systemStart[i];
+            _sys.systemStart();
         }
-        
-        
     }
 
-    function toString() {
+    static toString = function to_string() {
         return string_join("WorldID: ", entityId);
     }
-    
+
     initializeWorldSystems(_worldSystems);
-    
 }

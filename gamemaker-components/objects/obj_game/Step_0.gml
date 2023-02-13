@@ -1,1 +1,1 @@
-UpdateWorlds();
+updateWorlds();

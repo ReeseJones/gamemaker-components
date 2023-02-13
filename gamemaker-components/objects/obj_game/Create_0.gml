@@ -9,87 +9,86 @@ worlds = [];
 // Create pool of ids.
 worldIdPool = array_create(ENTITY_INITIAL_ID, 0);
 for(var i = 0; i < ENTITY_INITIAL_ID; i += 1) {
-	worldIdPool[i] = i;	
+    worldIdPool[i] = i;
 }
 
-function DestroyWorld(_worldId) {
-	var worldRef = GetWorldRef(_worldId);
-	
-	if(is_undefined(worldRef)) {
-		throw("Tried to delete a world which does not exist.");
-	}
-	
-	//Mark that this world is being destroyed.
-	worldRef.components.entity.entityIsDestroyed = true;
+function destroyWorld(_worldId) {
+    var _worldRef = getWorldRef(_worldId);
+
+    if(is_undefined(_worldRef)) {
+        throw("Tried to delete a world which does not exist.");
+    }
+
+    //Mark that this world is being destroyed.
+    _worldRef.components.entity.entityIsDestroyed = true;
 }
 
-function CreateWorld(_worldSystems = []) {
-	var newWorldId = GetNewWorldId()
-	var newWorld = new World(newWorldId, _worldSystems);
-	array_push(worlds, newWorld);
-	worldsMap[? newWorldId] = newWorld;
-	
-	return newWorld;
+function createWorld(_worldSystems = []) {
+    var _newWorldId = getNewWorldId()
+    var _newWorld = new World(_newWorldId, _worldSystems);
+    array_push(worlds, _newWorld);
+    worldsMap[? _newWorldId] = _newWorld;
+
+    return newWorld;
 }
 
-function GetWorldRef(_worldId) {
-	return worldsMap[? _worldId];	
+function getWorldRef(_worldId) {
+    return worldsMap[? _worldId];
 }
 
-function WorldExists(_worldId) {
-	return ds_map_exists(worldsMap, _worldId);
+function worldExists(_worldId) {
+    return ds_map_exists(worldsMap, _worldId);
 }
 
-function GetNewWorldId() {
-	if( array_length(worldIdPool) < 1 ) {
-		throw "Oops ran out of world ids";	
-	}
-	return array_pop(worldIdPool);
+function getNewWorldId() {
+    if( array_length(worldIdPool) < 1 ) {
+        throw "Oops ran out of world ids";
+    }
+    return array_pop(worldIdPool);
 }
 
-function UpdateWorlds() {
-	var worldCount = array_length(worlds);
-	for(var i = 0; i < worldCount; i += 1) {
-		var world  = worlds[i];
-		world.step();
-	}
-	CleanupDestroyedWorlds();
-
+function updateWorlds() {
+    var _worldCount = array_length(worlds);
+    for(var i = 0; i < _worldCount; i += 1) {
+        var _world  = worlds[i];
+        _world.step();
+    }
+    cleanupDestroyedWorlds();
 }
 
-function DrawWorlds() {
-	var worldCount = array_length(worlds);
-	for(var i = 0; i < worldCount; i += 1) {
-		var world  = worlds[i];
-		world.draw();
-	}
+function drawWorlds() {
+    var _worldCount = array_length(worlds);
+    for(var i = 0; i < _worldCount; i += 1) {
+        var _world  = worlds[i];
+        _world.draw();
+    }
 }
 
-function DrawWorldGuis() {
-	var worldCount = array_length(worlds);
-	for(var i = 0; i < worldCount; i += 1) {
-		var world  = worlds[i];
-		world.drawGui();
-	}	
+function drawWorldGuis() {
+    var _worldCount = array_length(worlds);
+    for(var i = 0; i < _worldCount; i += 1) {
+        var _world  = worlds[i];
+        _world.drawGui();
+    }
 }
 
-function CleanupDestroyedWorlds() {
-	var listLength = array_length(worlds);
-	var i = listLength - 1;
-	var swapIndex = i;
-	var destroyedWorlds = false;
-	while(i > -1) {
-		var world = worlds[i];
-		if(world.components.entity.entityIsDestroyed) {
-			world.cleanup();
-			worlds[i] = worlds[swapIndex];
-			swapIndex -= 1;
-			listLength -=1;
-			destroyedWorlds = true;
-		}
-		i -= 1;
-	}
-	if(destroyedWorlds) {
-		array_resize(worlds, listLength);
-	}
+function cleanupDestroyedWorlds() {
+    var _listLength = array_length(worlds);
+    var i = _listLength - 1;
+    var _swapIndex = i;
+    var _destroyedWorlds = false;
+    while(i > -1) {
+        var _world = worlds[i];
+        if(_world.components.entity.entityIsDestroyed) {
+            _world.cleanup();
+            worlds[i] = worlds[_swapIndex];
+            _swapIndex -= 1;
+            _listLength -=1;
+            _destroyedWorlds = true;
+        }
+        i -= 1;
+    }
+    if(_destroyedWorlds) {
+        array_resize(worlds, _listLength);
+    }
 }

@@ -2,9 +2,9 @@
 var _worldCount = array_length(worlds);
 for(var i = 0; i < _worldCount; i += 1 ) {
 	var _world = worlds[i];
-	DestroyWorld(_world.entityId);
+	destroyWorld(_world.entityId);
 }
-CleanupDestroyedWorlds();
+cleanupDestroyedWorlds();
 
 delete inputManager;
 inputManager = undefined;

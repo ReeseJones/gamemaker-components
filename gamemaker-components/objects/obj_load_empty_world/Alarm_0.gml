@@ -1,6 +1,6 @@
-random_set_seed(date_current_datetime());
-var world = obj_game.LoadEmptyWorld();
-var instanceLayerName = "Instances";
+//random_set_seed(date_current_datetime());
+//var _world = obj_game.LoadEmptyWorld();
+//var _instanceLayerName = "Instances";
 /*
 	var newEntity = world.entity.CreateEntityDefault(200, 200, instanceLayerName);
 	world.entity.addComponent(newEntity, TestComp);
@@ -47,6 +47,6 @@ world.entity.addComponent(playerInst, KinematicMovement);
 world.kinematicMovement.SetDirectionAngle(playerInst, 45);
 world.kinematicMovement.SetSpeed(playerInst, 20);
 */
-var newInst = {};
+//var newInst = {};
 
-world.entity.registerEntity(newInst);
+//world.entity.registerEntity(newInst);

@@ -13,37 +13,37 @@ function obj_game_tests() {
                 matcher_value_equal(_idPoolLength, ENTITY_INITIAL_ID);
             });
             it("WorldExists should return false if a world does not exist.", function() {
-                matcher_value_equal(gameInstance.WorldExists(3), false);
+                matcher_value_equal(gameInstance.worldExists(3), false);
             });
             it("WorldExists should return a world ref if a world exists.", function() {
-                var _world = gameInstance.CreateWorld();
-                matcher_value_equal(gameInstance.WorldExists(_world.entityId), true);
+                var _world = gameInstance.createWorld();
+                matcher_value_equal(gameInstance.worldExists(_world.entityId), true);
             });
             
             describe("DestroyWorld - ", function() {
                 before_each( function() {
-                    world = gameInstance.CreateWorld();
+                    world = gameInstance.createWorld();
                 });
                 it("it should throw if no world with that id is in the game", function() {
                     matcher_should_throw( function() {
-                        gameInstance.DestroyWorld("fakeId");
+                        gameInstance.destroyWorld("fakeId");
                     });
                 });
                 it("it should mark the world's entity componet as is destroyed.", function() {
-                    gameInstance.DestroyWorld(world.entityId);
+                    gameInstance.destroyWorld(world.entityId);
                     matcher_is_true(world.components.entity.entityIsDestroyed);
                 });
             });
             
             describe("CreateWorld - ", function() {
                 it("it should return an instance of world", function() {
-                    var _world = gameInstance.CreateWorld();
+                    var _world = gameInstance.createWorld();
                     matcher_is_true(is_instanceof(_world, World));
                 });
                 it("it should throw if there are no world ids left", function() {
                     matcher_should_throw( function() {
                         for(var i = 0; i <= ENTITY_INITIAL_ID; i += 1) {
-                            gameInstance.CreateWorld();
+                            gameInstance.createWorld();
                         }
                     });
                 });
@@ -52,7 +52,7 @@ function obj_game_tests() {
                     var _worlds = [];
                     
                     for(var i = 0; i < _worldCount; i += 1) {
-                        array_push(_worlds, gameInstance.CreateWorld());    
+                        array_push(_worlds, gameInstance.createWorld());    
                     }
                     
                     for(var i = 0; i < _worldCount; i += 1) {
