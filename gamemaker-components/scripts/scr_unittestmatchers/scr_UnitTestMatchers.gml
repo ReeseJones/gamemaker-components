@@ -91,3 +91,11 @@ function matcher_is_true(_a) {
     }
 }
 
+function matcher_is_instanceof(_instance, _type) {
+    var _callbackString = get_debug_callstack_string();
+    
+    if(!is_instanceof(_instance, _type)) {
+        throw "instance is not of the specified type." + _callbackString;
+    }
+}
+

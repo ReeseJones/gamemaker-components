@@ -1,1 +1,1 @@
-updateWorlds();
+gameManager.updateWorlds();

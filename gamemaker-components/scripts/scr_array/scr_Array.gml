@@ -124,16 +124,12 @@ function array_remove_fast(_array, _value) {
 }
 
 
-/// @function                array_find_value(array, method, context)
+/// @function                array_find_value(array, method)
 /// @description             Returns the first value from the array where the predicate returns true. Or undefined if no match.
 /// @param {Array}           _array    The array to search
 /// @param {Function}        _method   The predicate. Will return the value that this predicate returns true for.
-/// @param {Any}             _context  The this context for _method. Can be struct or instance id
 /// @return {Any}
-function array_find_value(_array, _method, _context = undefined) {
-    if(_context) {
-        _method = method(_context, _method);
-    }
+function array_find_value(_array, _method) {
     var _arrayLength = array_length(_array);
     for(var i = 0; i < _arrayLength; i += 1) {
         var _val = _array[@ i];

@@ -1,1 +1,1 @@
-drawWorlds();
+gameManager.drawWorlds();

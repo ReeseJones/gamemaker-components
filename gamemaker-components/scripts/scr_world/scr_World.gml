@@ -1,22 +1,3 @@
-function SystemEventSubscribers() constructor {    
-
-    // Feather disable GM2017
-    systemStart = [];
-    systemStep = [];
-    systemCleanup = [];
-    beginStep = [];
-    step = [];
-    endStep = [];
-    drawBegin = [];
-    draw = [];
-    drawEnd = [];
-    drawGuiBegin = [];
-    drawGui = [];
-    drawGuiEnd = [];
-    // Feather restore GM2017
-}
-
-
 /// @desc World is the base class for all components.
 /// @param {Real} _id the id of this world.
 /// @param {Array<Array>} _worldSystems An array of Component Systems to bind to this world.
@@ -33,13 +14,8 @@ function World(_id, _worldSystems) constructor {
     entitySystems = [];
     systemEventSubscribers = new SystemEventSubscribers();
     worldSystemDependencies = [];
-    
-    components = {
-        entity: new Entity(self)
-    };
-    components.entity.entityId = entityId;
     // Feather restore GM2017
-    
+
     static setTickRate = function set_tick_rate(_fps) {
         ticksPerSecond = round(clamp(_fps, 0, 120));
     
@@ -47,7 +23,7 @@ function World(_id, _worldSystems) constructor {
             tickDt = 1 / ticksPerSecond;
         }
     }
-    
+
     static cleanup = function cleanup() {
         var _cleanupCount = array_length(systemEventSubscribers.systemCleanup);
         for(var i = 0; i < _cleanupCount; i += 1) {
@@ -61,7 +37,7 @@ function World(_id, _worldSystems) constructor {
         worldSystemDependencies = undefined;
         entityId = undefined;
     }
-    
+
     static step = function step() {
         if(ticksPerSecond < 0) {
             return;

@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_GameObjTests",
+  "name": "scr_ServiceContainerTests",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Game",
-    "path": "folders/Scripts/Game.yy",
+    "name": "Utility",
+    "path": "folders/Scripts/Utility.yy",
   },
 }
