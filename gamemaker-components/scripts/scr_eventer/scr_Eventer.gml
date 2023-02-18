@@ -117,7 +117,7 @@ function EventerSystem(_world) : ComponentSystem(_world) constructor {
 		});
 	}
 	
-	registerSystemEvent(ES_END_STEP);
+
 	function endStep(_eventer, _dt) {
 		//Swap the buffer into the main queue and process all events
 		var queueSwap = _eventer.eventQueue;

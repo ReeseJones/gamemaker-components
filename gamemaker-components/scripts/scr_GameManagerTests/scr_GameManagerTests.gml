@@ -19,7 +19,7 @@ function game_manager_tests() {
             });
             it("WorldExists should return a world ref if a world exists.", function() {
                 var _world = gameManager.createWorld();
-                matcher_value_equal(gameManager.worldExists(_world.entityId), true);
+                matcher_value_equal(gameManager.worldExists(_world.id), true);
             });
             
             describe("DestroyWorld - ", function() {
@@ -31,9 +31,9 @@ function game_manager_tests() {
                         gameManager.destroyWorld("fakeId");
                     });
                 });
-                it("it should mark the world's entity componet as is destroyed.", function() {
-                    gameManager.destroyWorld(world.entityId);
-                    matcher_is_true(world.components.entity.entityIsDestroyed);
+                it("it should mark the world's isDestroyed property as true.", function() {
+                    gameManager.destroyWorld(world.id);
+                    matcher_is_true(world.isDestroyed);
                 });
             });
             
@@ -49,30 +49,10 @@ function game_manager_tests() {
                         }
                     });
                 });
-                it("all worlds should have a reference to themeslves.", function() {
-                    var _worldCount = 5;
-                    var _worlds = [];
-                    
-                    for(var i = 0; i < _worldCount; i += 1) {
-                        array_push(_worlds, gameManager.createWorld());    
-                    }
-                    
-                    for(var i = 0; i < _worldCount; i += 1) {
-                        var _curWorld = _worlds[i];
-                        var _checkRef = _curWorld.entity.getRef(_curWorld.entityId);
-                        matcher_value_equal(_curWorld, _checkRef);
-                    }
-                });
             });
             
             describe("cleanup - ", function() {
-                before_each( function() {
-                    world = gameManager.createWorld();
-                    worldTwo = gameManager.createWorld();
-                });
-                it("it should throw if no world with that id is in the game", function() {
-                    
-                });
+                
             });
         })
     ];

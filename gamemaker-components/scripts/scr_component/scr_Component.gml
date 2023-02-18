@@ -10,7 +10,7 @@ function Component(_ref) constructor {
     //Run Draw on this component
     visible = true;
     componentIsDestroyed = false;
-    
+
     static getEntityId = function() {
         return entityRef.components.entity.entityId;
     }
@@ -38,7 +38,7 @@ function Component(_ref) constructor {
 
 /// @desc ComponentSystem is the base class for all systems which manage a component type. Worlds have systems which add behavior.
 /// @param {Struct.World} _world The world which this System operates in.
-function ComponentSystem(_world) constructor {
+function ComponentSystem() constructor {
 
     name = string_lowercase_first(instanceof(self));
     //Run update of this entire system
@@ -46,33 +46,38 @@ function ComponentSystem(_world) constructor {
     //Run draw of this entire system
     visible = true;
     //What world this system belongs too
-    world = _world
+    world = undefined
     
     componentList = [];
     componentsDirty = false;
-    
+
+    //@description Called after all systems are registered to the world.
     static systemStart = function system_start() {
-        //Called after all systems are registered to the world.
+
     }
 
+    ///@description Called when the world is destroyed.
     static systemCleanup = function system_cleanup() {
-        //Called when the world is destroyed.
+
     }
 
-    static systemStep = function system_step() {
-        //Called once per each step of updating the world.
-        //Note this happens only when the world state progresses.
-        //This happens at most only the specified ticksPerSecond
-        //If the ticksPerSecond exceeds the FPS the game is running at
-        //then the updates will effectivley only run at the fps
-        //TODO: dt should be fixed for step, double check that it is.
+    ///@description Called once per each step of updating the world.
+    /// Note this happens only when the world state progresses.
+    /// This happens at most only the specified ticksPerSecond
+    /// If the ticksPerSecond exceeds the FPS the game is running at
+    /// then the updates will effectivley only run at the fps
+    /// TODO: dt should be fixed for step, double check that it is.
+    ///@param {Real} _dt Delta time in second since last step
+    static systemStep = function system_step(_dt) {
+
     }
 
     /// @desc onCreate is called after a component has been initialized.
-    /// @param {Struct.Component} _component description
+    /// Runs after all values have been deserialized
+    /// Or after a component has been dynamically added.
+    /// @param {Struct.Component} _component
     static onCreate = function on_create(_component) {
-        //Runs after all values have been deserialized
-        //Or after a component has been dynamically added.
+        
     }
 
     //The step functions happen once per world simulation update.
@@ -82,12 +87,49 @@ function ComponentSystem(_world) constructor {
         //Runs in the world step phase. Before step and endStep
     }
     
+    static runBeginStep = function(_dt) {
+        if(!enabled) { return; }
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.enabled) {
+                beginStep(_component, _dt);
+            }
+        }
+    }
+
+    //Runs in the world step phase. After beginStep and before endStep
     static step = function step(_component, _dt) {
-        //Runs in the world step phase. After beginStep and before endStep
+
+    }
+    
+    static runStep = function(_dt) {
+        if(!enabled) { return; }
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.enabled) {
+                step(_component, _dt);
+            }
+        }
     }
     
     static endStep = function end_step(_component, _dt) {
         //Runs in the world step phase. After beginStep and Step
+    }
+    
+    static runEndStep = function(_dt) {
+        if(!enabled) { return; }
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.enabled) {
+                endStep(_component, _dt);
+            }
+        }
     }
 
     //All draw Methods happen at the the maximum FPS the game can run.
@@ -98,25 +140,97 @@ function ComponentSystem(_world) constructor {
     static drawBegin = function draw_begin(_component, _dt) {
         
     }
+    
+    static runDrawBegin = function(_tickProgress) {
+        if(!visible) return;
+        
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.visible) {
+                drawBegin(_component, _tickProgress);
+            }
+        }
+    }
 
     static draw = function draw(_component, _dt) {
     
+    }
+    
+    static runDraw = function(_tickProgress) {
+        if(!visible) return;
+        
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.visible) {
+                draw(_component, _tickProgress);
+            }
+        }
     }
     
     static drawEnd = function draw_end(_component, _dt) {
     
     }
     
+    static runDrawEnd = function(_tickProgress) {
+        if(!visible) return;
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.visible) {
+                drawEnd(_component, _tickProgress);
+            }
+        }
+    }
+    
     static drawGuiBegin = function draw_gui_begin(_component, _dt) {
     
+    }
+    
+    static runDrawGuiBegin = function(_tickProgress) {
+        if(!visible) return;
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.visible) {
+                drawGuiBegin(_component, _tickProgress);
+            }
+        }
     }
     
     static drawGui = function draw_gui(_component, _dt) {
     
     }
     
+    static runDrawGui = function(_tickProgress) {
+        if(!visible) return;
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.visible) {
+                drawGui(_component, _tickProgress);
+            }
+        }
+    }
+    
     static drawGuiEnd = function draw_gui_end(_component, _dt) {
     
+    }
+    
+    static runDrawGuiEnd = function(_tickProgress) {
+        if(!visible) return;
+
+        var _componentCount = array_length(componentList);
+        for(var i = 0; i < _componentCount; i += 1) {
+            var _component = componentList[i];
+            if(_component.visible) {
+                drawGuiEnd(_component, _tickProgress);
+            }
+        }
     }
 
     static destroy = function destroy(_component) {
@@ -172,11 +286,7 @@ function ComponentSystem(_world) constructor {
         }
     }
     
-    static registerSystemEvent = function register_system_event(_entitySystemEvent) {
-        array_push(world.systemEventSubscribers[$ _entitySystemEvent], self);
-    }
-    
     function toString() {
-        return string_join("", name, "\nenabled: ", enabled, "\nvisible: ", visible, "\nworldId: ", world.entityId, "\nComponent Count: ", array_length(componentList));
+        return string_join("", name, "\nenabled: ", enabled, "\nvisible: ", visible, "\nworldId: ", world.id, "\nComponent Count: ", array_length(componentList));
     }
 }

@@ -8,7 +8,7 @@ function KinematicMovement(_instance) : Component(_instance) constructor {
     // Feather restore GM2017
 }
 
-function KinematicMovementSystem(_world) : ComponentSystem(_world) constructor {
+function KinematicMovementSystem() : ComponentSystem() constructor {
 
      // Feather disable GM2017
     entityCollisionList = undefined;

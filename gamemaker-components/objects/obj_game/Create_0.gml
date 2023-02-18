@@ -1,6 +1,2 @@
-serviceContainer = new ServiceContainer();
-serviceContainer.service("inputDeviceManager", InputDeviceManager, []);
-serviceContainer.service("inputManager", InputManager, ["inputDeviceManager"]);
-serviceContainer.service("gameManager", GameManager, ["inputDeviceManager", "inputManager"]);
-
+serviceContainer = global.gameContainer;
 gameManager = serviceContainer.get("gameManager");

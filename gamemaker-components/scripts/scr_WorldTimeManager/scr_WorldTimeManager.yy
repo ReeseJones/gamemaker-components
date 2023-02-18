@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_SystemEventSubscribers",
+  "name": "scr_WorldTimeManager",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

@@ -1,12 +1,16 @@
 ///@function GameManager(_inputDeviceManager, _inputManager)
 ///@param {Struct.InputDeviceManager} _inputDeviceManager This is an input device manager
 ///@param {Struct.InputManager} _inputManager this is an input manager
-function GameManager(_inputDeviceManager, _inputManager) constructor {
+///@param {Struct.ServiceFactory} _worldFactory Factory whichs spawns a new world.
+function GameManager(_inputDeviceManager, _inputManager, _worldFactory) constructor {
     // Feather disable GM2017
     inputDeviceManager =_inputDeviceManager;
     inputManager = _inputManager;
+    worldFactory = _worldFactory;
+
     worldsMap = ds_map_create();
     worlds = [];
+    isDestroyed = false;
 
     worldIdPool = array_create(ENTITY_INITIAL_ID, 0);
     for(var i = 0; i < ENTITY_INITIAL_ID; i += 1) {
@@ -22,14 +26,15 @@ function GameManager(_inputDeviceManager, _inputManager) constructor {
         }
 
         //Mark that this world is being destroyed.
-        _worldRef.components.entity.entityIsDestroyed = true;
+        _worldRef.isDestroyed = true;
     }
 
-    static createWorld = function create_world(_worldSystems = []) {
-        var _newWorldId = getNewWorldId()
-        var _newWorld = new World(_newWorldId, _worldSystems);
+    static createWorld = function create_world() {
+        var _newWorld = worldFactory.create();
+        _newWorld.id = getNewWorldId();
+
         array_push(worlds, _newWorld);
-        worldsMap[? _newWorldId] = _newWorld;
+        worldsMap[? _newWorld.id] = _newWorld;
 
         return _newWorld;
     }
@@ -86,7 +91,7 @@ function GameManager(_inputDeviceManager, _inputManager) constructor {
         var _destroyedWorlds = false;
         while(i > -1) {
             var _world = worlds[i];
-            if(_world.components.entity.entityIsDestroyed) {
+            if(_world.isDestroyed) {
                 _world.cleanup();
                 worlds[i] = worlds[_swapIndex];
                 _swapIndex -= 1;
@@ -101,9 +106,8 @@ function GameManager(_inputDeviceManager, _inputManager) constructor {
     }
     
     static cleanup = function cleanup() {
-        var _worldCount = array_length(worlds);
         array_foreach(worlds, function(_world) {
-             destroyWorld(_world.entityId);
+             destroyWorld(_world.id);
         });
         worlds = [];
         cleanupDestroyedWorlds();

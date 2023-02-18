@@ -5,7 +5,7 @@ function UiRoot(_instance) : Component(_instance) constructor {
     // Feather restore GM2017
 }
 
-function UiRootSystem(_world) : ComponentSystem(_world) constructor {
+function UiRootSystem() : ComponentSystem() constructor {
 
     static beginStep = function begin_step(_uiRoot, _dt) {
         var _rectSizeComp = _uiRoot.instance.components.rectangleSizing;

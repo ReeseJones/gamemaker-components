@@ -5,7 +5,7 @@ function DebugTools(_instance) : Component(_instance) constructor
     timer = 0;
 }
 
-function DebugToolsSystem(_world) : ComponentSystem(_world) constructor {
+function DebugToolsSystem() : ComponentSystem() constructor {
     
     function systemStart() {
         

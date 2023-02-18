@@ -44,7 +44,7 @@ function TestConstructorC(_text) constructor {
 tag_script(service_container_tests, [TAG_UNIT_TEST_SPEC]);
 function service_container_tests() {
     return [
-        describe("ServiceContainer", function() {
+        describe("ServiceContainer ", function() {
             it("should be able to bind a value and retrieve it", function(){
                 var _serviceContainer = new ServiceContainer();
                 
@@ -163,6 +163,28 @@ function service_container_tests() {
                     myTestServiceContainer.factory("myService", _facMethod, []);
                     myTestServiceContainer.factory("myService", _facMethod, []);
                 });
+            });
+            it("should make a new instance if scope is transient", function() {
+                var _serviceContainer = new ServiceContainer();
+                _serviceContainer.value("neat_text", "Reese Is Cool");
+                _serviceContainer.service("serviceA", TestConstructorA, ["serviceB"]).inTransientScope();
+                _serviceContainer.service("serviceB", TestConstructorB, ["serviceC"]);
+                _serviceContainer.service("serviceC", TestConstructorC, ["neat_text"]).inTransientScope();
+                
+                var _a = _serviceContainer.get("serviceA");
+                var _a2 = _serviceContainer.get("serviceA");
+                var _b = _serviceContainer.get("serviceB");
+                var _c = _serviceContainer.get("serviceC");
+                
+                
+                matcher_is_true(_a != _a2);
+                matcher_value_equal(_b, _a.b);
+                matcher_value_equal(_b, _a2.b);
+                matcher_is_true(_c != _b.c);
+                matcher_is_true(_a.b.c = _a2.b.c);
+                matcher_is_instanceof(_a, TestConstructorA)
+                matcher_is_instanceof(_b, TestConstructorB)
+                matcher_is_instanceof(_c, TestConstructorC)
             });
         })
     ];

@@ -2,7 +2,7 @@ function TestComp(_instance) : Component(_instance) constructor {
     timer = 0;
 }
 
-function TestCompSystem(_world) : ComponentSystem(_world) constructor {
+function TestCompSystem() : ComponentSystem() constructor {
     
     static onCreate = function on_create(_component) {
         show_debug_message("TestComponent Created!");

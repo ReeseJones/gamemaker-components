@@ -7,7 +7,7 @@ function RectangleLayout(_instance) : Component(_instance) constructor {
     // Feather restore GM2017
 }
 
-function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
+function RectangleLayoutSystem() : ComponentSystem() constructor {
 
     static endStep = function end_step(_rectLayout, _dt) {
         var _inst = _rectLayout.instance;

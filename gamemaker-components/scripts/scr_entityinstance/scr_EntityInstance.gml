@@ -5,7 +5,7 @@
 
 function EntityInstance(_instance) : Component(_instance) constructor {
     instanceRef = undefined;
-    
+
     //General Instance Variables
     visible = true;
     solid = false;  
@@ -46,7 +46,7 @@ function EntityInstance(_instance) : Component(_instance) constructor {
     */
 }
 
-function EntityInstanceSystem(_world) : ComponentSystem(_world) constructor {
+function EntityInstanceSystem() : ComponentSystem() constructor {
     
     /*
     function onCreate(_entityInst) {

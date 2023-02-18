@@ -1,55 +1,14 @@
 // Feather disable GM2017
 #macro ENTITY_INITIAL_ID 100
 
-function add_detached_component(_ref, _component) {
-    //Ensure entity exists
-    var _entityRef = _ref
-    if(!_entityRef) {
-        show_debug_message(string_join("", "Tried to add component '", _component, "' to non existant instance with id: ", _ref));
-        return;
-    }
-
-    var _isStruct = is_struct(_entityRef);
-    var _addComponents = false;
-    if(_isStruct) {
-        if(!variable_struct_exists(_entityRef, "components")) {
-            _addComponents = true;
-        }
-    } else {
-        if(!variable_instance_exists(_entityRef, "components")) {
-            _addComponents = true;    
-        }
-    }
-    
-    if(_addComponents) {
-        _entityRef.components = {};    
-    }
-
-    var _componentName = script_get_name(_component);
-    if(!is_undefined(_entityRef.components[$ _componentName])) {
-        throw string_join("", "Component with name: ", _componentName, " has already been added");
-    }
-
-    //onCreate the component
-    var _newComponent = new _component(_entityRef);
-    
-    //Add it into the component map of the entity
-    _entityRef.components[$ _newComponent.name] = _newComponent;
-    
-    //Add it into the list of components this entity has
-    array_push(_entityRef.components.entity.components, _newComponent);
-        
-
-    return _newComponent;
-}
-
 function Entity(_ref) : Component(_ref) constructor {
     entityId = undefined;
     components = [];
     entityIsDestroyed = false;
 }
 
-function EntitySystem(_world) : ComponentSystem(_world) constructor {
+
+function EntitySystem() : ComponentSystem() constructor {
     //Map of all instances belonging to this world
     instances = ds_map_create();
     nextInstanceId = ENTITY_INITIAL_ID;
@@ -107,7 +66,7 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         for(var i = 0; i < _componentCount; i += 1) {
             removeComponent(_entityId, _comps[i].name);
         }
-                
+
         array_push(instanceRemoveQueue, _entityId);
     }
     
@@ -124,7 +83,7 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         return _entityRef && !_entityRef.components.entity.entityIsDestroyed;
     }
     
-    static entityeExists = function entity_exists(_entityId) {
+    static entityExists = function entity_exists(_entityId) {
         return ds_map_exists(instances, _entityId);
     }
 
@@ -138,12 +97,12 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         var _entityRef = getRef(_entityId);
         if(!_entityRef) {
             show_debug_message(string_join("", "Tried to add component '", _component, "' to non existant instance with id: ", _entityId));
-            return;    
+            return;
         }
         
         var _componentName = script_get_name(_component);
         if(!is_undefined(_entityRef.components[$ _componentName])) {
-            throw string_join("", "Component with name: ", _componentName, " has already been added");    
+            throw string_join("", "Component with name: ", _componentName, " has already been added");
         }
         
         //Create the component
@@ -193,7 +152,6 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         array_push(componentRemoveQueue, _componentToRemove);
     }
 
-    registerSystemEvent(ES_SYSTEM_CLEANUP);
     static systemCleanup = function system_cleanup() {
 
         var _entityCount = array_length(componentList);
@@ -207,7 +165,6 @@ function EntitySystem(_world) : ComponentSystem(_world) constructor {
         instances = undefined;
     }
 
-    registerSystemEvent(ES_SYSTEM_STEP);
     static systemStep = function system_step() {
         runCleanupSweep();
     }

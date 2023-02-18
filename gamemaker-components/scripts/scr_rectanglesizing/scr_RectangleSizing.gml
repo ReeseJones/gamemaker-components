@@ -9,7 +9,7 @@ function RectangleSizing(_instance) : Component(_instance) constructor {
     // Feather restore GM2017
 }
 
-function RectangleSizingSystem(_world) : ComponentSystem(_world) constructor {
+function RectangleSizingSystem() : ComponentSystem() constructor {
 
     static drawGui = function draw_gui(_component, _dt) {
         if(_component.debug) {

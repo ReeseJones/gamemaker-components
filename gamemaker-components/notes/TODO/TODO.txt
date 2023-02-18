@@ -1,3 +1,9 @@
+Left off: 
+    Made world system kernel and world factory
+    I need to update the entitySystem so that its not responsible for making components and doesnt need the world to do it.
+    or it can use the world but will delegate away some how
+
+
 1) Test events in world
 	- Determine new event system file (answer - scr_EventSystem - component-less event system)
 	- Finish Implementation of EventSystem which needs

@@ -7,11 +7,9 @@ function EntityTree(_entityRef) : Component(_entityRef) constructor {
     children = [];
 }
 
-function EntityTreeSystem(_world) : ComponentSystem(_world) constructor {
-
+function EntityTreeSystem() : ComponentSystem() constructor {
     childTraversalQueue = ds_queue_create();
 
-    registerSystemEvent(ES_SYSTEM_CLEANUP);
     static systemCleanup = function system_cleanup() {
         ds_queue_destroy(childTraversalQueue);
     }
