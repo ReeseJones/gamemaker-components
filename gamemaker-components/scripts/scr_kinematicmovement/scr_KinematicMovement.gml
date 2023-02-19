@@ -1,4 +1,5 @@
-function KinematicMovement(_instance) : Component(_instance) constructor {
+/// @param {struct.Entity} _entity A reference to which thing this component is bound to.
+function KinematicMovement(_entity) : Component(_entity) constructor {
     // Feather disable GM2017
     direction = { x: 1, y: 0 };
     speed = 0;
@@ -8,46 +9,50 @@ function KinematicMovement(_instance) : Component(_instance) constructor {
     // Feather restore GM2017
 }
 
-function KinematicMovementSystem() : ComponentSystem() constructor {
+/// @param {Struct.World} _world The world which this System operates in.
+function KinematicMovementSystem(_world = undefined) : ComponentSystem(_world) constructor {
+    static componentConstructor = KinematicMovement;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
 
      // Feather disable GM2017
     entityCollisionList = undefined;
      // Feather restore GM2017
 
-    static systemStart = function system_start() {
+    static systemStart = function() {
         entityCollisionList = ds_list_create();
     }
     
-    static systemCleanup = function system_cleanup() {
+    static systemCleanup = function() {
         ds_list_destroy(entityCollisionList);
     }
     
     static setSpeed = function set_speed(_entityId, _speed) {
-        var _inst = entity.getRef(_entityId);
-        var _km = _inst.components.kinematicMovement;
+        var _entity = world.getRef(_entityId);
+        var _km = _entity.component.kinematicMovement;
         _km.speed = _speed;
     }
     
-    static setDirectionVector = function set_direction_vector(_entityId, _x, _y) {
-        var _inst = entity.getRef(_entityId);
-        var _km = _inst.components.kinematicMovement;
+    static setDirectionVector = function(_entityId, _x, _y) {
+        var _entity = world.getRef(_entityId);
+        var _km = _entity.component.kinematicMovement;
         var _length = sqrt(_x*_x + _y*_y);
         _km.direction.x = _x / _length;
         _km.direction.y = _y / _length;
     }
 
-    static setDirectionAngle = function set_direction_angle(_entityId, _angleDegrees) {
-        var _inst = entity.getRef(_entityId);
-        var _km = _inst.components.kinematicMovement;
+    static setDirectionAngle = function(_entityId, _angleDegrees) {
+        var _entity = world.getRef(_entityId);
+        var _km = _entity.components.kinematicMovement;
         var _angleInRads = degtorad(_angleDegrees);
         _km.direction.x = cos(_angleInRads);
         //inverting sign because postive y is down in game maker
         _km.direction.y = -sin(_angleInRads);
     }
 
+    ///@param {Struct.KinematicMovement} _km
     static onCreate = function on_create(_km) {
         static collisionList = ds_list_create();
-        
+
         with(_km.instance) {
             show_debug_message("Testing start collisions");
             ds_list_clear(collisionList);
@@ -61,8 +66,9 @@ function KinematicMovementSystem() : ComponentSystem() constructor {
         }
     }
 
+    ///@param {Struct.KinematicMovement} _km
+    ///@param {Real} _dt
     static step = function step(_km, _dt) {
-
         array_resize(_km.debugCollisionsPoints, 0 );
         array_resize(_km.debugReflectionVector, 0 );
         
@@ -138,6 +144,8 @@ function KinematicMovementSystem() : ComponentSystem() constructor {
         _inst.y = _entityComp.y;
     }
     
+    ///@param {Struct.KinematicMovement} _km
+    ///@param {Real} _dt Tick progress
     function draw(_km, _dt) {
         var _inst = _km.instance;
         var _entityComp = _inst.components.entity;

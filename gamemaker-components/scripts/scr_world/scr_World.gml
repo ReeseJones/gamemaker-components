@@ -2,16 +2,16 @@
 /// @param {Struct.WorldTimeManager} _worldTimeManager Time manager which controls passage of
 /// @param {Array<Struct.ComponentSystem>} _systems Time manager which controls passage of
 /// time in the world and determines when a new frame starts.
-/// @param {Struct.EntityManager} _entityManager
-/// @param {Struct.EntityComponentManager} _componentManager
-function World(_worldTimeManager, _systems, _entityManager) constructor {
+function World(_worldTimeManager, _systems) constructor {
     // Feather disable GM2017
     id = -1;
     timeManager = _worldTimeManager;
     systems = _systems;
-    entityManager = _entityManager;
     system = {};
     systemCount = array_length(systems);
+    
+    instances = ds_map_create();
+    instanceRemoveQueue = [];
     // Feather restore GM2017
 
     //Initialize systems to world
@@ -27,8 +27,7 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
     ///@param {Real} _entityId
     ///@param {String} _componentName
     static addComponent = function(_entityId, _componentName) {
-        //Ensure entity exists
-        var _entityRef = entityManager.getRef(_entityId);
+        var _entityRef = getRef(_entityId);
         if(is_undefined(_entityRef)) {
             show_debug_message(string_join("", "Tried to add component '", _componentName, "' to non existant instance with id: ", _entityId));
             return;
@@ -43,8 +42,7 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
     }
 
     static destroyComponent = function(_entityId, _componentName) {
-        //Ensure entity exists
-        var _entityRef = entityManager.getRef(_entityId);
+        var _entityRef = getRef(_entityId);
         if(is_undefined(_entityRef)) {
             show_debug_message(string_join("", "Tried to remove component '", _componentName, "' to non existant instance with id: ", _entityId));
             return;
@@ -56,25 +54,72 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
 
     static createEntity = function(_entityId) {
         var _newEntity new Entity(_entityId, self);
-        entityManager.registerEntity(_newEntity, _entityId);
+        registerEntity(_newEntity, _entityId);
         return _newEntity;
     }
 
     static destroyEntity = function(_entityId) {
-        var _entity = entityManager.getRef(_entityId);
-        if(is_defined(_entity)) {
-            var _comps = variable_struct_get_names(_entity.component);
-            var _compCount = array_length(_comps);
-            for(var i = 0; i < _compCount; i += 1) {
-                var _sys = system[$ _comps[i]];
-                _sys.removeComponent(_entity);
-            }
-
-            entityManager.entityDestroy(_entityId);
+        var _entity = getRef(_entityId);
+        if(is_undefined(_entity)) {
+            show_debug_message(string_join("", "Tried to delete id ", _entityId, " but no entity was found."));
+            return;
         }
+
+        var _comps = variable_struct_get_names(_entity.component);
+        var _compCount = array_length(_comps);
+        for(var i = 0; i < _compCount; i += 1) {
+            var _sys = system[$ _comps[i]];
+            _sys.removeComponent(_entity);
+        }
+
+        _entity.entityIsDestroyed = true;
+        array_push(instanceRemoveQueue, _entityId);
     }
 
-    static step = function step() {
+    ///@param {Real} _entityId
+    ///@returns {Struct.Entity}
+    static getRef = function get_ref(_entityId) {
+        return instances[? _entityId];
+    }
+    
+    static entityIsAlive = function(_entityId) {
+        var _entityRef = instances[? _entityId];
+        return _entityRef && !_entityRef.entityIsDestroyed;
+    }
+    
+    static entityExists = function(_entityId) {
+        return ds_map_exists(instances, _entityId);
+    }
+
+    static registerEntity = function(_entity, _id) {
+        if(is_undefined(_id)) {
+            throw "Must have defined entity id";
+        } else if ( ds_map_exists(instances, _id) ) {
+            throw string_join("", "Entity with id '", _id, "' already exists.");
+        }
+
+        instances[? _id] = _entity;
+        return _id;
+    }
+    
+    static removeDestroyedEntities = function() {
+        var _instanceCount = array_length(instanceRemoveQueue);
+        for(var i = 0; i < _instanceCount; i += 1) {
+            var _entityId = instanceRemoveQueue[i];
+            var _entityRef = getRef(_entityId);
+            if(is_undefined(_entityRef)) {
+                throw "Entity to be removed is already deleted in removed destroyed entities";
+            }
+            
+            ds_map_delete(instances, _entityId);
+            delete _entityRef.component;
+            _entityRef.component = undefined;
+            _entityRef.world = undefined;
+        }
+        array_resize(instanceRemoveQueue, 0);
+    }
+
+    static step = function() {
         var _progressedTimeSequence = timeManager.stepClock();
         if(!_progressedTimeSequence) return;
 
@@ -102,10 +147,10 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
             _system.cleanComponentList();
         }
 
-        entityManager.removeDestroyedEntities();
+        removeDestroyedEntities();
     }
 
-    static draw = function draw() {
+    static draw = function() {
         for(var i = 0; i < systemCount; i += 1) {
             systems[i].runDrawBegin(timeManager.tickProgress);
         }
@@ -120,7 +165,7 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
     }
 
     // Feather disable once GM2017
-    static drawGui = function draw_gui() {
+    static drawGui = function() {
         for(var i = 0; i < systemCount; i += 1) {
             systems[i].runDrawGuiBegin(timeManager.tickProgress);
         }
@@ -134,7 +179,7 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
         }
     }
     
-    static cleanup = function cleanup() {
+    static cleanup = function() {
         var _length = array_length(systems);
         for(var i = 0; i < _length; i += 1) {
            var _sys = systems[i];
@@ -142,22 +187,22 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
            _sys.componentsDirty = true;
            var _compCount = array_length(_sys.componentList);
            for(var j = 0; j < _compCount; j += 1 ) {
+               //mark as destroyed so clean component list picks them up.
                _sys.componentList[j].componentIsDestroyed = true;
            }
            _sys.cleanComponentList();
         }
-        
 
         timeManager = undefined;
-        entityManager.cleanup();
-        entityManager = undefined;
+        ds_map_destroy(instances);
+        instances = undefined;
         systems = undefined;
         systemCount = 0;
         system = undefined;
         id = undefined;
     }
 
-    static debugDraw = function debug_draw() {
+    static debugDraw = function() {
         var _debugText = [
             "FPS: " + string(fps),
             "Real FPS: " + string(fps_real),
@@ -173,7 +218,7 @@ function World(_worldTimeManager, _systems, _entityManager) constructor {
     }
     
 
-    static toString = function to_string() {
+    static toString = function() {
         return string_join("WorldID: ", id);
     }
 }

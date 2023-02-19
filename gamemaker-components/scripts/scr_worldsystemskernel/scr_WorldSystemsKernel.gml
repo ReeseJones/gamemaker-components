@@ -11,16 +11,15 @@ _gc.service("worldFactory", ServiceFactory, ["gameContainer", "worldServiceName"
 
 _gc.service("world", World, ["worldTimeManager", "aggregatedSystems"]).inTreeScope();
 _gc.service("worldTimeManager", WorldTimeManager, ["realTimeProvider"]).inTreeScope();
-_gc.service("entityManager", EntityManager).inTreeScope();
 _gc.service("realTimeProvider", TimeProvider);
 
-_gc.service("entityInstanceSystem", EntityInstanceSystem, []).inTreeScope();
-_gc.service("entityTreeSystem", EntityTreeSystem, []).inTreeScope();
-_gc.service("kinematicMovementSystem", KinematicMovementSystem, []).inTreeScope();
+//_gc.service("kinematicMovementSystem", KinematicMovementSystem, []).inTreeScope();
+//_gc.service("entityInstanceSystem", EntityInstanceSystem, []).inTreeScope();
+_gc.service("entityTreeSystem", EntityTreeSystem).inTreeScope();
 _gc.service("rectangleLayoutSystem", RectangleLayoutSystem, []).inTreeScope();
 _gc.service("rectangleSizingSystem", RectangleSizingSystem, []).inTreeScope();
-_gc.service("testCompSystem", TestCompSystem, []).inTreeScope();
-_gc.service("uiRootSystem", UiRootSystem, []).inTreeScope();
+//_gc.service("testCompSystem", TestCompSystem, []).inTreeScope();
+//_gc.service("uiRootSystem", UiRootSystem, []).inTreeScope();
 
 _gc.factory("aggregatedSystems", function() {
     var _systems = [];

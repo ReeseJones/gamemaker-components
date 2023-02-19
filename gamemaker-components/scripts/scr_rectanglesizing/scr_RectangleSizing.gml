@@ -10,6 +10,8 @@ function RectangleSizing(_instance) : Component(_instance) constructor {
 }
 
 function RectangleSizingSystem() : ComponentSystem() constructor {
+    static componentConstructor = RectangleSizing;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
 
     static drawGui = function draw_gui(_component, _dt) {
         if(_component.debug) {

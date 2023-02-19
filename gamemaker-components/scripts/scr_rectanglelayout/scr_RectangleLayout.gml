@@ -1,4 +1,5 @@
-function RectangleLayout(_instance) : Component(_instance) constructor {
+/// @param {struct.Entity} _entity A reference to which thing this component is bound to.
+function RectangleLayout(_entity) : Component(_entity) constructor {
     // Feather disable GM2017
     top = 0;
     left = 0;
@@ -7,23 +8,30 @@ function RectangleLayout(_instance) : Component(_instance) constructor {
     // Feather restore GM2017
 }
 
-function RectangleLayoutSystem() : ComponentSystem() constructor {
+/// @param {Struct.World} _world The world which this System operates in.
+function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
+    static componentConstructor = RectangleLayout;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
 
-    static endStep = function end_step(_rectLayout, _dt) {
-        var _inst = _rectLayout.instance;
-        var _rectSizing = _inst.components.rectangleSizing;
-        var _entityTree = _inst.components._entityTree;
+
+    ///@param {Struct.RectangleLayout} _rectLayout
+    ///@param {Real} _dt
+    static endStep = function(_rectLayout, _dt) {
+        var _entity = _rectLayout.entityRef;
+        var _rectSizing = _entity.component.rectangleSizing;
+        var _entityTree = _entity.component.entityTree;
         if(!_entityTree || !_rectSizing) {
             return;
         }
+
         if(!_entityTree.parent) {
             return;
         }
-        var _parent = entity.getRef(_entityTree.parent);
+        var _parent = world.getRef(_entityTree.parent);
         if(!_parent) {
             return;
         }
-        var _parentRectSizing = _parent.components.rectangleSizing;
+        var _parentRectSizing = _parent.component.rectangleSizing;
         if(!_parentRectSizing) {
             return;
         }
@@ -38,5 +46,4 @@ function RectangleLayoutSystem() : ComponentSystem() constructor {
         _rectSizing.width = _right - _left;
         _rectSizing.height = _bottom - _top;
     }
-
 }

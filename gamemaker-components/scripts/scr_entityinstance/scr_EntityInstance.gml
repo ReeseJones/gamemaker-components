@@ -47,7 +47,8 @@ function EntityInstance(_instance) : Component(_instance) constructor {
 }
 
 function EntityInstanceSystem() : ComponentSystem() constructor {
-    
+    static componentConstructor = EntityInstance;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
     /*
     function onCreate(_entityInst) {
         //Mask and Bounding Box

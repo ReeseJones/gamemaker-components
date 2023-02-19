@@ -6,6 +6,8 @@ function UiRoot(_instance) : Component(_instance) constructor {
 }
 
 function UiRootSystem() : ComponentSystem() constructor {
+    static componentConstructor = UiRoot;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
 
     static beginStep = function begin_step(_uiRoot, _dt) {
         var _rectSizeComp = _uiRoot.instance.components.rectangleSizing;

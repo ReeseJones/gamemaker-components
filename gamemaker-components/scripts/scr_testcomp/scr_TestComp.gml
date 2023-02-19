@@ -3,6 +3,9 @@ function TestComp(_instance) : Component(_instance) constructor {
 }
 
 function TestCompSystem() : ComponentSystem() constructor {
+    static componentConstructor = TestComp;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
+    
     
     static onCreate = function on_create(_component) {
         show_debug_message("TestComponent Created!");
