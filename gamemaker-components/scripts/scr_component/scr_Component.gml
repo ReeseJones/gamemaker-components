@@ -1,22 +1,3 @@
-// Feather disable GM2017
-
-/// @desc Component is the base class for all components.
-/// @param {Struct} _ref A reference to which thing this component is bound to.
-function Component(_ref) constructor {
-    name = string_lowercase_first(instanceof(self));
-    entityRef = _ref;
-    //Run Update on this component
-    enabled = true;
-    //Run Draw on this component
-    visible = true;
-    componentIsDestroyed = false;
-
-    static getEntityId = function() {
-        return entityRef.components.entity.entityId;
-    }
-}
-
-
 #macro ES_SYSTEM_START "systemStart"
 #macro ES_SYSTEM_CLEANUP "systemCleanup"
 #macro ES_SYSTEM_STEP "systemStep"
@@ -36,20 +17,75 @@ function Component(_ref) constructor {
 #macro ES_DRAW_GUI "drawGui"
 #macro ES_DRAW_GUI_END "drawGuiEnd"
 
+/// @desc Component is the base class for all components.
+/// @param {struct.Entity} _entity A reference to which thing this component is bound to.
+function Component(_entity = undefined) constructor {
+    static name = string_lowercase_first(instanceof(self));
+
+    // Feather disable GM2017
+    entityRef = _entity;
+    //Run Update on this component
+    enabled = true;
+    //Run Draw on this component
+    visible = true;
+    componentIsDestroyed = false;
+    // Feather restore GM2017
+
+    static getEntityId = function() {
+        return entityRef.entityId;
+    }
+}
+
 /// @desc ComponentSystem is the base class for all systems which manage a component type. Worlds have systems which add behavior.
 /// @param {Struct.World} _world The world which this System operates in.
-function ComponentSystem() constructor {
+function ComponentSystem(_world = undefined) constructor {
 
-    name = string_lowercase_first(instanceof(self));
+    // Feather disable GM2017
+    static name = string_lowercase_first(instanceof(self));
+    static componentConstructor = Component;
+    static componentName = string_lowercase_first(script_get_name(componentConstructor));
+
     //Run update of this entire system
     enabled = true;
     //Run draw of this entire system
     visible = true;
     //What world this system belongs too
-    world = undefined
-    
+    world = _world;
+
     componentList = [];
     componentsDirty = false;
+    
+    // Feather restore GM2017
+
+    static addComponent = function(_entity) {
+        //Create the component
+        var _newComponent = new componentConstructor(_entity);
+        //Add it into the component map of the entity
+        _entity.component[$ componentName] = _newComponent;
+        
+        //Add it into the systems tracked component list
+        array_push(componentList, _newComponent);
+        
+        //TODO run create code when component is dynamically added?
+        onCreate(_newComponent);
+    }
+    
+    static removeComponent = function (_entity) {
+        var _componentToRemove = _entity.component[$ componentName];
+        if(!_componentToRemove) {
+            show_debug_message(string_join("", "Tried from remove component '", componentName,"' from instance with id: ", _entity.entityId, " which did not have this component."));
+            return;
+        }
+
+        //Run code when component is removed
+        destroy(_componentToRemove);
+
+        _componentToRemove.enabled = false;
+        _componentToRemove.visible = false;
+        _componentToRemove.componentIsDestroyed = true;
+
+        componentsDirty = true;
+    }
 
     //@description Called after all systems are registered to the world.
     static systemStart = function system_start() {
@@ -103,7 +139,7 @@ function ComponentSystem() constructor {
     static step = function step(_component, _dt) {
 
     }
-    
+
     static runStep = function(_dt) {
         if(!enabled) { return; }
 
@@ -269,24 +305,34 @@ function ComponentSystem() constructor {
     }
     
     static cleanComponentList = function clean_component_list() {
-        if(componentsDirty) {
-            componentsDirty = false;
-            var _listLength = array_length(componentList);
-            var i = _listLength - 1;
-            var _swapIndex = i;
-            while(i > -1) {
-                if(componentList[i].componentIsDestroyed) {
-                    componentList[i] = componentList[_swapIndex];
-                    _swapIndex -= 1;
-                    _listLength -=1;
-                }
-                i -= 1;
+        if(!componentsDirty) return;
+        
+        componentsDirty = false;
+        var _listLength = array_length(componentList);
+        var i = _listLength - 1;
+        var _swapIndex = i;
+        while(i > -1) {
+            var _comp = componentList[i];
+            if(_comp.componentIsDestroyed) {
+                //destroy code
+                var _entity = _comp.entityRef;
+                //run cleanup method
+                cleanup(_comp);
+                delete _entity.component[$ componentName];
+                variable_struct_remove(_entity.component, componentName);
+                _comp.entityRef = undefined;
+
+                //remove from component list
+                componentList[i] = componentList[_swapIndex];
+                _swapIndex -= 1;
+                _listLength -=1;
             }
-            array_resize(componentList, _listLength);
+            i -= 1;
         }
+        array_resize(componentList, _listLength);
     }
     
-    function toString() {
+    static toString = function() {
         return string_join("", name, "\nenabled: ", enabled, "\nvisible: ", visible, "\nworldId: ", world.id, "\nComponent Count: ", array_length(componentList));
     }
 }

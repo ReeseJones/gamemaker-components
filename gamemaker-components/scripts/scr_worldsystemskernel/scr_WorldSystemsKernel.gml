@@ -11,9 +11,9 @@ _gc.service("worldFactory", ServiceFactory, ["gameContainer", "worldServiceName"
 
 _gc.service("world", World, ["worldTimeManager", "aggregatedSystems"]).inTreeScope();
 _gc.service("worldTimeManager", WorldTimeManager, ["realTimeProvider"]).inTreeScope();
+_gc.service("entityManager", EntityManager).inTreeScope();
 _gc.service("realTimeProvider", TimeProvider);
 
-_gc.service("entitySystem", EntitySystem, []).inTreeScope();
 _gc.service("entityInstanceSystem", EntityInstanceSystem, []).inTreeScope();
 _gc.service("entityTreeSystem", EntityTreeSystem, []).inTreeScope();
 _gc.service("kinematicMovementSystem", KinematicMovementSystem, []).inTreeScope();
@@ -29,7 +29,6 @@ _gc.factory("aggregatedSystems", function() {
     }
     return _systems;
 }, [
-    "entitySystem",
     "entityTreeSystem",
     "entityInstanceSystem",
     "kinematicMovementSystem",

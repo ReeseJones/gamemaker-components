@@ -1,5 +1,3 @@
-// Feather disable GM2017
-
 /// @desc EntityTree component creates a tree like relationship between entities.
 /// @param {Struct} _entityRef A reference to the struct or game object that this entity represents.
 function EntityTree(_entityRef) : Component(_entityRef) constructor {
@@ -8,7 +6,9 @@ function EntityTree(_entityRef) : Component(_entityRef) constructor {
 }
 
 function EntityTreeSystem() : ComponentSystem() constructor {
+     // Feather disable GM2017
     childTraversalQueue = ds_queue_create();
+    // Feather restore GM2017
 
     static systemCleanup = function system_cleanup() {
         ds_queue_destroy(childTraversalQueue);

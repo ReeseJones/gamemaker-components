@@ -1,20 +1,106 @@
-// Feather disable GM2017
 #macro ENTITY_INITIAL_ID 100
 
-function Entity(_ref) : Component(_ref) constructor {
-    entityId = undefined;
-    components = [];
+///@param {Real} _entityId
+///@param {struct.World} _world
+///@param {struct.EntityManager} _entityManager
+function Entity(_entityId, _world) constructor {
+    // Feather disable GM2017
+    entityId = _entityId;
+    world = _world;
+    component = {};
     entityIsDestroyed = false;
+    // Feather restore GM2017
 }
 
+function EntityManager() constructor {
+    // Feather disable GM2017
+    instances = ds_map_create();
+    instanceRemoveQueue = [];
+    // Feather restore GM2017
+    
+    ///@param {Real} _entityId
+    ///@returns {Struct.Entity}
+    static getRef = function get_ref(_entityId) {
+        return instances[? _entityId];
+    }
+    
+    static entityIsAlive = function entity_is_alive(_entityId) {
+        var _entityRef = instances[? _entityId];
+        return _entityRef && !_entityRef.entityIsDestroyed;
+    }
+    
+    static entityExists = function entity_exists(_entityId) {
+        return ds_map_exists(instances, _entityId);
+    }
+    
+    static registerEntity = function register_entity(_entity, _id) {
+        if(is_undefined(_id)) {
+            throw "Must have defined entity id";
+        } else if ( ds_map_exists(instances, _id) ) {
+            throw string_join("", "Entity with id '", _id, "' already exists.");
+        }
 
+        instances[? _id] = _entity;
+        
+        return _id;
+    }
+
+    static entityDestroy = function entity_destroy(_entityId) {
+        if (_entityId < ENTITY_INITIAL_ID) {
+            //Less than ENTITY_INITIAL_ID are reserverd for WORLD ids.
+            throw(string_join("", "Entity id invalid for deletion: ", _entityId, ". Worlds and  game id may not be destroyed."));    
+        }
+        var _entityRef = getRef(_entityId);
+        if(is_undefined(_entityRef)) {
+            show_debug_message(string_join("", "Tried to delete id ", _entityId, " but no entity was found."));
+            return;
+        }
+
+        _entityRef.entityIsDestroyed = true;
+        array_push(instanceRemoveQueue, _entityId);
+    }
+    
+    static removeDestroyedEntities = function() {
+        //Delete queued instances
+        var _instanceCount = array_length(instanceRemoveQueue);
+        for(var i = 0; i < _instanceCount; i += 1) {
+            var _entityId = instanceRemoveQueue[i];
+            var _entityRef = getRef(_entityId);
+            if(is_defined(_entityRef)) {
+                //Removing the entity from the entity map. (no longer will be found in the world)
+                ds_map_delete(instances, _entityId);
+                delete _entityRef.component;
+                _entityRef.component = undefined;
+                _entityRef.world = undefined;
+            }
+        }
+        array_resize(instanceRemoveQueue, 0);
+    }
+
+    static cleanup = function() {
+        var _entities = ds_map_values_to_array(instances);
+        var _entityCount = array_length(_entities);
+        for(var i = 0; i < _entityCount; i += 1) {
+            entityDestroy(_entities.entityId);
+        }
+
+        removeDestroyedEntities();
+
+        ds_map_destroy(instances);
+        instances = undefined;
+    }
+}
+
+/*
 function EntitySystem() : ComponentSystem() constructor {
     //Map of all instances belonging to this world
+    // Feather disable GM2017
     instances = ds_map_create();
     nextInstanceId = ENTITY_INITIAL_ID;
     componentRemoveQueue = [];
     instanceRemoveQueue = [];
-
+    // Feather restore GM2017
+    
     static registerEntity = function register_entity(_ref, _id = undefined) {
         if(is_undefined(_id)) {
             _id = getNewEntityId();
@@ -227,3 +313,4 @@ function EntitySystem() : ComponentSystem() constructor {
         }
     }
 }
+*/
