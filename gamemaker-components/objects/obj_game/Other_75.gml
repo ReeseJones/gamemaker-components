@@ -2,7 +2,7 @@ var _eventType = async_load[? "event_type"];
 switch(_eventType) {
     case "gamepad discovered":
     case "gamepad lost":
-        gameManager.inputDeviceManager.updateAvailableDevices();
+        inputDeviceManager.updateAvailableDevices();
         break;
     case "audio_system_status":
     case "virtual keyboard status":

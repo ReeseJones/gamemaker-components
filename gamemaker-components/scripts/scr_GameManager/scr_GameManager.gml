@@ -1,21 +1,11 @@
 ///@function GameManager(_inputDeviceManager, _inputManager)
-///@param {Struct.InputDeviceManager} _inputDeviceManager This is an input device manager
-///@param {Struct.InputManager} _inputManager this is an input manager
 ///@param {Struct.ServiceFactory} _worldFactory Factory whichs spawns a new world.
-function GameManager(_inputDeviceManager, _inputManager, _worldFactory) constructor {
+function GameManager(_worldFactory) constructor {
     // Feather disable GM2017
-    inputDeviceManager =_inputDeviceManager;
-    inputManager = _inputManager;
     worldFactory = _worldFactory;
-
     worldsMap = ds_map_create();
     worlds = [];
     isDestroyed = false;
-
-    worldIdPool = array_create(ENTITY_INITIAL_ID, 0);
-    for(var i = 0; i < ENTITY_INITIAL_ID; i += 1) {
-        worldIdPool[i] = i;
-    }
     // Feather restore GM2017
 
     static destroyWorld = function destroy_world(_worldId) {
@@ -29,9 +19,14 @@ function GameManager(_inputDeviceManager, _inputManager, _worldFactory) construc
         _worldRef.isDestroyed = true;
     }
 
-    static createWorld = function create_world() {
+//@param {string} _id Id for the world
+    static createWorld = function create_world(_id) {
+        if(worldExists(_id)) {
+            throw "World cannot be created: " + string(_id) + " already used.";
+        }
+
         var _newWorld = worldFactory.create();
-        _newWorld.id = getNewWorldId();
+        _newWorld.id = _id;
 
         array_push(worlds, _newWorld);
         worldsMap[? _newWorld.id] = _newWorld;
@@ -45,13 +40,6 @@ function GameManager(_inputDeviceManager, _inputManager, _worldFactory) construc
 
     static worldExists = function world_exists(_worldId) {
         return ds_map_exists(worldsMap, _worldId);
-    }
-
-    static getNewWorldId = function get_new_world_id() {
-        if( array_length(worldIdPool) < 1 ) {
-            throw "Oops ran out of world ids";
-        }
-        return array_pop(worldIdPool);
     }
 
     static updateWorlds = function update_worlds() {
@@ -84,7 +72,7 @@ function GameManager(_inputDeviceManager, _inputManager, _worldFactory) construc
         }
     }
 
-    static cleanupDestroyedWorlds = function cleanup_destroyed_worlds() {
+    static cleanupDestroyedWorlds = function() {
         var _listLength = array_length(worlds);
         var i = _listLength - 1;
         var _swapIndex = i;
@@ -92,8 +80,10 @@ function GameManager(_inputDeviceManager, _inputManager, _worldFactory) construc
         while(i > -1) {
             var _world = worlds[i];
             if(_world.isDestroyed) {
+                var _worldId = _world.id;
                 _world.cleanup();
                 worlds[i] = worlds[_swapIndex];
+                ds_map_delete(worldsMap, _worldId);
                 _swapIndex -= 1;
                 _listLength -=1;
                 _destroyedWorlds = true;
@@ -109,8 +99,9 @@ function GameManager(_inputDeviceManager, _inputManager, _worldFactory) construc
         array_foreach(worlds, function(_world) {
              destroyWorld(_world.id);
         });
-        worlds = [];
+        
         cleanupDestroyedWorlds();
+        worlds = [];
 
         inputManager = undefined;
         inputDeviceManager = undefined;

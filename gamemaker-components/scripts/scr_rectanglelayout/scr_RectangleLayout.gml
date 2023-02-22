@@ -13,7 +13,6 @@ function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
     static componentConstructor = RectangleLayout;
     static componentName = string_lowercase_first(script_get_name(componentConstructor));
 
-
     ///@param {Struct.RectangleLayout} _rectLayout
     ///@param {Real} _dt
     static endStep = function(_rectLayout, _dt) {
@@ -28,11 +27,11 @@ function RectangleLayoutSystem(_world) : ComponentSystem(_world) constructor {
             return;
         }
         var _parent = world.getRef(_entityTree.parent);
-        if(!_parent) {
+        if(is_undefined(_parent)) {
             return;
         }
         var _parentRectSizing = _parent.component.rectangleSizing;
-        if(!_parentRectSizing) {
+        if(is_undefined(_parentRectSizing)) {
             return;
         }
 

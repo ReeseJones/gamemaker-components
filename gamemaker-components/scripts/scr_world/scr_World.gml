@@ -9,6 +9,7 @@ function World(_worldTimeManager, _systems) constructor {
     systems = _systems;
     system = {};
     systemCount = array_length(systems);
+    isDestroyed = false;
     
     instances = ds_map_create();
     instanceRemoveQueue = [];
@@ -53,7 +54,7 @@ function World(_worldTimeManager, _systems) constructor {
     }
 
     static createEntity = function(_entityId) {
-        var _newEntity new Entity(_entityId, self);
+        var _newEntity = new Entity(_entityId, self);
         registerEntity(_newEntity, _entityId);
         return _newEntity;
     }
