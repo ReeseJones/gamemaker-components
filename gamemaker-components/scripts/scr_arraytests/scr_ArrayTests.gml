@@ -7,7 +7,8 @@ return [
             var b = [4, 5, 6];
             var _expect = [1, 2, 3, 4, 5, 6];
 
-            matcher_arrays_equal(array_concat_ext(a, b, a), _expect);
+
+            expect(array_concat_ext(a, b, a)).toEqualArray(_expect);
             matcher_arrays_equal(a, _expect);
             matcher_arrays_equal(b, [4, 5, 6]);
         });
@@ -106,6 +107,15 @@ return [
             });
             
             matcher_value_equal(_result, _sam);
+        });
+        it("can have arbitrary code in macros", function() {
+            var _testArguments = function() {
+                COPY_PARAMS;
+                matcher_is_array(_params);
+                matcher_arrays_equal(_params, ["3", "2", "1", 1, 2, 3]);
+            }
+
+            _testArguments("3", "2", "1", 1, 2, 3);
         });
     })
 ];

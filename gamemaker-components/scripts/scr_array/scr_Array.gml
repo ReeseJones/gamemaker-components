@@ -1,3 +1,5 @@
+#macro COPY_PARAMS var _params=[] for(var __i = 0; __i < argument_count; __i += 1) array_push(_params, argument[__i])
+
 /// @function              array_deep_copy(value)
 /// @description           Recursivly attempts to copy elements of array. Does not work on instances.
 /// @param {Array<any>}    _value The array of which to join the elements.

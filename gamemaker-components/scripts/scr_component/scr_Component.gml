@@ -1,22 +1,3 @@
-#macro ES_SYSTEM_START "systemStart"
-#macro ES_SYSTEM_CLEANUP "systemCleanup"
-#macro ES_SYSTEM_STEP "systemStep"
-
-#macro ES_CREATE "create"
-#macro ES_DESTROY "destroy"
-#macro ES_CLEANUP "cleanup"
-
-#macro ES_BEGIN_STEP "beginStep"
-#macro ES_STEP "step"
-#macro ES_END_STEP "endStep"
-
-#macro ES_DRAW_BEGIN "drawBegin"
-#macro ES_DRAW "draw"
-#macro ES_DRAW_END "drawEnd"
-#macro ES_DRAW_GUI_BEGIN "drawGuiBegin"
-#macro ES_DRAW_GUI "drawGui"
-#macro ES_DRAW_GUI_END "drawGuiEnd"
-
 /// @desc Component is the base class for all components.
 /// @param {struct.Entity} _entity A reference to which thing this component is bound to.
 function Component(_entity = undefined) constructor {

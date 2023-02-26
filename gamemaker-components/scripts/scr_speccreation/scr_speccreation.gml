@@ -1,18 +1,27 @@
 /// @desc Description for SpecDescription
 /// @param {string} _description description of the spec
 /// @param {function} _spec The function that preforms the test
-function SpecDescription(_description, _spec) constructor {
+/// @param {Array<Struct.ExpectationData>} _expectationResults The function that preforms the test
+function SpecDescription(_description, _spec, _expectationResults = []) constructor {
+    // Feather disable GM2017
     description = _description;
     spec = _spec;
+    expectationResults = [];
+    // Feather restore GM2017
 }
 
-function TestSuite() constructor {
+/// @param {string} _description description of the spec
+/// @param {Array<Struct.SpecDescription>} _tests
+/// @param {Array<Function>} _befores
+/// @param {Array<Function>} _afters
+/// @param {Array<Struct.TestSuite>} _children
+function TestSuite(_description ="", _tests = [], _befores = [], _afters = [], _children = []) constructor {
     // Feather disable GM2017
-    description = "";
-    tests = [];
-    befores = [];
-    afters = [];
-    children = [];
+    description = _description;
+    tests = _tests;
+    befores = _befores;
+    afters = _afters;
+    children = _children;
     scriptLocation = "";
     // Feather restore GM2017
 }
@@ -64,17 +73,17 @@ function after_each(_afterTests) {
     if(is_struct(self) && is_instanceof(self, TestSuite)) {
         array_push(self.afters, _afterTests);
     } else {
-        throw "before_each defined outside of a test suite";    
+        throw "before_each defined outside of a test suite";
     }
 }
 
 /// @desc describe a set of spec definitions.
 /// @param {Struct.TestSuite} _testSuite
-/// @param {Array<Any>} _beforeStack
-/// @param {Array<Any>} _afterStack
-/// @param {Array<Any>} _descriptionStack
-/// @param {Array<Any>} _testResults
-/// @returns {Array<Any>}
+/// @param {Array<Array<Funciton>>} _beforeStack
+/// @param {Array<Array<Funciton>>} _afterStack
+/// @param {Array<String>} _descriptionStack
+/// @param {Array<String>} _testResults
+/// @returns {Array<String>}
 function visit_all_test_suites(_testSuite, _beforeStack = [], _afterStack = [], _descriptionStack = [], _testResults = []) {
         array_push(_beforeStack, _testSuite.befores);
         array_push(_afterStack, _testSuite.afters);
@@ -93,26 +102,30 @@ function visit_all_test_suites(_testSuite, _beforeStack = [], _afterStack = [], 
                 }));
             }));
             
-            //Adding two strings together: TODO: delete once better type info
-            // Feather disable once GM1009
             var _desc = array_join(_descriptionStack) + _spec.description;
-            var _passed = false;
+            var _results = undefined;
+            var _threw = false;
             var _newError = undefined;
 
             try {
                 var _testFunc = method(_testContext, _spec.spec);
-                _testFunc();
-                _passed = true;
+                _results = _testFunc();
             }
             catch(_error) {
-                _passed = false;
+                _threw = true;
                 _newError = _error;
             }
         
-            var _currentTestResults = _passed ? "PASSED: " : "FAILED: ";
-            _currentTestResults += _desc;
+            var _prefix = "PASSED: ";
+            if(_threw) {
+               _prefix = "ERROR: "; 
+            } else {
+               _prefix = _results.passed ? "PASSED: " : "FAILED: ";
+            }
+
+            var _currentTestResults =_prefix + _desc;
             
-            if(!_passed) {
+            if(!_results.passed) {
                 _currentTestResults += "\n" + string(_newError) + " - " + _testSuite.scriptLocation; 
             }
             
@@ -162,7 +175,7 @@ function run_all_specs() {
         array_concat_ext(_resultsArray, _results, _resultsArray);
     }
     
-    //Intentionally passing show_debug_message
+    //Cant change/ shouldnt change name of builtin method
     // Feather disable once GM2017
     array_foreach(_resultsArray, show_debug_message);
     return _resultsArray;

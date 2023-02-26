@@ -2,11 +2,13 @@
 /// @param {Struct.WorldTimeManager} _worldTimeManager Time manager which controls passage of
 /// @param {Array<Struct.ComponentSystem>} _systems Time manager which controls passage of
 /// time in the world and determines when a new frame starts.
-function World(_worldTimeManager, _systems) constructor {
+/// @param {Struct.LoggingService} _logger
+function World(_worldTimeManager, _systems, _logger) constructor {
     // Feather disable GM2017
-    id = -1;
+    id = undefined;
     timeManager = _worldTimeManager;
     systems = _systems;
+    logger = _logger;
     system = {};
     systemCount = array_length(systems);
     isDestroyed = false;
@@ -30,11 +32,12 @@ function World(_worldTimeManager, _systems) constructor {
     static addComponent = function(_entityId, _componentName) {
         var _entityRef = getRef(_entityId);
         if(is_undefined(_entityRef)) {
-            show_debug_message(string_join("", "Tried to add component '", _componentName, "' to non existant instance with id: ", _entityId));
+            logger.logWarning(LOG_LEVEL.IMPORTANT, "Tried to add component '", _componentName, "' to non existant instance with id: ", _entityId); 
             return;
         }
 
         if(!is_undefined(_entityRef.component[$ _componentName])) {
+            logger.logError(LOG_LEVEL.URGENT, "Component with name: ", _componentName, " has already been added");
             throw string_join("", "Component with name: ", _componentName, " has already been added");
         }
         
@@ -200,7 +203,7 @@ function World(_worldTimeManager, _systems) constructor {
         systems = undefined;
         systemCount = 0;
         system = undefined;
-        id = undefined;
+        //self.id = undefined;
     }
 
     static debugDraw = function() {
@@ -220,6 +223,6 @@ function World(_worldTimeManager, _systems) constructor {
     
 
     static toString = function() {
-        return string_join("WorldID: ", id);
+        return string_join("", "WorldID: ", id);
     }
 }

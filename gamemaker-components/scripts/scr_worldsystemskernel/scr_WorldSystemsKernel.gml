@@ -7,8 +7,9 @@ _gc.service("gameManager", GameManager, ["inputDeviceManager", "inputManager", "
 _gc.service("inputDeviceManager", InputDeviceManager);
 _gc.service("inputManager", InputManager, ["inputDeviceManager"]);
 _gc.service("worldFactory", ServiceFactory, ["gameContainer", "worldServiceName"]);
+_gc.service("debugLogger", LoggingService);
 
-_gc.service("world", World, ["worldTimeManager", "aggregatedSystems"]).inTreeScope();
+_gc.service("world", World, ["worldTimeManager", "aggregatedSystems", "debugLogger"]).inTreeScope();
 _gc.service("worldTimeManager", WorldTimeManager, ["realTimeProvider"]).inTreeScope();
 _gc.service("realTimeProvider", TimeProvider);
 
