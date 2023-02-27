@@ -32,7 +32,7 @@ function World(_worldTimeManager, _systems, _logger) constructor {
     static addComponent = function(_entityId, _componentName) {
         var _entityRef = getRef(_entityId);
         if(is_undefined(_entityRef)) {
-            logger.logWarning(LOG_LEVEL.IMPORTANT, "Tried to add component '", _componentName, "' to non existant instance with id: ", _entityId); 
+            logger.logWarning(LOG_LEVEL.IMPORTANT, "Tried to add component '", _componentName, "' to non existant instance with id: ", _entityId);
             return;
         }
 
@@ -48,7 +48,7 @@ function World(_worldTimeManager, _systems, _logger) constructor {
     static destroyComponent = function(_entityId, _componentName) {
         var _entityRef = getRef(_entityId);
         if(is_undefined(_entityRef)) {
-            show_debug_message(string_join("", "Tried to remove component '", _componentName, "' to non existant instance with id: ", _entityId));
+            logger.logWarning(LOG_LEVEL.IMPORTANT, "Tried to remove component '", _componentName, "' to non existant instance with id: ", _entityId);
             return;
         }
         

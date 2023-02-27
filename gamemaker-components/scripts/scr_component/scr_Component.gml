@@ -49,6 +49,7 @@ function ComponentSystem(_world = undefined) constructor {
         
         //TODO run create code when component is dynamically added?
         onCreate(_newComponent);
+        return _newComponent;
     }
     
     static removeComponent = function (_entity) {

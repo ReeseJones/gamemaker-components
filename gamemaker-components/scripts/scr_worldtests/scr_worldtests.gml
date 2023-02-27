@@ -7,23 +7,27 @@ function world_tests() {
                 timeProvider = { 
                     getDeltaSeconds: function(){ return 0.1}
                 };
+                
                 logger = new LoggingService();
+                logWarningSpy = test_spy_create();
+                logger.logWarning = logWarningSpy.spyMethod;
+                
                 timeManager = new WorldTimeManager(timeProvider);
                 
                 testSystem = new ComponentSystem();
+                systemStartSpy = test_spy_create();
+                testSystem.systemStart = systemStartSpy.spyMethod;
+                //testSystem.addComponent = test_spy_create();
+                //testSystem.removeComponent = test_spy_create();
+                
                 systems = [testSystem];
             });
-            after_each(function() {
 
-            });
             describe("Creation: ", function() {
                it("World systems have their systemStart method called.", function() {
-                   called = false;
-                   testSystem.systemStart = function() { 
-                       called = true;
-                   };
                    var _world = new World(timeManager, systems, logger);
-                   matcher_is_true(called);
+                   systemStartSpy.toBeCalled();
+                   systemStartSpy.toBeCalledWith();
                });
             });
             describe("addComponent: ", function() {
@@ -31,16 +35,37 @@ function world_tests() {
                    world = new World(timeManager, systems, logger);
                });
                it("will log a warning if you try and add a component to something that doesnt exist.", function() {
-                   called = false;
-                   logger.logWarning = function() {
-                       called = true; 
-                   };
-                   logger.logWarning.iAmAnObject = true;
                    world.addComponent("badId", "component");
-                   //WOW FUNCTIONS ARE OBJECTS REESE YOU CAN MAKE SPIES
-                   //ALSO KEEP TESTING THE WORLDS METHODS
-                   matcher_is_true(called);
-                   matcher_is_true(logger.logWarning.iAmAnObject);
+                   logWarningSpy.toBeCalledWith(LOG_LEVEL.IMPORTANT, "Tried to add component '", "component", "' to non existant instance with id: ", "badId");
+               });
+               it("should add the component", function() {
+                   var _newEntity = world.createEntity("tim");
+                   world.addComponent("tim", "component");
+                   matcher_struct_property_exists(_newEntity.component, "component");
+               });
+               it("should throw if your try and add a duplicate component", function() {
+                   var _newEntity = world.createEntity("tim");
+                   world.addComponent("tim", "component");
+                   matcher_should_throw( function() {
+                        world.addComponent("tim", "component");
+                   });
+               });
+            });
+            describe("destroyComponent: ", function() {
+               before_each(function() {
+                   world = new World(timeManager, systems, logger);
+               });
+               it("Will log a warning if you try to remove a component from a non existant entity", function() {
+                   world.destroyComponent("badId", "component");
+                   logWarningSpy.toBeCalled();
+               });
+               it("should immediately mark the component for descruction", function() {
+                   var _newEntity = world.createEntity("tim");
+                   var _comp = world.addComponent("tim", "component");
+                   matcher_struct_property_exists(_newEntity.component, "component");
+                   
+                   world.destroyComponent("tim", "component");
+                   matcher_is_true(_comp.componentIsDestroyed);
                });
             });
         })
