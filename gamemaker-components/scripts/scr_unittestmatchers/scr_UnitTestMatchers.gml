@@ -83,6 +83,17 @@ function matcher_is_defined(_a) {
     }
 }
 
+function matcher_struct_property_exists(_struct, _propName, _not = false) {
+    var _callbackString = get_debug_callstack_string();
+
+    if(variable_struct_exists(_struct, _propName) && _not) {
+        var _message = _not ? 
+              string_join("", "Property with name ", _propName, " found on struct." ) 
+            : string_join("", "Property ", _propName, " is missing.");
+        throw _message + _callbackString;
+    }
+}
+
 function matcher_is_true(_a) {
     var _callbackString = get_debug_callstack_string();
     

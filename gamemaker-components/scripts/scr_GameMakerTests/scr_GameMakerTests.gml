@@ -12,8 +12,8 @@ function game_maker_tests() {
             it(" Functions can have properties", function() {
                 testText = "I am a property on a function";
                 testFunc = function() {};
-                testFunc.newVar = _testText;
-                matcher_should_throw()
+                testFunc.newVar = testText;
+                testFunc();
             });
         })
     ];

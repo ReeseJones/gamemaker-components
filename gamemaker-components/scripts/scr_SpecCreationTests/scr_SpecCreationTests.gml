@@ -5,14 +5,14 @@ function spec_creation_tests() {
             before_each(function() {
                 self.foo = 0;
             });
-            it("can use the `this` to share state", function() {
-                expect(self.foo).toBe(0);
+            it(" can use the `this` to share state", function() {
+                matcher_value_equal(self.foo, 0);
                 self.bar = "test pollution?";
             });
 
-            it("prevents test pollution by having an empty `this` created for the next spec", function() {
-                expect(this.foo).toBe(0);
-                expect(this.bar).toBe(undefined);
+            it(" prevents test pollution by having an empty `this` created for the next spec", function() {
+                matcher_value_equal(self.foo, 0);
+                matcher_struct_property_exists(self, "bar", true);
             });
         })
     ];

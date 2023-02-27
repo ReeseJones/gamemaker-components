@@ -1,13 +1,9 @@
 /// @desc Description for SpecDescription
 /// @param {string} _description description of the spec
 /// @param {function} _spec The function that preforms the test
-/// @param {Array<Struct.ExpectationData>} _expectationResults The function that preforms the test
-function SpecDescription(_description, _spec, _expectationResults = []) constructor {
-    // Feather disable GM2017
+function SpecDescription(_description, _spec) constructor {
     description = _description;
     spec = _spec;
-    expectationResults = [];
-    // Feather restore GM2017
 }
 
 /// @param {string} _description description of the spec
@@ -30,7 +26,7 @@ function TestSuite(_description ="", _tests = [], _befores = [], _afters = [], _
 /// @param {string} _description description
 /// @param {function} _specDefinitions A function which describes the specs.
 /// @returns {Struct.TestSuite} Returns the test suite this describe created
-function describe(_description, _specDefinitions) {    
+function describe(_description, _specDefinitions) {
     var _testSuite = new TestSuite();
     var _suiteBinding = method(_testSuite, _specDefinitions);
     _testSuite.description = _description;
@@ -63,7 +59,7 @@ function before_each(_beforeSetup) {
     if(is_struct(self) && is_instanceof(self, TestSuite)) {
         array_push(self.befores, _beforeSetup);
     } else {
-        throw "before_each defined outside of a test suite";    
+        throw "before_each defined outside of a test suite";
     }
 }
 
@@ -79,11 +75,11 @@ function after_each(_afterTests) {
 
 /// @desc describe a set of spec definitions.
 /// @param {Struct.TestSuite} _testSuite
-/// @param {Array<Array<Funciton>>} _beforeStack
-/// @param {Array<Array<Funciton>>} _afterStack
-/// @param {Array<String>} _descriptionStack
-/// @param {Array<String>} _testResults
-/// @returns {Array<String>}
+/// @param {Array<Any>} _beforeStack
+/// @param {Array<Any>} _afterStack
+/// @param {Array<Any>} _descriptionStack
+/// @param {Array<Any>} _testResults
+/// @returns {Array<Any>}
 function visit_all_test_suites(_testSuite, _beforeStack = [], _afterStack = [], _descriptionStack = [], _testResults = []) {
         array_push(_beforeStack, _testSuite.befores);
         array_push(_afterStack, _testSuite.afters);
@@ -101,31 +97,25 @@ function visit_all_test_suites(_testSuite, _beforeStack = [], _afterStack = [], 
                     _boundFunc();
                 }));
             }));
-            
+
             var _desc = array_join(_descriptionStack) + _spec.description;
-            var _results = undefined;
-            var _threw = false;
+            var _passed = false;
             var _newError = undefined;
 
             try {
                 var _testFunc = method(_testContext, _spec.spec);
-                _results = _testFunc();
+                _testFunc();
+                _passed = true;
             }
             catch(_error) {
-                _threw = true;
+                _passed = false;
                 _newError = _error;
             }
         
-            var _prefix = "PASSED: ";
-            if(_threw) {
-               _prefix = "ERROR: "; 
-            } else {
-               _prefix = _results.passed ? "PASSED: " : "FAILED: ";
-            }
-
-            var _currentTestResults =_prefix + _desc;
+            var _currentTestResults = _passed ? "PASSED: " : "FAILED: ";
+            _currentTestResults += _desc;
             
-            if(!_results.passed) {
+            if(!_passed) {
                 _currentTestResults += "\n" + string(_newError) + " - " + _testSuite.scriptLocation; 
             }
             
@@ -175,7 +165,7 @@ function run_all_specs() {
         array_concat_ext(_resultsArray, _results, _resultsArray);
     }
     
-    //Cant change/ shouldnt change name of builtin method
+    //Cant shouldnt change name of builtin method
     // Feather disable once GM2017
     array_foreach(_resultsArray, show_debug_message);
     return _resultsArray;
