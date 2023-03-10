@@ -44,7 +44,7 @@ function TestConstructorC(_text) constructor {
 tag_script(service_container_tests, [TAG_UNIT_TEST_SPEC]);
 function service_container_tests() {
     return [
-        describe("ServiceContainer ", function() {
+        describe("ServiceContainer", function() {
             it("should be able to bind a value and retrieve it", function(){
                 var _serviceContainer = new ServiceContainer();
                 

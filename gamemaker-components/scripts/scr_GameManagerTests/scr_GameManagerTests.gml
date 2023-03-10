@@ -6,10 +6,12 @@ function game_manager_tests() {
             before_each(function() {
                 testTimeProvider = { getDeltaSeconds: function() { return 0.1;} };
                 testTimeManager = new WorldTimeManager(testTimeProvider);
+                logger = new LoggingService();
                 testWorldFactory = {
+                    logger: logger,
                     testTimeManager: testTimeManager,
                     create: function() {
-                    return new World(testTimeManager, []);
+                    return new World(testTimeManager, [], logger);
                 }};
                 gameManager = new GameManager(testWorldFactory);
             });
@@ -25,7 +27,7 @@ function game_manager_tests() {
                 matcher_value_equal(gameManager.worldExists(_world.id), true);
             });
             
-            describe("DestroyWorld - ", function() {
+            describe("DestroyWorld", function() {
                 before_each( function() {
                     world = gameManager.createWorld(0);
                 });
@@ -40,7 +42,7 @@ function game_manager_tests() {
                 });
             });
             
-            describe("CreateWorld - ", function() {
+            describe("CreateWorld", function() {
                 it("it should return an instance of world", function() {
                     var _world = gameManager.createWorld("newWorld");
                     matcher_is_true(is_instanceof(_world, World));
@@ -53,7 +55,7 @@ function game_manager_tests() {
                 });
             });
             
-            describe("getWorldRef - ", function() {
+            describe("getWorldRef", function() {
                  it("it should return a reference to a world if it exists", function() {
                     var _world = gameManager.createWorld("one");
                     matcher_value_equal(gameManager.getWorldRef(_world.id), _world);
@@ -65,7 +67,7 @@ function game_manager_tests() {
                 });
             });
             
-             describe(" destroy world - ", function() {
+             describe("destroy world", function() {
                 it("world is not removed on destruction", function() {
                     var _world = gameManager.createWorld(-3);
                     gameManager.destroyWorld(_world.id);

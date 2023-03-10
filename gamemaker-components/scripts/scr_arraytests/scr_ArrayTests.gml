@@ -1,7 +1,7 @@
 tag_script(array_tests, [TAG_UNIT_TEST_SPEC]);
 function array_tests() {
 return [
-    describe("Arrays - ", function() {
+    describe("Arrays", function() {
         it("array_concat_ext should combine two arrays into the original array without issue", function() {
             var a = [1, 2, 3];
             var b = [4, 5, 6];

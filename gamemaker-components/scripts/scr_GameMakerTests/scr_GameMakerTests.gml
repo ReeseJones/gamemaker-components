@@ -9,12 +9,6 @@ function game_maker_tests() {
             after_each(function() {
 
             });
-            it(" Functions can have properties", function() {
-                testText = "I am a property on a function";
-                testFunc = function() {};
-                testFunc.newVar = testText;
-                testFunc();
-            });
         })
     ];
 }

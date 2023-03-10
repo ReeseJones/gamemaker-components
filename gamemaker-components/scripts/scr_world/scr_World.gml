@@ -65,7 +65,7 @@ function World(_worldTimeManager, _systems, _logger) constructor {
     static destroyEntity = function(_entityId) {
         var _entity = getRef(_entityId);
         if(is_undefined(_entity)) {
-            show_debug_message(string_join("", "Tried to delete id ", _entityId, " but no entity was found."));
+            logger.logWarning(LOG_LEVEL.IMPORTANT, "Tried to delete id ", _entityId, " but no entity was found.");
             return;
         }
 
@@ -198,12 +198,14 @@ function World(_worldTimeManager, _systems, _logger) constructor {
         }
 
         timeManager = undefined;
-        ds_map_destroy(instances);
-        instances = undefined;
-        systems = undefined;
+        if ( ds_exists(instances, ds_type_map) ) {
+            ds_map_destroy(instances);
+        }
+        instances = -1;
+
+        systems = [];
         systemCount = 0;
-        system = undefined;
-        //self.id = undefined;
+        system = {};
     }
 
     static debugDraw = function() {

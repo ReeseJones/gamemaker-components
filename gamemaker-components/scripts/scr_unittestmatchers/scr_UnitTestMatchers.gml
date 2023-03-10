@@ -40,6 +40,18 @@ function matcher_arrays_equal(_a, _b) {
     }
 }
 
+function matcher_array_contains(_a, _b) {
+    var _callbackString = get_debug_callstack_string();
+    
+    if(!is_array(_a)) {
+        throw "Arrays does not contain value: _a is not an array." + _callbackString;
+    }
+
+    if(!array_contains(_a, _b)) {
+        throw string_join("", "Arrays does not contain _b: _a is ", _a, " and _b is ", _b, _callbackString);
+    }
+}
+
 function matcher_should_throw(_throwingMethod) {
     var _callbackString = get_debug_callstack_string();
     
@@ -99,6 +111,14 @@ function matcher_is_true(_a) {
     
     if(_a != true) {
         throw "_a is not true." + _callbackString;
+    }
+}
+
+function matcher_is_false(_a) {
+    var _callbackString = get_debug_callstack_string();
+    
+    if(_a != false) {
+        throw "_a is not false." + _callbackString;
     }
 }
 

@@ -98,7 +98,7 @@ function visit_all_test_suites(_testSuite, _beforeStack = [], _afterStack = [], 
                 }));
             }));
 
-            var _desc = array_join(_descriptionStack) + _spec.description;
+            var _desc = array_join(_descriptionStack, " ") + " " + _spec.description;
             var _passed = false;
             var _newError = undefined;
 

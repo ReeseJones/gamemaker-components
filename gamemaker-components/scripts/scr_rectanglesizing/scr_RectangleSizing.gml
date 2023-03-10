@@ -11,7 +11,7 @@ function RectangleSizing(_entity) : Component(_entity) constructor {
 }
 
 /// @param {Struct.World} _world The world which this System operates in.
-function RectangleSizingSystem(_world) : ComponentSystem(_world) constructor {
+function RectangleSizingSystem(_world = undefined) : ComponentSystem(_world) constructor {
     static componentConstructor = RectangleSizing;
     static componentName = string_lowercase_first(script_get_name(componentConstructor));
 
