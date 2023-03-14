@@ -19,7 +19,7 @@ function GameManager(_worldFactory) constructor {
         _worldRef.isDestroyed = true;
     }
 
-//@param {string} _id Id for the world
+    //@param {string} _id Id for the world
     static createWorld = function create_world(_id) {
         if(worldExists(_id)) {
             throw "World cannot be created: " + string(_id) + " already used.";
@@ -34,15 +34,18 @@ function GameManager(_worldFactory) constructor {
         return _newWorld;
     }
 
-    static getWorldRef = function get_world_ref(_worldId) {
+    ///@param {Real} _worldId Id for the world
+    ///@return {Struct.World}
+    static getWorldRef = function(_worldId) {
         return worldsMap[? _worldId];
     }
 
-    static worldExists = function world_exists(_worldId) {
+    ///@param {Real} _worldId Id for the world
+    static worldExists = function(_worldId) {
         return ds_map_exists(worldsMap, _worldId);
     }
 
-    static updateWorlds = function update_worlds() {
+    static updateWorlds = function() {
         var _worldCount = array_length(worlds);
         for(var i = 0; i < _worldCount; i += 1) {
             var _world  = worlds[i];

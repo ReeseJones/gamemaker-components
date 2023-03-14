@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_EntitySystem",
+  "name": "scr_SubscriberData",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Entity",
-    "path": "folders/Scripts/Entity.yy",
+    "name": "Events",
+    "path": "folders/Scripts/Events.yy",
   },
 }

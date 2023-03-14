@@ -23,12 +23,14 @@ function LoggingService() constructor {
         }
     }
     
+    ///@param {Real} _level
     static logWarning = function(_level) {
         COPY_PARAMS;
         array_insert(_params, 1, "Warning: ");
         method_call(log, _params);
     }
     
+    ///@param {Real} _level
     static logError = function(_level) {
         COPY_PARAMS;
         array_insert(_params, 1, "Error: ");

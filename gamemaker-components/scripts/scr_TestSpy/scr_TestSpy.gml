@@ -1,7 +1,8 @@
+///@self TestSpyInstance
 function test_spy_callable() {
     COPY_PARAMS;
     array_push(callsToSpy, _params);
-    
+
     if(callThrough && is_defined(originalMethod)) {
         return method_call(originalMethod, _params);
     }

@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_Event",
+  "name": "scr_Entity",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Events",
-    "path": "folders/Scripts/Events.yy",
+    "name": "Entity",
+    "path": "folders/Scripts/Entity.yy",
   },
 }
