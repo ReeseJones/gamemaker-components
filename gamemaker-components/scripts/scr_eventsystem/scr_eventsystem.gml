@@ -16,7 +16,7 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
     logger = _logger;
     timeManager = _timeManager;
 
-    //emitterId -> eventType -> SubscriptionData
+    //emitterId -> eventType -> SubscriptionData[]
     subscriptionMap = {};
     eventQueue = undefined;
     subscriberMatcherData = new SubscriberData(0, 0, "");
@@ -126,14 +126,14 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
                 logger.logWarning(LOG_LEVEL.URGENT, "EventSystem.Subscribe: subscribing listener that doesnt exist in this on world: ", _listenerWorldId);
                 //return;
             }
-        }
 
-        var _methodParts = string_split(_methodAddress, ".");
-        var _system = _listenerWorld.system[$ _methodParts[0]];
-        var _method = _system[$ _methodParts[1]];
-        if(!is_method(_method)) {
-            logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe because the method at ", _methodAddress, " did not exist in the listener world.");
-            return;
+            var _methodParts = string_split(_methodAddress, ".");
+            var _system = _listenerWorld.system[$ _methodParts[0]];
+            var _method = _system[$ _methodParts[1]];
+            if(!is_method(_method)) {
+                logger.logWarning(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe because the method at ", _methodAddress, " did not exist in the listener world.");
+                //return;
+            }
         }
         
         var _eventMap = subscriptionMap[$ _emitterId];
@@ -141,13 +141,13 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
             _eventMap = {};
             subscriptionMap[$ _emitterId] = _eventMap;
         }
-        
+
         var _subscriberList = _eventMap[$ _eventType];
         if(is_undefined(_subscriberList)) {
             _subscriberList = [];
             _eventMap[$ _eventType] = _subscriberList;
         }
-        
+
         var _newSubscriberData = new SubscriberData(_listenerId, _listenerWorldId, _methodAddress);
         array_push(_subscriberList, _newSubscriberData);
     }

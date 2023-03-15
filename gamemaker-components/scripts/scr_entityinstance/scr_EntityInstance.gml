@@ -1,15 +1,16 @@
-// Feather disable GM2017
-
 #macro MASK_SIZE_POWER 6
 #macro MASK_RESOLUTION 64
 
-function EntityInstance(_instance) : Component(_instance) constructor {
-    instanceRef = undefined;
+function EntityInstance() : Component() constructor {
+    // Feather disable GM2017
+    instance = undefined;
 
     //General Instance Variables
     visible = true;
-    solid = false;  
-    layerId = "instances";
+    solid = false;
+    
+    layerName = "instances";
+    layer = -1;
     
     //Movement and Position Instance Variables
     x = 0;
@@ -21,10 +22,11 @@ function EntityInstance(_instance) : Component(_instance) constructor {
     speed = 0;
     friction = 0;
     
-    objectIndex = 0;
+    objectIndex = obj_solid_dynamic;
     
     //Sprite Properties
-    spriteIndex = 0;
+    spriteIndex = spr_mask_circle;
+    //TODO: Image Index??? Image Speed?
     imageAlpha = 1;
     imageAngle = 0;
     imageBlend = 0;
@@ -32,155 +34,170 @@ function EntityInstance(_instance) : Component(_instance) constructor {
     imageYscale = 1;
     
     //Mask and Bounding Box
-    maskIndex = 0;
-    maskWidth = 1;
-    maskHeight = 1;
-    
-    /*
-    if(sprite_exists(spriteIndex) && sprite_exists(maskIndex)) {
-        maskWidth = sprite_get_width(spriteIndex);
-        maskHeight = sprite_get_height(spriteIndex);
-        _instance.image_xscale = maskWidth / sprite_get_width(maskIndex);
-        _instance.image_yscale = maskHeight / sprite_get_height(maskIndex);
-    }
-    */
+    maskIndex = spr_mask_circle;
+    maskWidth = 64;
+    maskHeight = 64;
+    // Feather restore GM2017
 }
 
 function EntityInstanceSystem() : ComponentSystem() constructor {
     static componentConstructor = EntityInstance;
     static componentName = string_lowercase_first(script_get_name(componentConstructor));
-    /*
-    function onCreate(_entityInst) {
-        //Mask and Bounding Box
-        _entityInst.maskIndex = instance.mask_index;
+
+    ///@param {Struct.EntityInstance} _entityInst
+    static onCreate = function(_entityInst) {
+        setObject(_entityInst.getEntityId(), _entityInst.objectIndex, _entityInst.layerName);
+    }
     
+    ///@param {Struct.EntityInstance} _entityInst
+    static onDestroy = function(_entityInst) {
+        instance_destroy(_entityInst.instance);
+        _entityInst.instance = -1;
+    }
+    
+    ///@param {Real} _entityId
+    ///@param {Asset.GMObject} _newObjectIndex
+    ///@param {String} _newLayerId
+    static setObject = function(_entityId, _newObjectIndex, _newLayerId) {
+        var _entity = world.getRef(_entityId);
+        var _entityInst = _entity.component.entityInstance;
+        //cleanup old object
+        if(instance_exists(_entityInst.instance)) {
+            instance_destroy(_entityInst.instance);
+            _entityInst.instance = -1;
+        }
+
+        if(object_exists(_newObjectIndex)) {
+            _entityInst.objectIndex = _newObjectIndex;
+        }
+
+        if(layer_exists(_newLayerId)) {
+            if(is_real(_newLayerId)) {
+                _entityInst.layer = _newLayerId;
+                _entityInst.layerName = layer_get_name(_newLayerId);
+            } else {
+                _entityInst.layer = layer_get_id(_newLayerId);
+                _entityInst.layerName = _newLayerId;
+            }
+        }
+
+        _entityInst.instance = instance_create_layer(
+            _entityInst.x,
+            _entityInst.y,
+            _entityInst.layerId,
+            _entityInst.objectIndex
+        );
+        
         if(sprite_exists(_entityInst.spriteIndex) && sprite_exists(_entityInst.maskIndex)) {
-            _entityInst.maskWidth = sprite_get_width(spriteIndex);
-            _entityInst.maskHeight = sprite_get_height(spriteIndex);
-            instance.image_xscale = _entityInst.maskWidth / sprite_get_width(_entityInst.maskIndex);
-            instance.image_yscale = _entityInst.maskHeight / sprite_get_height(_entityInst.maskIndex);
-        }    
+            _entityInst.maskWidth = sprite_get_width(_entityInst.spriteIndex);
+            _entityInst.maskHeight = sprite_get_height(_entityInst.spriteIndex);
+            _entityInst.imageXscale = _entityInst.maskWidth / sprite_get_width(_entityInst.maskIndex);
+            _entityInst.imageYscale = _entityInst.maskHeight / sprite_get_height(_entityInst.maskIndex);
+        }
+            
+        //TODO: Fix when can assert types
+        // Feather disable once GM1041
+        entity_instance_sync_instance(_entityInst, _entityInst.instance);
     }
     
-    */
-    
-    function SetSize(_entityId, _xWidth, _yHeight) {
-        var _entityRef = entity.getRef(_entityId);
-        var _eInst = _entityRef.components.entityInstance;
-        _eInst.maskWidth = _xWidth;
-        _eInst.maskHeight = _yHeight;
-        _eInst.image_xscale = _xWidth / sprite_get_width(_eInst.maskIndex);
-        _eInst.image_yscale = _yHeight / sprite_get_height(_eInst.maskIndex);
-        //TODO forward to inst props?
-    }
-    
-    function SetImageAngle(_entityId, _rotationDegrees) {
-        var _entityRef = entity.getRef(_entityId);
-        var _eInst = _entityRef.components.entityInstance;
-        _eInst.imageAngle = _rotationDegrees;
-        //TODO forward to inst props?
-        //_eInst.instanceRef.image_angle = _rotationDegrees;
-    }
-    
-    function SetImageScale(_entityId, _xScale, _yScale) {
-        var _entityRef = entity.getRef(_entityId);
-        var _eInst = _entityRef.components.entityInstance;
-        _eInst.imageXscale = _xScale;
-        _eInst.imageYscale = _yScale;
-        //TODO forward to inst props?
-    }
-    
-    /*
-    function beginStep(_entity, _dt) {
-        var inst = _entity.instance;
+    ///@param {Real} _entityId
+    ///@param {Real} _xWidth
+    ///@param {Real} _yHeight
+    static setSize = function(_entityId, _xWidth, _yHeight) {
+        var _entity = world.getRef(_entityId);
+        var _entityInst = _entity.component.entityInstance;
         
-        inst.visible = _entity.visible;
-        inst.solid = _entity.solid;
-        inst.persistent = _entity.persistent;
-        //TODO: Update layer id
+        _entityInst.maskWidth = _xWidth;
+        _entityInst.maskHeight = _yHeight;
+        
+        _entityInst.imageXScale = _xWidth / sprite_get_width(_entityInst.maskIndex);
+        _entityInst.imageYScale = _yHeight / sprite_get_height(_entityInst.maskIndex);
+        
+        var _inst = _entityInst.instance;
+        _inst.image_xscale = _entityInst.imageXScale;
+        _inst.image_yscale = _entityInst.imageYScale;
+    }
     
+    ///@param {Real} _entityId
+    ///@param {Real} _rotationDegrees
+    static setImageAngle = function(_entityId, _rotationDegrees) {
+        var _entity = world.getRef(_entityId);
+        var _entityInst = _entity.component.entityInstance;
+
+        _entityInst.imageAngle = _rotationDegrees;
+        _entityInst.instance.image_angle = _rotationDegrees;
+    }
+
+    ///@param {Struct.EntityInstance} _entityInstance
+    ///@param {Real} _dt
+    static beginStep = function(_entityInstance, _dt) {
+        var _inst = _entityInstance.instance;
+
         //Movement and Position Instance Variables
-        _entity.xPrevious = _entity.x;
-        _entity.yPrevious = _entity.y;
+        _entityInstance.xPrevious = _entityInstance.x;
+        _entityInstance.yPrevious = _entityInstance.y;
+        _entityInstance.directionPrevious = _entityInstance.direction;
         
-        inst.x = _entity.x;
-        inst.y = _entity.y;
-    
-        _entity.directionPrevious = _entity.direction;
-        inst.direction = _entity.direction;
-        inst.speed = _entity.speed;
-        inst.friction = _entity.friction;
-    
-        //Sprite Properties
-        inst.sprite_index = _entity.spriteIndex;
-        inst.image_alpha = _entity.imageAlpha;
-        inst.image_blend = _entity.imageBlend;
-        
-        //Mask and Bounding Box
-        inst.mask_index = _entity.maskIndex;
-        inst.image_xscale = _entity.maskWidth / sprite_get_width( _entity.maskIndex);
-        inst.image_yscale = _entity.maskHeight / sprite_get_height( _entity.maskIndex);
-        inst.image_angle = _entity.imageAngle;
+        //TODO Sync component properties to instance???
+        entity_instance_sync_instance(_entityInstance, _inst);
     }
-    */
-    
-    /*
-    function drawEnd(_entityInst, _dt) {
-        var inst = _entityInst.instance;
-        var xx = inst.x
-        var yy = inst.y
-        var rot = _entityInst.imageAngle;
+
+    ///@param {Struct.EntityInstance} _entityInstance
+    ///@param {Real} _dt
+    static drawEnd = function(_entityInstance, _dt) {
+        var _inst = _entityInstance.instance;
+        var _xx = _inst.x
+        var _yy = _inst.y
+        var _rot = _entityInstance.imageAngle;
             
         //get the rotated bounding box world positions
-        var bbox = rect_get_rotated(xx, yy, _entityInst.maskWidth / 2, _entityInst.maskHeight / 2, rot);
+        var _bbox = rect_get_rotated(_xx, _yy, _entityInstance.maskWidth / 2, _entityInstance.maskHeight / 2, _rot);
         
-        draw_line_width(bbox.tl.x, bbox.tl.y, bbox.br.x, bbox.br.y, 3);
+        draw_line_width(_bbox.tl.x, _bbox.tl.y, _bbox.br.x, _bbox.br.y, 3);
         
         //rotate them around origin back to be axis aligned
-        vector2d_inplace_rotate( bbox.tl, rot);
-        vector2d_inplace_rotate( bbox.br, rot);
+        vector2d_inplace_rotate( _bbox.tl, _rot);
+        vector2d_inplace_rotate( _bbox.br, _rot);
         
-        draw_line(bbox.tl.x, bbox.tl.y, bbox.br.x, bbox.tl.y);
-        draw_line(bbox.br.x, bbox.tl.y, bbox.br.x, bbox.br.y);
-        draw_line(bbox.br.x, bbox.br.y, bbox.tl.x, bbox.br.y);
-        draw_line(bbox.tl.x, bbox.br.y, bbox.tl.x, bbox.tl.y);
+        draw_line(_bbox.tl.x, _bbox.tl.y, _bbox.br.x, _bbox.tl.y);
+        draw_line(_bbox.br.x, _bbox.tl.y, _bbox.br.x, _bbox.br.y);
+        draw_line(_bbox.br.x, _bbox.br.y, _bbox.tl.x, _bbox.br.y);
+        draw_line(_bbox.tl.x, _bbox.br.y, _bbox.tl.x, _bbox.tl.y);
     }
-    */
-    
-    /*
-    function draw(_entityInst, _dt) {
-        var inst = _entityInst.instance;
-        var xx = lerp(_entityInst.xPrevious, _entityInst.x, _dt);
-        var yy = lerp(_entityInst.yPrevious, _entityInst.y, _dt);
-        
-        
-        if(sprite_exists(_entityInst.spriteIndex)) {
+
+    ///@param {Struct.EntityInstance} _entityInstance
+    ///@param {Real} _dt
+    static draw = function(_entityInstance, _dt) {
+        var _inst = _entityInstance.instance;
+        var _xx = lerp(_entityInstance.xPrevious, _entityInstance.x, _dt);
+        var _yy = lerp(_entityInstance.yPrevious, _entityInstance.y, _dt);
+
+        if(sprite_exists(_entityInstance.spriteIndex)) {
             draw_sprite_ext(
-                _entityInst.spriteIndex,
+                _entityInstance.spriteIndex,
                 0, 
-                xx,
-                yy, 
-                _entityInst.imageXscale,
-                _entityInst.imageYscale, 
-                _entityInst.imageAngle,
-                _entityInst.imageBlend,
+                _xx,
+                _yy, 
+                _entityInstance.imageXscale,
+                _entityInstance.imageYscale, 
+                _entityInstance.imageAngle,
+                _entityInstance.imageBlend,
                 0.3
             );
         }
-        
-        if(sprite_exists(inst.mask_index)) {
+
+        if(sprite_exists(_inst.mask_index)) {
             draw_sprite_ext(
-                inst.mask_index,
+                _inst.mask_index,
                 0,
-                inst.x,
-                inst.y,
-                inst.image_xscale,
-                inst.image_yscale,
-                inst.image_angle,
+                _inst.x,
+                _inst.y,
+                _inst.image_xscale,
+                _inst.image_yscale,
+                _inst.image_angle,
                 c_white,
                 0.4
             );
         }
     }
-    */
 }

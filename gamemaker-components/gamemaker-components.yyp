@@ -76,6 +76,7 @@
     {"id":{"name":"scr_UiRoot","path":"scripts/scr_UiRoot/scr_UiRoot.yy",},},
     {"id":{"name":"scr_NearestPointOnEllipse","path":"scripts/scr_NearestPointOnEllipse/scr_NearestPointOnEllipse.yy",},},
     {"id":{"name":"rm_splash","path":"rooms/rm_splash/rm_splash.yy",},},
+    {"id":{"name":"scr_Instance","path":"scripts/scr_Instance/scr_Instance.yy",},},
     {"id":{"name":"scr_EntityTree","path":"scripts/scr_EntityTree/scr_EntityTree.yy",},},
     {"id":{"name":"EntityCreationNotes","path":"notes/EntityCreationNotes/EntityCreationNotes.yy",},},
     {"id":{"name":"scr_EventSystem","path":"scripts/scr_EventSystem/scr_EventSystem.yy",},},

@@ -77,15 +77,65 @@ function event_system_tests() {
             });
         });
         describe("subscribe", function() {
-            describe("should throw when", function() {
+            it("should make it so your callback is called when a matching event fires.", function() {
+                eventName = "testEventType";
+                callbackSpy = test_spy_create();
+                worldOne.createEntity(42);
+                testSystem.testCallback = callbackSpy.spyMethod;
+                eventSystem.dispatch(eventName, 42, "data");
+                eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 2);
+                eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 3);
+                eventSystem.subscribe(1, 42, "component.testCallback", eventName, 42);
                 
+                for(var i = 0; i < 4; i += 1) {
+                    gameManager.updateWorlds();
+                }
+                
+                callbackSpy.toBeCalledTimes(3);
+            });
+            it("can work for entities in different worlds", function() {
+                eventName = "testEventType";
+                callbackSpy = test_spy_create();
+                callbackSpy2 = test_spy_create();
+                worldOne.createEntity(42);
+                testSystem.testCallback = callbackSpy.spyMethod;
+                
+                eventSystem.dispatch(eventName, 42, "data");
+                eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 2);
+                eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 3);
+                worldTwo = gameManager.createWorld(2);
+                worldTwo.createEntity(42);
+                testSystem2 = worldTwo.system.component;
+                testSystem2.testCallback = callbackSpy2.spyMethod;
+                
+                eventSystem.subscribe(2, 42, "component.testCallback", eventName, 42);
+                
+                for(var i = 0; i < 4; i += 1) {
+                    gameManager.updateWorlds();
+                }
+                
+                callbackSpy.toBeCalledTimes(0);
+                callbackSpy2.toBeCalledTimes(3);
+            })
+        });
+        describe("unsubscribe", function() {
+            it("should make it so your callback is not called when a matching event fires.", function() {
+                eventName = "testEventType";
+                callbackSpy = test_spy_create();
+                worldOne.createEntity(42);
+                testSystem.testCallback = callbackSpy.spyMethod;
+                eventSystem.dispatch(eventName, 42, "data");
+                eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 2);
+                eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 3);
+                eventSystem.subscribe(1, 42, "component.testCallback", eventName, 42);
+                
+                gameManager.updateWorlds();
+                eventSystem.unsubscribe(1, 42, "component.testCallback", eventName, 42);
+                gameManager.updateWorlds();
+                gameManager.updateWorlds();
+                
+                callbackSpy.toBeCalledTimes(1);
             });
         });
-        describe("systemStep", function() {
-            describe("should throw when", function() {
-                
-            });
-        });
-        
     })];
 }
