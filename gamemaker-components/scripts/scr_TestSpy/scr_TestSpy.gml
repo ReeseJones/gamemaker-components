@@ -1,4 +1,5 @@
 ///@self TestSpyInstance
+///@return {Any}
 function test_spy_callable() {
     COPY_PARAMS;
     array_push(callsToSpy, _params);
@@ -10,6 +11,7 @@ function test_spy_callable() {
     return returnValue;
 }
 
+///@return {struct.TestSpyInstance}
 function test_spy_create() {
     var _self = new TestSpyInstance();
     _self.spyMethod = method(_self, test_spy_callable)
@@ -19,6 +21,7 @@ function test_spy_create() {
 ///@param {Struct} _struct
 ///@param {String} _funcName
 ///@param {Bool} _callThrough
+///@return {Struct.TestSpyInstance}
 function spy_on(_struct, _funcName, _callThrough = false) {
     if(!variable_struct_exists(_struct, _funcName) || !is_method(_struct[$ _funcName]) ) {
         throw string_join("", "Cannot spy on struct with property ", _funcName, " because property does not exsit. Or is not a method.");

@@ -19,6 +19,7 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
     //emitterId -> eventType -> SubscriptionData
     subscriptionMap = {};
     eventQueue = undefined;
+    subscriberMatcherData = new SubscriberData(0, 0, "");
     // Feather restore GM2017
     static systemStart = function(){
         eventQueue = ds_map_create();
@@ -43,14 +44,14 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
         var _queuedEventCount = array_length(_eventsForSequence);
         
         for(var i = 0; i < _queuedEventCount; i += 1) {
-            var _eventdata = _eventsForSequence[i];
+            var _eventData = _eventsForSequence[i];
             
             var _eventMap = subscriptionMap[$ _eventData.entityId];
             if(is_undefined(_eventMap)) {
                 continue;
             }
 
-            var _subscriberList = _eventMap[$ _eventType.eventType];
+            var _subscriberList = _eventMap[$ _eventData.eventType];
             if(is_undefined(_subscriberList)) {
                 continue;
             }
@@ -63,16 +64,18 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
                 
                 var _listenerWorld = gameManager.getWorldRef(_subscriberData.listenerWorldId);
                 if(is_undefined(_listenerWorld)) {
-                    //TOODO: Remove this subscriber Data
+                    // TODO: Remove this subscriber Data
                     continue;
                 }
 
                 var _listener = _listenerWorld.getRef(_subscriberData.listenerId);
+                // TODO: Remove if entity is destroyed OR undefined
                 if(is_undefined(_listener)) {
-                    //TODO: Remove this subscriber data
+                    // TODO: Remove this subscriber data
                     continue;
                 }
 
+                //TODO: Introduce method/reference caching
                 var _methodParts = string_split(_subscriberData.methodAddress, ".");
                 var _componentName = _methodParts[0];
                 var _system = _listenerWorld.system[$ _componentName];
@@ -82,6 +85,7 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
                 }
                 
                 /*
+                //Commented this out because it will throw if its not a method anyways.
                 var _method = _system[$ _methodParts[1]];
                 if(!is_method(_method)) {
                     throw string_join("", "Could not find method with name: ", _methodParts[1], " on system: ", _system.name);
@@ -103,22 +107,25 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
     static subscribe = function(_listenerWorldId, _listenerId, _methodAddress, _eventType, _emitterId) {
         var _listenerWorld = gameManager.getWorldRef(_listenerWorldId);
         if(is_undefined(_listenerWorld)) {
-            logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe to entity ", _emitterId, " because listener world with id ", _listenerWorldId, " did not exist.");
-            return;
+            //logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe to entity ", _emitterId, " because listener world with id ", _listenerWorldId, " did not exist.");
+            logger.logWarning(LOG_LEVEL.URGENT, "EventSystem.Subscribe: subscribing listener on world that doesnt exist.");
+            //return;
         }
 
-        /*
-        var _emitter = _emitterWorld.getRef(_emitterId);
+        var _emitter = world.getRef(_emitterId);
         if(is_undefined(_emitter)) {
-            logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe to entity ", _emitterId, " because it did not exist on world ", _emitterWorldId);
-            return;
+            //logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe to entity ", _emitterId, " because it did not exist on world ", _emitterWorldId);
+            logger.logWarning(LOG_LEVEL.URGENT, "EventSystem.Subscribe: subscribing to emitter that doesnt exist in this world: ", world.id);
+            //return;
         }
-        */
-
-        var _listener = _listenerWorld.getRef(_listenerId);
-        if(is_undefined(_listener)) {
-            logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe because the listener does not exist ", _listenerId);
-            return;
+        
+        if(is_defined(_listenerWorld)) {
+            var _listener = _listenerWorld.getRef(_listenerId);
+            if(is_undefined(_listener)) {
+                //logger.logError(LOG_LEVEL.URGENT, "EventSystem.Subscribe: Could not subscribe because the listener does not exist ", _listenerId);
+                logger.logWarning(LOG_LEVEL.URGENT, "EventSystem.Subscribe: subscribing listener that doesnt exist in this on world: ", _listenerWorldId);
+                //return;
+            }
         }
 
         var _methodParts = string_split(_methodAddress, ".");
@@ -143,6 +150,34 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
         
         var _newSubscriberData = new SubscriberData(_listenerId, _listenerWorldId, _methodAddress);
         array_push(_subscriberList, _newSubscriberData);
+    }
+    
+    ///@param {Real} _listenerWorldId id of Entity interested in this event
+    ///@param {Real} _listenerId id of Entity interested in this event
+    ///@param {string} _methodAddress
+    ///@param {string} _eventType
+    ///@param {Real} _emitterId
+    static unsubscribe = function(_listenerWorldId, _listenerId, _methodAddress, _eventType, _emitterId) {
+        var _eventMap = subscriptionMap[$ _emitterId];
+        if(is_undefined(_eventMap)) {
+            return;
+        }
+        
+        var _subscriberList = _eventMap[$ _eventType];
+        if(is_undefined(_subscriberList)) {
+            return;
+        }
+        
+        subscriberMatcherData.listenerId = _listenerId;
+        subscriberMatcherData.listenerWorldId = _listenerWorldId;
+        subscriberMatcherData.methodAddress = _methodAddress;
+
+        var _subscriberIndex = array_find_index(_subscriberList, subscriberMatcher);
+        if (_subscriberIndex == -1) { 
+            return;
+        }
+
+        array_delete_fast(_subscriberList, _subscriberIndex);
     }
 
     ///@param {string} _eventType
@@ -170,6 +205,14 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
         }
 
         return _eventsForSequence;
+    }
+    
+    ///@param {Struct.SubscriberData} _subscriberData
+    ///@return {Bool}
+    static subscriberMatcher = function(_subscriberData) {
+        return subscriberMatcherData.listenerId == _subscriberData.listenerId
+            && subscriberMatcherData.listenerWorldId == _subscriberData.listenerWorldId
+            && subscriberMatcherData.methodAddress == _subscriberData.methodAddress;
     }
     
 }
