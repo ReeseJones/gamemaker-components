@@ -1,4 +1,5 @@
-function UiRoot(_instance) : Component(_instance) constructor {
+///@param {Struct.Entity} _entity
+function UiRoot(_entity) : Component(_entity) constructor {
     // Feather disable GM2017
     focusedElement = undefined;
     cameraId = 0;

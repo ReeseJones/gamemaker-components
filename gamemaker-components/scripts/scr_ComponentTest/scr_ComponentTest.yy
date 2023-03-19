@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_TimeProvider",
+  "name": "scr_ComponentTest",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Game",
-    "path": "folders/Scripts/Game.yy",
+    "name": "Entity",
+    "path": "folders/Scripts/Entity.yy",
   },
 }

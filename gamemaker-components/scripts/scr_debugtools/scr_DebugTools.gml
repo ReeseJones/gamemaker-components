@@ -1,30 +1,29 @@
-// Feather disable GM2017
-
-function DebugTools(_instance) : Component(_instance) constructor
+///@param {Struct.Entity} _entity
+function DebugTools(_entity) : Component(_entity) constructor
 {
     timer = 0;
 }
 
 function DebugToolsSystem() : ComponentSystem() constructor {
     
-    function systemStart() {
+    static systemStart = function() {
         
     }
     
-    function systemCleanup() {
+    static systemCleanup = function() {
         
     }
     
-    function systemStep(_dt) {
+    static systemStep = function(_dt) {
         if(mouse_check_button(mb_left)) {
-            var _wallInst = world.entity.InstanceCreateLayer(obj_solid_static, mouse_x, mouse_y, "Instances");
+            //var _wallInst = world.entity.InstanceCreateLayer(obj_solid_static, mouse_x, mouse_y, "Instances");
         }
         
         if(mouse_check_button(mb_right)) {
-            var _playerInst = world.entity.InstanceCreateLayer(obj_solid_dynamic, 900, 540, "Instances");
-            world.entity.addComponent(_playerInst, KinematicMovement);
-            world.kinematicMovement.SetDirectionAngle(_playerInst, 45);
-            world.kinematicMovement.SetSpeed(_playerInst, 20);
+            //var _playerInst = world.entity.InstanceCreateLayer(obj_solid_dynamic, 900, 540, "Instances");
+            // world.entity.addComponent(_playerInst, KinematicMovement);
+            //world.kinematicMovement.SetDirectionAngle(_playerInst, 45);
+            //world.kinematicMovement.SetSpeed(_playerInst, 20);
         }
     }
     

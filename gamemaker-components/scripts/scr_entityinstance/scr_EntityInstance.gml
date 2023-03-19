@@ -1,17 +1,19 @@
 #macro MASK_SIZE_POWER 6
 #macro MASK_RESOLUTION 64
 
-function EntityInstance() : Component() constructor {
+///@param {Struct.Entity} _entity
+function EntityInstance(_entity) : Component(_entity) constructor {
+    static name = string_lowercase_first(instanceof(self));
     // Feather disable GM2017
     instance = undefined;
 
     //General Instance Variables
     visible = true;
     solid = false;
-    
+
     layerName = "instances";
     layer = -1;
-    
+
     //Movement and Position Instance Variables
     x = 0;
     y = 0;
@@ -21,18 +23,18 @@ function EntityInstance() : Component() constructor {
     directionPrevious = 0;
     speed = 0;
     friction = 0;
-    
+
     objectIndex = obj_solid_dynamic;
-    
+
     //Sprite Properties
     spriteIndex = spr_mask_circle;
     //TODO: Image Index??? Image Speed?
     imageAlpha = 1;
     imageAngle = 0;
     imageBlend = 0;
-    imageXscale = 1;
-    imageYscale = 1;
-    
+    imageXScale = 1;
+    imageYScale = 1;
+
     //Mask and Bounding Box
     maskIndex = spr_mask_circle;
     maskWidth = 64;
@@ -69,6 +71,8 @@ function EntityInstanceSystem() : ComponentSystem() constructor {
 
         if(object_exists(_newObjectIndex)) {
             _entityInst.objectIndex = _newObjectIndex;
+        } else {
+            throw string_join("", "EntityInstance.setObject: Object with index ", _newObjectIndex, " does not exist.");
         }
 
         if(layer_exists(_newLayerId)) {
@@ -79,20 +83,22 @@ function EntityInstanceSystem() : ComponentSystem() constructor {
                 _entityInst.layer = layer_get_id(_newLayerId);
                 _entityInst.layerName = _newLayerId;
             }
+        } else {
+            throw string_join("", "EntityInstance.setObject: Cannot create object since layer does not exist: ", _newLayerId);
         }
 
         _entityInst.instance = instance_create_layer(
             _entityInst.x,
             _entityInst.y,
-            _entityInst.layerId,
+            _entityInst.layer,
             _entityInst.objectIndex
         );
         
         if(sprite_exists(_entityInst.spriteIndex) && sprite_exists(_entityInst.maskIndex)) {
             _entityInst.maskWidth = sprite_get_width(_entityInst.spriteIndex);
             _entityInst.maskHeight = sprite_get_height(_entityInst.spriteIndex);
-            _entityInst.imageXscale = _entityInst.maskWidth / sprite_get_width(_entityInst.maskIndex);
-            _entityInst.imageYscale = _entityInst.maskHeight / sprite_get_height(_entityInst.maskIndex);
+            _entityInst.imageXScale = _entityInst.maskWidth / sprite_get_width(_entityInst.maskIndex);
+            _entityInst.imageYScale = _entityInst.maskHeight / sprite_get_height(_entityInst.maskIndex);
         }
             
         //TODO: Fix when can assert types
@@ -178,8 +184,8 @@ function EntityInstanceSystem() : ComponentSystem() constructor {
                 0, 
                 _xx,
                 _yy, 
-                _entityInstance.imageXscale,
-                _entityInstance.imageYscale, 
+                _entityInstance.imageXScale,
+                _entityInstance.imageYScale, 
                 _entityInstance.imageAngle,
                 _entityInstance.imageBlend,
                 0.3

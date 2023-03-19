@@ -19,8 +19,8 @@ function entity_instance_sync_instance(_source, _dest) {
     _dest.image_alpha = _source.imageAlpha;
     _dest.image_angle = _source.imageAngle;
     _dest.image_blend = _source.imageBlend;
-    _dest.image_yscale = _source.imageYscale;
-    _dest.image_xscale = _source.imageXscale;
+    _dest.image_yscale = _source.imageYScale;
+    _dest.image_xscale = _source.imageXScale;
     //TODO: Image Index??? Image Speed?
     
     //Mask and Bounding Box

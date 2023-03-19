@@ -21,17 +21,16 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
     eventQueue = undefined;
     subscriberMatcherData = new SubscriberData(0, 0, "");
     // Feather restore GM2017
-    static systemStart = function(){
+    static systemStart = function() {
         eventQueue = ds_map_create();
     }
-    
+
     static systemCleanup = function() {
         if(ds_exists(eventQueue, ds_type_map)) {
             ds_map_destroy(eventQueue);
             eventQueue = -1;
         }
     }
-
 
     ///@param {Real} _dt Delta time in second since last step
     static systemStep = function(_dt) {

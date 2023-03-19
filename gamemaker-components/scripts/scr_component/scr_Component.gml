@@ -38,7 +38,11 @@ function ComponentSystem(_world = undefined) constructor {
     
     // Feather restore GM2017
 
+    ///@param {Struct.Entity} _entity
     static addComponent = function(_entity) {
+        if(is_undefined(_entity)) {
+            throw "Error: Entity must be defined";
+        }
         //Create the component
         var _newComponent = new componentConstructor(_entity);
         //Add it into the component map of the entity

@@ -94,6 +94,7 @@
     {"id":{"name":"scr_NearestPointOnEdge","path":"scripts/scr_NearestPointOnEdge/scr_NearestPointOnEdge.yy",},},
     {"id":{"name":"scr_WorldTests","path":"scripts/scr_WorldTests/scr_WorldTests.yy",},},
     {"id":{"name":"obj_ui_element","path":"objects/obj_ui_element/obj_ui_element.yy",},},
+    {"id":{"name":"scr_ComponentTest","path":"scripts/scr_ComponentTest/scr_ComponentTest.yy",},},
     {"id":{"name":"scr_InputDeviceManager","path":"scripts/scr_InputDeviceManager/scr_InputDeviceManager.yy",},},
     {"id":{"name":"scr_WorldTimeManager","path":"scripts/scr_WorldTimeManager/scr_WorldTimeManager.yy",},},
     {"id":{"name":"scr_EntityInstance","path":"scripts/scr_EntityInstance/scr_EntityInstance.yy",},},
