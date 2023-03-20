@@ -1,6 +1,6 @@
 /// @desc Component is the base class for all components.
 /// @param {struct.Entity} _entity A reference to which thing this component is bound to.
-function Component(_entity = undefined) constructor {
+function Component(_entity) constructor {
     static name = string_lowercase_first(instanceof(self));
 
     // Feather disable GM2017
