@@ -7,11 +7,11 @@ function TestCompSystem() : ComponentSystem() constructor {
     static componentName = string_lowercase_first(script_get_name(componentConstructor));
     
     
-    static onCreate = function on_create(_component) {
+    static onCreate = function(_component) {
         show_debug_message("TestComponent Created!");
     }
     
-    function step(_component, _dt) {
+    static step = function(_component, _dt) {
         _component.timer += 1;
 
         if(_component.timer % 60 == 0) {

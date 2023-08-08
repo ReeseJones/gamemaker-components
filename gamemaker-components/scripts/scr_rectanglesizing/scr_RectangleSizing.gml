@@ -17,7 +17,7 @@ function RectangleSizingSystem(_world = undefined) : ComponentSystem(_world) con
 
     /// @param {Struct.RectangleSizing} _component
     /// @param {Real} _dt
-    static drawGui = function draw_gui(_component, _dt) {
+    static drawGui = function(_component, _dt) {
         if(_component.debug) {
             draw_set_color(_component.debugCol);
             draw_rectangle(_component.x, _component.y, _component.x + _component.width, _component.y + _component.height, true);

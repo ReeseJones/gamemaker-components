@@ -74,12 +74,12 @@ function ComponentSystem(_world = undefined) constructor {
     }
 
     //@description Called after all systems are registered to the world.
-    static systemStart = function system_start() {
+    static systemStart = function() {
 
     }
 
     ///@description Called when the world is destroyed.
-    static systemCleanup = function system_cleanup() {
+    static systemCleanup = function() {
 
     }
 
@@ -90,7 +90,7 @@ function ComponentSystem(_world = undefined) constructor {
     /// then the updates will effectivley only run at the fps
     /// TODO: dt should be fixed for step, double check that it is.
     ///@param {Real} _dt Delta time in second since last step
-    static systemStep = function system_step(_dt) {
+    static systemStep = function(_dt) {
 
     }
 
@@ -98,14 +98,14 @@ function ComponentSystem(_world = undefined) constructor {
     /// Runs after all values have been deserialized
     /// Or after a component has been dynamically added.
     /// @param {Struct.Component} _component
-    static onCreate = function on_create(_component) {
+    static onCreate = function(_component) {
         
     }
 
     //The step functions happen once per world simulation update.
     //The dt these are passed is a fixed time based on the intended
     //number of frames per second the world simulates at.
-    static beginStep = function begin_step(_component, _dt) {
+    static beginStep = function(_component, _dt) {
         //Runs in the world step phase. Before step and endStep
     }
     
@@ -122,7 +122,7 @@ function ComponentSystem(_world = undefined) constructor {
     }
 
     //Runs in the world step phase. After beginStep and before endStep
-    static step = function step(_component, _dt) {
+    static step = function(_component, _dt) {
 
     }
 
@@ -138,7 +138,7 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
     
-    static endStep = function end_step(_component, _dt) {
+    static endStep = function(_component, _dt) {
         //Runs in the world step phase. After beginStep and Step
     }
     
@@ -159,7 +159,7 @@ function ComponentSystem(_world = undefined) constructor {
     //the delta time passed to the draw functions is a percentage of
     //the elapsed current world step. A number from 0 - 1
 
-    static drawBegin = function draw_begin(_component, _dt) {
+    static drawBegin = function(_component, _dt) {
         
     }
     
@@ -175,7 +175,7 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
 
-    static draw = function draw(_component, _dt) {
+    static draw = function(_component, _dt) {
     
     }
     
@@ -191,7 +191,7 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
     
-    static drawEnd = function draw_end(_component, _dt) {
+    static drawEnd = function(_component, _dt) {
     
     }
     
@@ -207,7 +207,7 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
     
-    static drawGuiBegin = function draw_gui_begin(_component, _dt) {
+    static drawGuiBegin = function(_component, _dt) {
     
     }
     
@@ -223,7 +223,7 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
     
-    static drawGui = function draw_gui(_component, _dt) {
+    static drawGui = function(_component, _dt) {
     
     }
     
@@ -239,7 +239,7 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
     
-    static drawGuiEnd = function draw_gui_end(_component, _dt) {
+    static drawGuiEnd = function(_component, _dt) {
     
     }
     
@@ -255,42 +255,42 @@ function ComponentSystem(_world = undefined) constructor {
         }
     }
 
-    static destroy = function destroy(_component) {
-        // When removeComponent is called the destroy code runs immdiately.
+    static destroy = function(_component) {
+        // When removeComponent is called the destroy code runs immediately.
         // When an entity is destroyed and its components are removed this code also runs.
         
-        //The component/entity is immidately marked as destroyed, but will not be cleaned up until
-        //The end of the step phase immdiately following the cleanup event.
+        //The component/entity is immediately marked as destroyed, but will not be cleaned up until
+        //The end of the step phase immediately following the cleanup event.
         
         // NOTE: The simulation continues to run after this, so it may be wise to leave
         // some resources/assets/references alive until cleanup.
     }
 
-    static cleanup = function cleanup(_component) {
+    static cleanup = function(_component) {
         // Similar to destroy except this code runs after all the step events when the entities
         // and components are removed from the world and systems. Should be used to clean up
         // resources that the component allocated that are not automatically cleaned up.
     }
     
-    //TODO: Figure out how world/system/entity/component serilization will work.
+    //TODO: Figure out how world/system/entity/component serialization will work.
     
-    static serializeBinary = function serialize_binary(_component, _buffer) {
+    static serializeBinary = function(_component, _buffer) {
         
     }
     
-    static serializeJson = function serialize_json(_component, _buffer) {
+    static serializeJson = function(_component, _buffer) {
         
     }
     
-    static deserializeBinary = function deserialize_binary(_component, _buffer) {
+    static deserializeBinary = function(_component, _buffer) {
         
     }
     
-    static deserializeJson = function deserialize_json(_component, _buffer) {
+    static deserializeJson = function(_component, _buffer) {
         
     }
     
-    static cleanComponentList = function clean_component_list() {
+    static cleanComponentList = function() {
         if(!componentsDirty) return;
         
         componentsDirty = false;

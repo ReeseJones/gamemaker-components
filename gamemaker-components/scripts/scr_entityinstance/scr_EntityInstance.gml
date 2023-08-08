@@ -50,13 +50,13 @@ function EntityInstanceSystem() : ComponentSystem() constructor {
     static onCreate = function(_entityInst) {
         setObject(_entityInst.getEntityId(), _entityInst.objectIndex, _entityInst.layerName);
     }
-    
+
     ///@param {Struct.EntityInstance} _entityInst
     static onDestroy = function(_entityInst) {
         instance_destroy(_entityInst.instance);
         _entityInst.instance = -1;
     }
-    
+
     ///@param {Real} _entityId
     ///@param {Asset.GMObject} _newObjectIndex
     ///@param {String} _newLayerId
@@ -112,13 +112,13 @@ function EntityInstanceSystem() : ComponentSystem() constructor {
     static setSize = function(_entityId, _xWidth, _yHeight) {
         var _entity = world.getRef(_entityId);
         var _entityInst = _entity.component.entityInstance;
-        
+
         _entityInst.maskWidth = _xWidth;
         _entityInst.maskHeight = _yHeight;
-        
+
         _entityInst.imageXScale = _xWidth / sprite_get_width(_entityInst.maskIndex);
         _entityInst.imageYScale = _yHeight / sprite_get_height(_entityInst.maskIndex);
-        
+
         var _inst = _entityInst.instance;
         _inst.image_xscale = _entityInst.imageXScale;
         _inst.image_yscale = _entityInst.imageYScale;
@@ -155,16 +155,16 @@ function EntityInstanceSystem() : ComponentSystem() constructor {
         var _xx = _inst.x
         var _yy = _inst.y
         var _rot = _entityInstance.imageAngle;
-            
+
         //get the rotated bounding box world positions
         var _bbox = rect_get_rotated(_xx, _yy, _entityInstance.maskWidth / 2, _entityInstance.maskHeight / 2, _rot);
-        
+
         draw_line_width(_bbox.tl.x, _bbox.tl.y, _bbox.br.x, _bbox.br.y, 3);
-        
+
         //rotate them around origin back to be axis aligned
         vector2d_inplace_rotate( _bbox.tl, _rot);
         vector2d_inplace_rotate( _bbox.br, _rot);
-        
+
         draw_line(_bbox.tl.x, _bbox.tl.y, _bbox.br.x, _bbox.tl.y);
         draw_line(_bbox.br.x, _bbox.tl.y, _bbox.br.x, _bbox.br.y);
         draw_line(_bbox.br.x, _bbox.br.y, _bbox.tl.x, _bbox.br.y);

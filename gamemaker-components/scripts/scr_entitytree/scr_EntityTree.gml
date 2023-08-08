@@ -169,7 +169,7 @@ function EntityTreeSystem(_world = undefined) : ComponentSystem(_world) construc
 /// @function       cleanup(entityTree)
 /// @description    ComponentSystem cleanup event. Removes entities from the trees they are in.
 /// @param {Struct.EntityTree}   _entityTree component to be cleaned up.
-    static cleanup = function cleanup(_entityTree) { 
+    static cleanup = function(_entityTree) { 
         var _entityId = _entityTree.getEntityId();
         disconnectFromTree(_entityId);
     }

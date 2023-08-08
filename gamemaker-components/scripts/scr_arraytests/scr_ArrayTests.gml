@@ -29,30 +29,18 @@ return [
             matcher_arrays_equal(a, [1, 2, 3]);
             matcher_arrays_equal(b, [4, 5, 6]);
         });
-        it("array_shift should default remove first element in array", function() {
-            var a = [1, 2, 3];
-            var _expectA = [2, 3];
-            var _expectResult = [1];
-            
-            matcher_arrays_equal(array_shift(a), _expectResult);
-            matcher_arrays_equal(a, _expectA);
-        });
-        it("array_shift should remove be able to remove multiple elements in array", function() {
-            var a = [1, 2, 3, 4, 5];
-            
-            matcher_arrays_equal(array_shift(a, 5), [1, 2, 3, 4, 5]);
-            matcher_arrays_equal(a, []);
-        });
-        it("array_shift should throw if you try and shift more than the array size", function() {
-            matcher_should_throw(function() {
-                var a = [1, 2, 3, 4, 5];
-                array_shift(a, 6);
-            });
+        it("array_shift should default remove first element in array and return the element", function() {
+            var _someArray = [1, 2, 3];
+            var _expectedArray = [2, 3];
+            var _expect = 1;
+
+            matcher_value_equal(array_shift(_someArray), _expect);
+            matcher_arrays_equal(_someArray, _expectedArray);
         });
         it("array_join should return the stringified values seperated by default nothing", function() {
             var a = [1, 2, 3, 4, 5];
             var _expect = "12345";
-            
+
             var _result = array_join(a);
             matcher_value_equal(_result, _expect);
             matcher_arrays_equal(a, [1, 2, 3, 4, 5]);

@@ -170,26 +170,3 @@ function array_concat_ext(_arrayA, _arrayB, _arrayDest = undefined) {
 
     return _arrayDest;
 }
-
-/// @function                array_shift(array, length = 1)
-/// @description             Removes _length elements from the start of _array mutating it, and returning the element(s) removed.
-/// @param {Array<Any>}      _array    The array to shift and modify
-/// @param {Real}            _length   The number of elements to shift off
-/// @return {Array<Any>}
-function array_shift(_array, _length = 1) {
-    var _arrayLength = array_length(_array);
-    var _newLength = _arrayLength - _length;
-    if(_length > _arrayLength) {
-        throw string_join("", "Attmped to shift array with length(", _arrayLength, ")", " (", _length , ") elements. Cannot shift greater than array length.");    
-    }
-    
-    var _shiftedValues = array_create(_length);
-    array_copy(_shiftedValues, 0, _array, 0, _length);
-    for(var i = _length; i <= _newLength; i += 1) {
-        _array[i - _length] = _array[i];
-    }
-    array_resize(_array, _newLength);
-    //TODO: Delete once better typings
-    // Feather disable once GM1045
-    return _shiftedValues;
-}
