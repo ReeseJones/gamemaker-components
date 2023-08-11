@@ -3,8 +3,8 @@
 
 ///@param {Struct.Entity} _entity
 function EntityInstance(_entity) : Component(_entity) constructor {
-    static name = string_lowercase_first(instanceof(self));
-    // Feather disable GM2017
+    static staticIntialization();
+    
     instance = undefined;
 
     //General Instance Variables
@@ -39,13 +39,12 @@ function EntityInstance(_entity) : Component(_entity) constructor {
     maskIndex = spr_mask_circle;
     maskWidth = 64;
     maskHeight = 64;
-    // Feather restore GM2017
 }
 
 function EntityInstanceSystem() : ComponentSystem() constructor {
     static componentConstructor = EntityInstance;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
-
+    static staticIntialization();
+    
     ///@param {Struct.EntityInstance} _entityInst
     static onCreate = function(_entityInst) {
         setObject(_entityInst.getEntityId(), _entityInst.objectIndex, _entityInst.layerName);

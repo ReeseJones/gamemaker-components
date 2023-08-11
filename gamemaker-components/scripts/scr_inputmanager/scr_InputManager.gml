@@ -1,5 +1,3 @@
-//TODO: Remove disable once better name checking
-// Feather disable GM2017
 enum DEVICE_INDEX {
     MOUSE_AND_KEYBOARD = -1,
     //The rest are gamepads 0 to n

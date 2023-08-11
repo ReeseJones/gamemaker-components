@@ -1,12 +1,13 @@
 /// @param {struct.Entity} _entity A reference to which thing this component is bound to.
 function KinematicMovement(_entity) : Component(_entity) constructor {
-    // Feather disable GM2017
+    static staticIntialization();
+    
     direction = { x: 1, y: 0 };
     speed = 0;
     mass = 1;
     debugCollisionsPoints = [];
     debugReflectionVector = [];
-    // Feather restore GM2017
+
 }
 
 ///@param {Struct.EntityInstanceSystem} _entityInstanceSystem
@@ -14,12 +15,11 @@ function KinematicMovement(_entity) : Component(_entity) constructor {
 ///@param {Struct.WorldTimeManager} _timeManager
 function KinematicMovementSystem(_entityInstanceSystem) : ComponentSystem() constructor {
     static componentConstructor = KinematicMovement;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
+    static staticIntialization();
 
-     // Feather disable GM2017
     entityCollisionList = undefined;
     entityInstanceSystem = _entityInstanceSystem;
-     // Feather restore GM2017
+
 
     static systemStart = function() {
         entityCollisionList = ds_list_create();

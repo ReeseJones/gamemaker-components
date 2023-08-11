@@ -81,6 +81,7 @@
     {"name":"rm_unit_tests","order":4,"path":"rooms/rm_unit_tests/rm_unit_tests.yy",},
     {"name":"scr_ReliableSequenceMath","order":3,"path":"scripts/scr_ReliableSequenceMath/scr_ReliableSequenceMath.yy",},
     {"name":"obj_keyboard_controller","order":4,"path":"objects/obj_keyboard_controller/obj_keyboard_controller.yy",},
+    {"name":"scr_FlexLayout","order":22,"path":"scripts/scr_FlexLayout/scr_FlexLayout.yy",},
     {"name":"obj_solid_dynamic","order":12,"path":"objects/obj_solid_dynamic/obj_solid_dynamic.yy",},
     {"name":"scr_CircularBuffer","order":1,"path":"scripts/scr_CircularBuffer/scr_CircularBuffer.yy",},
     {"name":"scr_BitMask","order":1,"path":"scripts/scr_BitMask/scr_BitMask.yy",},

@@ -26,16 +26,16 @@ function event_system_tests() {
                 });
                 it("an event is queued for the current worldSequence", function() {
                     eventSystem.dispatch("testEventType", 42, "data", worldOne.timeManager.worldSequence);
-                    
+
                     logWarningSpy.toBeCalled();
                 });
                 it("an event is queued for an old worldSequence", function() {
                     // Set world time to 100
                     worldOne.timeManager.worldSequence = 100;
-                    
+
                     // Dispatch event at world time 4
                     eventSystem.dispatch("testEventType", 42, "data", 4);
-                    
+
 
                     logWarningSpy.toBeCalled();
                 });
@@ -60,12 +60,12 @@ function event_system_tests() {
                 it("should dispatch an event on the next world sequence by default", function() {
                     eventSystem.dispatch(eventName, 42, "data");
                     gameManager.updateWorlds();
-                
+
                     callbackSpy.toBeCalledTimes(1);
                 });
                 it("may dispatch an event on future world sequences", function() {
                     eventSystem.dispatch(eventName, 42, "data", eventSystem.timeManager.worldSequence + 4);
-                
+
                     for(var i = 0; i < 3; i += 1) {
                         gameManager.updateWorlds();
                         callbackSpy.toBeCalledTimes(0);

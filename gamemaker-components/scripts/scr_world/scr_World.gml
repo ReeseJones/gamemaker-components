@@ -4,7 +4,7 @@
 /// time in the world and determines when a new frame starts.
 /// @param {Struct.LoggingService} _logger
 function World(_worldTimeManager, _systems, _logger) constructor {
-    // Feather disable GM2017
+
     id = undefined;
     timeManager = _worldTimeManager;
     systems = _systems;
@@ -15,7 +15,7 @@ function World(_worldTimeManager, _systems, _logger) constructor {
     
     instances = ds_map_create();
     instanceRemoveQueue = [];
-    // Feather restore GM2017
+
 
     //Initialize systems to world
     array_foreach(systems, function(_system) {

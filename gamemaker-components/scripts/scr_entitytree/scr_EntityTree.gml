@@ -1,6 +1,8 @@
 /// @desc EntityTree component creates a tree like relationship between entities.
 /// @param {struct.Entity} _entity A reference to which thing this component is bound to.
 function EntityTree(_entity) : Component(_entity) constructor {
+    static staticIntialization();
+    
     parent = undefined;
     children = [];
 }
@@ -8,11 +10,9 @@ function EntityTree(_entity) : Component(_entity) constructor {
 /// @param {Struct.World} _world The world which this System operates in.
 function EntityTreeSystem(_world = undefined) : ComponentSystem(_world) constructor {
     static componentConstructor = EntityTree;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
+    static staticIntialization();
     
-    // Feather disable GM2017
     childTraversalQueue = ds_queue_create();
-    // Feather restore GM2017
 
     static systemCleanup = function() {
         ds_queue_destroy(childTraversalQueue);

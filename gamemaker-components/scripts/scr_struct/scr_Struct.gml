@@ -31,7 +31,7 @@ function struct_deep_copy(_value) {
     return _destination;
 }
 
-function struct_foreach(_struct, _method) {
+function struct_foreach_custom(_struct, _method) {
     var _keys = variable_struct_get_names(_struct);
     
     var _keyCount = array_length(_keys);

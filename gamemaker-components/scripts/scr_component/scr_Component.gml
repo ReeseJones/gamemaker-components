@@ -1,7 +1,12 @@
 /// @desc Component is the base class for all components.
 /// @param {struct.Entity} _entity A reference to which thing this component is bound to.
+/// @self Struct.Component
 function Component(_entity) constructor {
-    static name = string_lowercase_first(instanceof(self));
+    static staticIntialization = function(){
+        var _staticStruct = static_get(self);
+        _staticStruct.name = string_lowercase_first(instanceof(self));
+    }
+    static staticIntialization();
 
     // Feather disable GM2017
     entityRef = _entity;
@@ -20,11 +25,17 @@ function Component(_entity) constructor {
 /// @desc ComponentSystem is the base class for all systems which manage a component type. Worlds have systems which add behavior.
 /// @param {Struct.World} _world The world which this System operates in.
 function ComponentSystem(_world = undefined) constructor {
-
-    // Feather disable GM2017
-    static name = string_lowercase_first(instanceof(self));
     static componentConstructor = Component;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
+    static componentName = "component";
+    static staticIntialization = function() {
+        var _staticStruct = static_get(self);
+        _staticStruct.name = string_lowercase_first(instanceof(self));
+        var _sysLen = string_length("system");
+        var _sysNameLen = string_length(_staticStruct.name);
+        var _compName = string_delete(_staticStruct.name, 1 +_sysNameLen - _sysLen, _sysLen);
+        _staticStruct.componentName = _compName;
+    }
+    static staticIntialization();
 
     //Run update of this entire system
     enabled = true;

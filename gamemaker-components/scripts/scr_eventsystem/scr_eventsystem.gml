@@ -1,17 +1,15 @@
 /// @param {struct.Entity} _entity A reference to which thing this component is bound to.
 function Event(_entity): Component(_entity) constructor{
-    
+    static staticIntialization();
 }
 
 ///@param {Struct.GameManager} _gameManager
 ///@param {Struct.LoggingService} _logger
 ///@param {Struct.WorldTimeManager} _timeManager
 function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() constructor {
-    // Feather disable GM2017
-    static name = string_lowercase_first(instanceof(self));
     static componentConstructor = Event;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
-
+    static staticIntialization();
+    
     gameManager = _gameManager;
     logger = _logger;
     timeManager = _timeManager;

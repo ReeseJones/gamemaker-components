@@ -1,14 +1,14 @@
 ///@param {Struct.Entity} _entity
 function UiRoot(_entity) : Component(_entity) constructor {
-    // Feather disable GM2017
+    static staticIntialization();
+
     focusedElement = undefined;
     cameraId = 0;
-    // Feather restore GM2017
 }
 
 function UiRootSystem() : ComponentSystem() constructor {
     static componentConstructor = UiRoot;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
+    static staticIntialization();
 
     static beginStep = function(_uiRoot, _dt) {
         var _rectSizeComp = _uiRoot.instance.components.rectangleSizing;

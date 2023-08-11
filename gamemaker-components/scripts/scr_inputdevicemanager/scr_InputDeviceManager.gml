@@ -1,10 +1,8 @@
 function InputDeviceManager() constructor 
 {
-    // Feather disable GM2017
     allocatedDevices = [];
     availableDevices = [DEVICE_INDEX.MOUSE_AND_KEYBOARD];
-    // Feather restore GM2017
-    
+
     static updateAvailableDevices = function update_available_devices() {
         var _deviceCount = gamepad_get_device_count();
         //show_debug_message("Updating Available Devices: " + string(_deviceCount));
@@ -25,7 +23,7 @@ function InputDeviceManager() constructor
     
     //Attempts to get the requested device id, but otherwise will give the first available.
     //Will return undefined if its unable to return an available device.
-    static allocateInputDevice = function allocate_input_device(_deviceIndexPreference) {        
+    static allocateInputDevice = function allocate_input_device(_deviceIndexPreference) {
         if(deviceIsAvailable(_deviceIndexPreference)) {
             array_push(allocatedDevices, _deviceIndexPreference);
             array_remove(availableDevices, _deviceIndexPreference);

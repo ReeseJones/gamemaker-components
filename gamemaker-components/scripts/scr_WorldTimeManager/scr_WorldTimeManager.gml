@@ -4,7 +4,7 @@
 /// TickProgress: Percentage (a number from 0 to 1) of the way to the next frame we are at. Used for draw tweening.
 ///@param {Struct.TimeProvider} _timeProvider
 function WorldTimeManager(_timeProvider) constructor {
-    // Feather disable GM2017
+
     ticksPerSecond = 10;
     secondsPerTick = 1 / ticksPerSecond;
     timeProvider = _timeProvider;
@@ -12,7 +12,7 @@ function WorldTimeManager(_timeProvider) constructor {
     worldSequence = 0;
     secondsSinceLastTick = 0;
     tickProgress = 0;
-    // Feather restore GM2017
+
     
     ///@function setTickRate(_fps)
     ///@desc     How many frames per second between 0 and 120 should this time manager run.

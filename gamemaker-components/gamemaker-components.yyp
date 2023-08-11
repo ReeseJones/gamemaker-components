@@ -32,7 +32,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.6.0.92",
+    "IDEVersion": "2023.800.0.389",
   },
   "resources": [
     {"id":{"name":"obj_wall_circle","path":"objects/obj_wall_circle/obj_wall_circle.yy",},},
@@ -107,6 +107,7 @@
     {"id":{"name":"rm_unit_tests","path":"rooms/rm_unit_tests/rm_unit_tests.yy",},},
     {"id":{"name":"scr_ReliableSequenceMath","path":"scripts/scr_ReliableSequenceMath/scr_ReliableSequenceMath.yy",},},
     {"id":{"name":"obj_keyboard_controller","path":"objects/obj_keyboard_controller/obj_keyboard_controller.yy",},},
+    {"id":{"name":"scr_FlexLayout","path":"scripts/scr_FlexLayout/scr_FlexLayout.yy",},},
     {"id":{"name":"obj_solid_dynamic","path":"objects/obj_solid_dynamic/obj_solid_dynamic.yy",},},
     {"id":{"name":"scr_CircularBuffer","path":"scripts/scr_CircularBuffer/scr_CircularBuffer.yy",},},
     {"id":{"name":"scr_BitMask","path":"scripts/scr_BitMask/scr_BitMask.yy",},},

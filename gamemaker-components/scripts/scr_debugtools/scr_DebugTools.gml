@@ -1,10 +1,14 @@
 ///@param {Struct.Entity} _entity
 function DebugTools(_entity) : Component(_entity) constructor
 {
+    static staticIntialization();
+
     timer = 0;
 }
 
 function DebugToolsSystem() : ComponentSystem() constructor {
+    static componentConstructor = DebugTools;
+    static staticIntialization();
     
     static systemStart = function() {
         

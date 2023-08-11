@@ -1,12 +1,13 @@
 function TestComp(_instance) : Component(_instance) constructor {
+    static staticIntialization();
+
     timer = 0;
 }
 
 function TestCompSystem() : ComponentSystem() constructor {
     static componentConstructor = TestComp;
-    static componentName = string_lowercase_first(script_get_name(componentConstructor));
-    
-    
+    static staticIntialization();
+
     static onCreate = function(_component) {
         show_debug_message("TestComponent Created!");
     }
