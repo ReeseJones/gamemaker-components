@@ -1,13 +1,15 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_ui_element",
-  "eventList": [],
-  "managed": true,
+  "name": "obj_editor_drag_button",
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+  ],
+  "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "MechEditor",
+    "path": "folders/Objects/MechEditor.yy",
   },
   "parentObjectId": {
     "name": "obj_clickable",

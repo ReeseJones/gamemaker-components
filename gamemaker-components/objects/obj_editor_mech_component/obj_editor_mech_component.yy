@@ -1,18 +1,17 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_ui_element",
-  "eventList": [],
-  "managed": true,
+  "name": "obj_editor_mech_component",
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+  ],
+  "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "MechEditor",
+    "path": "folders/Objects/MechEditor.yy",
   },
-  "parentObjectId": {
-    "name": "obj_clickable",
-    "path": "objects/obj_clickable/obj_clickable.yy",
-  },
+  "parentObjectId": null,
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -28,10 +27,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_obj_solid_rectangle",
-    "path": "sprites/spr_obj_solid_rectangle/spr_obj_solid_rectangle.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }
