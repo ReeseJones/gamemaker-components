@@ -11,3 +11,4 @@ isDraggable = true;
 onDragStart = clickable_on_drag_start;
 onDragEnd = clickable_on_drag_end;
 onDragAbort = clickable_on_drag_abort;
+onDropTargetChange = clickable_on_drop_target_change;

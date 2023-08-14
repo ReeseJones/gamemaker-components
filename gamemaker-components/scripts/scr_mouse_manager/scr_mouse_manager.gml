@@ -64,8 +64,6 @@ function MouseManager() constructor {
             with(dragTarget) {
                 onDragAbort();
             }
-        } else {
-            logger.log(LOG_LEVEL.INFORMATIONAL, $"Cancelling drag not in progress");
         }
         resetDragState();
     }
@@ -201,6 +199,12 @@ function MouseManager() constructor {
         if(_currentHoverTarget) {
             with(_currentHoverTarget) {
                 onMouseOver();
+            }
+        }
+        
+        if(state == DRAG_STATE.IN_PROGRESS && instance_exists(dragTarget)) {
+            with(dragTarget) {
+                onDropTargetChange(_currentHoverTarget);
             }
         }
     }

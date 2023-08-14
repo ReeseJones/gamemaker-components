@@ -31,15 +31,17 @@ onClicked = function(_button) {
 }
 
 dragging = false;
+randomCondition = choose(true, false);
 
 onDragStart = function() {
     dragging = true;
+    window_set_cursor(cr_handpoint);
 }
 
 onDragEnd = function(_dropTarget) {
     dragging = false;
-
-    if(instance_exists(_dropTarget)) {
+    window_set_cursor(cr_default);
+    if(instance_exists(_dropTarget) && _dropTarget.randomCondition) {
         _dropTarget.image_xscale += 0.2;
         _dropTarget.image_yscale += 0.2;
         instance_destroy();
@@ -52,4 +54,18 @@ onDragEnd = function(_dropTarget) {
 
 onDragAbort = function() {
     dragging = false;
+    window_set_cursor(cr_default);
+}
+
+onDropTargetChange = function(_dropTarget) {
+    if(!instance_exists(_dropTarget)) {
+        window_set_cursor(cr_handpoint);
+        return;
+    }
+    
+    if(_dropTarget.randomCondition) {
+        window_set_cursor(cr_uparrow);
+    } else {
+        window_set_cursor(cr_hourglass);
+    }
 }

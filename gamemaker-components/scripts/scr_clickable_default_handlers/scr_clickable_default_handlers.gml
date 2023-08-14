@@ -45,3 +45,10 @@ function clickable_on_drag_abort() {
 function clickable_on_drag_end(_dropTarget) {
     show_debug_message($"drag from {id} finished on {_dropTarget}");
 }
+
+/// @function clickable_on_drop_target_change
+/// @description default handler for when a drop target chagnes.
+/// @param {Id.Instance}    _dropTarget
+function clickable_on_drop_target_change(_dropTarget) {
+    show_debug_message($"New drop target: {_dropTarget}");
+}
