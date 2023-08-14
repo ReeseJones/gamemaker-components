@@ -1,1 +1,0 @@
-mouseManager.handleGlobalLeftReleased();
