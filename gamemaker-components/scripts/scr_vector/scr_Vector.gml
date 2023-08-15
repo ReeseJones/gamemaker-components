@@ -111,6 +111,12 @@ function vector2d_rotate_around(_v1, _p1, _angleDegrees) {
     }
 }
 
+function vector2d_inplace_rotate_around(_v1, _p1, _angleDegrees) {
+    vector2d_inplace_subtract(_v1, _p1);
+    vector2d_inplace_rotate(_v1, _angleDegrees);
+    vector2d_inplace_add(_v1, _p1);
+}
+
 //Warning: Must use normalized vectors
 //Normal points up out of surface.
 function vector2d_reflect(_v1, _n) {

@@ -17,12 +17,10 @@ onClicked = function(_button) {
         
         repeat(2) {
             var _depthOrder = round(random(10));
-            var _newInst = instance_create_depth(
-                random(room_width),
-                random(room_height),
-                _depthOrder,
-                object_index
-            );
+            var _newInst = instance_copy(true);
+            _newInst.x = random(room_width);
+            _newInst.y = random(room_height);
+            _newInst.depth = _depthOrder;
             _newInst.depthOrder = _depthOrder;
         }
         
