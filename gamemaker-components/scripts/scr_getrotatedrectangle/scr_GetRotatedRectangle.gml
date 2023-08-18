@@ -28,13 +28,15 @@ function rect_get_rotated(_x, _y, _halfWidth, _halfHeight, _angleDeg) {
     _yy = _br.x * s + _br.y * c;
     _br.x = _x + _xx;
     _br.y = _y +_yy;
-
-    return {
+    
+    var _bbox = {
         tl: _tl,
         tr: _tr,
         bl: _bl,
         br: _br
     };
+
+    return _bbox;
 }
 
 

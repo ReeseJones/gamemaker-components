@@ -1,4 +1,5 @@
-
+function item () constructor {}
+function potion () : item () constructor {}
 
 function TestOnlyItem () constructor {
     static testString = "testABC";
@@ -59,6 +60,13 @@ function game_maker_tests() {
                 it("can execute statements with static keyword", function() {
                     var _testInstance = new TestOnlyStaticStatementChild();
                     matcher_value_equal(_testInstance.name == "TestOnlyStaticStatementChild", true);
+                });
+                it("inheriting from empty constructors result in same static ref", function(){
+                    var _potion = new potion();
+                    var _static_potion = static_get(potion);
+
+                    var _result = static_get(item) == static_get(_static_potion);
+                    matcher_value_equal(_result, true);
                 });
             });
         })

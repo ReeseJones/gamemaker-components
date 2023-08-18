@@ -1,6 +1,7 @@
 {
   "FolderOrderSettings": [
     {"name":"Fonts","order":11,"path":"folders/Fonts.yy",},
+    {"name":"MechSystem","order":13,"path":"folders/MechSystem.yy",},
     {"name":"Objects","order":9,"path":"folders/Objects.yy",},
     {"name":"MechEditor","order":19,"path":"folders/Objects/MechEditor.yy",},
     {"name":"Rooms","order":10,"path":"folders/Rooms.yy",},
@@ -76,6 +77,7 @@
     {"name":"spr_mech_doodad02","order":1,"path":"sprites/spr_mech_doodad02/spr_mech_doodad02.yy",},
     {"name":"obj_solid","order":11,"path":"objects/obj_solid/obj_solid.yy",},
     {"name":"scr_World","order":11,"path":"scripts/scr_World/scr_World.yy",},
+    {"name":"scr_DrawGrid","order":15,"path":"scripts/scr_DrawGrid/scr_DrawGrid.yy",},
     {"name":"rm_test_mining","order":3,"path":"rooms/rm_test_mining/rm_test_mining.yy",},
     {"name":"scr_NearestPointOnEdge","order":4,"path":"scripts/scr_NearestPointOnEdge/scr_NearestPointOnEdge.yy",},
     {"name":"scr_WorldTests","order":14,"path":"scripts/scr_WorldTests/scr_WorldTests.yy",},
@@ -87,6 +89,7 @@
     {"name":"scr_Entity","order":3,"path":"scripts/scr_Entity/scr_Entity.yy",},
     {"name":"spr_circle","order":1,"path":"sprites/spr_circle/spr_circle.yy",},
     {"name":"spr_splash_text","order":2,"path":"sprites/spr_splash_text/spr_splash_text.yy",},
+    {"name":"scr_MechSocket","order":1,"path":"scripts/scr_MechSocket/scr_MechSocket.yy",},
     {"name":"obj_wall_rectangle","order":15,"path":"objects/obj_wall_rectangle/obj_wall_rectangle.yy",},
     {"name":"spr_obj_solid","order":4,"path":"sprites/spr_obj_solid/spr_obj_solid.yy",},
     {"name":"obj_clickable","order":20,"path":"objects/obj_clickable/obj_clickable.yy",},
@@ -103,6 +106,8 @@
     {"name":"scr_EventSystemTestKernel","order":20,"path":"scripts/scr_EventSystemTestKernel/scr_EventSystemTestKernel.yy",},
     {"name":"obj_editor_mech","order":1,"path":"objects/obj_editor_mech/obj_editor_mech.yy",},
     {"name":"scr_component_drag_manager","order":3,"path":"scripts/scr_component_drag_manager/scr_component_drag_manager.yy",},
+    {"name":"scr_MechSystem","order":2,"path":"scripts/scr_MechSystem/scr_MechSystem.yy",},
+    {"name":"scr_VectorStructures","order":14,"path":"scripts/scr_VectorStructures/scr_VectorStructures.yy",},
     {"name":"scr_SubscriberData","order":3,"path":"scripts/scr_SubscriberData/scr_SubscriberData.yy",},
     {"name":"rm_main_menu","order":2,"path":"rooms/rm_main_menu/rm_main_menu.yy",},
     {"name":"obj_editor_drag_button","order":2,"path":"objects/obj_editor_drag_button/obj_editor_drag_button.yy",},

@@ -9,7 +9,7 @@ var _rot = image_angle;
 
 //get the rotated bounding box world positions
 var _bbox = rect_get_rotated(x, y, sprite_width / 2, sprite_height / 2, _rot);
-show_debug_message($"sprite width {sprite_width}")
+
 rect_draw_bbox(_bbox);
 
 draw_set_color(c_lime);
