@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_mouse_manager",
+  "name": "scr_ClickableDefaultHandlers",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

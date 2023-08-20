@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_clickable_default_handlers",
+  "name": "scr_ComponentDragManager",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

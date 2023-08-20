@@ -1,7 +1,7 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_editor_mech_component",
+  "name": "obj_mech_component",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
   ],
@@ -11,7 +11,10 @@
     "name": "MechEditor",
     "path": "folders/Objects/MechEditor.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_solid_dynamic",
+    "path": "objects/obj_solid_dynamic/obj_solid_dynamic.yy",
+  },
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,

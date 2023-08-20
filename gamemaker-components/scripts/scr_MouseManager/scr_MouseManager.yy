@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_component_drag_manager",
+  "name": "scr_MouseManager",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
