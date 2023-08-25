@@ -1,8 +1,9 @@
 event_inherited();
 
+controlMode = MECH_CONTROL_MODE.EDIT;
 component = new MechComponent(2,2);
-mechParent = undefined;
 componentBinding = new MechComponentBinder(id, component);
+mechParent = undefined;
 
 onMouseOver = function() {
     image_blend = c_red;

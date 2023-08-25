@@ -1,7 +1,7 @@
 ///@param {Struct.Entity} _entity
 function DebugTools(_entity) : Component(_entity) constructor
 {
-    static staticIntialization();
+    static __tmp = staticIntialization();
 
     timer = 0;
 }

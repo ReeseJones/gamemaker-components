@@ -5,6 +5,8 @@
 function MechComponent(_width, _height, _sockets = []) constructor {
     static staticComponentId = 0;
     id = $"cId:{++staticComponentId}";
+    dataId = undefined;
+    name = "";
     sockets = _sockets;
     position = new Vec2();
     width = _width;

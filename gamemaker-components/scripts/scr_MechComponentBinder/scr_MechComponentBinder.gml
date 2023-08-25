@@ -6,7 +6,7 @@ function MechComponentBinder(_boundInstance, _component) constructor {
     component = _component;
 
     updateAll();
-    
+
     static updateObjectSize = function() {
         var _width = component.width * MECH_CELL_SIZE;
         var _height = component.height * MECH_CELL_SIZE;
@@ -21,5 +21,10 @@ function MechComponentBinder(_boundInstance, _component) constructor {
     static updateAll = function() {
         updateObjectSize();
         updateAppearance();
+    }
+    
+    static setBoundComponent = function(_component) {
+        component = _component;
+        updateAll();
     }
 }

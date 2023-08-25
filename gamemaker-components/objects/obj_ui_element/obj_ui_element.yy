@@ -3,11 +3,11 @@
   "resourceVersion": "1.0",
   "name": "obj_ui_element",
   "eventList": [],
-  "managed": true,
+  "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "BaseObjects",
+    "path": "folders/BaseObjects.yy",
   },
   "parentObjectId": {
     "name": "obj_clickable",

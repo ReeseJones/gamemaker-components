@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_TestSpy",
+  "name": "scr_MechComponentFactory",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Testing",
-    "path": "folders/Testing.yy",
+    "name": "MechSystem",
+    "path": "folders/MechSystem.yy",
   },
 }

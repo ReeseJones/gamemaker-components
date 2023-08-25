@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "MechEditor",
-    "path": "folders/Objects/MechEditor.yy",
+    "name": "MechSystem",
+    "path": "folders/MechSystem.yy",
   },
 }

@@ -1,6 +1,3 @@
 function ControllerManager() constructor {
-	controllers = [];
-	
-	
-
+controllers = [];
 }

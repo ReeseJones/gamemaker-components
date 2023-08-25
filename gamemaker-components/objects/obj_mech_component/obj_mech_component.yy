@@ -8,8 +8,8 @@
   "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "MechEditor",
-    "path": "folders/Objects/MechEditor.yy",
+    "name": "MechSystem",
+    "path": "folders/MechSystem.yy",
   },
   "parentObjectId": {
     "name": "obj_solid_dynamic",

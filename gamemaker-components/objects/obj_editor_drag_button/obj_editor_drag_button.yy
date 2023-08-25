@@ -8,8 +8,8 @@
   "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "MechEditor",
-    "path": "folders/Objects/MechEditor.yy",
+    "name": "Objects",
+    "path": "folders/Objects.yy",
   },
   "parentObjectId": {
     "name": "obj_clickable",

@@ -1,7 +1,6 @@
 /// @function MechComponentGrid
 /// @param {Real}   _width
 /// @param {Real}   _height
-
 function MechComponentGrid(_width, _height) constructor {
     width = _width;
     height = _height;
@@ -53,10 +52,12 @@ function MechComponentGrid(_width, _height) constructor {
         
         variable_struct_remove(componentMap, _component.id);
         
-        var _right = _component.position.x + _component.width - 1;
-        var _top = _component.position.y + _component.height - 1;
-        ds_grid_set_region(collisionGrid, _x, _y, _right, _top, 0);
-        ds_grid_set_region(idGrid, _x, _y, _right, _top, undefined);
+        var _left = _component.position.x;
+        var _bottom = _component.position.y;
+        var _right = _left + _component.width - 1;
+        var _top = _bottom + _component.height - 1;
+        ds_grid_set_region(collisionGrid, _left, _bottom, _right, _top, 0);
+        ds_grid_set_region(idGrid, _left, _bottom, _right, _top, undefined);
     }
     
     /// @function componentCanBePlaced

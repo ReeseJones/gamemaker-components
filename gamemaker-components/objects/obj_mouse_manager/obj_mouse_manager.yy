@@ -11,8 +11,8 @@
   "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "MechEditor",
-    "path": "folders/Objects/MechEditor.yy",
+    "name": "UI",
+    "path": "folders/UI.yy",
   },
   "parentObjectId": null,
   "persistent": true,

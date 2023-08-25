@@ -6,7 +6,7 @@ function Component(_entity) constructor {
         var _staticStruct = static_get(self);
         _staticStruct.name = string_lowercase_first(instanceof(self));
     }
-    static staticIntialization();
+    static __tmp = staticIntialization();
 
     // Feather disable GM2017
     entityRef = _entity;
@@ -35,7 +35,7 @@ function ComponentSystem(_world = undefined) constructor {
         var _compName = string_delete(_staticStruct.name, 1 +_sysNameLen - _sysLen, _sysLen);
         _staticStruct.componentName = _compName;
     }
-    static staticIntialization();
+    static __tmp = staticIntialization();
 
     //Run update of this entire system
     enabled = true;
