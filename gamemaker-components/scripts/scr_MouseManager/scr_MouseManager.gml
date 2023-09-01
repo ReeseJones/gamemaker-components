@@ -46,12 +46,10 @@ function MouseManager() constructor {
             //We are now in a drag
             state = DRAG_STATE.IN_PROGRESS
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Starting drag on {dragTarget}");
-            with(dragTarget) {
-                onDragStart();
-            }
+            event_dispatch(dragTarget, EVENT_DRAG_START);
         }
     }
-    
+
     static resetDragState = function() {
         state = DRAG_STATE.IDLE;
         dragTarget = undefined;
@@ -61,9 +59,7 @@ function MouseManager() constructor {
     static abortDrag = function() {
         if(state == DRAG_STATE.IN_PROGRESS) {
             logger.log(LOG_LEVEL.INFORMATIONAL, $"In progress drag cancelled on {dragTarget}");
-            with(dragTarget) {
-                onDragAbort();
-            }
+            event_dispatch(dragTarget, EVENT_DRAG_ABORT);
         }
         resetDragState();
     }
@@ -90,7 +86,7 @@ function MouseManager() constructor {
             if( device_mouse_check_button_pressed(0, _button)) {
                 handleGlobalPressed(_button);
             }
-            
+
             if( device_mouse_check_button_released(0, _button)) {
                 handleGlobalReleased(_button);
             }
@@ -112,10 +108,8 @@ function MouseManager() constructor {
             clickTarget = hoverTarget;
             
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on press of {hoverTarget}");
-            with(hoverTarget) {
-                onPressed(_button);
-            }
-            
+            event_dispatch(hoverTarget, EVENT_PRESSED, _button);
+
             if(hoverTarget.isDraggable) {
                 dragInitiate(_button);
             }
@@ -130,9 +124,8 @@ function MouseManager() constructor {
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Completing drag starting at {dragTarget} and ending at {hoverTarget}");
 
             var _dropTarget = hoverTarget;
-            with(dragTarget) {
-                onDragEnd(_dropTarget);
-            }
+            event_dispatch(dragTarget, EVENT_DRAG_END, _dropTarget);
+
             resetDragState();
         } else {
             abortDrag();
@@ -144,12 +137,12 @@ function MouseManager() constructor {
             
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on release of {hoverTarget}");
             var _logger = logger;
-            with(hoverTarget) {
-                onReleased(_button);
-                if(_isClickTarget && _sameButton) {
-                    _logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on Clicked of target {id}");
-                    onClicked(_button);
-                }
+
+            event_dispatch(hoverTarget, EVENT_RELEASED, _button);
+
+            if(_isClickTarget && _sameButton) {
+                _logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on Clicked of target {hoverTarget.id}");
+                event_dispatch(hoverTarget, EVENT_CLICKED, _button);
             }
         }
     }
@@ -175,7 +168,7 @@ function MouseManager() constructor {
 
         updateHoveredInstance();
     }
-    
+
     static updateHoveredInstance = function() {
         var _oldHoverTarget = hoverTarget;
         var _currentHoverTarget = ds_priority_find_min(instanceHoverList);
@@ -190,22 +183,16 @@ function MouseManager() constructor {
 
         //If the old hover target exists notify that its not hoverd object
         if(_oldHoverTarget) {
-            with(_oldHoverTarget) {
-                onMouseOut();
-            }
+            event_dispatch(_oldHoverTarget, EVENT_MOUSE_OUT);
         }
-        
+
         //if the new hover target exists notify that it IS hovered object
         if(_currentHoverTarget) {
-            with(_currentHoverTarget) {
-                onMouseOver();
-            }
+            event_dispatch(_currentHoverTarget, EVENT_MOUSE_OVER);
         }
-        
+
         if(state == DRAG_STATE.IN_PROGRESS && instance_exists(dragTarget)) {
-            with(dragTarget) {
-                onDropTargetChange(_currentHoverTarget);
-            }
+            event_dispatch(dragTarget, EVENT_DRAG_DROP_TARGET_CHANGE, _currentHoverTarget);
         }
     }
 }
@@ -214,11 +201,15 @@ function MouseManager() constructor {
 function mouse_manager_handle_mouse_over(_instanceRef) {
     if(instance_exists(obj_mouse_manager)) {
         obj_mouse_manager.mouseManager.handleInstanceMouseOver(_instanceRef);
+    } else {
+        throw "create a mouse manager!!!";
     }
 }
 
 function mouse_manager_handle_mouse_out(_instanceRef) {
     if(instance_exists(obj_mouse_manager)) {
         obj_mouse_manager.mouseManager.handleInstanceMouseOut(_instanceRef);
+    } else {
+        throw "create a mouse manager!!!";
     }
 }

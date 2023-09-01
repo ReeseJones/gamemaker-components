@@ -36,7 +36,7 @@
   "isEcma": false,
   "LibraryEmitters": [],
   "MetaData": {
-    "IDEVersion": "2023.800.0.389",
+    "IDEVersion": "2023.800.0.404",
   },
   "resources": [
     {"id":{"name":"obj_wall_circle","path":"objects/obj_wall_circle/obj_wall_circle.yy",},},
@@ -55,6 +55,7 @@
     {"id":{"name":"scr_ClickableDefaultHandlers","path":"scripts/scr_ClickableDefaultHandlers/scr_ClickableDefaultHandlers.yy",},},
     {"id":{"name":"scr_EventData","path":"scripts/scr_EventData/scr_EventData.yy",},},
     {"id":{"name":"scr_FileGetSaveDirectory","path":"scripts/scr_FileGetSaveDirectory/scr_FileGetSaveDirectory.yy",},},
+    {"id":{"name":"scr_EventNode","path":"scripts/scr_EventNode/scr_EventNode.yy",},},
     {"id":{"name":"scr_GameMakerTests","path":"scripts/scr_GameMakerTests/scr_GameMakerTests.yy",},},
     {"id":{"name":"scr_KinematicMovement","path":"scripts/scr_KinematicMovement/scr_KinematicMovement.yy",},},
     {"id":{"name":"scr_Struct","path":"scripts/scr_Struct/scr_Struct.yy",},},
@@ -106,6 +107,7 @@
     {"id":{"name":"scr_SpecCreationTests","path":"scripts/scr_SpecCreationTests/scr_SpecCreationTests.yy",},},
     {"id":{"name":"scr_EventSystemTest","path":"scripts/scr_EventSystemTest/scr_EventSystemTest.yy",},},
     {"id":{"name":"scr_RectangleSizing","path":"scripts/scr_RectangleSizing/scr_RectangleSizing.yy",},},
+    {"id":{"name":"scr_Events","path":"scripts/scr_Events/scr_Events.yy",},},
     {"id":{"name":"spr_mech_doodad02","path":"sprites/spr_mech_doodad02/spr_mech_doodad02.yy",},},
     {"id":{"name":"obj_solid","path":"objects/obj_solid/obj_solid.yy",},},
     {"id":{"name":"scr_World","path":"scripts/scr_World/scr_World.yy",},},
@@ -150,7 +152,6 @@
     {"id":{"name":"scr_GameManager","path":"scripts/scr_GameManager/scr_GameManager.yy",},},
     {"id":{"name":"scr_ControlMode","path":"scripts/scr_ControlMode/scr_ControlMode.yy",},},
     {"id":{"name":"obj_editor_drag_button","path":"objects/obj_editor_drag_button/obj_editor_drag_button.yy",},},
-    {"id":{"name":"scr_MechTestingData","path":"scripts/scr_MechTestingData/scr_MechTestingData.yy",},},
     {"id":{"name":"scr_GameManagerTests","path":"scripts/scr_GameManagerTests/scr_GameManagerTests.yy",},},
     {"id":{"name":"TODO","path":"notes/TODO/TODO.yy",},},
     {"id":{"name":"scr_WorldSystemsKernel","path":"scripts/scr_WorldSystemsKernel/scr_WorldSystemsKernel.yy",},},
@@ -167,6 +168,7 @@
     {"roomId":{"name":"rm_lobby","path":"rooms/rm_lobby/rm_lobby.yy",},},
     {"roomId":{"name":"rm_main_menu","path":"rooms/rm_main_menu/rm_main_menu.yy",},},
   ],
+  "templateType": null,
   "TextureGroups": [
     {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
   ],

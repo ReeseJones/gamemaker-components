@@ -49,3 +49,10 @@ function mech_component_draw(_mechSystem, _component) {
         mech_socket_draw(_mechSystem, _component, _socket);
     }
 }
+
+///@function mech_component_draw(_mechSystem, _component)
+/// @self {Asset.GMObject}
+/// @param {Constant.MouseButton}    _button
+function mech_component_handle_on_clicked(_button) {
+    
+}

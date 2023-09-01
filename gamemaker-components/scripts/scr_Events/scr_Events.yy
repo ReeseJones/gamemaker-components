@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "scr_MechTestingData",
+  "name": "scr_Events",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "MechSystem",
-    "path": "folders/MechSystem.yy",
+    "name": "Events",
+    "path": "folders/Scripts/Events.yy",
   },
 }

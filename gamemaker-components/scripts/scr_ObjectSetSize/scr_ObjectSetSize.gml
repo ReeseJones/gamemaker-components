@@ -14,6 +14,6 @@ function object_set_size(_inst, _xWidth, _yWidth, _maskSpr = undefined) {
         }
 
         image_xscale = _xWidth / sprite_get_width(mask_index);
-        image_yscale = _yWidth / sprite_get_width(mask_index);
+        image_yscale = _yWidth / sprite_get_height(mask_index);
     }
 }

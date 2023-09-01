@@ -13,8 +13,8 @@ mechSystem.position.y = room_height / 2;
 mechComponentGrid = new MechComponentGrid(mechSystem.gridWidth, mechSystem.gridHeight);
 
 
-var _newComponent = global.mechComponentFactory.createComponent("testTwoByThree");
 
-array_push(mechSystem.components, _newComponent.component);
+//TODO: Currently insets a component for testing purposes
+//array_push(mechSystem.components, _newComponent.component);
 
-mechController.editorManager.beginPlacingComponent(id, _newComponent);
+//mechController.editorManager.beginPlacingComponent(id, _newComponent);

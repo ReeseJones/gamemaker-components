@@ -19,8 +19,8 @@ function MechComponentBinder(_boundInstance, _component) constructor {
     }
     
     static updateAll = function() {
-        updateObjectSize();
         updateAppearance();
+        updateObjectSize();
     }
     
     static setBoundComponent = function(_component) {
