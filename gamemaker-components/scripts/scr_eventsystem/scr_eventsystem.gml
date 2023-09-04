@@ -189,7 +189,7 @@ function EventSystem(_gameManager, _logger, _timeManager) : ComponentSystem() co
 
         var _sequenceEventQueue = getOrInsertEventQueue(_worldSequenceNumber);
         
-        array_push(_sequenceEventQueue, new EventData(_eventType, _data, _entityId));
+        array_push(_sequenceEventQueue, new EventDataOld(_eventType, _data, _entityId));
     }
 
     ///@param {Real} _worldSequenceNumber

@@ -22,6 +22,10 @@ function MechEditorManager() constructor {
         component = undefined;
         placementTarget = undefined;
     }
+    
+    static isPlacingComponent = function() {
+        return !is_undefined(component);
+    }
   
     static update = function() {
         if(is_undefined(component)) {
@@ -35,7 +39,7 @@ function MechEditorManager() constructor {
         var _relY = mouse_y - _gridY;
         
         var _gridPosX = round(_relX / MECH_CELL_SIZE - ((component.component.width & 1) * 0.5));
-        var _gridPosY = round(_relY / MECH_CELL_SIZE - ((component.component.width & 1) * 0.5));
+        var _gridPosY = round(_relY / MECH_CELL_SIZE - ((component.component.height & 1) * 0.5));
 
         var _finalCellPosX = _gridPosX - floor(component.component.width / 2);
         var _finalCellPosY = _gridPosY - floor(component.component.height / 2);

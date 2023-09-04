@@ -1,6 +1,8 @@
 #macro EVENT_MOUSE_OVER "mouseover"
 #macro EVENT_MOUSE_OUT "mouseout"
 
+#macro EVENT_RELEASED_GLOBAL "releasedglobal"
+
 #macro EVENT_PRESSED "pressed"
 #macro EVENT_RELEASED "released"
 #macro EVENT_CLICKED "clicked"

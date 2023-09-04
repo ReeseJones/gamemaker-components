@@ -1,4 +1,5 @@
 // 256 / 16 = 16 cells
+event_make_event_node(id);
 
 depth = 12;
 

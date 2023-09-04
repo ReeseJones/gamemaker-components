@@ -1,0 +1,1 @@
+editorManager.update();

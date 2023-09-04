@@ -3,7 +3,7 @@
 ///@param {String} _eventType
 ///@param {Any} _data
 ///@param {Real} _entityId
-function EventData(_eventType, _data, _entityId) constructor {
+function EventDataOld(_eventType, _data, _entityId) constructor {
     eventType = _eventType;
     data = _data;
     entityId = _entityId;
