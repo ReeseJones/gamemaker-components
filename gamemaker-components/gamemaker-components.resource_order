@@ -20,6 +20,7 @@
     {"name":"Testing","order":9,"path":"folders/Testing.yy",},
     {"name":"UI","order":7,"path":"folders/UI.yy",},
     {"name":"Input","order":29,"path":"folders/Scripts/Input.yy",},
+    {"name":"Draw","order":30,"path":"folders/Scripts/Draw.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_wall_circle","order":7,"path":"objects/obj_wall_circle/obj_wall_circle.yy",},
