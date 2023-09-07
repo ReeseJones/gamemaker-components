@@ -10,23 +10,34 @@ function MechEditorManager() constructor {
         if(!is_undefined(component)) {
             throw "Must finish placing a component before starting another placement";
         }
-        
+
         component = _component;
         placementTarget = _mech;
+        component.mechParent = _mech;
+        var _compData = _component.component;
+
+        if(placementTarget.mechComponentGrid.componentInGrid(_compData)) {
+            placementTarget.mechComponentGrid.removeComponent(_compData);
+        }
     }
 
     /// @function endPlacingComponent()
     /// @param {Id.Instance}   _mech
     /// @param {Id.Instance}   _component
     static endPlacingComponent = function(_mech, _component) {
-        component = undefined;
-        placementTarget = undefined;
+        var _compData =  component.component;
+        if(placementTarget.mechComponentGrid.componentCanBePlaced(_compData.position.x, _compData.position.y, _compData)) {
+            placementTarget.mechComponentGrid.addComponent(_compData.position.x, _compData.position.y, _compData);
+            component = undefined;
+            placementTarget = undefined;
+        }
+
     }
-    
+
     static isPlacingComponent = function() {
         return !is_undefined(component);
     }
-  
+
     static update = function() {
         if(is_undefined(component)) {
             return;

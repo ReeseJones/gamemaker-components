@@ -1,6 +1,8 @@
-event_make_event_node(id);
+event_make_event_node_like(id);
 
 editorManager = new MechEditorManager();
+
+node_append_child(root_get(), id);
 
 //TODO Better target selection
 mechEditTarget = obj_mech.id;
@@ -10,8 +12,6 @@ componentCreationButtons = [];
 
 var _components = global.mechComponentDataProvider.getComponents();
 var _compCount = array_length(_components);
-
-
 
 
 for(var i = 0; i < _compCount; i += 1) {
@@ -33,8 +33,15 @@ for(var i = 0; i < _compCount; i += 1) {
     }));
 }
 
-event_add_listener(id, EVENT_CLICKED, method(id, function(_event) {
+event_add_listener(root_get(), EVENT_CLICKED, method(id, function(_event) {
     if(_event.mouseButton != mb_left) {
+        return;
+    }
+
+    if(_event.target == root_get()) {
+        if(editorManager.isPlacingComponent()) {
+            editorManager.endPlacingComponent(obj_mech.id, editorManager.component);
+        }
         return;
     }
 
@@ -53,8 +60,6 @@ event_add_listener(id, EVENT_CLICKED, method(id, function(_event) {
             editorManager.endPlacingComponent(obj_mech.id, editorManager.component);
         }
 
-    } else {
-        show_debug_message("click event with no target");
     }
 
 }));

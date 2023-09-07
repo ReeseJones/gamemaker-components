@@ -3,15 +3,17 @@
 function Node(_parentNode = undefined, _childNodes = []) constructor {
     parentNode = _parentNode;
     childNodes = _childNodes;
+    nodeDepth = 0;
 }
 
 
 ///@return {Struct.Node}
-function node_make_node(_instanceOrStruct) {
+function node_make_node_like(_instanceOrStruct) {
     if( is_struct(_instanceOrStruct) || instance_exists(_instanceOrStruct) ) {
 
         _instanceOrStruct.parentNode = undefined;
         _instanceOrStruct.childNodes = [];
+        _instanceOrStruct.nodeDepth = 0;
         
          return _instanceOrStruct;
     }
@@ -25,6 +27,7 @@ function node_append_child(_parent, _child) {
     node_remove(_child);
     _child.parentNode = _parent;
     array_push(_parent.childNodes, _child);
+    node_update_depth(_child);
 }
 
 ///@param {Struct.Node} _node
@@ -32,6 +35,7 @@ function node_remove(_node) {
     if(_node.parentNode != undefined) {
         array_remove_first(_node.parentNode.childNodes, _node);
         _node.parentNode = undefined;
+        node_update_depth(_node);
     }
 }
 
@@ -42,6 +46,21 @@ function node_root_node(_node) {
     }
 
     return _node;
+}
+
+///@param {Struct.Node} _node
+function node_update_depth(_node) {
+    if(is_undefined(_node.parentNode)) {
+        _node.nodeDepth = 0;
+    } else {
+        _node.nodeDepth = _node.parentNode.nodeDepth + 1;
+    }
+    
+    var _childCount = array_length(_node.childNodes);
+    for(var i = 0; i < _childCount; i += 1) {
+        _childNode = _node.childNodes[i];
+        node_update_depth(_childNode);
+    }
 }
 
 ///@param {Struct.Node} _node

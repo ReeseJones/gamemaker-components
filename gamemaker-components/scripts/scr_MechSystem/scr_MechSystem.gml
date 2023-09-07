@@ -27,13 +27,9 @@ function mech_system_draw(_mechSystem) {
     var _top = _y - _gridPixelHeight / 2;
 
     if(_mechSystem.drawGrid) {
+        draw_set_alpha(0.6);
         draw_grid(_left, _top, MECH_CELL_SIZE, MECH_CELL_SIZE, _mechSystem.gridWidth, _mechSystem.gridHeight);
-    }
-
-    var _componentCount = array_length( _mechSystem.components );
-    for(var i = 0; i < _componentCount; i += 1) {
-        var _component = _mechSystem.components[i];
-        mech_component_draw(_mechSystem, _component);
+        draw_set_alpha(1);
     }
 }
 

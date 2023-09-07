@@ -162,7 +162,7 @@ function MouseManager() : EventNode()  constructor {
             return;
         }
 
-        ds_priority_add(instanceHoverList, _instanceRef, _instanceRef.depthOrder);
+        ds_priority_add(instanceHoverList, _instanceRef, _instanceRef.nodeDepth);
 
         updateHoveredInstance();
     }
@@ -180,7 +180,7 @@ function MouseManager() : EventNode()  constructor {
 
     static updateHoveredInstance = function() {
         var _oldHoverTarget = hoverTarget;
-        var _currentHoverTarget = ds_priority_find_min(instanceHoverList);
+        var _currentHoverTarget = ds_priority_find_max(instanceHoverList);
 
         // if the hover target is unchanged we can stop early, no need to notify.
         if(_currentHoverTarget == _oldHoverTarget) {
@@ -192,11 +192,13 @@ function MouseManager() : EventNode()  constructor {
 
         //If the old hover target exists notify that its not hoverd object
         if(_oldHoverTarget) {
+            _oldHoverTarget.mouseIsOver = false;
             event_dispatch(_oldHoverTarget, new EventData(EVENT_MOUSE_OUT, _oldHoverTarget));
         }
 
         //if the new hover target exists notify that it IS hovered object
         if(_currentHoverTarget) {
+            _currentHoverTarget.mouseIsOver = true;
             event_dispatch(_currentHoverTarget, new EventData(EVENT_MOUSE_OVER, _currentHoverTarget));
         }
 

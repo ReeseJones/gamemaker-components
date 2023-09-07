@@ -37,8 +37,9 @@ function mech_socket_draw(_mechSystem, _mechComponent, _socket) {
     var _x = mech_system_grid_cell_position_x(_mechSystem, _xPos);
     var _y = mech_system_grid_cell_position_y(_mechSystem, _yPos);
 
-    draw_set_color(c_aqua);
-    draw_rectangle(_x + 4, _y + 4, _x + 13, _y + 13, true);
+    draw_set_color(c_orange);
+    draw_set_alpha(0.8);
+    draw_rectangle(_x + 4, _y + 4, _x + 13, _y + 13, false);
 
     var _xCenter = _x + MECH_CELL_SIZE / 2;
     var _yCenter = _y + MECH_CELL_SIZE / 2;

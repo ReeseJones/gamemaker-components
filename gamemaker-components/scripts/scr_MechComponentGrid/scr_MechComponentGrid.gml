@@ -41,6 +41,7 @@ function MechComponentGrid(_width, _height) constructor {
         
         ds_grid_set_region(collisionGrid, _x, _y, _right, _top, 1);
         ds_grid_set_region(idGrid, _x, _y, _right, _top, _component.id);
+        componentMap[$ _component.id] = _component;
     }
     
     /// @function removeComponent
@@ -58,6 +59,12 @@ function MechComponentGrid(_width, _height) constructor {
         var _top = _bottom + _component.height - 1;
         ds_grid_set_region(collisionGrid, _left, _bottom, _right, _top, 0);
         ds_grid_set_region(idGrid, _left, _bottom, _right, _top, undefined);
+
+    }
+
+    /// @param {Struct.MechComponent}   _component
+    static componentInGrid = function(_component) {
+        return variable_struct_exists(componentMap, _component.id);
     }
     
     /// @function componentCanBePlaced
@@ -65,7 +72,7 @@ function MechComponentGrid(_width, _height) constructor {
     /// @param {Real}   _y
     /// @param {Struct.MechComponent}   _component
     static componentCanBePlaced = function(_x, _y, _component) {
-        
+
         //If the region is not in bounds it cannot be placed.
         if( !ds_grid_region_in_bounds(collisionGrid, _x, _y, _component.width, _component.height) ) {
             return false;

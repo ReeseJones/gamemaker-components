@@ -34,12 +34,12 @@ function EventNode(_parent = undefined, _children = []) : Node(_parent, _childre
 ///@description Will turn a struct or instance into an event node.
 ///@param {Struct.EventNode OR Id.Instance<Any>} _target
 ///@return {Struct.EventNode}
-function event_make_event_node(_target) {
+function event_make_event_node_like(_target) {
     if( is_struct(_target) || instance_exists(_target) ) {
         _target.eventCaptureSubscriberMap = {};
         _target.eventBubbleSubscriberMap = {};
 
-        return node_make_node(_target);;
+        return node_make_node_like(_target);;
     }
 
     throw "Could not be made into event node";

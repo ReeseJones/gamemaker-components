@@ -1,19 +1,21 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_wall_rectangle",
-  "eventList": [],
-  "managed": true,
+  "name": "obj_root",
+  "eventList": [
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
+  ],
+  "managed": false,
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "BaseObjects",
+    "path": "folders/BaseObjects.yy",
   },
   "parentObjectId": {
-    "name": "obj_solid_static",
-    "path": "objects/obj_solid_static/obj_solid_static.yy",
+    "name": "obj_clickable",
+    "path": "objects/obj_clickable/obj_clickable.yy",
   },
-  "persistent": false,
+  "persistent": true,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
   "physicsFriction": 0.2,
@@ -29,12 +31,9 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_obj_solid_rectangle",
-    "path": "sprites/spr_obj_solid_rectangle/spr_obj_solid_rectangle.yy",
+    "name": "spr_mask_rectangle",
+    "path": "sprites/spr_mask_rectangle/spr_mask_rectangle.yy",
   },
-  "spriteMaskId": {
-    "name": "spr_mask_rectangle_rot",
-    "path": "sprites/spr_mask_rectangle_rot/spr_mask_rectangle_rot.yy",
-  },
-  "visible": true,
+  "spriteMaskId": null,
+  "visible": false,
 }
