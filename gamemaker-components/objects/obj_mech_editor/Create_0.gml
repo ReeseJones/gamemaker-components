@@ -34,10 +34,6 @@ for(var i = 0; i < _compCount; i += 1) {
 }
 
 event_add_listener(root_get(), EVENT_CLICKED, method(id, function(_event) {
-    if(_event.mouseButton != mb_left) {
-        return;
-    }
-
     if(_event.target == root_get()) {
         if(editorManager.isPlacingComponent()) {
             editorManager.endPlacingComponent(obj_mech.id, editorManager.component);
@@ -53,13 +49,11 @@ event_add_listener(root_get(), EVENT_CLICKED, method(id, function(_event) {
             editorManager.beginPlacingComponent(obj_mech.id, _newComponent);
         }
     } else if(_event.target.object_index == obj_mech_component) {
-
         if(!editorManager.isPlacingComponent()) {
             editorManager.beginPlacingComponent(obj_mech.id, _event.target);
         } else if(editorManager.component == _event.target) {
             editorManager.endPlacingComponent(obj_mech.id, editorManager.component);
         }
-
     }
 
 }));

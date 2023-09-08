@@ -48,7 +48,7 @@ function MechEditorManager() constructor {
         var _gridY = mech_system_grid_cell_position_y(placementTarget.mechSystem, 0);
         var _relX = mouse_x - _gridX;
         var _relY = mouse_y - _gridY;
-        
+
         var _gridPosX = round(_relX / MECH_CELL_SIZE - ((component.component.width & 1) * 0.5));
         var _gridPosY = round(_relY / MECH_CELL_SIZE - ((component.component.height & 1) * 0.5));
 
@@ -58,9 +58,13 @@ function MechEditorManager() constructor {
         // Assign cell position
         component.component.position.x = _finalCellPosX;
         component.component.position.y = _finalCellPosY;
-        
+
         // Assign world position
         component.x = mech_system_grid_cell_position_x(placementTarget.mechSystem, _finalCellPosX) + (component.component.width / 2 * MECH_CELL_SIZE);
         component.y = mech_system_grid_cell_position_y(placementTarget.mechSystem, _finalCellPosY) + (component.component.height / 2 * MECH_CELL_SIZE);
+    }
+    
+    static draw = function() {
+        
     }
 }

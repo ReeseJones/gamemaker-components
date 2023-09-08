@@ -10,4 +10,6 @@ function MechComponentData(_name, _width, _height, spriteIndex_, _socketPosition
     width = _width;
     height = _height;
     spriteIndex = spriteIndex_;
+    type = "Weapon";
+    subtype ="Ballistic";
 }

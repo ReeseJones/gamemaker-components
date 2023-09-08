@@ -12,10 +12,3 @@ mechSystem.position.x = room_width / 2;
 mechSystem.position.y = room_height / 2;
 
 mechComponentGrid = new MechComponentGrid(mechSystem.gridWidth, mechSystem.gridHeight);
-
-
-
-//TODO: Currently insets a component for testing purposes
-//array_push(mechSystem.components, _newComponent.component);
-
-//mechController.editorManager.beginPlacingComponent(id, _newComponent);
