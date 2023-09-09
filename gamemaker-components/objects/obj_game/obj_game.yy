@@ -12,7 +12,10 @@
     "name": "Game",
     "path": "folders/Game.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "obj_clickable",
+    "path": "objects/obj_clickable/obj_clickable.yy",
+  },
   "persistent": true,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,
@@ -28,7 +31,10 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_mask_rectangle",
+    "path": "sprites/spr_mask_rectangle/spr_mask_rectangle.yy",
+  },
   "spriteMaskId": null,
-  "visible": true,
+  "visible": false,
 }

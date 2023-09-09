@@ -1,7 +1,7 @@
 function root_get() {
-    if(instance_exists(obj_root)) {
-        return obj_root.id;
+    if(instance_exists(obj_game)) {
+        return obj_game.id;
     } else {
-        return instance_create_depth(0,0,0, obj_root);
+        return instance_create_depth(0,0,1000, obj_game);
     }
 }
