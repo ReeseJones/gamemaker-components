@@ -12,8 +12,9 @@ function MouseEvent(_type, _data, _mouseButton) : EventData(_type, _data) constr
 }
 
 
-function MouseManager() : EventNode()  constructor {
-    logger = new LoggingService();
+///@param {Struct.LoggingService} _logger
+function MouseManager(_logger) : EventNode()  constructor {
+    logger = _logger
     //TODO: Destroy this list
     instanceHoverList = ds_priority_create();
 
@@ -210,16 +211,16 @@ function MouseManager() : EventNode()  constructor {
 
 
 function mouse_manager_handle_mouse_over(_instanceRef) {
-    if(instance_exists(obj_mouse_manager)) {
-        obj_mouse_manager.mouseManager.handleInstanceMouseOver(_instanceRef);
+    if(instance_exists(obj_game)) {
+        obj_game.mouseManager.handleInstanceMouseOver(_instanceRef);
     } else {
         throw "create a mouse manager!!!";
     }
 }
 
 function mouse_manager_handle_mouse_out(_instanceRef) {
-    if(instance_exists(obj_mouse_manager)) {
-        obj_mouse_manager.mouseManager.handleInstanceMouseOut(_instanceRef);
+    if(instance_exists(obj_game)) {
+        obj_game.mouseManager.handleInstanceMouseOut(_instanceRef);
     } else {
         throw "create a mouse manager!!!";
     }

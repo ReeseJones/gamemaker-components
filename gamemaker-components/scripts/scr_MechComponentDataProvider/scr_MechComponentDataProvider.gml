@@ -41,4 +41,4 @@ function MechComponentDataProvider() constructor {
     }
 }
 
-global.mechComponentDataProvider = new MechComponentDataProvider();
+//global.mechComponentDataProvider = new MechComponentDataProvider();

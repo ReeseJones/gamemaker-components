@@ -1,38 +1,40 @@
 #macro COPY_PARAMS var _params=[] for(var __i = 0; __i < argument_count; __i += 1) array_push(_params, argument[__i])
 
-/// @function              array_deep_copy(value)
-/// @description           Recursivly attempts to copy elements of array. Does not work on instances.
-/// @param {Array<any>}    _value The array of which to join the elements.
+/// @param {Array<any>}     _source
+/// @param {Array<any>}     _destination
+/// @param {Function}       _callback
 /// @return {Array<any>}
-function array_deep_copy(_value) {
-    static arrayDeepCopyHelper = function(_destination, _source) {
+function array_deep_copy(_source, _destination = [], _callback = undefined) {
+    if(!is_array(_source)) {
+        throw ("_source is not an array");
+    }
+    if(!is_array(_destination)) {
+        throw ("_destination is not an array");
+    }
 
-        if(!is_array(_source)) {
-            throw ("_source is not an array");
+    var _sourceLength = array_length(_source);
+
+    for(var i = 0; i < _sourceLength; i += 1)
+    {
+        var _propVal = _source[i];
+        var _copiedValue = undefined;
+        if(is_struct(_propVal)) {
+            _copiedValue = struct_deep_copy(_propVal, {}, _callback);
+        } else if(is_array(_propVal) ) {
+            // Is any value
+            // Feather disable once GM1043
+            _copiedValue = array_deep_copy(_propVal, [], _callback);
+        } else {
+            _copiedValue = _propVal;
         }
 
-        var _sourceLength = array_length(_source);
+        _destination[@i] = _copiedValue;
+    }
 
-        for(var i = 0; i < _sourceLength; i += 1)
-        {
-            var _propVal = _source[i];
-            var _copiedValue = undefined;
-            if(is_struct(_propVal)) {
-                _copiedValue = struct_deep_copy(_propVal);
-            } else if(is_array(_propVal) ) {
-                // Is any value
-                // Feather disable once GM1043
-                _copiedValue = array_deep_copy(_propVal);
-            } else {
-                _copiedValue = _propVal;
-            }
+    if(is_callable(_callback)) {
+        _callback(_source, _destination);
+    }
 
-            _destination[@i] = _copiedValue;
-        }
-    };
-    
-    var _destination = array_create(array_length(_value));
-    arrayDeepCopyHelper(_destination, _value);
     return _destination;
 }
 

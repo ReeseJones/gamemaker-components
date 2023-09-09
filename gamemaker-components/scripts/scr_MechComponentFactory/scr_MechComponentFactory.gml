@@ -38,4 +38,4 @@ function MechComponentFactory(_componentDataProvider) constructor {
     }
 }
 
-global.mechComponentFactory = new MechComponentFactory(global.mechComponentDataProvider);
+//global.mechComponentFactory = new MechComponentFactory(global.mechComponentDataProvider);

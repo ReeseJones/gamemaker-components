@@ -1,6 +1,5 @@
 #macro TAG_COMMAND "c_command"
 #macro TAG_SCRIPT "script"
-#macro TAG_UNIT_TEST "unit_test"
 #macro TAG_UNIT_TEST_SPEC "unit_test_spec"
 #macro TAG_GEOMETRY "geometry"
 #macro TAG_MATH "math"

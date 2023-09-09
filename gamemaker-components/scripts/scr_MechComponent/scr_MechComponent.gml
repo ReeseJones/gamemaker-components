@@ -1,20 +1,11 @@
 ///@function MechComponent(_sockets)
-///@param {real} _width The width measured in cells
-///@param {real} _height The height measured in cells
-///@param {Array<Struct.MechSocket>} _sockets The array of sockets this component has.
-function MechComponent(_width, _height, _sockets = []) constructor {
+///@param {Struct.MechComponentData} _componentData
+function MechComponent(_componentData) constructor {
     static staticComponentId = 0;
+    // A unique runtime id
     id = $"cId:{++staticComponentId}";
-    dataId = undefined;
-    name = "";
-    sockets = _sockets;
-    position = new Vec2();
-    width = _width;
-    height = _height;
-    spriteIndex = choose(spr_mech_doodad01, spr_mech_doodad02, spr_mech_doodad03, spr_mech_doodad04,spr_mech_doodad05, spr_mech_doodad06);
-    orientation = 0;
-    flipVertical = false;
-    flipHorizontal = false;
+    componentData =_componentData;
+    placement = new MechComponentPlacementOptions();
 }
 
 ///@function mech_component_draw(_mechSystem, _component)

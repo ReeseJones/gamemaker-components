@@ -1,33 +1,39 @@
-function struct_deep_copy(_value) {
-    static structDeepCopyHelper = function(_destination, _source) {
-        if(!is_struct(_source)) {
-            throw ("_source is not a struct");
-        }
+///@param {Struct} _source
+///@param {Struct} _destination
+///@param {Function} _callback
+///@return {Struct}
+function struct_deep_copy(_source, _destination = {}, _callback = undefined) {
+    if(!is_struct(_source)) {
+        throw ("_source is not a struct");
+    }
+    if(!is_struct(_destination)) {
+        throw ("_destination is not a struct");
+    }
 
-        var _props = variable_struct_get_names(_source);
-        var _propCount = array_length(_props);
+    var _props = variable_struct_get_names(_source);
+    var _propCount = array_length(_props);
         
-        for(var i = 0; i < _propCount; i += 1)
-        {
-            var _propName = _props[i];
-            var _propVal = _source[$ _propName];
-            // Feather disable once GM2018
-            var _copiedValue;
-            if(is_struct(_propVal)) {
-                _copiedValue = struct_deep_copy(_propVal);
-            } else if (is_array(_propVal) ) {
-                // Feather disable once GM1043
-                _copiedValue = array_deep_copy(_propVal);
-            } else {
-                _copiedValue = _propVal;
-            }
-            
-            _destination[$_propName] = _copiedValue;
-        }
-    };
+    for(var i = 0; i < _propCount; i += 1)
+    {
+        var _propName = _props[i];
+        var _propVal = _source[$ _propName];
 
-    var _destination = {};
-    structDeepCopyHelper(_destination, _value);
+        var _copiedValue = undefined;
+        if(is_struct(_propVal)) {
+            _copiedValue = struct_deep_copy(_propVal, {}, _callback);
+        } else if (is_array(_propVal) ) {
+            _copiedValue = array_deep_copy(_propVal, [], _callback);
+        } else {
+            _copiedValue = _propVal;
+        }
+
+        _destination[$ _propName] = _copiedValue;
+    }
+
+    if(is_callable(_callback)) {
+        _callback(_source, _destination);
+    }
+
     return _destination;
 }
 
