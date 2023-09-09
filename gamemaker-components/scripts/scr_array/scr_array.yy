@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "DataStructures",
-    "path": "folders/Scripts/DataStructures.yy",
+    "path": "folders/DataStructures.yy",
   },
 }

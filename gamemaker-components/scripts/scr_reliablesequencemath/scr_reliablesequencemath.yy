@@ -5,7 +5,7 @@
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "ReliableProtocol",
-    "path": "folders/Scripts/Networking/ReliableProtocol.yy",
+    "name": "Math",
+    "path": "folders/Math.yy",
   },
 }
