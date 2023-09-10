@@ -27,12 +27,8 @@ function test_save_data_tests() {
 
             it("will remove and restore struct prototype", function() {
                 var _fileName = file_get_save_directory() + "test.json";
-                var _openFile = file_text_open_write(_fileName);
-
-                var _text = json_serialize(componentList, true);
-                file_text_write_string(_openFile, _text);
-                file_text_writeln(_openFile);
-                file_text_close(_openFile);
+                
+                file_json_write(_fileName, componentList);
 
                 var _parsed = file_json_read(_fileName);
                 matcher_is_array(_parsed);

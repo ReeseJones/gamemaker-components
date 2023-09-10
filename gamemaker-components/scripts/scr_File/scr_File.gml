@@ -21,3 +21,13 @@ function file_json_read(_filename) {
     var _parsed = json_deserialize(_stringContents);
     return _parsed;
 }
+
+function file_json_write(_filename, _jsonObj) {
+    var _openFile = file_text_open_write(_filename);
+
+    var _stringContents = json_serialize(_jsonObj, true);
+
+    file_text_write_string(_openFile, _stringContents);
+    file_text_writeln(_openFile);
+    file_text_close(_openFile);
+}

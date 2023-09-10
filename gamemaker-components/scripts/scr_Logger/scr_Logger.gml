@@ -8,7 +8,7 @@ enum LOG_LEVEL {
 
 function LoggingService() constructor {
     logLevel = LOG_LEVEL.SHOW_ALL;
- 
+
     ///@param {Real} _level
     static log = function(_level) {
         var _currentTime = date_time_string(date_current_datetime());

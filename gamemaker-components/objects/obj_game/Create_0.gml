@@ -9,5 +9,6 @@ isDraggable = false;
 serviceContainer = global.gameContainer;
 inputDeviceManager = serviceContainer.get("inputDeviceManager");
 mouseManager = serviceContainer.get("mouseManager");
+data = serviceContainer.get("gameSaveData");
 
 run_all_specs();

@@ -1,3 +1,4 @@
+struct_serialize_as(MechComponent, nameof(MechComponent));
 ///@function MechComponent(_sockets)
 ///@param {Struct.MechComponentData} _componentData
 function MechComponent(_componentData) constructor {
