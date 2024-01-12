@@ -18,7 +18,7 @@ function ui_button_draw() {
     } else {
         draw_set_color(textColor);
     }
-    
+
     draw_set_halign(fa_center);
     draw_set_valign(fa_middle);
 
