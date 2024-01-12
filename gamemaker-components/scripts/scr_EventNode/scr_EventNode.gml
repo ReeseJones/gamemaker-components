@@ -39,7 +39,7 @@ function event_make_event_node_like(_target) {
         _target.eventCaptureSubscriberMap = {};
         _target.eventBubbleSubscriberMap = {};
 
-        return node_make_node_like(_target);;
+        return node_make_node_like(_target);
     }
 
     throw "Could not be made into event node";

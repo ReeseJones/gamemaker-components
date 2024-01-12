@@ -9,6 +9,12 @@ isDraggable = false;
 serviceContainer = global.gameContainer;
 inputDeviceManager = serviceContainer.get("inputDeviceManager");
 mouseManager = serviceContainer.get("mouseManager");
-data = serviceContainer.get("gameSaveData");
+saveData = serviceContainer.get("gameSaveData");
+gameStaticData = serviceContainer.get("gameStaticData");
 
 run_all_specs();
+
+alarm[0] = 10;
+
+window_set_fullscreen(false);
+

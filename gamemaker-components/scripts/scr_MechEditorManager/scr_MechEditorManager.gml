@@ -43,7 +43,6 @@ function MechEditorManager() constructor {
             return;
         }
 
-        //TODO Getting grid position then getting component relative position to start moving it
         var _gridX = mech_system_grid_cell_position_x(placementTarget.mechSystem, 0);
         var _gridY = mech_system_grid_cell_position_y(placementTarget.mechSystem, 0);
         var _relX = mouse_x - _gridX;

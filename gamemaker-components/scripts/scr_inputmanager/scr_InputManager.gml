@@ -62,8 +62,6 @@ enum ACTION_INPUT {
 //TODO CONVERT FROM ARRAYS TO STRUCTS
 
 function InputManager(_inputDeviceManager) constructor {
-    //TODO Remove once better type checking
-    // Feather disable once GM1063
     keyboardCheckMethod = (os_type == os_windows) ? keyboard_check_direct : keyboard_check;
     inputDeviceManager = _inputDeviceManager;
 
@@ -117,7 +115,7 @@ function InputManager(_inputDeviceManager) constructor {
     }
 
 /// @function        checkAllDeviceInput()
-/// @return {Real} return the DEVICE_INDEX from which input was detected first.
+/// @return {Real OR Undefined} return the DEVICE_INDEX from which input was detected first.
     static checkAllDeviceInput = function check_all_device_input() {
         var _devices = inputDeviceManager.getAllDevices();
         var _deviceCount = array_length(_devices);
@@ -154,8 +152,6 @@ function InputManager(_inputDeviceManager) constructor {
         var _pressMap = functionsMap[BUTTON_PRESS_TYPE.PRESS];
         var _releaseMap = functionsMap[BUTTON_PRESS_TYPE.RELEASE];
 
-        //TODO: Remove disable once type checking is good.
-        // Feather disable GM1043
         _heldMap[BINDING_TYPE.KEYBOARD_KEY] = function(_device, _key) { return keyboardCheckMethod(_key); };
         _heldMap[BINDING_TYPE.MOUSE_BUTTON] = device_mouse_check_button;
         _heldMap[BINDING_TYPE.GAMEPAD_BUTTON] = gamepad_button_check;
@@ -170,7 +166,7 @@ function InputManager(_inputDeviceManager) constructor {
         _releaseMap[BINDING_TYPE.MOUSE_BUTTON] = device_mouse_check_button_released;
         _releaseMap[BINDING_TYPE.GAMEPAD_BUTTON] = gamepad_button_check_released;
         _releaseMap[BINDING_TYPE.MOUSE_WHEEL] = function() { return false };
-        // Feather restore GM1043
+
     }
     
     static initializeBindings = function initialize_bindings() {

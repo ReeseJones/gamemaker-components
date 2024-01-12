@@ -1,48 +1,48 @@
 ///@description Turns base 10 real into a hex string
 function string_hex(_value) {
-    var s = sign(_value);
-    var v = abs(_value);
+    var _s = sign(_value);
+    var _v = abs(_value);
 
-    var output = "";
+    var _output = "";
 
-    while (v > 0)  {
-        var c  = v & 0xf;
-        output = chr(c + ((c < 10) ? 48 : 55)) + output;
-        v = v >> 4;
+    while (_v > 0)  {
+        var _c  = _v & 0xf;
+        _output = chr(_c + ((_c < 10) ? 48 : 55)) + _output;
+        _v = _v >> 4;
     }
 
-    if (string_length(output) == 0) {
-        output = "0";
+    if (string_length(_output) == 0) {
+        _output = "0";
     }
 
-    return ((s < 0) ? "-" : "") + output;
+    return ((_s < 0) ? "-" : "") + _output;
 }
 
 ///@description Turns hex string into base10 real.
-function hex(str) {
-    var result = 0;
+function hex(_str) {
+    var _result = 0;
 
     // special unicode values
-    static ZERO = ord("0");
-    static NINE = ord("9");
-    static A = ord("A");
-    static F = ord("F");
+    static zero = ord("0");
+    static nine = ord("9");
+    static a = ord("a");
+    static f = ord("f");
 
-    for (var i = 1; i <= string_length(str); i++) {
-        var c = ord(string_char_at(string_upper(str), i));
+    for (var i = 1; i <= string_length(_str); i++) {
+        var _c = ord(string_char_at(string_upper(_str), i));
         // you could also multiply by 16 but you get more nerd points for bitshifts
-        result = result << 4;
+        _result = _result << 4;
         // if the character is a number or letter, add the _value
         // it represents to the total
-        if (c >= ZERO && c <= NINE) {
-            result = result + (c - ZERO);
-        } else if (c >= A && c <= F) {
-            result = result + (c - A + 10);
+        if (_c >= zero && _c <= nine) {
+            _result = _result + (_c - zero);
+        } else if (_c >= a && _c <= f) {
+            _result = _result + (_c - a + 10);
         // otherwise complain
         } else {
-            throw "bad input for hex(str): " + str;
+            throw "bad input for hex(_str): " + _str;
         }
     }
 
-    return result;
+    return _result;
 }

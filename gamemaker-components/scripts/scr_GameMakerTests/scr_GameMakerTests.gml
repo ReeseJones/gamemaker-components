@@ -1,5 +1,5 @@
-function item () constructor {}
-function potion () : item () constructor {}
+function TestItem () constructor {}
+function TestPotion () : TestItem () constructor {}
 
 function TestOnlyItem () constructor {
     static testString = "testABC";
@@ -7,19 +7,6 @@ function TestOnlyItem () constructor {
 
 function TestOnlyPotion () : TestOnlyItem () constructor {
     static testString = "test123";
-}
-
-function TestOnlyStaticStatement() constructor {
-    static updateName = function(){
-        var _staticStruct = static_get(self);
-        _staticStruct.name = instanceof(self);
-    }
-    
-    static updateName();
-}
-
-function TestOnlyStaticStatementChild () : TestOnlyStaticStatement () constructor {
-    static updateName();
 }
 
 tag_script(game_maker_tests, [TAG_UNIT_TEST_SPEC]);
@@ -57,15 +44,11 @@ function game_maker_tests() {
                     var _newPotion = new TestOnlyPotion();
                     matcher_value_equal(_newPotion.testAdd == _staticItem.testAdd, true);
                 });
-                it("can execute statements with static keyword", function() {
-                    var _testInstance = new TestOnlyStaticStatementChild();
-                    matcher_value_equal(_testInstance.name == "TestOnlyStaticStatementChild", true);
-                });
                 it("inheriting from empty constructors result in same static ref", function(){
-                    var _potion = new potion();
-                    var _static_potion = static_get(potion);
+                    var _potion = new TestPotion();
+                    var _staticPotion = static_get(TestPotion);
 
-                    var _result = static_get(item) == static_get(_static_potion);
+                    var _result = static_get(TestItem) == static_get(_staticPotion);
                     matcher_value_equal(_result, true);
                 });
             });

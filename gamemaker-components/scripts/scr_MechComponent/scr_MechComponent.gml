@@ -1,11 +1,11 @@
 struct_serialize_as(MechComponent, nameof(MechComponent));
-///@function MechComponent(_sockets)
-///@param {Struct.MechComponentData} _componentData
-function MechComponent(_componentData) constructor {
+///@param {String} _componentDataId
+function MechComponent(_componentDataId) constructor {
     static staticComponentId = 0;
     // A unique runtime id
     id = $"cId:{++staticComponentId}";
-    componentData =_componentData;
+    // Reference to the original component data
+    componentDataId = _componentDataId;
     placement = new MechComponentPlacementOptions();
 }
 
@@ -13,7 +13,7 @@ function MechComponent(_componentData) constructor {
 ///@param {Struct.MechSystem} _mechSystem 
 ///@param {Struct.MechComponent} _component
 function mech_component_draw(_mechSystem, _component) {
-    
+
     var _x = mech_system_grid_cell_position_x(_mechSystem, _component.position.x);
     var _y = mech_system_grid_cell_position_y(_mechSystem, _component.position.y);
 
