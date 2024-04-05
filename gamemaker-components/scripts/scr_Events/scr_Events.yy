@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_Events",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Events",
-    "path": "folders/Events.yy",
+  "$GMScript":"",
+  "%Name":"scr_Events",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_Events",
+  "parent":{
+    "name":"Events",
+    "path":"folders/Events.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

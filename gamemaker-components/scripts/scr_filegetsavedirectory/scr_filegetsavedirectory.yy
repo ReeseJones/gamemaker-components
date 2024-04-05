@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_FileGetSaveDirectory",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Files",
-    "path": "folders/Files.yy",
+  "$GMScript":"",
+  "%Name":"scr_FileGetSaveDirectory",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_FileGetSaveDirectory",
+  "parent":{
+    "name":"Files",
+    "path":"folders/Files.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

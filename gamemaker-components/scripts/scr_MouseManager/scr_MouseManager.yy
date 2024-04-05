@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_MouseManager",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "UI",
-    "path": "folders/UI.yy",
+  "$GMScript":"",
+  "%Name":"scr_MouseManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_MouseManager",
+  "parent":{
+    "name":"UI",
+    "path":"folders/UI.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

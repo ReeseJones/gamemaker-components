@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_NearestPointOnEllipse",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Math.yy",
+  "$GMScript":"",
+  "%Name":"scr_NearestPointOnEllipse",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_NearestPointOnEllipse",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

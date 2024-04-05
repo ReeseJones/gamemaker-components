@@ -14,6 +14,7 @@ gameStaticData = serviceContainer.get("gameStaticData");
 
 run_all_specs();
 
+// Moves from bootstrap screen to first room
 alarm[0] = 10;
 
 window_set_fullscreen(false);

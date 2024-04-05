@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_ui_layout_calculator",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "UI",
-    "path": "folders/UI.yy",
+  "$GMScript":"",
+  "%Name":"scr_ui_layout_calculator",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_layout_calculator",
+  "parent":{
+    "name":"UI",
+    "path":"folders/UI.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

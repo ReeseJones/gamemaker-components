@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_SpecCreation",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Testing",
-    "path": "folders/Testing.yy",
+  "$GMScript":"",
+  "%Name":"scr_SpecCreation",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_SpecCreation",
+  "parent":{
+    "name":"Testing",
+    "path":"folders/Testing.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_GameStaticData",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Game",
-    "path": "folders/Game.yy",
+  "$GMScript":"",
+  "%Name":"scr_GameStaticData",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_GameStaticData",
+  "parent":{
+    "name":"Game",
+    "path":"folders/Game.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_GetRotatedRectangle",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Math",
-    "path": "folders/Math.yy",
+  "$GMScript":"",
+  "%Name":"scr_GetRotatedRectangle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_GetRotatedRectangle",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Math.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

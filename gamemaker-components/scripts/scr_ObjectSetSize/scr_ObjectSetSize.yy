@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_ObjectSetSize",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Utility",
-    "path": "folders/Utility.yy",
+  "$GMScript":"",
+  "%Name":"scr_ObjectSetSize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ObjectSetSize",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/Utility.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

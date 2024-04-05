@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_Array",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "DataStructures",
-    "path": "folders/DataStructures.yy",
+  "$GMScript":"",
+  "%Name":"scr_Array",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_Array",
+  "parent":{
+    "name":"DataStructures",
+    "path":"folders/DataStructures.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

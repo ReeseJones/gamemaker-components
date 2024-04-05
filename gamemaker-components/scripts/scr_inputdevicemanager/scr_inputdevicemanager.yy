@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_InputDeviceManager",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Input",
-    "path": "folders/Input.yy",
+  "$GMScript":"",
+  "%Name":"scr_InputDeviceManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_InputDeviceManager",
+  "parent":{
+    "name":"Input",
+    "path":"folders/Input.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

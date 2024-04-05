@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_DrawGrid",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Draw",
-    "path": "folders/Draw.yy",
+  "$GMScript":"",
+  "%Name":"scr_DrawGrid",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_DrawGrid",
+  "parent":{
+    "name":"Draw",
+    "path":"folders/Draw.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

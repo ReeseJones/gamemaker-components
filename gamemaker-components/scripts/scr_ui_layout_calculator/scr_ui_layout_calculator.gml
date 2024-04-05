@@ -3,7 +3,6 @@ enum FLEX_DIRECTION {
     COLUMN,
 }
 
-
 enum OVERFLOW_TYPE {
     VISIBLE,
     HIDDEN,
@@ -13,14 +12,6 @@ enum OVERFLOW_TYPE {
 enum LAYOUT_TYPE {
     NONE,
     FLEX,
-    STACK,
-    FIT_CONTENT,
-}
-
-enum FIT_CONTENT_TYPE {
-    WIDTH,
-    HEIGHT,
-    BOTH,
 }
 
 ///@param {Struct.EventNode} _uiRoot
@@ -28,14 +19,16 @@ function ui_calculate_layout(_uiRoot) {
 
     _uiRoot.width = display_get_gui_width();
     _uiRoot.height = display_get_gui_height();
+    _uiRoot.calculatedXPos = 0;
+    _uiRoot.calculatedYPos = 0;
 
     ui_calculate_layout_helper(_uiRoot);
 }
 
 ///@param {Struct.EventNode} _node
 function ui_calculate_layout_helper(_node) {
-    //calculate my size
 
+    // Calculate my size relative to parent if needed
     if( is_real(_node.width) ) {
         _node.calculatedWidth = _node.width >= -1 &&_node.width <= 1
             ? _node.width * _node.parentNode.calculatedWidth
@@ -47,22 +40,25 @@ function ui_calculate_layout_helper(_node) {
             ? _node.height * _node.parentNode.calculatedHeight
             : _node.height;
     }
-    
+
+    // Calculate children relative sizes
     var _childrenCount = array_length(_node.childNodes); 
     for(var _i = 0; _i < _childrenCount; _i += 1) {
         var _childNode = _node.childNodes[_i];
         ui_calculate_layout_helper(_childNode);
     }
 
-
-    //size dynamic children
+    var _currentXPos = _node.calculatedXPos - _node.ca
+    // Calculate children layout
+    for(var _i = 0; _i < _childrenCount; _i += 1) {
+        var _childNode = _node.childNodes[_i];
+       
+    }
 }
 
 function ui_element_calculate_fixed_sizes() {
     
 }
-
-
 
 
 
