@@ -7,6 +7,7 @@ depth = 100;
 isDraggable = false;
 
 serviceContainer = global.gameContainer;
+/** @type {real} */
 inputDeviceManager = serviceContainer.get("inputDeviceManager");
 mouseManager = serviceContainer.get("mouseManager");
 saveData = serviceContainer.get("gameSaveData");

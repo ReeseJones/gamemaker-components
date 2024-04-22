@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"scr_NumberInRange",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_NumberInRange",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Math.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
