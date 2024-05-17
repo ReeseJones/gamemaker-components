@@ -84,7 +84,6 @@ function ui_calculate_layout(_uiRoot) {
     //TODO: make sure UI root has correct calculated sizes
     _uiRoot.sizeProperties.width = display_get_gui_width();
     _uiRoot.sizeProperties.height = display_get_gui_height();
-    
     _uiRoot.calculatedSize.width = display_get_gui_width();
     _uiRoot.calculatedSize.height = display_get_gui_height();
 
@@ -97,7 +96,7 @@ function ui_calculate_layout_helper(_node) {
     // Calculate children relative sizes
     var _childrenCount = array_length(_node.childNodes);
     for(var _i = 0; _i < _childrenCount; _i += 1) {
-        var _childNode = _node.childNodes[_i]; 
+        var _childNode = _node.childNodes[_i];
         ui_calculate_element_size(_childNode, _node);
         ui_calculate_layout_helper(_childNode);
     }

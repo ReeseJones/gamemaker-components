@@ -199,6 +199,48 @@ function ui_layout_calculator_tests() {
                         });
                     });
                 });
+                describe("Calculates an elements height", function() {
+                    describe("by infering size from the parent", function() {
+                        before_each(function() {
+                            panel.sizeProperties.height = undefined;
+                        });
+                        it("it should be the height of the parent minus the top and bottom offset from the parent", function() {
+                            panel.sizeProperties.position.top = 100;
+                            panel.sizeProperties.position.bottom = 150;
+
+                            ui_calculate_element_size(panel, uiRoot);
+
+                            matcher_value_equal(panel.calculatedSize.height, 1000 - 100 - 150);
+                        });
+                        it("it should be the height of the parent minus the top and bottom offset from the parent calculated from %", function() {
+                            panel.sizeProperties.position.top = 0.2;
+                            panel.sizeProperties.position.bottom = 0.25;
+
+                            ui_calculate_element_size(panel, uiRoot);
+
+                            matcher_value_equal(panel.calculatedSize.height, 1000 - 200 - 250);
+                        });
+                        it("by being a percentage of the size of the parent", function() {
+                            panel.sizeProperties.height = 0.4;
+
+                            ui_calculate_element_size(panel, uiRoot);
+
+                            matcher_value_equal(panel.calculatedSize.height, 400);
+                        });
+                        it("height will be calculated height or border+padding size, which ever is larger", function() {
+                            // 40% of 1000 is 400, but with padding and border adding up to 100% total size will be 100% of 1000
+                            panel.sizeProperties.height = 0.4;
+                            panel.sizeProperties.border.top = 0.2;
+                            panel.sizeProperties.border.bottom = 0.2;
+                            panel.sizeProperties.padding.top = 0.3;
+                            panel.sizeProperties.padding.bottom = 0.3;
+
+                            ui_calculate_element_size(panel, uiRoot);
+
+                            matcher_value_equal(panel.calculatedSize.height, 1000);
+                        });
+                    });
+                });
             });
         })
     ];
