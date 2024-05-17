@@ -210,7 +210,8 @@ function MouseManager(_logger) : EventNode()  constructor {
 }
 
 /// @description handles local mouse over events for the ui stack
-/// @param {Id.Instance}    _instanceReffunction mouse_manager_handle_mouse_over(_instanceRef) {
+/// @param {Id.Instance}    _instanceRef
+function mouse_manager_handle_mouse_over(_instanceRef) {
     if(instance_exists(obj_game)) {
         obj_game.mouseManager.handleInstanceMouseOver(_instanceRef);
     } else {
@@ -219,7 +220,8 @@ function MouseManager(_logger) : EventNode()  constructor {
 }
 
 /// @description handles local mouse out events for the ui stack
-/// @param {Id.Instance}    _instanceReffunction mouse_manager_handle_mouse_out(_instanceRef) {
+/// @param {Id.Instance}    _instanceRef
+function mouse_manager_handle_mouse_out(_instanceRef) {
     if(instance_exists(obj_game)) {
         obj_game.mouseManager.handleInstanceMouseOut(_instanceRef);
     } else {

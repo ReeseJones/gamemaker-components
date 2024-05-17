@@ -1,16 +1,12 @@
 function scrape_anon_function_location(_method) {
-    var _searchTerm = "gml_GlobalScript_";
-    var _searchTermLength = string_length(_searchTerm)
     var _scrName = script_get_name(_method);
-    var _strLen = string_length(_scrName);
-    var _namePos = string_last_pos(_searchTerm, _scrName);
 
-    if(_namePos == 0) {
-        return "OOPS DAISY";
-    }
-    
-    var _count = _strLen - _namePos - _searchTermLength + 1;
-    return string_copy(_scrName, _namePos + _searchTermLength, _count);
+    var _tokens = string_split(_scrName, "@", true);
+    array_reverse_ext(_tokens);
+
+    var _finalString = array_join(_tokens, "@");
+
+    return _finalString;
 }
 
 function get_debug_callstack_string() {

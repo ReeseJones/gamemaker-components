@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"scr_ui_layout_calculator_test",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_layout_calculator_test",
+  "parent":{
+    "name":"UI",
+    "path":"folders/UI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

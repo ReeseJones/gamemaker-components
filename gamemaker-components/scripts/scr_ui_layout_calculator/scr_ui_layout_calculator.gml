@@ -15,15 +15,17 @@ enum LAYOUT_TYPE {
 }
 
 ///@param {real} _dimension
-///@param {real} _parentDimension///@param {real} _begin
-///@param {real} _endfunction ui_calculate_dimension(_dimension, _parentDimension, _begin = undefined, _end = undefined) {
+///@param {real} _parentDimension
+///@param {real} _begin
+///@param {real} _end
+function ui_calculate_dimension(_dimension, _parentDimension, _begin = undefined, _end = undefined) {
     var _parentIsReal = is_real(_parentDimension);
     if( is_real(_dimension) ) {
         return number_in_range(_dimension, -1, 1) && _parentIsReal
             ? _dimension * _parentDimension
             : _dimension;
     }
-    
+
     if( is_real(_begin) && is_real(_end) && _parentIsReal) {
         _begin = number_in_range(_begin, -1, 1)
             ? _begin * _parentDimension
@@ -31,44 +33,46 @@ enum LAYOUT_TYPE {
         _end = number_in_range(_end, -1, 1)
             ? _end * _parentDimension
             : _end;
-        return max(0, _parentDimension - _begin - _end)
+        return max(0, _parentDimension - _begin - _end);
     }
     
     return 0;
 }
-    
+
 ///@param {Struct.ElementProperties} _node
 ///@param {Struct.ElementProperties} _parentNode
 function ui_calculate_element_size(_node, _parentNode) {
     var _parentSize = _parentNode.calculatedSize;
     var _nodeDest = _node.calculatedSize;
     var _nodeSrc = _node.sizeProperties;
-    
+
     var _borderDest = _node.calculatedSize.border;
     var _borderSrc = _node.sizeProperties.border;
-    
+
     var _paddingDest = _node.calculatedSize.padding;
     var _paddingSrc = _node.sizeProperties.padding;
-    
+
     var _positionDest = _node.calculatedSize.position;
-    var _positionSrc = _node.sizeProperties.position;    
+    var _positionSrc = _node.sizeProperties.position;
+
     _borderDest.bottom = ui_calculate_dimension(_borderSrc.bottom, _parentSize.height);
     _borderDest.top = ui_calculate_dimension(_borderSrc.top, _parentSize.height);
     _borderDest.left = ui_calculate_dimension(_borderSrc.left, _parentSize.width);
     _borderDest.right = ui_calculate_dimension(_borderSrc.right, _parentSize.width);
-    
+
     _paddingDest.bottom = ui_calculate_dimension(_paddingSrc.bottom, _parentSize.height);
     _paddingDest.top = ui_calculate_dimension(_paddingSrc.top, _parentSize.height);
     _paddingDest.left = ui_calculate_dimension(_paddingSrc.left, _parentSize.width);
-    _paddingDest.right = ui_calculate_dimension(_paddingSrc.right, _parentSize.width);    
+    _paddingDest.right = ui_calculate_dimension(_paddingSrc.right, _parentSize.width);
+
     _positionDest.bottom = ui_calculate_dimension(_positionSrc.bottom, _parentSize.height);
     _positionDest.top = ui_calculate_dimension(_positionSrc.top, _parentSize.height);
     _positionDest.left = ui_calculate_dimension(_positionSrc.left, _parentSize.width);
-    _positionDest.right = ui_calculate_dimension(_positionSrc.right, _parentSize.width);    
-    
+    _positionDest.right = ui_calculate_dimension(_positionSrc.right, _parentSize.width);
+
     _nodeDest.width = ui_calculate_dimension(_nodeSrc.width, _parentSize.width, _positionDest.left, _positionDest.right);
     _nodeDest.height = ui_calculate_dimension(_nodeSrc.height, _parentSize.height, _positionDest.top, _positionDest.bottom);
-    
+
     // Choose the larger, padding + border size or initial calculated size. generally should result in calcualted size
     // otherwise that means the border and padding are taking up 100% or more of the desired space.
     _nodeDest.width = max(_nodeDest.width, _borderDest.left + _borderDest.right + _paddingDest.left + _paddingDest.right);
@@ -80,6 +84,10 @@ function ui_calculate_layout(_uiRoot) {
     //TODO: make sure UI root has correct calculated sizes
     _uiRoot.sizeProperties.width = display_get_gui_width();
     _uiRoot.sizeProperties.height = display_get_gui_height();
+    
+    _uiRoot.calculatedSize.width = display_get_gui_width();
+    _uiRoot.calculatedSize.height = display_get_gui_height();
+
     ui_calculate_layout_helper(_uiRoot);
 }
 
@@ -89,11 +97,11 @@ function ui_calculate_layout_helper(_node) {
     // Calculate children relative sizes
     var _childrenCount = array_length(_node.childNodes);
     for(var _i = 0; _i < _childrenCount; _i += 1) {
-        var _childNode = _node.childNodes[_i];
+        var _childNode = _node.childNodes[_i]; 
+        ui_calculate_element_size(_childNode, _node);
         ui_calculate_layout_helper(_childNode);
     }
 
-    //var _currentXPos = _node.calculatedXPos - _node.ca
     // Calculate children layout
     for(var _i = 0; _i < _childrenCount; _i += 1) {
         var _childNode = _node.childNodes[_i];
