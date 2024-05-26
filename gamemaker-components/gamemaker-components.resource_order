@@ -100,6 +100,7 @@
     {"name":"scr_Time","order":1,"path":"scripts/scr_Time/scr_Time.yy",},
     {"name":"scr_ui_button","order":7,"path":"scripts/scr_ui_button/scr_ui_button.yy",},
     {"name":"scr_ui_element","order":19,"path":"scripts/scr_ui_element/scr_ui_element.yy",},
+    {"name":"scr_ui_layout_calculator_test_2","order":21,"path":"scripts/scr_ui_layout_calculator_test_2/scr_ui_layout_calculator_test_2.yy",},
     {"name":"scr_ui_layout_calculator_test","order":20,"path":"scripts/scr_ui_layout_calculator_test/scr_ui_layout_calculator_test.yy",},
     {"name":"scr_ui_layout_calculator","order":16,"path":"scripts/scr_ui_layout_calculator/scr_ui_layout_calculator.yy",},
     {"name":"scr_UnitTestMatchers","order":1,"path":"scripts/scr_UnitTestMatchers/scr_UnitTestMatchers.yy",},

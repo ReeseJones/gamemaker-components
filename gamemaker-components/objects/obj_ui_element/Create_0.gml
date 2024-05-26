@@ -2,7 +2,7 @@ event_inherited();
 
 isDraggable = false;
 
-sizeProperties = new ElementSizeProperties();
+sizeProperties = new ElementSizeDescription();
 calculatedSize = new ElementSizeProperties();
 
 

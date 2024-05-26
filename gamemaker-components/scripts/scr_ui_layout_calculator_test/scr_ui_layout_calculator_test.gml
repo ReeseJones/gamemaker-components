@@ -10,10 +10,8 @@ function ui_layout_calculator_tests() {
                 item = instance_create_depth(0, 0 , 0, obj_ui_element);
                 
                 // UI root has hardcoded size for test, but typically would be the size of the window or UI space.
-                uiRoot.sizeProperties.width = 1000;
-                uiRoot.sizeProperties.height = 1000;
-                uiRoot.calculatedSize.width = uiRoot.sizeProperties.width;
-                uiRoot.calculatedSize.height = uiRoot.sizeProperties.height;
+                // Calling this method on root with no children just sets the size of root.
+                ui_calculate_layout(uiRoot, 1000, 1000);
             });
             after_each(function() {
                 instance_destroy(uiRoot);

@@ -70,22 +70,32 @@ function ui_calculate_element_size(_node, _parentNode) {
     _positionDest.left = ui_calculate_dimension(_positionSrc.left, _parentSize.width);
     _positionDest.right = ui_calculate_dimension(_positionSrc.right, _parentSize.width);
 
-    _nodeDest.width = ui_calculate_dimension(_nodeSrc.width, _parentSize.width, _positionDest.left, _positionDest.right);
-    _nodeDest.height = ui_calculate_dimension(_nodeSrc.height, _parentSize.height, _positionDest.top, _positionDest.bottom);
+    // Width and height is calculated from parents internalWidth and height, which if it has padding will be smaller than its nominal width;
+    _nodeDest.width = ui_calculate_dimension(_nodeSrc.width, _parentSize.innerWidth, _positionDest.left, _positionDest.right);
+    _nodeDest.height = ui_calculate_dimension(_nodeSrc.height, _parentSize.innerHeight, _positionDest.top, _positionDest.bottom);
 
     // Choose the larger, padding + border size or initial calculated size. generally should result in calcualted size
     // otherwise that means the border and padding are taking up 100% or more of the desired space.
     _nodeDest.width = max(_nodeDest.width, _borderDest.left + _borderDest.right + _paddingDest.left + _paddingDest.right);
     _nodeDest.height = max(_nodeDest.height, _borderDest.top + _borderDest.bottom + _paddingDest.top + _paddingDest.bottom);
+
+    _nodeDest.innerWidth = _nodeDest.width - _paddingDest.left - _paddingDest.right - _borderDest.left - _borderDest.right;
+    _nodeDest.innerHeight = _nodeDest.height - _paddingDest.top - _paddingDest.bottom - _borderDest.top - _borderDest.bottom;
 }
 
 ///@param {Struct.ElementProperties} _uiRoot
-function ui_calculate_layout(_uiRoot) {
-    //TODO: make sure UI root has correct calculated sizes
-    _uiRoot.sizeProperties.width = display_get_gui_width();
-    _uiRoot.sizeProperties.height = display_get_gui_height();
-    _uiRoot.calculatedSize.width = display_get_gui_width();
-    _uiRoot.calculatedSize.height = display_get_gui_height();
+function ui_calculate_layout(_uiRoot, _rootWidth, _rootHeight) {
+    static tempParentSize = new ElementProperties();
+
+    //Set root size
+    tempParentSize.calculatedSize.height = _rootHeight;
+    tempParentSize.calculatedSize.width = _rootWidth;
+    tempParentSize.calculatedSize.innerHeight = _rootHeight;
+    tempParentSize.calculatedSize.innerWidth = _rootWidth;
+    _uiRoot.sizeProperties.width = _rootWidth;
+    _uiRoot.sizeProperties.height = _rootHeight;
+    // We calculate the root elements size before looping.
+    ui_calculate_element_size(_uiRoot, tempParentSize);
 
     ui_calculate_layout_helper(_uiRoot);
 }
@@ -101,6 +111,7 @@ function ui_calculate_layout_helper(_node) {
         ui_calculate_layout_helper(_childNode);
     }
 
+    //TODO: Is this even needed? How do layouts get created?
     // Calculate children layout
     for(var _i = 0; _i < _childrenCount; _i += 1) {
         var _childNode = _node.childNodes[_i];
