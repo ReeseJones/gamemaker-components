@@ -55,20 +55,20 @@ function ui_calculate_element_size(_node, _parentNode) {
     var _positionDest = _node.calculatedSize.position;
     var _positionSrc = _node.sizeProperties.position;
 
-    _borderDest.bottom = ui_calculate_dimension(_borderSrc.bottom, _parentSize.height);
-    _borderDest.top = ui_calculate_dimension(_borderSrc.top, _parentSize.height);
-    _borderDest.left = ui_calculate_dimension(_borderSrc.left, _parentSize.width);
-    _borderDest.right = ui_calculate_dimension(_borderSrc.right, _parentSize.width);
+    _borderDest.bottom = ui_calculate_dimension(_borderSrc.bottom, _parentSize.innerHeight);
+    _borderDest.top = ui_calculate_dimension(_borderSrc.top, _parentSize.innerHeight);
+    _borderDest.left = ui_calculate_dimension(_borderSrc.left, _parentSize.innerWidth);
+    _borderDest.right = ui_calculate_dimension(_borderSrc.right, _parentSize.innerWidth);
 
-    _paddingDest.bottom = ui_calculate_dimension(_paddingSrc.bottom, _parentSize.height);
-    _paddingDest.top = ui_calculate_dimension(_paddingSrc.top, _parentSize.height);
-    _paddingDest.left = ui_calculate_dimension(_paddingSrc.left, _parentSize.width);
-    _paddingDest.right = ui_calculate_dimension(_paddingSrc.right, _parentSize.width);
+    _paddingDest.bottom = ui_calculate_dimension(_paddingSrc.bottom, _parentSize.innerHeight);
+    _paddingDest.top = ui_calculate_dimension(_paddingSrc.top, _parentSize.innerHeight);
+    _paddingDest.left = ui_calculate_dimension(_paddingSrc.left, _parentSize.innerWidth);
+    _paddingDest.right = ui_calculate_dimension(_paddingSrc.right, _parentSize.innerWidth);
 
-    _positionDest.bottom = ui_calculate_dimension(_positionSrc.bottom, _parentSize.height);
-    _positionDest.top = ui_calculate_dimension(_positionSrc.top, _parentSize.height);
-    _positionDest.left = ui_calculate_dimension(_positionSrc.left, _parentSize.width);
-    _positionDest.right = ui_calculate_dimension(_positionSrc.right, _parentSize.width);
+    _positionDest.bottom = ui_calculate_dimension(_positionSrc.bottom, _parentSize.innerHeight);
+    _positionDest.top = ui_calculate_dimension(_positionSrc.top, _parentSize.innerHeight);
+    _positionDest.left = ui_calculate_dimension(_positionSrc.left, _parentSize.innerWidth);
+    _positionDest.right = ui_calculate_dimension(_positionSrc.right, _parentSize.innerWidth);
 
     // Width and height is calculated from parents internalWidth and height, which if it has padding will be smaller than its nominal width;
     _nodeDest.width = ui_calculate_dimension(_nodeSrc.width, _parentSize.innerWidth, _positionDest.left, _positionDest.right);

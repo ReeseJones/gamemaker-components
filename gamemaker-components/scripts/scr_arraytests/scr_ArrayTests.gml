@@ -29,6 +29,15 @@ return [
             matcher_arrays_equal(a, [1, 2, 3]);
             matcher_arrays_equal(b, [4, 5, 6]);
         });
+        it("array_concat_ext should combine two arrays into the second array without issue", function() {
+            var a = [1, 2, 3];
+            var b = [4, 5, 6];
+            var _expect = [4, 5, 6, 1, 2, 3];
+            
+            matcher_arrays_equal(array_concat_ext(b, a, b), _expect);
+            matcher_arrays_equal(b, _expect);
+            matcher_arrays_equal(a, [1, 2, 3]);
+        });
         it("array_shift should default remove first element in array and return the element", function() {
             var _someArray = [1, 2, 3];
             var _expectedArray = [2, 3];

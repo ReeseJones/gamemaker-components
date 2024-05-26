@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"scr_TagNamesTest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_TagNamesTest",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,3 @@
+function ObjectDescription() constructor {
+    
+}
