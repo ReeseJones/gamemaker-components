@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_Events",
   "isCompatibility":false,
   "isDnD":false,

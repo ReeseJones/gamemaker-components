@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_ds_grid",
   "isCompatibility":false,
   "isDnD":false,

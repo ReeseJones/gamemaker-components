@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_VariableForeachTest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_VariableForeachTest",
+  "parent":{
+    "name":"DataStructures",
+    "path":"folders/DataStructures.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

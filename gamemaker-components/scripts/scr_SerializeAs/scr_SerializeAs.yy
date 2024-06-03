@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_SerializeAs",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_SerializeAs",
+  "parent":{
+    "name":"Files",
+    "path":"folders/Files.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

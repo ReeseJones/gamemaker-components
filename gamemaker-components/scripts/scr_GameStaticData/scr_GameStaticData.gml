@@ -1,4 +1,4 @@
-struct_serialize_as(GameStaticData, nameof(GameStaticData));
+struct_serialize_as(nameof(GameStaticData), GameStaticData);
 ///@param {Array<Struct.MechComponentData>} _components
 function GameStaticData(_components) constructor {
     /*

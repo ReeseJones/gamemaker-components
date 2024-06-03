@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_ui_layout_calculator_test",
   "isCompatibility":false,
   "isDnD":false,

@@ -1,12 +1,12 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_TestSaveData",
   "isCompatibility":false,
   "isDnD":false,
   "name":"scr_TestSaveData",
   "parent":{
-    "name":"MechSystem",
-    "path":"folders/MechSystem.yy",
+    "name":"Files",
+    "path":"folders/Files.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

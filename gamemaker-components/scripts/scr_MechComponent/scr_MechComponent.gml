@@ -1,4 +1,4 @@
-struct_serialize_as(MechComponent, nameof(MechComponent));
+struct_serialize_as(nameof(MechComponent), MechComponent);
 ///@param {String} _componentDataId
 function MechComponent(_componentDataId) constructor {
     static staticComponentId = 0;

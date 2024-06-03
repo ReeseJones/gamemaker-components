@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_DsMap",
   "isCompatibility":false,
   "isDnD":false,

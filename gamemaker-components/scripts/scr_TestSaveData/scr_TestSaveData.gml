@@ -32,7 +32,10 @@ function test_save_data_tests() {
 
                 var _parsed = file_json_read(_fileName);
                 matcher_is_array(_parsed);
-                matcher_is_instanceof(_parsed[0], MechComponentData);
+                
+                var _mechComponentData = _parsed[0];
+                matcher_is_instanceof(_mechComponentData, MechComponentData);
+                matcher_is_instanceof(_mechComponentData.socketPositions[0], Vec2);
             });
         })
     ];

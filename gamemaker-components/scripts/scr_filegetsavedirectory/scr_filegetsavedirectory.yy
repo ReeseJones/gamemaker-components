@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_FileGetSaveDirectory",
   "isCompatibility":false,
   "isDnD":false,

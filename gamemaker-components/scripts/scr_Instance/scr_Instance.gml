@@ -1,7 +1,6 @@
 ///@param {Struct.EntityInstance} _source
 ///@param {Id.Instance} _dest
 function entity_instance_sync_instance(_source, _dest) {
-// Feather disable GM2017
     //General Instance Variables
     _dest.visible = _source.visible;
     _dest.solid = _source.solid;
@@ -22,10 +21,9 @@ function entity_instance_sync_instance(_source, _dest) {
     _dest.image_yscale = _source.imageYScale;
     _dest.image_xscale = _source.imageXScale;
     //TODO: Image Index??? Image Speed?
-    
+
     //Mask and Bounding Box
     _dest.mask_index = _source.maskIndex;
-    // Feather restore GM2017
 }
 
 function instance_sync_properties() {

@@ -58,7 +58,7 @@ function node_update_depth(_node) {
     
     var _childCount = array_length(_node.childNodes);
     for(var i = 0; i < _childCount; i += 1) {
-        _childNode = _node.childNodes[i];
+        var _childNode = _node.childNodes[i];
         node_update_depth(_childNode);
     }
 }
