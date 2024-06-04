@@ -1,4 +1,6 @@
 ///@param {string} _assetName
-function AssetDescription(_assetName) constructor {
+///@param {real} _id
+function AssetDescription(_assetName, _id) constructor {
+    id = _id;
     assetName = _assetName;
 }

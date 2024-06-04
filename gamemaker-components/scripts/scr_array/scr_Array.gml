@@ -92,13 +92,8 @@ function array_remove(_array, _value) {
 /// @param {Any}           _value The value which will be removed from the array. Only the first is removed.
 /// @return {Array<Any>}
 function array_remove_first(_array, _value) {
-    var _arrayLength = array_length(_array);
-    for(var i = 0; i < _arrayLength; i += 1) {
-        if(_array[@ i] == _value) {
-            array_delete(_array, i, 1);
-            break;
-        }
-    }
+    var _index = array_get_index(_array, _value);
+    array_delete(_array, _index, 1);
 
     return _array;
 }

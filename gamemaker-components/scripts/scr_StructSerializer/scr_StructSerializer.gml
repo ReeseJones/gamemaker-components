@@ -25,7 +25,7 @@ function struct_serialize_default(_structOrArray) {
         // Save static name for reinstating later.
         var _staticStructName = _source.__ssn;
 
-        // Remove all static properties if they exit
+        // Remove all static properties if they exist
         var _staticSource = static_get(_source);
         if(is_struct(_staticSource)) {
             var _names = variable_struct_get_names(_staticSource);

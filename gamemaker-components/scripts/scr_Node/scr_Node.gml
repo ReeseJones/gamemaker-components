@@ -96,3 +96,16 @@ function node_contains(_parent, _child) {
 function node_is_connected(_node) {
     return _node.parentNode != undefined;
 }
+
+///@description depth first node taversal. calls callback on all nodes
+///@param {Struct.Node} _node
+///@param {Function} _callback
+///@param {bool} _includeRoot
+function node_foreach(_node, _callback) {
+    var _childLength = array_length(_node.childNodes);
+    for(var i = 0; i < _childLength; i += 1) {
+        var _child = _node.childNodes[i];
+        node_foreach(_child, _callback);
+    }
+    _callback(_node);
+}

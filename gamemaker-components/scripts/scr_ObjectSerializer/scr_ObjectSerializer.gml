@@ -1,7 +1,7 @@
 ///@description A decorator which records how an instance should be serialized and deserialized.
 ///@param {Asset.GMObject} _object
-///@param {Function} _serializer Should take as input the same thing the deserializer outputs
-///@param {Function} _deserializer Should take as input the same thing the serializer outputs
+///@param {Function} _serializer _serializer(_assetGraph, serializedObj)
+///@param {Function} _deserializer _deserializer(_assetGraph, serializedObj)
 function object_serialize_as(_object, _serializer, _deserializer) {
     static objectSerializerNameMap = {}
     
@@ -16,5 +16,5 @@ function object_serialize_as(_object, _serializer, _deserializer) {
 
     objectSerializerNameMap[$ _object] = _objectName;
 
-    serialize_as(_objectName, undefined, _serializer, _deserializer);
+    serialize_as(_objectName, _object, _serializer, _deserializer);
 }

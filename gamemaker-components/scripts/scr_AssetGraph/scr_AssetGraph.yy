@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_AssetGraph",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_AssetGraph",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

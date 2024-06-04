@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_SerializedObjectsList",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_SerializedObjectsList",
+  "parent":{
+    "name":"Assets",
+    "path":"folders/Assets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

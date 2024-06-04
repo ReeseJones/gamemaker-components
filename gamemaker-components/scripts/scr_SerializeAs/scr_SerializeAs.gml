@@ -1,6 +1,6 @@
 ///@description
-///@param {Function} _serializer
-///@param {Function} _deserializer
+///@param {Function} _serializer _serializer(_assetGraph, serializedObj)
+///@param {Function} _deserializer _deserializer(_assetGraph, serializedObj)
 ///@param {Struct} _structStatic
 function SerializerData(_serializer = undefined, _deserializer = undefined, _structStatic = undefined) constructor {
     serializer = _serializer;
@@ -8,6 +8,10 @@ function SerializerData(_serializer = undefined, _deserializer = undefined, _str
     structStatic = _structStatic;
 }
 
+///@param {String} _name _serializer(_assetGraph, serializedObj)
+///@param {Struct OR Asset.GameObject} _structStatic
+///@param {Function} _serializer _serializer(_assetGraph, serializedObj)
+///@param {Function} _deserializer _deserializer(_assetGraph, serializedObj)
 function serialize_as(_name, _structStatic, _serializer, _deserializer) {
     static serializerMap = {};
     
