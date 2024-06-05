@@ -1,56 +1,66 @@
-function struct_serialize_as(_name, _struct, _serializer = struct_serialize_default, _deserializer = struct_deserialize_default) {
+///@description Annotates a struct so that its static is saved when written to and from json.
+function struct_save_static(_name, _struct) {
+    static staticStructMap = {};
 
     var _static = static_get(_struct);
     if(!is_struct(_static)) {
-        throw $"Struct cannot be serialized as {_name}. Struct has no static prototype. (appears to be POD)";
+        throw $"Struct static cannot be saved as {_name}. Struct has no static prototype. (appears to be POD)";
     }
 
-    serialize_as(_name, _static, _serializer, _deserializer);
+    if(struct_exists(staticStructMap, _name)) {
+        throw $"Struct with name {_name} already registered";
+    }
 
     //If we saved the serialization data succesfully, save the name of the static to the prototype.
     _static.__ssn = _name;
+    staticStructMap[$ _name] = _static;
 }
 
-///@description struct_serialize_default Readies a struct (or array) that can be written as json to a file. Copies passed in value.
-function struct_serialize_default(_structOrArray) {
+///@description Registeres a serializer for a struct and also saves its static
+function struct_serialize_as(_name, _struct, _serializer, _deserializer) {
+    struct_save_static(_name, _struct);
+    serialize_as(_name, _serializer, _deserializer); 
+}
+
+///@description struct_static_dehydrate Makes a copy of a json obj and prepares it to be written as a plain json obj which can be rehydrated later.
+function struct_static_dehydrate(_structOrArray) {
     var _copyMethod = is_array(_structOrArray) ? array_deep_copy : struct_deep_copy;
 
-    var _copy = _copyMethod(_structOrArray, undefined, function(_source, _dest) {
-        //If we are not iterating over a serialized struct, default copy is okay. end early.
-        if(!is_struct(_source) || !variable_struct_exists(_source, "__ssn")) {
+    var _copy = variable_clone(_structOrArray);
+    variable_foreach(_copy, function(_value) {
+        if(!is_struct(_value) || !variable_struct_exists(_value, "__ssn")) {
             return;
         }
 
-        //Otherwise we do some special wiring for structs with static prototypes
-        // Save static name for reinstating later.
-        var _staticStructName = _source.__ssn;
+        var _staticStructName = _value.__ssn;
 
-        // Remove all static properties if they exist
-        var _staticSource = static_get(_source);
-        if(is_struct(_staticSource)) {
-            var _names = variable_struct_get_names(_staticSource);
-            var _staticPropCount = array_length(_names);
+        var _staticSource = static_get(_value);
+        if(!is_struct(_staticSource)) {
+            throw $"Struct has __ssn: {_staticStructName} but no static attached";
+        }
 
-            for(var i = 0; i < _staticPropCount; i += 1) {
-                var _name = _names[i];
+        var _names = variable_struct_get_names(_staticSource);
+        var _staticPropCount = array_length(_names);
 
-                if(variable_struct_exists(_dest, _name)) {
-                    variable_struct_remove(_dest, _name);
-                }
+        for(var i = 0; i < _staticPropCount; i += 1) {
+            var _name = _names[i];
+
+            if(variable_struct_exists(_value, _name)) {
+                variable_struct_remove(_value, _name);
             }
         }
 
         //Serialize the static name. This is kept to restore the static prototype later when deserialized.
-        _dest.__ssn = _staticStructName;
+        _value.__ssn = _staticStructName;
     });
 
     return _copy;
 }
 
-///@description struct_deserialize_default takes a json object and turns it into a struct/array instance with struct prototypes restored. Modifies passed in object.
-function struct_deserialize_default(_structOrArray) {
+///@description struct_static_hydrate takes a json object and turns it into a struct/array instance with struct prototypes restored. Modifies passed in object.
+function struct_static_hydrate(_structOrArray) {
 
-    variable_foreach(_structOrArray, function hookUpStaticStruct(_value) {
+    variable_foreach(_structOrArray, function(_value) {
         if(!is_struct(_value) || !variable_struct_exists(_value, "__ssn")) {
             return;
          }
@@ -58,8 +68,8 @@ function struct_deserialize_default(_structOrArray) {
         var _ssn = _value.__ssn;
         // Remove the property __ssn property because it will be on the static.
         variable_struct_remove(_value, "__ssn");
-        var _serializerData = serialize_data_get(_ssn);
-        static_set(_value, _serializerData.structStatic);
+        var _structStaticMap = static_get(struct_save_static).staticStructMap;
+        static_set(_value, _structStaticMap[$ _ssn]);
     });
 
     return _structOrArray;

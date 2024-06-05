@@ -10,12 +10,12 @@ function asset_graph_instance_add(_assetGraph, _instance) {
     var _instanceObjectName = object_get_name(_instance.object_index);
     var _instanceDesc = new InstanceDescription(_instanceObjectName, _instance.id);
 
-    _assetGraph.instances[$ _instance.id] = _instanceDesc;
+    _assetGraph.instances[$ int64(_instance.id)] = _instanceDesc;
 
     return _instanceDesc;
 }
 
-struct_serialize_as(nameof(AssetGraph), AssetGraph)
+struct_save_static(nameof(AssetGraph), AssetGraph)
 function AssetGraph() constructor {
     instances = {};
     structs = {};

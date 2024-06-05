@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_SerializeAsTest",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_SerializeAsTest",
+  "parent":{
+    "name":"Files",
+    "path":"folders/Files.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

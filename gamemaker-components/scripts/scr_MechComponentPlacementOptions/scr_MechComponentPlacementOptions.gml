@@ -1,4 +1,4 @@
-struct_serialize_as( nameof(MechComponentPlacementOptions), MechComponentPlacementOptions);
+struct_save_static( nameof(MechComponentPlacementOptions), MechComponentPlacementOptions);
 function MechComponentPlacementOptions() constructor {
     position = new Vec2();
     orientation = 0;

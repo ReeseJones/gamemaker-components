@@ -61,6 +61,7 @@ function instance_description_add_property_primitive(_instance, _instanceDesc, _
 
 function instance_description_add_property_instance_ref(_instance, _instanceDesc, _propName) {
     var _propVal = variable_instance_get(_instance, _propName);
+    _propVal = real_id(_propVal);
     var _newPropDescription = new InstancePropertyDescription(_propName, PROPERTY_DESCRIPTION_TYPE.INSTANCE_REF, _propVal);
     array_push(_instanceDesc.properties, _newPropDescription);
     return _newPropDescription;
@@ -80,9 +81,10 @@ function instance_description_add_property_array_instance_ref(_instance, _instan
     var _newPropDescription = new InstancePropertyDescription(_propName, PROPERTY_DESCRIPTION_TYPE.ARRAY, []);
     
     for(var i = 0; i < _arrayLength; i += 1) {
-        var _arrayVal = _array[i];
+        // Convert this from handle to number id since we manually handle restore.
+        var _arrayVal = real_id(_array[i]);
         var _arrayValueDescription = new ValueDescription(PROPERTY_DESCRIPTION_TYPE.INSTANCE_REF, _arrayVal);
-        array_push(_arrayValueDescription.value, _arrayValueDescription);
+        array_push(_newPropDescription.value, _arrayValueDescription);
     }
 
     array_push(_instanceDesc.properties, _newPropDescription);

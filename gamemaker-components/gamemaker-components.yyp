@@ -126,6 +126,7 @@
     {"id":{"name":"scr_ReliableSequenceMath","path":"scripts/scr_ReliableSequenceMath/scr_ReliableSequenceMath.yy",},},
     {"id":{"name":"scr_Root","path":"scripts/scr_Root/scr_Root.yy",},},
     {"id":{"name":"scr_SerializeAs","path":"scripts/scr_SerializeAs/scr_SerializeAs.yy",},},
+    {"id":{"name":"scr_SerializeAsTest","path":"scripts/scr_SerializeAsTest/scr_SerializeAsTest.yy",},},
     {"id":{"name":"scr_ServiceContainer","path":"scripts/scr_ServiceContainer/scr_ServiceContainer.yy",},},
     {"id":{"name":"scr_ServiceContainerTests","path":"scripts/scr_ServiceContainerTests/scr_ServiceContainerTests.yy",},},
     {"id":{"name":"scr_ServiceFactory","path":"scripts/scr_ServiceFactory/scr_ServiceFactory.yy",},},

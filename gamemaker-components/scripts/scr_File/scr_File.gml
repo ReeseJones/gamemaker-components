@@ -19,7 +19,7 @@ function file_json_read(_filename) {
     }
 
     var _rawJsonStruct = json_parse(_stringContents);
-    var _parsed = struct_deserialize_default(_rawJsonStruct);
+    var _parsed = struct_static_hydrate(_rawJsonStruct);
     return _parsed;
 }
 

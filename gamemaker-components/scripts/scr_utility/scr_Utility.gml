@@ -2,6 +2,13 @@ function is_equal(_val1, _val2) {
     return _val1 == _val2;
 }
 
+///@description Converts a handle to real number safely.
+function real_id(_value) {
+    if(is_undefined(_value)) {
+        return undefined;
+    }
+    return int64(_value);
+}
 
 function value_or_default(_value, _default) {
     if(is_undefined(_value)) {

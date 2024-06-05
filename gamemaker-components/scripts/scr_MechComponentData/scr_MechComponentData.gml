@@ -1,4 +1,4 @@
-struct_serialize_as(nameof(MechComponentData), MechComponentData);
+struct_save_static(nameof(MechComponentData), MechComponentData);
 ///@param {String} _id Unique component identifier
 ///@param {real} _width The width measured in cells
 ///@param {real} _height The height measured in cells

@@ -1,4 +1,4 @@
-struct_serialize_as(nameof(GameData), GameData);
+struct_save_static(nameof(GameData), GameData);
 function GameData() constructor {
     currentProfile = ""
     playerData = [];

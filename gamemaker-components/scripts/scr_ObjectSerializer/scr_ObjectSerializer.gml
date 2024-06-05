@@ -4,7 +4,7 @@
 ///@param {Function} _deserializer _deserializer(_assetGraph, serializedObj)
 function object_serialize_as(_object, _serializer, _deserializer) {
     static objectSerializerNameMap = {}
-    
+
     if(!object_exists(_object)) {
         throw $"Object with id %{_object} does not exist!";
     }
@@ -16,5 +16,5 @@ function object_serialize_as(_object, _serializer, _deserializer) {
 
     objectSerializerNameMap[$ _object] = _objectName;
 
-    serialize_as(_objectName, _object, _serializer, _deserializer);
+    serialize_as(_objectName, _serializer, _deserializer);
 }

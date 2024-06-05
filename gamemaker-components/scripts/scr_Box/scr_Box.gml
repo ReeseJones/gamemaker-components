@@ -1,4 +1,4 @@
-struct_serialize_as(nameof(Box), Box);
+struct_save_static(nameof(Box), Box);
 ///@param {real} _top
 ///@param {real} _left
 ///@param {real} _bottom
