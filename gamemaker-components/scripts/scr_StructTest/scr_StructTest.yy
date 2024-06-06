@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ObjectSetSize",
+  "%Name":"scr_StructTest",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ObjectSetSize",
+  "name":"scr_StructTest",
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"DataStructures",
+    "path":"folders/DataStructures.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

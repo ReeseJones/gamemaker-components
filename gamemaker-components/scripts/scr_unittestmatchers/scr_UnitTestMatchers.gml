@@ -126,3 +126,21 @@ function matcher_is_instanceof(_instance, _type) {
     }
 }
 
+function matcher_instance_is_object(_instance, _type) {
+    var _callbackString = get_debug_callstack_string();
+    
+    if(!object_exists(_type)) {
+        throw $"Matcher: matcher_instance_is_object incorrectly configured. object doesnt exist: {_type}"
+    }
+    
+    var _objName = object_get_name(_type);
+    
+    if(!instance_exists(_instance)) {
+        throw $"instance is not of type {_objName}, instance does not exist.";
+    }
+
+    if(_instance.object_index != _type) {
+        throw $"instance is not of type {_objName}. Actual type: {_instance.object_index}";
+    }
+}
+

@@ -1,4 +1,13 @@
+///@param {Struct} _static
+///@param {Function} _constructor
+function StructStaticData(_static, _constructor) constructor {
+    structStatic = _static;
+    constructorFunc = _constructor;
+}
+
 ///@description Annotates a struct so that its static is saved when written to and from json.
+///@param {String} _name
+///@param {Function} _struct
 function struct_save_static(_name, _struct) {
     static staticStructMap = {};
 
@@ -13,7 +22,18 @@ function struct_save_static(_name, _struct) {
 
     //If we saved the serialization data succesfully, save the name of the static to the prototype.
     _static.__ssn = _name;
-    staticStructMap[$ _name] = _static;
+    var _data = new StructStaticData(_static, _struct);
+    staticStructMap[$ _name] = _data;
+
+    return _data;
+}
+
+///@return {string} _ssn struct static name
+///@return {Struct.StructStaticData}
+function struct_get_data(_ssn) {
+    var _structStaticMap = static_get(struct_save_static).staticStructMap;
+    var _structData = _structStaticMap[$ _ssn];
+    return _structData;
 }
 
 ///@description Registeres a serializer for a struct and also saves its static
@@ -69,7 +89,8 @@ function struct_static_hydrate(_structOrArray) {
         // Remove the property __ssn property because it will be on the static.
         variable_struct_remove(_value, "__ssn");
         var _structStaticMap = static_get(struct_save_static).staticStructMap;
-        static_set(_value, _structStaticMap[$ _ssn]);
+        var _structData = _structStaticMap[$ _ssn];
+        static_set(_value, _structData.structStatic);
     });
 
     return _structOrArray;

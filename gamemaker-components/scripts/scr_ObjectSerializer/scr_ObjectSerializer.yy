@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_ObjectSerializer",
   "parent":{
-    "name":"Files",
-    "path":"folders/Files.yy",
+    "name":"Objects",
+    "path":"folders/Objects.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -20,6 +20,7 @@ function file_json_read(_filename) {
 
     var _rawJsonStruct = json_parse(_stringContents);
     var _parsed = struct_static_hydrate(_rawJsonStruct);
+    file_text_close(_openFile);
     return _parsed;
 }
 

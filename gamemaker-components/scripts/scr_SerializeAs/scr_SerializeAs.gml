@@ -34,6 +34,7 @@ function serialize_data_get(_name) {
     }
 }
 
+///@param {Struct.AssetGraph} _assetGraph
 function serialize(_assetGraph, _structOrInstance) {
     var _name = "";
     if(is_struct(_structOrInstance) && struct_exists(_structOrInstance, "__ssn")) {

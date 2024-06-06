@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_obj_description",
+  "%Name":"scr_AssetGroup",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_obj_description",
+  "name":"scr_AssetGroup",
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Files",
+    "path":"folders/Files.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

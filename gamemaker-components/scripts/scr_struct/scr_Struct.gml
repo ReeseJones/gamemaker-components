@@ -45,3 +45,11 @@ function struct_foreach_custom(_struct, _method) {
         _method(_struct[$ _keys[i]], _struct);
     }
 }
+
+function struct_get_id(_struct) {
+    if(struct_exists(_struct, "id")) {
+        return id_to_string(_struct.id);
+    }
+    _struct.id = id_to_string(ptr(_struct));
+    return _struct.id;
+}

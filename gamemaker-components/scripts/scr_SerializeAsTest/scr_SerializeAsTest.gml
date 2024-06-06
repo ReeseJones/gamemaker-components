@@ -3,6 +3,7 @@ function serializer_tests() {
     return [
         describe("serialize", function() {
             before_each(function() {
+                filename = file_get_save_directory() + "serialize_asset_graph_test.json";
                 uiRoot = instance_create_depth(0, 0 , 0, obj_ui_element);
                 panel = instance_create_depth(0, 0 , 0, obj_ui_element);
                 header = instance_create_depth(0, 0 , 0, obj_ui_element);
@@ -48,15 +49,36 @@ function serializer_tests() {
                 instance_destroy(panel);
                 instance_destroy(header);
                 instance_destroy(content);
-                array_foreach(items, instance_destroy);
+                array_foreach(items, function(_inst) {
+                    instance_destroy(_inst);
+                });
             });
 
             it("should work", function() {
                 var _assetGraph = new AssetGraph();
                 serialize(_assetGraph, uiRoot);
                 var _assetJson = struct_static_dehydrate(_assetGraph);
-                var _fileName = file_get_save_directory() + "serialize_asset_graph_test.json"
-                file_json_write(_fileName, _assetJson);
+                file_json_write(filename, _assetJson);
+            });
+            
+            it("should work to restore all asset graph from file", function() {
+                var _assetGraph = file_json_read(filename);
+                
+                matcher_is_instanceof(_assetGraph, AssetGraph);
+                matcher_value_equal(array_length(_assetGraph.ids), 9) 
+            });
+            
+            it("asset graph can be deserialized into useable stuff", function() {
+                var _assetGraph = file_json_read(filename);
+
+                var _assetGroup = deserialize(_assetGraph);
+                
+                matcher_is_instanceof(_assetGroup, AssetGroup);
+                matcher_value_equal(array_length(_assetGroup.ids), 9);
+                
+                struct_foreach(_assetGroup.instances, function(_key, _value) {
+                    matcher_instance_is_object(_value, obj_ui_element);
+                });
             });
         })
     ];

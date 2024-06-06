@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_Instance",
+  "%Name":"scr_InstanceProperties",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_Instance",
+  "name":"scr_InstanceProperties",
   "parent":{
-    "name":"Utility",
-    "path":"folders/Utility.yy",
+    "name":"Instances",
+    "path":"folders/Objects/Instances.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

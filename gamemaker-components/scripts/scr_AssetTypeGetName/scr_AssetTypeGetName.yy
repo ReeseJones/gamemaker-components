@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ConstantGetName",
+  "%Name":"scr_AssetTypeGetName",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ConstantGetName",
+  "name":"scr_AssetTypeGetName",
   "parent":{
-    "name":"Utility",
-    "path":"folders/Utility.yy",
+    "name":"Assets",
+    "path":"folders/Assets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

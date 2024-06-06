@@ -2,6 +2,22 @@ function is_equal(_val1, _val2) {
     return _val1 == _val2;
 }
 
+///@description Converts a handle, string or number to a string id safely.
+function id_to_string(_value) {
+    if(is_string(_value) && string_length(_value) > 0) {
+        return _value;
+    }
+    if(is_undefined(_value)) {
+        return undefined;
+    }
+    if(is_handle(_value) || is_real(_value) || is_ptr(_value)) {
+        var _intVal = int64(_value);
+        return _intVal == 0 ? undefined : string(_intVal);
+    }
+
+    return undefined;
+}
+
 ///@description Converts a handle to real number safely.
 function real_id(_value) {
     if(is_undefined(_value)) {

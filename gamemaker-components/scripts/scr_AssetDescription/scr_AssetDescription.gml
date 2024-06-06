@@ -1,6 +1,6 @@
 ///@param {string} _assetName
 ///@param {real} _id
 function AssetDescription(_assetName, _id) constructor {
-    id = int64(_id);
+    id = id_to_string(_id);
     assetName = _assetName;
 }

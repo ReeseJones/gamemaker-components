@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ObjectSetSize",
+  "%Name":"scr_InstanceDescription",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ObjectSetSize",
+  "name":"scr_InstanceDescription",
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Files",
+    "path":"folders/Files.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
