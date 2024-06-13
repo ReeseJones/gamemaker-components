@@ -3,10 +3,13 @@ function asset_graph_instance_exists(_assetGraph, _id) {
     return struct_exists(_assetGraph.instances, _id);
 }
 
+
+///@description adds or gets an already added assetGraph instance description
+///@return {Struct.InstanceDescription}
 function asset_graph_instance_add(_assetGraph, _instance) {
     var _id =  id_to_string(_instance.id);
     if(asset_graph_instance_exists(_assetGraph, _id)) {
-        throw $"Instance with id {_id} already added to graph.";
+        return _assetGraph.instances[$ _id];
     }
 
     var _instanceObjectName = object_get_name(_instance.object_index);

@@ -80,6 +80,20 @@ function serializer_tests() {
                     matcher_instance_is_object(_value, obj_ui_element);
                 });
             });
+            
+            it("asset graph can be deserialized into useable stuff, then calculate ui layout", function() {
+                var _assetGraph = file_json_read(filename);
+
+                var _assetGroup = deserialize(_assetGraph);
+                
+                //Get the root ui element from here.
+                var _first = _assetGroup.instances[$ _assetGroup.ids[0]];
+                while( is_defined(_first.parentNode) ) {
+                    _first = _first.parentNode;
+                }
+
+                ui_calculate_layout(_first, 1000, 1000);
+            });
         })
     ];
 }

@@ -3,6 +3,22 @@
 function StructStaticData(_static, _constructor) constructor {
     structStatic = _static;
     constructorFunc = _constructor;
+    staticChain = [];
+
+    var _current = _static;
+    while (!is_undefined(_current))
+    {
+        if(struct_exists(_current, "__ssn")) {
+            array_push(staticChain, string(_current.__ssn));
+        } else {
+            show_debug_message("Parent of {_static.__ssn} does not have __ssn");
+            break;
+        }
+        _current = static_get(_current);
+    };
+
+    // Reverse so we start from parent when iterating.
+    array_reverse_ext(staticChain);
 }
 
 ///@description Annotates a struct so that its static is saved when written to and from json.
@@ -37,9 +53,9 @@ function struct_get_data(_ssn) {
 }
 
 ///@description Registeres a serializer for a struct and also saves its static
-function struct_serialize_as(_name, _struct, _serializer, _deserializer) {
+function struct_serialize_as(_name, _struct, _serializer) {
     struct_save_static(_name, _struct);
-    serialize_as(_name, _serializer, _deserializer); 
+    serialize_as(_name, _serializer);
 }
 
 ///@description struct_static_dehydrate Makes a copy of a json obj and prepares it to be written as a plain json obj which can be rehydrated later.

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_obj_clickable_serialize",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_obj_clickable_serialize",
+  "parent":{
+    "name":"BaseObjects",
+    "path":"folders/BaseObjects.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
