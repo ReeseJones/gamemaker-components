@@ -14,10 +14,8 @@ function ElementSizeDescription(_width = undefined, _height = undefined, _border
     position = _position;
 }
 
-///@param {real} _width A width equal to or less than 1.0 is interpreted as a percentage of the parents size
-// A number greater than or equal to 2 is interpreted as a gui pixel size
-// Undefined means something else calculates size
-// 0.0 - 1.0 | N >= 2 | undefined
+///@description The caculated sizes derived from the ElementSizeDescription
+///@param {real} _width
 ///@param {real} _height
 ///@param {Struct.Box} _border
 ///@param {Struct.Box} _padding

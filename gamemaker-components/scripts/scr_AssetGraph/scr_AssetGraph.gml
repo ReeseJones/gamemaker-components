@@ -1,3 +1,5 @@
+///@param {Struct.AssetGraph} _assetGraph
+///@param {String} _id
 function asset_graph_instance_exists(_assetGraph, _id) {
     _id = id_to_string(_id);
     return struct_exists(_assetGraph.instances, _id);
@@ -5,6 +7,8 @@ function asset_graph_instance_exists(_assetGraph, _id) {
 
 
 ///@description adds or gets an already added assetGraph instance description
+///@param {Struct.AssetGraph} _assetGraph
+///@param {Id.Instance} _instance
 ///@return {Struct.InstanceDescription}
 function asset_graph_instance_add(_assetGraph, _instance) {
     var _id =  id_to_string(_instance.id);
@@ -21,6 +25,8 @@ function asset_graph_instance_add(_assetGraph, _instance) {
     return _instanceDesc;
 }
 
+///@param {Struct.AssetGraph} _assetGraph
+///@param {Struct} _struct
 function asset_graph_struct_add(_assetGraph, _struct) {
     var _id = struct_get_id(_struct);
 

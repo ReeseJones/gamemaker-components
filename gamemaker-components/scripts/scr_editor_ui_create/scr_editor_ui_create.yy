@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_editor_ui_create",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_editor_ui_create",
+  "parent":{
+    "name":"EditorUI",
+    "path":"folders/UI/EditorUI.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

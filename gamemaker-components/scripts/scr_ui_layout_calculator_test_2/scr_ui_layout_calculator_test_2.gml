@@ -3,18 +3,21 @@ function ui_layout_calculator_tests_two() {
     return [
         describe("UI layout calculator", function() {
             before_each(function() {
-                uiRoot = instance_create_depth(0, 0 , 0, obj_ui_element);
-                panel = instance_create_depth(0, 0 , 0, obj_ui_element);
-                header = instance_create_depth(0, 0 , 0, obj_ui_element);
-                content = instance_create_depth(0, 0 , 0, obj_ui_element);
-                item = instance_create_depth(0, 0 , 0, obj_ui_element);
+               testLayer = layer_create(-300, "invisible_test");
+               layer_set_visible(testLayer, false);
+               uiRoot = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+               panel = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+               header = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+               content = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+               item = instance_create_layer(0, 0 , testLayer, obj_ui_element);
             });
             after_each(function() {
-                instance_destroy(uiRoot);
-                instance_destroy(panel);
-                instance_destroy(header);
-                instance_destroy(content);
-                instance_destroy(item);
+               //instance_destroy(uiRoot);
+               //instance_destroy(panel);
+               //instance_destroy(header);
+               //instance_destroy(content);
+               //instance_destroy(item);
+               layer_destroy(testLayer)
             });
             describe("ui_calculate_layout", function() {
                it("should set the size of all elements in a heirarchy starting from the root", function(){

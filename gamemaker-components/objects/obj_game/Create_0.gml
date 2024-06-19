@@ -12,6 +12,7 @@ inputDeviceManager = serviceContainer.get("inputDeviceManager");
 mouseManager = serviceContainer.get("mouseManager");
 saveData = serviceContainer.get("gameSaveData");
 gameStaticData = serviceContainer.get("gameStaticData");
+editorUi = undefined;
 
 run_all_specs();
 
@@ -19,4 +20,6 @@ run_all_specs();
 alarm[0] = 10;
 
 window_set_fullscreen(false);
+
+gameStateMode = GAME_STATE_MODE.PLAY;
 

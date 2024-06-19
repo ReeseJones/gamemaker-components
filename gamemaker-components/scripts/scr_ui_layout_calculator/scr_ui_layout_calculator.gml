@@ -35,7 +35,7 @@ function ui_calculate_dimension(_dimension, _parentDimension, _begin = undefined
             : _end;
         return max(0, _parentDimension - _begin - _end);
     }
-    
+
     return 0;
 }
 
@@ -64,15 +64,16 @@ function ui_calculate_element_size(_node, _parentNode) {
     _paddingDest.top = ui_calculate_dimension(_paddingSrc.top, _parentSize.innerHeight);
     _paddingDest.left = ui_calculate_dimension(_paddingSrc.left, _parentSize.innerWidth);
     _paddingDest.right = ui_calculate_dimension(_paddingSrc.right, _parentSize.innerWidth);
-
-    _positionDest.bottom = ui_calculate_dimension(_positionSrc.bottom, _parentSize.innerHeight);
-    _positionDest.top = ui_calculate_dimension(_positionSrc.top, _parentSize.innerHeight);
-    _positionDest.left = ui_calculate_dimension(_positionSrc.left, _parentSize.innerWidth);
-    _positionDest.right = ui_calculate_dimension(_positionSrc.right, _parentSize.innerWidth);
+    
+    // Calculate temp parent relative positions
+    var _posBottom = ui_calculate_dimension(_positionSrc.bottom, _parentSize.innerHeight);
+    var _posTop = ui_calculate_dimension(_positionSrc.top, _parentSize.innerHeight);
+    var _posLeft = ui_calculate_dimension(_positionSrc.left, _parentSize.innerWidth);
+    var _posRight = ui_calculate_dimension(_positionSrc.right, _parentSize.innerWidth);
 
     // Width and height is calculated from parents internalWidth and height, which if it has padding will be smaller than its nominal width;
-    _nodeDest.width = ui_calculate_dimension(_nodeSrc.width, _parentSize.innerWidth, _positionDest.left, _positionDest.right);
-    _nodeDest.height = ui_calculate_dimension(_nodeSrc.height, _parentSize.innerHeight, _positionDest.top, _positionDest.bottom);
+    _nodeDest.width = ui_calculate_dimension(_nodeSrc.width, _parentSize.innerWidth, _posLeft, _posRight);
+    _nodeDest.height = ui_calculate_dimension(_nodeSrc.height, _parentSize.innerHeight, _posTop, _posBottom);
 
     // Choose the larger, padding + border size or initial calculated size. generally should result in calcualted size
     // otherwise that means the border and padding are taking up 100% or more of the desired space.
@@ -81,6 +82,11 @@ function ui_calculate_element_size(_node, _parentNode) {
 
     _nodeDest.innerWidth = _nodeDest.width - _paddingDest.left - _paddingDest.right - _borderDest.left - _borderDest.right;
     _nodeDest.innerHeight = _nodeDest.height - _paddingDest.top - _paddingDest.bottom - _borderDest.top - _borderDest.bottom;
+
+    _positionDest.top = _posTop + _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top;
+    _positionDest.left = _posLeft + _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
+    _positionDest.bottom = _positionDest.top + _nodeDest.height;
+    _positionDest.right = _positionDest.left + _nodeDest.width;
 }
 
 ///@param {Struct.ElementProperties} _uiRoot
@@ -92,6 +98,12 @@ function ui_calculate_layout(_uiRoot, _rootWidth, _rootHeight) {
     tempParentSize.calculatedSize.width = _rootWidth;
     tempParentSize.calculatedSize.innerHeight = _rootHeight;
     tempParentSize.calculatedSize.innerWidth = _rootWidth;
+    tempParentSize.calculatedSize.border = global.boxZero;
+    tempParentSize.calculatedSize.padding = global.boxZero;
+    tempParentSize.calculatedSize.position.left = 0;
+    tempParentSize.calculatedSize.position.right = _rootWidth;
+    tempParentSize.calculatedSize.position.top = 0;
+    tempParentSize.calculatedSize.position.bottom = _rootHeight;
     _uiRoot.sizeProperties.width = _rootWidth;
     _uiRoot.sizeProperties.height = _rootHeight;
     // We calculate the root elements size before looping.

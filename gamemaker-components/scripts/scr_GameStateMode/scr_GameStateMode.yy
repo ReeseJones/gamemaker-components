@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_GameStateMode",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_GameStateMode",
+  "parent":{
+    "name":"Game",
+    "path":"folders/Game.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

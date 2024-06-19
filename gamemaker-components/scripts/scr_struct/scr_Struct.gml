@@ -37,6 +37,8 @@ function struct_deep_copy(_source, _destination = {}, _callback = undefined) {
     return _destination;
 }
 
+///@param {Struct} _struct
+///@param {Function} _method
 function struct_foreach_custom(_struct, _method) {
     var _keys = variable_struct_get_names(_struct);
     
@@ -46,6 +48,7 @@ function struct_foreach_custom(_struct, _method) {
     }
 }
 
+///@param {Struct} _struct
 function struct_get_id(_struct) {
     if(struct_exists(_struct, "id")) {
         return id_to_string(_struct.id);

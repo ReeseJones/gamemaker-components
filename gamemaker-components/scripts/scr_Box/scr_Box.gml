@@ -9,3 +9,5 @@ function Box(_top = undefined, _left = undefined, _bottom = undefined, _right = 
     bottom = _bottom;
     right = _right;
 }
+
+global.boxZero = new Box(0, 0, 0, 0);

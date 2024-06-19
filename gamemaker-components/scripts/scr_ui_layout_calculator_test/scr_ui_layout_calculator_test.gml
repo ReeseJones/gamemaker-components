@@ -3,22 +3,24 @@ function ui_layout_calculator_tests() {
     return [
         describe("UI layout calculator", function() {
             before_each(function() {
-                uiRoot = instance_create_depth(0, 0 , 0, obj_ui_element);
-                panel = instance_create_depth(0, 0 , 0, obj_ui_element);
-                header = instance_create_depth(0, 0 , 0, obj_ui_element);
-                content = instance_create_depth(0, 0 , 0, obj_ui_element);
-                item = instance_create_depth(0, 0 , 0, obj_ui_element);
-                
+                testLayer = layer_create(-300, "invisible_test");
+                layer_set_visible(testLayer, false);
+                uiRoot = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                panel = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                header = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                content = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                item = instance_create_layer(0, 0 , testLayer, obj_ui_element);
                 // UI root has hardcoded size for test, but typically would be the size of the window or UI space.
                 // Calling this method on root with no children just sets the size of root.
                 ui_calculate_layout(uiRoot, 1000, 1000);
             });
             after_each(function() {
-                instance_destroy(uiRoot);
-                instance_destroy(panel);
-                instance_destroy(header);
-                instance_destroy(content);
-                instance_destroy(item);
+                //instance_destroy(uiRoot);
+                //instance_destroy(panel);
+                //instance_destroy(header);
+                //instance_destroy(content);
+                //instance_destroy(item);
+                layer_destroy(testLayer)
             });
             describe("ui_calculate_dimension", function() {
                 it("If dimension is a real number greater than 1 dimension is returned", function() {

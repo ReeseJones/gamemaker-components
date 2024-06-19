@@ -4,13 +4,15 @@ function serializer_tests() {
         describe("serialize", function() {
             before_each(function() {
                 filename = file_get_save_directory() + "serialize_asset_graph_test.json";
-                uiRoot = instance_create_depth(0, 0 , 0, obj_ui_element);
-                panel = instance_create_depth(0, 0 , 0, obj_ui_element);
-                header = instance_create_depth(0, 0 , 0, obj_ui_element);
-                content = instance_create_depth(0, 0 , 0, obj_ui_element);
+                testLayer = layer_create(-300, "invisible_test");
+                layer_set_visible(testLayer, false);
+                uiRoot = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                panel = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                header = instance_create_layer(0, 0 , testLayer, obj_ui_element);
+                content = instance_create_layer(0, 0 , testLayer, obj_ui_element);
                 items = [];
                 for(var i = 0; i < 5; i += 1) {
-                    var _item = instance_create_depth(0, 0 , 0, obj_ui_element);
+                    var _item = instance_create_layer(0, 0 , testLayer, obj_ui_element);
                     node_append_child(content, _item);
                     array_push(items, _item);
                     _item.sizeProperties.width = 1;
@@ -45,13 +47,14 @@ function serializer_tests() {
                 ui_calculate_layout(uiRoot, 1000, 1000);
             });
             after_each(function() {
-                instance_destroy(uiRoot);
+                /*instance_destroy(uiRoot);
                 instance_destroy(panel);
                 instance_destroy(header);
                 instance_destroy(content);
                 array_foreach(items, function(_inst) {
                     instance_destroy(_inst);
-                });
+                }); */
+               layer_destroy(testLayer);
             });
 
             it("should work", function() {
