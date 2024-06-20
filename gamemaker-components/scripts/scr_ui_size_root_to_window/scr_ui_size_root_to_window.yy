@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ui_layout_calculator_test_2",
+  "%Name":"scr_ui_size_root_to_window",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ui_layout_calculator_test_2",
+  "name":"scr_ui_size_root_to_window",
   "parent":{
     "name":"Layouts",
     "path":"folders/UI/Layouts.yy",

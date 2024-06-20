@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_ui_layout_calculator_test",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Layouts",
+    "path":"folders/UI/Layouts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

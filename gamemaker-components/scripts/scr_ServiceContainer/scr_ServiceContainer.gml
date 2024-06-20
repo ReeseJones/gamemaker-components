@@ -17,27 +17,24 @@ function ServiceRegistration(_type, _name, _value, _dependencies = [], _scope = 
     value = _value;
     dependencies = _dependencies;
     scope = _scope;
-    
+
     static inSingletonScope = function in_singleton_scope() {
         scope = SERVICE_SCOPE_SINGLETON;
     }
-    
+
     static inTransientScope = function in_transient_scope() {
         scope = SERVICE_SCOPE_TRANSIENT;
     }
-    
+
     static inTreeScope = function in_transient_scope() {
         scope = SERVICE_SCOPE_TREE;
     }
 }
 
 function ServiceContainer() constructor {
-    // Feather disable GM2017
     valueRegistrationMap = {};
     instanceMap = {};
-    treeInstanceMap = {};
-    // Feather restore GM2017
-    
+    treeInstanceMap = {}
 
     ///@func  validateServiceIsUnbound(_name)
     ///@param {String} _name
@@ -54,7 +51,7 @@ function ServiceContainer() constructor {
              throw "Must provide valid options object to bind with valid name";
          }
          validateServiceIsUnbound(_options.name);
-          valueRegistrationMap[$ _options.name] = _options;
+         valueRegistrationMap[$ _options.name] = _options;
     }
 
     ///@func  value(name, value)

@@ -1,17 +1,41 @@
-enum FLEX_DIRECTION {
-    ROW,
-    COLUMN,
+
+///@param {Struct.ElementProperties} _element
+function ui_calculate_layout(_element) {
+    static elementQueue = ds_queue_create();
+    ds_queue_clear(elementQueue);
+
+    ds_queue_enqueue(elementQueue, _element);
+
+    while(!ds_queue_empty(elementQueue)) {
+        var _current = ds_queue_dequeue(elementQueue);
+        var _childrenCount = array_length(_current.childNodes);
+        for(var i = 0; i < _childrenCount; i += 1) {
+            var _child = _current.childNodes[i];
+            ds_queue_enqueue(elementQueue, _child);
+        }
+        ui_calculate_element(_current, _current.parentNode)
+    }
 }
 
-enum OVERFLOW_TYPE {
-    VISIBLE,
-    HIDDEN,
-    SCROLL,
-}
+///@param {Struct.ElementProperties} _node
+///@param {Struct.ElementProperties} _parentNode
+function ui_calculate_element(_node, _parentNode) {
+    if(is_undefined(_parentNode)) {
+        ui_size_root_to_window(_node);
+    } else {
+         ui_calculate_element_size(_node, _parentNode);
+    }
 
-enum LAYOUT_TYPE {
-    NONE,
-    FLEX,
+    if(is_defined(_parentNode)
+       && _parentNode.sizeProperties.layout == ELEMENT_LAYOUT_TYPE.MANUAL) {
+        ui_calculate_element_position(_node, _parentNode);
+     } else {
+         var _currentLayoutType = _node.sizeProperties.layout;
+         switch(_currentLayoutType) {
+             case ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL:
+             case ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL:
+         }
+     }
 }
 
 ///@param {real} _dimension
@@ -52,7 +76,6 @@ function ui_calculate_element_size(_node, _parentNode) {
     var _paddingDest = _node.calculatedSize.padding;
     var _paddingSrc = _node.sizeProperties.padding;
 
-    var _positionDest = _node.calculatedSize.position;
     var _positionSrc = _node.sizeProperties.position;
 
     _borderDest.bottom = ui_calculate_dimension(_borderSrc.bottom, _parentSize.innerHeight);
@@ -82,117 +105,23 @@ function ui_calculate_element_size(_node, _parentNode) {
 
     _nodeDest.innerWidth = _nodeDest.width - _paddingDest.left - _paddingDest.right - _borderDest.left - _borderDest.right;
     _nodeDest.innerHeight = _nodeDest.height - _paddingDest.top - _paddingDest.bottom - _borderDest.top - _borderDest.bottom;
+}
+
+///@description Caclulates the position of an element manually specified by user. MUST calculate parent and size first!
+///@param {Struct.ElementProperties} _node
+///@param {Struct.ElementProperties} _parentNode
+function ui_calculate_element_position(_node, _parentNode) {
+    var _parentSize = _parentNode.calculatedSize;
+    var _nodeDest = _node.calculatedSize;
+
+    var _positionDest = _node.calculatedSize.position;
+    var _positionSrc = _node.sizeProperties.position;
+
+    var _posTop = ui_calculate_dimension(_positionSrc.top, _parentSize.innerHeight);
+    var _posLeft = ui_calculate_dimension(_positionSrc.left, _parentSize.innerWidth);
 
     _positionDest.top = _posTop + _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top;
     _positionDest.left = _posLeft + _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
     _positionDest.bottom = _positionDest.top + _nodeDest.height;
     _positionDest.right = _positionDest.left + _nodeDest.width;
 }
-
-///@param {Struct.ElementProperties} _uiRoot
-function ui_calculate_layout(_uiRoot, _rootWidth, _rootHeight) {
-    static tempParentSize = new ElementProperties();
-
-    //Set root size
-    tempParentSize.calculatedSize.height = _rootHeight;
-    tempParentSize.calculatedSize.width = _rootWidth;
-    tempParentSize.calculatedSize.innerHeight = _rootHeight;
-    tempParentSize.calculatedSize.innerWidth = _rootWidth;
-    tempParentSize.calculatedSize.border = global.boxZero;
-    tempParentSize.calculatedSize.padding = global.boxZero;
-    tempParentSize.calculatedSize.position.left = 0;
-    tempParentSize.calculatedSize.position.right = _rootWidth;
-    tempParentSize.calculatedSize.position.top = 0;
-    tempParentSize.calculatedSize.position.bottom = _rootHeight;
-    _uiRoot.sizeProperties.width = _rootWidth;
-    _uiRoot.sizeProperties.height = _rootHeight;
-    // We calculate the root elements size before looping.
-    ui_calculate_element_size(_uiRoot, tempParentSize);
-
-    ui_calculate_layout_helper(_uiRoot);
-}
-
-///@param {Struct.ElementProperties} _node
-function ui_calculate_layout_helper(_node) {
-
-    // Calculate children relative sizes
-    var _childrenCount = array_length(_node.childNodes);
-    for(var _i = 0; _i < _childrenCount; _i += 1) {
-        var _childNode = _node.childNodes[_i];
-        ui_calculate_element_size(_childNode, _node);
-        ui_calculate_layout_helper(_childNode);
-    }
-
-    //TODO: Is this even needed? How do layouts get created?
-    // Calculate children layout
-    for(var _i = 0; _i < _childrenCount; _i += 1) {
-        var _childNode = _node.childNodes[_i];
-       
-    }
-}
-
-
-
-
-// Ratio Sizing - 100% or 50% of container
-// fixed sizing - 300px;
-// content sizing - as big as content // text for example
-    // max width
-    // max height
-// sized by parent:
-/*
-    panel:
-        width = 0.3; // 30% of parent
-        height = 1.0; // 100% of parent
-        overflow: VISIBLE
-        layout: FLEX
-        flexDirection: COULMN
-        display: box
-
-    Header:
-        width = 1.0;
-        height = 0.2;
-        overflow = VISIBLE
-        layout: NONE
-        flexType: static
-        flex = 0.2 // Reserves 1/5th of flex container
-        display: controlled by flex
-
-    ContentContainer:
-        width: 1.0
-        height: 1.0
-        layout: STACK
-        overflow: SCROLL
-        flexType: grow
-        flex: 1.0 // shares rest of flex
-        display: controlled by flex
-
-     WeaponDataContainer:
-        width: 1.0
-        height: 1.0
-        overflow: VISIBLE
-        layout: FLEX
-        flexType: static
-        flex: 1
-        display: controlled by content
-        fitMode: Height //width | Height | Both
-
-      Weapon Header Row:
-        width: 1.0
-        height: 1.0
-        overflow: visible
-        layout: Flex
-        flexDirection: ROW
-        flexType: static
-        flex: 1
-        display: width controlled by width, height controlled by content
-        fitMode: Height
-
-     WeaponIcon: // Sizes to container. Maintain aspect ratio?
-
-     Weapon Name:// size driven by content
-
-     Weapon Stats:
-
-
-*/

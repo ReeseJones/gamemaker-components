@@ -1,3 +1,9 @@
+enum ELEMENT_LAYOUT_TYPE {
+    NONE = 0,
+    MANUAL = 1,
+    FLEX_HORIZONTAL = 2,
+    FLEX_VERTICAL = 3
+}
 ///@param {real} _width A width equal to or less than 1.0 is interpreted as a percentage of the parents size
 // A number greater than or equal to 2 is interpreted as a gui pixel size
 // Undefined means something else calculates size
@@ -12,6 +18,7 @@ function ElementSizeDescription(_width = undefined, _height = undefined, _border
     border = _border;
     padding = _padding;
     position = _position;
+    layout = ELEMENT_LAYOUT_TYPE.MANUAL;
 }
 
 ///@description The caculated sizes derived from the ElementSizeDescription
