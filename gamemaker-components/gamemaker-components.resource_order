@@ -124,6 +124,8 @@
     {"name":"scr_ui_element","order":19,"path":"scripts/scr_ui_element/scr_ui_element.yy",},
     {"name":"scr_ui_layout_calculator_test_2","order":2,"path":"scripts/scr_ui_layout_calculator_test_2/scr_ui_layout_calculator_test_2.yy",},
     {"name":"scr_ui_layout_calculator_test","order":1,"path":"scripts/scr_ui_layout_calculator_test/scr_ui_layout_calculator_test.yy",},
+    {"name":"scr_ui_layout_flex_horizontal","order":6,"path":"scripts/scr_ui_layout_flex_horizontal/scr_ui_layout_flex_horizontal.yy",},
+    {"name":"scr_ui_layout_manual","order":5,"path":"scripts/scr_ui_layout_manual/scr_ui_layout_manual.yy",},
     {"name":"scr_ui_size_root_to_window","order":4,"path":"scripts/scr_ui_size_root_to_window/scr_ui_size_root_to_window.yy",},
     {"name":"scr_UnitTestMatchers","order":1,"path":"scripts/scr_UnitTestMatchers/scr_UnitTestMatchers.yy",},
     {"name":"scr_Utility","order":2,"path":"scripts/scr_Utility/scr_Utility.yy",},

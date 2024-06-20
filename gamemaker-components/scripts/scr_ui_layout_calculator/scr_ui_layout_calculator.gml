@@ -6,6 +6,10 @@ function ui_calculate_layout(_element) {
 
     ds_queue_enqueue(elementQueue, _element);
 
+    if(is_undefined(_element.parentNode)) {
+        ui_size_root_to_window(_element);
+    }
+
     while(!ds_queue_empty(elementQueue)) {
         var _current = ds_queue_dequeue(elementQueue);
         var _childrenCount = array_length(_current.childNodes);
@@ -13,29 +17,19 @@ function ui_calculate_layout(_element) {
             var _child = _current.childNodes[i];
             ds_queue_enqueue(elementQueue, _child);
         }
-        ui_calculate_element(_current, _current.parentNode)
-    }
-}
 
-///@param {Struct.ElementProperties} _node
-///@param {Struct.ElementProperties} _parentNode
-function ui_calculate_element(_node, _parentNode) {
-    if(is_undefined(_parentNode)) {
-        ui_size_root_to_window(_node);
-    } else {
-         ui_calculate_element_size(_node, _parentNode);
-    }
+        var _currentLayoutType = _current.sizeProperties.layout;
+        var _layoutScript = ui_layout_manual;
+        switch(_currentLayoutType) {
+            case ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL:
+                _layoutScript = ui_layout_flex_horizontal;
+            break;
+            case ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL:
+            break;
+        }
 
-    if(is_defined(_parentNode)
-       && _parentNode.sizeProperties.layout == ELEMENT_LAYOUT_TYPE.MANUAL) {
-        ui_calculate_element_position(_node, _parentNode);
-     } else {
-         var _currentLayoutType = _node.sizeProperties.layout;
-         switch(_currentLayoutType) {
-             case ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL:
-             case ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL:
-         }
-     }
+        _layoutScript(_current);
+    }
 }
 
 ///@param {real} _dimension
