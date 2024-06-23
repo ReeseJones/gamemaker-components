@@ -8,7 +8,7 @@ function ui_layout_flex_horizontal(_node) {
         var _child = _node.childNodes[i];
         ui_calculate_element_size(_child, _node);
 
-        // TODO: consider borders and padding?
+        // If elements do not have a defined width they are flexible. (even with padding/border)
         if( is_undefined(_child.sizeProperties.width) || _child.calculatedSize.width == 0) {
             array_push(_dynamicElements, _child);
         } else {
@@ -22,10 +22,8 @@ function ui_layout_flex_horizontal(_node) {
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _dynamicElements[i];
         var _childCalcSize = _child.calculatedSize;
-
-        // TODO: consider borders and padding? Borders and padding need to be incorperated.
-        _childCalcSize.width = _distributedWidth
-        _childCalcSize.innerWidth = _distributedWidth;
+        _childCalcSize.width = _distributedWidth;
+        ui_calculate_inner_width(_childCalcSize);
     }
 
     var _parentSize = _node.calculatedSize;
@@ -34,10 +32,35 @@ function ui_layout_flex_horizontal(_node) {
     _childCount = array_length(_node.childNodes);
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
+        var _childSize = _child.calculatedSize;
         var _positionDest = _child.calculatedSize.position;
-        _positionDest.top = _top;
+        // update vertical/size position
+        var _alignment = _node.sizeProperties.alignment;
+        switch(_alignment) {
+            case LAYOUT_ALIGNMENT.CENTER:
+                var _centerOffset = (_parentSize.innerHeight - _childSize.height) / 2;
+                _positionDest.top = _top + _centerOffset;
+                _positionDest.bottom = _positionDest.top + _childSize.height;
+            break;
+            case LAYOUT_ALIGNMENT.START:
+                _positionDest.top = _top;
+                _positionDest.bottom = _positionDest.top + _childSize.height;
+            break;
+            case LAYOUT_ALIGNMENT.END:
+                var _endOffset = _parentSize.innerHeight - _childSize.height;
+                _positionDest.top = _top + _endOffset;
+                _positionDest.bottom = _positionDest.top + _childSize.height;
+            break;
+            case LAYOUT_ALIGNMENT.STRETCH:
+            default:
+                _positionDest.top = _top;
+                _positionDest.bottom = _top + _parentSize.innerHeight;
+                _childSize.height = _parentSize.innerHeight;
+                ui_calculate_inner_height(_childSize);
+            break;
+        }
+
         _positionDest.left = _currentPos;
-        _positionDest.bottom = _top + _child.calculatedSize.height;
         _positionDest.right = _positionDest.left + _child.calculatedSize.width;
         _currentPos += _child.calculatedSize.width;
     }
