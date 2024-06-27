@@ -32,12 +32,7 @@ if(is_defined(textDescription.text) && is_defined(calculatedSize.width) && is_de
     draw_set_font(textDescription.font);
     draw_set_halign(textDescription.halign);
     draw_set_valign(textDescription.valign);
-    
-    if(is_defined(textDescription.text)) {
-        sizeProperties.height = string_height_ext(textDescription.text, textDescription.lineSpacing, calculatedSize.innerWidth) 
-                                 + sizeProperties.padding.top + sizeProperties.padding.bottom;
-    }
-    
+
     _xx = round(_xx);
     _yy = round(_yy);
     draw_text_ext(_xx, _yy, textDescription.text, textDescription.lineSpacing, calculatedSize.innerWidth);

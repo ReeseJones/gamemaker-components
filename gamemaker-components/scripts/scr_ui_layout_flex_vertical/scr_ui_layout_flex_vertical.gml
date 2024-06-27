@@ -63,6 +63,9 @@ function ui_layout_flex_vertical(_node) {
 
         _positionDest.top = _currentPos;
         _positionDest.bottom = _positionDest.top + _child.calculatedSize.height;
+        if(is_method(_child.postLayoutCallback)) {
+            _child.postLayoutCallback();
+        }
         _currentPos += _child.calculatedSize.height;
     }
 }

@@ -34,6 +34,7 @@
     {"$GMFolder":"","%Name":"Tilesets","folderPath":"folders/Tilesets.yy","name":"Tilesets","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"UI","folderPath":"folders/UI.yy","name":"UI","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"EditorUI","folderPath":"folders/UI/EditorUI.yy","name":"EditorUI","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Element","folderPath":"folders/UI/Element.yy","name":"Element","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Layouts","folderPath":"folders/UI/Layouts.yy","name":"Layouts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Text","folderPath":"folders/UI/Text.yy","name":"Text","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Utility","folderPath":"folders/Utility.yy","name":"Utility","resourceType":"GMFolder","resourceVersion":"2.0",},

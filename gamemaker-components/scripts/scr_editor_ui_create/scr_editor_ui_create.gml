@@ -23,6 +23,7 @@ function editor_ui_create() {
     _editorContentArea.sizeProperties.alignment = LAYOUT_ALIGNMENT.CENTER;
 
     _editorMainPanel.sizeProperties.width = 0.25;
+    _editorMainPanel.sizeProperties.padding = new Box(16, 16, 16, 16);
     _editorMainPanel.sizeProperties.height = 0.8;
     _editorMainPanel.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
     _editorMainPanel.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;

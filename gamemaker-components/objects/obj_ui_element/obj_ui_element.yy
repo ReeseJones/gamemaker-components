@@ -10,8 +10,8 @@
   "name":"obj_ui_element",
   "overriddenProperties":[],
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Element",
+    "path":"folders/UI/Element.yy",
   },
   "parentObjectId":{
     "name":"obj_clickable",

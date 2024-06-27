@@ -50,4 +50,5 @@ function ElementSizeProperties(_width = undefined, _height = undefined, _border 
 function ElementProperties() : EventNode() constructor {
     sizeProperties = new ElementSizeDescription();
     calculatedSize = new ElementSizeProperties();
+    textDescription = new UiTextDescription();
 }

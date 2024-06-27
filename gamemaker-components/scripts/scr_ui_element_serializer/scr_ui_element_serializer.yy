@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_ui_element_serializer",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Element",
+    "path":"folders/UI/Element.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
