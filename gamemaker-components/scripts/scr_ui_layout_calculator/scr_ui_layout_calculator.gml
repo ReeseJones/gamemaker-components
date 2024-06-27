@@ -4,7 +4,9 @@ function ui_calculate_layout(_element) {
     static elementQueue = ds_queue_create();
     ds_queue_clear(elementQueue);
 
-    ds_queue_enqueue(elementQueue, _element);
+    if(_element.calculatedSize.needsRecalculated) {
+        ds_queue_enqueue(elementQueue, _element);
+    }
 
     if(is_undefined(_element.parentNode)) {
         ui_size_root_to_window(_element);
@@ -15,7 +17,9 @@ function ui_calculate_layout(_element) {
         var _childrenCount = array_length(_current.childNodes);
         for(var i = 0; i < _childrenCount; i += 1) {
             var _child = _current.childNodes[i];
-            ds_queue_enqueue(elementQueue, _child);
+            if(_child.calculatedSize.needsRecalculated) {
+                ds_queue_enqueue(elementQueue, _child);
+            }
         }
 
         var _currentLayoutType = _current.sizeProperties.layout;
@@ -30,6 +34,7 @@ function ui_calculate_layout(_element) {
         }
 
         _layoutScript(_current);
+        show_debug_message($"Recalculated ${_current} {object_get_name(_current.object_index)} {_current.nodeDepth}");
     }
 }
 

@@ -101,11 +101,27 @@ function node_is_connected(_node) {
 ///@param {Struct.Node} _node
 ///@param {Function} _callback
 ///@param {bool} _includeRoot
-function node_foreach(_node, _callback) {
+function node_foreach(_node, _callback, _includeRoot = false) {
+    if(_includeRoot) {
+        _callback(_node);
+    }
     var _childLength = array_length(_node.childNodes);
     for(var i = 0; i < _childLength; i += 1) {
         var _child = _node.childNodes[i];
-        node_foreach(_child, _callback);
+        node_foreach(_child, _callback, true);
     }
-    _callback(_node);
+}
+
+///@description Traverse up the node tree towards the parent.
+///@param {Struct.Node} _node
+///@param {Function} _callback
+///@param {bool} _includeRoot
+function node_foreach_parent(_node, _callback, _includeRoot = false) {
+    if(_includeRoot) {
+        _callback(_node);
+    }
+
+    if(is_defined(_node.parentNode)) {
+        node_foreach_parent(_node.parentNode, _callback, true);
+    }
 }

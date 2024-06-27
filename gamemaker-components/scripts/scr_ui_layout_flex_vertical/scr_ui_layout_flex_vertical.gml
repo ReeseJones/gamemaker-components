@@ -1,8 +1,12 @@
 ///@param {Struct.ElementProperties} _node
 function ui_layout_flex_vertical(_node) {
+    var _parentSize = _node.calculatedSize;
     var _childCount = array_length(_node.childNodes);
-    var _currentDistributableHeight = _node.calculatedSize.innerHeight;
+    var _currentDistributableHeight = _parentSize.innerHeight;
     var _dynamicElements = [];
+
+    _parentSize.needsRecalculated = false;
+
     //TODO: Collect info on children size. Flex layout size will increase to accomodate children? Or save size vs required size?
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
@@ -26,7 +30,6 @@ function ui_layout_flex_vertical(_node) {
         ui_calculate_inner_height(_childCalcSize);
     }
 
-    var _parentSize = _node.calculatedSize;
     var _top = _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top;
     var _left = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
     var _currentPos = _top;
@@ -66,6 +69,7 @@ function ui_layout_flex_vertical(_node) {
         if(is_method(_child.postLayoutCallback)) {
             _child.postLayoutCallback();
         }
+
         _currentPos += _child.calculatedSize.height;
     }
 }

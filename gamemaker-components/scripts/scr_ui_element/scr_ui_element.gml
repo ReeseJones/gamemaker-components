@@ -37,6 +37,7 @@ function ElementSizeDescription(_width = undefined, _height = undefined, _border
 ///@param {Struct.Box} _padding
 ///@param {Struct.Box} _position
 function ElementSizeProperties(_width = undefined, _height = undefined, _border = new Box(), _padding = new Box(), _position = new Box() ) constructor {
+    needsRecalculated = true;
     width = _width;
     height = _height;
     innerWidth = _width;
