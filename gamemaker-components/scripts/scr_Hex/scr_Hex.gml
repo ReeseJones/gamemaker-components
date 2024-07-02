@@ -5,7 +5,7 @@ function string_hex(_value) {
 
     var _output = "";
 
-    while (_v > 0)  {
+    while (_v > 0) {
         var _c  = _v & 0xf;
         _output = chr(_c + ((_c < 10) ? 48 : 55)) + _output;
         _v = _v >> 4;

@@ -23,3 +23,5 @@ window_set_fullscreen(false);
 
 gameStateMode = GAME_STATE_MODE.PLAY;
 
+prevMouseElement = undefined;
+

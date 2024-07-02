@@ -41,14 +41,14 @@ function nearest_point_on_instance(_startPos, _inst) {
         case spr_obj_solid_rectangle: {
             var _xx = _instEntity.x;
             var _yy = _instEntity.y;
-            
+
             //get the rotated bounding box world positions
             var _bbox = rect_get_rotated(_xx, _yy, _halfWidth, _halfHeight, _rot);
-            
+
             //rotate them around origin back to be axis aligned
             vector2d_inplace_rotate( _bbox.tl, _rot);
             vector2d_inplace_rotate( _bbox.br, _rot);
-            
+
             //do the same rotation to the starting position
             var _startPosRot = vector2d_rotate(_startPos, _rot);
             //perform the check

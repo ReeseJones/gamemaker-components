@@ -41,14 +41,16 @@ function MouseManager(_logger) : EventNode()  constructor {
         state = DRAG_STATE.INITIATE;
         dragTarget = hoverTarget;
         dragButton = _button;
-        dragStartPosition.x = mouse_x;
-        dragStartPosition.y = mouse_y;
+        dragStartPosition.x = device_mouse_x_to_gui(0);
+        dragStartPosition.y = device_mouse_y_to_gui(0);
     }
 
 /// @function checkForDragStart
 /// @description encapsulates the logic for checking if a drag has started
     static checkForDragStart = function() {
-        var _dist = point_distance(dragStartPosition.x, dragStartPosition.y, mouse_x, mouse_y);
+        var _mouseX = device_mouse_x_to_gui(0);
+        var _mouseY = device_mouse_y_to_gui(0);
+        var _dist = point_distance(dragStartPosition.x, dragStartPosition.y, _mouseX, _mouseY);
 
         if(_dist > dragStartDistance) {
             //We are now in a drag
@@ -83,7 +85,7 @@ function MouseManager(_logger) : EventNode()  constructor {
             case DRAG_STATE.IN_PROGRESS: {
 
             } break;
-            
+
             default:
         }
 
@@ -146,12 +148,11 @@ function MouseManager(_logger) : EventNode()  constructor {
             var _sameButton = clickButton == _button;
             
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on release of {hoverTarget}");
-            var _logger = logger;
 
             event_dispatch(hoverTarget, new MouseEvent(EVENT_RELEASED, _button, _button));
 
             if(_isClickTarget && _sameButton) {
-                _logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on Clicked of target {hoverTarget.id}");
+                logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on Clicked of target {hoverTarget.id}");
                 event_dispatch(hoverTarget, new MouseEvent(EVENT_CLICKED, _button, _button));
             }
         }
@@ -167,7 +168,7 @@ function MouseManager(_logger) : EventNode()  constructor {
 
         updateHoveredInstance();
     }
-    
+
     static handleInstanceMouseOut = function(_instanceRef) {
         if(!object_is_ancestor(_instanceRef.object_index, obj_clickable)) {
             logger.log(LOG_LEVEL.IMPORTANT, "WARNING: handling MouseOut on non clickable object")
@@ -203,12 +204,14 @@ function MouseManager(_logger) : EventNode()  constructor {
             event_dispatch(_currentHoverTarget, new EventData(EVENT_MOUSE_OVER, _currentHoverTarget));
         }
 
+        //TODO: Drag targets always instances? possibly...
         if(state == DRAG_STATE.IN_PROGRESS && instance_exists(dragTarget)) {
             event_dispatch(dragTarget, new EventData(EVENT_DRAG_DROP_TARGET_CHANGE, _currentHoverTarget));
         }
     }
 }
 
+//TODO: global mouse manager? Service binding?
 /// @description handles local mouse over events for the ui stack
 /// @param {Id.Instance}    _instanceRef
 function mouse_manager_handle_mouse_over(_instanceRef) {
