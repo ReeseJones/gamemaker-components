@@ -18,7 +18,7 @@ function EventData(_type, _data) constructor {
     static stopImmediatePropagation = function() {
         immediateCancel = true;
     }
-    
+
     static stopPropagation = function() {
         cancel = true;
     }

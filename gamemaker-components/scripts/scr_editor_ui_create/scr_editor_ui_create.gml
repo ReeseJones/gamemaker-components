@@ -13,6 +13,7 @@ function editor_ui_create() {
 
     _editorUiRoot.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
     _editorUiRoot.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;
+    _editorUiRoot.sizeProperties.collides = false;
 
     _editorMenubar.sizeProperties.height = 64;
     _editorMenubar.sprite_index = spr_button_blue;
@@ -21,6 +22,7 @@ function editor_ui_create() {
 
     _editorContentArea.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL;
     _editorContentArea.sizeProperties.alignment = LAYOUT_ALIGNMENT.CENTER;
+    _editorContentArea.sizeProperties.collides = false;
 
     _editorMainPanel.sizeProperties.width = 0.25;
     _editorMainPanel.sizeProperties.padding = new Box(16, 16, 16, 16);
@@ -48,6 +50,7 @@ function editor_ui_create() {
     _editorMainPanelContent.image_blend = c_white;
 
     _editorLevelView.sizeProperties.height = 1
+    _editorLevelView.sizeProperties.collides = false;
 
     _editorSubpanel.sizeProperties.width = 0.25;
     _editorSubpanel.sizeProperties.height = 0.5;

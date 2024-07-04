@@ -28,6 +28,7 @@ function ElementSizeDescription(_width = undefined, _height = undefined, _border
     position = _position;
     layout = ELEMENT_LAYOUT_TYPE.MANUAL;
     alignment = LAYOUT_ALIGNMENT.CENTER;
+    collides = true;
 }
 
 ///@description The caculated sizes derived from the ElementSizeDescription
