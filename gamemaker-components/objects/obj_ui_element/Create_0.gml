@@ -4,7 +4,7 @@ isDraggable = false;
 
 sizeProperties = new ElementSizeDescription();
 calculatedSize = new ElementSizeProperties();
-postLayoutCallback = undefined;
+calculateSizeCallback = ui_calculate_element_size;
 
 
 //TODO: We dont use this for custom ui

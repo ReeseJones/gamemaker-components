@@ -27,7 +27,7 @@ if(is_defined(textDescription.text) && is_defined(calculatedSize.width) && is_de
             _yy = calculatedSize.position.top + calculatedSize.border.top + calculatedSize.padding.top;
             break;
     }
-    draw_set_color(textDescription.color);
+    draw_set_color(mouseIsOver ? c_white : textDescription.color);
     draw_set_alpha(textDescription.alpha);
     draw_set_font(textDescription.font);
     draw_set_halign(textDescription.halign);

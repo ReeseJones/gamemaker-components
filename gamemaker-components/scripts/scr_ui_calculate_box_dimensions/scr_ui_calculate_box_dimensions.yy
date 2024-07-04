@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ui_calculate_box_dimensions",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_calculate_box_dimensions",
+  "parent":{
+    "name":"Layouts",
+    "path":"folders/UI/Layouts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

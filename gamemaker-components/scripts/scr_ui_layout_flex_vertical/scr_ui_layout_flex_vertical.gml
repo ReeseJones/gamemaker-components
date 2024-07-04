@@ -10,7 +10,8 @@ function ui_layout_flex_vertical(_node) {
     //TODO: Collect info on children size. Flex layout size will increase to accomodate children? Or save size vs required size?
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
-        ui_calculate_element_size(_child, _node);
+
+        _child.calculateSizeCallback(_child, _node);
 
         // If elements do not have a defined height they are flexible. (even with padding/border)
         if( is_undefined(_child.sizeProperties.height) || _child.calculatedSize.height == 0) {
@@ -34,7 +35,7 @@ function ui_layout_flex_vertical(_node) {
     var _left = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
     var _currentPos = _top;
     _childCount = array_length(_node.childNodes);
-    for( var i = 0; i < _childCount; i += 1 ) {
+    for ( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
         var _childSize = _child.calculatedSize;
         var _positionDest = _child.calculatedSize.position;
@@ -66,9 +67,6 @@ function ui_layout_flex_vertical(_node) {
 
         _positionDest.top = _currentPos;
         _positionDest.bottom = _positionDest.top + _child.calculatedSize.height;
-        if(is_method(_child.postLayoutCallback)) {
-            _child.postLayoutCallback();
-        }
 
         _currentPos += _child.calculatedSize.height;
     }

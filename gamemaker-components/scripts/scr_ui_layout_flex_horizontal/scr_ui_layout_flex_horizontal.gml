@@ -10,7 +10,7 @@ function ui_layout_flex_horizontal(_node) {
     //TODO: Collect info on children size. Flex layout size will increase to accomodate children? Or save size vs required size?
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
-        ui_calculate_element_size(_child, _node);
+        _child.calculateSizeCallback(_child, _node);
 
         // If elements do not have a defined width they are flexible. (even with padding/border)
         if( is_undefined(_child.sizeProperties.width) || _child.calculatedSize.width == 0) {
@@ -66,9 +66,6 @@ function ui_layout_flex_horizontal(_node) {
         _positionDest.left = _currentPos;
         _positionDest.right = _positionDest.left + _child.calculatedSize.width;
 
-        if ( is_method(_child.postLayoutCallback)) {
-            _child.postLayoutCallback();
-        }
         _currentPos += _child.calculatedSize.width;
     }
 }

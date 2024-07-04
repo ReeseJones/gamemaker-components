@@ -1,6 +1,6 @@
  ///@param {Struct.ElementProperties} _node
 ///@param {Struct.ElementProperties} _parentNode
-function ui_calculate_element_size(_node, _parentNode) {
+function ui_calculate_text_size(_node, _parentNode) {
     var _parentSize = _parentNode.calculatedSize;
     var _childSize = _node.calculatedSize;
     var _nodeSrc = _node.sizeProperties;
@@ -27,7 +27,14 @@ function ui_calculate_element_size(_node, _parentNode) {
     _childSize.width = max(_childSize.width, _borderDest.left + _borderDest.right + _paddingDest.left + _paddingDest.right);
     ui_calculate_inner_width(_childSize);
 
+    var _edgeHeight = _borderDest.top + _borderDest.bottom + _paddingDest.top + _paddingDest.bottom;
+    // Text controlled Height
+    var _textDesc = _node.textDescription;
+    if( is_string(_textDesc.text) ) {
+        _nodeSrc.height = string_height_ext(_textDesc.text, _textDesc.lineSpacing, _childSize.innerWidth) + _edgeHeight;
+    }
+
     _childSize.height = ui_calculate_dimension(_nodeSrc.height, _parentSize.innerHeight, _posTop, _posBottom);
-    _childSize.height = max(_childSize.height, _borderDest.top + _borderDest.bottom + _paddingDest.top + _paddingDest.bottom);
+    _childSize.height = max(_childSize.height, _edgeHeight);
     ui_calculate_inner_height(_childSize);
 }

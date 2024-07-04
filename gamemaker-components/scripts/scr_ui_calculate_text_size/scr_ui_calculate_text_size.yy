@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ui_calculate_text_size",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_calculate_text_size",
+  "parent":{
+    "name":"Text",
+    "path":"folders/UI/Text.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
