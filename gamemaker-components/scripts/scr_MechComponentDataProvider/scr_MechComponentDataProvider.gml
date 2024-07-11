@@ -4,7 +4,8 @@ function MechComponentDataProvider(_components) constructor {
     var _componentCount = array_length(_components);
     for(var i = 0; i < _componentCount; i += 1) {
         var _comp = _components[i];
-        componentMap[? _comp.id] = _comp;
+        componentMap[$ _comp.id] = _comp;
+        _comp.spriteIndex = asset_get_index(_comp.spriteIndex);
     }
 
 /// @param {String}   _componentDataId

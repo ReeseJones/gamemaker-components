@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_MechComponentBinder",
+  "%Name":"scr_MechComponentPosition",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_MechComponentBinder",
+  "name":"scr_MechComponentPosition",
   "parent":{
     "name":"MechSystem",
     "path":"folders/MechSystem.yy",

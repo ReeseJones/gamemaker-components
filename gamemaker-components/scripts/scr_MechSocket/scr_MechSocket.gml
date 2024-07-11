@@ -12,7 +12,7 @@ enum CONNECTION_DIRECTION {
 ///@description A socket is one cell of a mech component. A socket will connect to any other sockets that touch it from other components.
 ///@param {Real} _xPos
 ///@param {Real} _yPos
-///@param {Array<Struct.MechComponent>} _connections Component to which this socket belongs.
+///@param {Array<Struct.MechComponent>} _connections Array of components which this socket is connected to
 function MechSocket(_xPos = 0, _yPos = 0, _connections = array_create(4, undefined)) constructor {
     //Position in component grid
     position = new Vec2(_xPos, _yPos);
@@ -31,8 +31,9 @@ function MechSocket(_xPos = 0, _yPos = 0, _connections = array_create(4, undefin
 ///@param {Struct.MechComponent} _mechComponent
 ///@param {Struct.MechSocket} _socket
 function mech_socket_draw(_mechSystem, _mechComponent, _socket) {
-    var _xPos = _mechComponent.position.x + _socket.position.x;
-    var _yPos = _mechComponent.position.y + _socket.position.y;
+    var _mechCompPosition = _mechComponent.placement.position;
+    var _xPos = _mechCompPosition.x + _socket.position.x;
+    var _yPos = _mechCompPosition.y + _socket.position.y;
 
     var _x = mech_system_grid_cell_position_x(_mechSystem, _xPos);
     var _y = mech_system_grid_cell_position_y(_mechSystem, _yPos);

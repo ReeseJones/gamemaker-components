@@ -2,14 +2,13 @@ struct_save_static(nameof(MechComponent), MechComponent);
 ///@param {String} _componentDataId
 function MechComponent(_componentDataId) constructor {
     static staticComponentId = 0;
-    // A unique runtime id
     id = $"cId:{++staticComponentId}";
-    // Reference to the original component data
+
     componentDataId = _componentDataId;
-    placement = new MechComponentPlacementOptions();
+    positionId = "undefined";
 }
 
-///@function mech_component_draw(_mechSystem, _component)
+/*
 ///@param {Struct.MechSystem} _mechSystem 
 ///@param {Struct.MechComponent} _component
 function mech_component_draw(_mechSystem, _component) {
@@ -41,3 +40,4 @@ function mech_component_draw(_mechSystem, _component) {
         mech_socket_draw(_mechSystem, _component, _socket);
     }
 }
+*/

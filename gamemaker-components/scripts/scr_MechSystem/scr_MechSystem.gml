@@ -5,13 +5,20 @@
 ///@param {real} _gridHeight The number of vertical cells in the grid.
 ///@param {Array<Struct.MechComponent>} _components The components installed in this mech
 function MechSystem(_gridWidth, _gridHeight, _components = []) constructor {
-
-    position = new Vec2();
     components = _components;
-    gridWidth = _gridWidth;
-    gridHeight = _gridHeight;
-    drawGrid = true;
-
+    mechComponentGrid = new EntityCollisionGrid(_gridWidth, _gridWidth);
+    // Map of component id to Struct.MechComponent
+    componentMap = {};
+    // Map of component id to component position
+    componentPositionMap = {};
+    
+    
+    static dispose = function () {
+        mechComponentGrid.dispose();
+        delete mechComponentGrid;
+        delete componentMap;
+        delete componentPositionMap
+    }
 }
 
 ///@function mech_system_draw(_mechSystem)

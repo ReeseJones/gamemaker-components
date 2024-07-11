@@ -56,3 +56,13 @@ function struct_get_id(_struct) {
     _struct.id = id_to_string(ptr(_struct));
     return _struct.id;
 }
+
+///@param {Struct} _struct
+///@return {Array}
+function struct_get_values(_struct) {
+    var _names = struct_get_names(_struct);
+    array_map_ext(_names, method( _struct, function(_key) {
+        return self[$_key];
+    }));
+    return _names;
+}

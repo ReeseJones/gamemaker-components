@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_MechComponentGrid",
+  "%Name":"scr_EntityCollisionGrid",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_MechComponentGrid",
+  "name":"scr_EntityCollisionGrid",
   "parent":{
     "name":"MechSystem",
     "path":"folders/MechSystem.yy",

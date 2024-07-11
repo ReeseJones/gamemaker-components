@@ -17,12 +17,16 @@ _gc.factory("gameSaveData", function(_filename) {
     if(file_exists(_filename)) {
         return file_json_read(_filename);
     }
-
+   
     var _saveData =  new GameData();
     file_json_write(_filename, _saveData);
     return _saveData;
 },["gameSaveFileName"]);
-_gc.service("mechComponentProvider", MechComponentDataProvider, ["gameStaticData"]);
+_gc.factory("mechComponentProvider", function(_gameStaticData) {
+    var _components = _gameStaticData.components;
+    return new MechComponentDataProvider(_components);
+},["gameStaticData"]);
+_gc.service("mechComponentFactory", MechComponentFactory, ["mechComponentProvider"]);
 _gc.service("inputDeviceManager", InputDeviceManager);
 _gc.service("inputManager", InputManager, ["inputDeviceManager"]);
 _gc.service("debugLogger", LoggingService);

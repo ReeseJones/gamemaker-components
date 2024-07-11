@@ -10,7 +10,11 @@ node_append_child(id, mechEditTarget);
 
 componentCreationButtons = [];
 
-var _components = global.mechComponentDataProvider.getComponents();
+
+componentDataProvider = global.gameContainer.get("mechComponentProvider");
+mechComponentFactory = global.gameContainer.get("mechComponentFactory");
+var _componentsMap = componentDataProvider.componentMap;
+var _components = struct_get_values(_componentsMap);
 var _compCount = array_length(_components);
 
 
@@ -19,7 +23,8 @@ for(var i = 0; i < _compCount; i += 1) {
 
     var _newButton = instance_create_depth(room_width - 128, 64 + 100 * i, 0, obj_editor_drag_button, {
         sprite_index: _compData.spriteIndex,
-        componentName: _compData.name
+        componentName: _compData.displayName,
+        componentId: _compData.id
     });
     array_push(componentCreationButtons, _newButton);
     node_append_child(id, _newButton);
@@ -43,8 +48,8 @@ event_add_listener(root_get(), EVENT_CLICKED, method(id, function(_event) {
 
     if(_event.target.object_index == obj_editor_drag_button) {
         if(!editorManager.isPlacingComponent()) {
-            var _compName = _event.target.componentName;
-            var _newComponent = global.mechComponentFactory.createComponent(_compName);
+            var _compName = _event.target.componentId;
+            var _newComponent = mechComponentFactory.createComponent(_compName);
             node_append_child(mechEditTarget, _newComponent);
             editorManager.beginPlacingComponent(obj_mech.id, _newComponent);
         }

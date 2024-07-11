@@ -1,8 +1,9 @@
 event_inherited();
 
 controlMode = MECH_CONTROL_MODE.EDIT;
-component = new MechComponent(2,2);
-componentBinding = new MechComponentBinder(id, component);
+component = new MechComponent("doodad01");
+componentData = new MechComponentData(0, 1, 1, 0, []);
+placement = new MechComponentPlacementOptions();
 mechParent = undefined;
 
 /*

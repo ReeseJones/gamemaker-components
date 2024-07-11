@@ -54,6 +54,8 @@ function node_update_depth(_node) {
         _node.nodeDepth = 0;
     } else {
         _node.nodeDepth = _node.parentNode.nodeDepth + 1;
+        //TODO: THIS IS A HACK
+        _node.depth = -_node.nodeDepth;
     }
     
     var _childCount = array_length(_node.childNodes);

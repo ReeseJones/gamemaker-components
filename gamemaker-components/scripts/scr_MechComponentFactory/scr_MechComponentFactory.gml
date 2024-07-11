@@ -13,26 +13,17 @@ function MechComponentFactory(_componentDataProvider) constructor {
         if(is_undefined(_compData)) {
             throw $"could not create component. Component with Data Id {_componentDataId} does not exist";
         }
-        
+
         var _inst = instance_create_depth(0, 0, 0, obj_mech_component);
+        var _newMechComponent = new MechComponent(_componentDataId);
 
-        var _sockets = [];
-        var _socketCount = array_length(_compData.socketPositions);
-
-        for(var i = 0; i < _socketCount; i += 1) {
-            var _sockData = _compData.socketPositions[i];
-            var _newSocket = new MechSocket(_sockData.x, _sockData.y);
-            array_push(_sockets, _newSocket);
-        }
-        
-        var _newMechComponent = new MechComponent( _compData.width, _compData.height, _sockets);
-        
-        _newMechComponent.name = _compData.name;
-        _newMechComponent.dataId = _componentDataId;
-        _newMechComponent.spriteIndex = _compData.spriteIndex;
-        
         _inst.component = _newMechComponent;
-        _inst.componentBinding.setBoundComponent(_newMechComponent);
+        _inst.componentData = _compData;
+
+        _inst.sprite_index = _compData.spriteIndex;
+        var _width = MECH_CELL_SIZE * _compData.width;
+        var _height = MECH_CELL_SIZE * _compData.height;
+        object_set_size(_inst, _width, _height);
 
         return _inst;
     }

@@ -17,7 +17,7 @@ function MechEditorManager() constructor {
         var _compData = _component.component;
 
         if(placementTarget.mechComponentGrid.componentInGrid(_compData)) {
-            placementTarget.mechComponentGrid.removeComponent(_compData);
+            placementTarget.mechComponentGrid.removeEntity(_compData);
         }
     }
 
@@ -26,7 +26,7 @@ function MechEditorManager() constructor {
     /// @param {Id.Instance}   _component
     static endPlacingComponent = function(_mech, _component) {
         var _compData =  component.component;
-        if(placementTarget.mechComponentGrid.componentCanBePlaced(_compData.position.x, _compData.position.y, _compData)) {
+        if(placementTarget.mechComponentGrid.entityCanBePlaced(_compData.position.x, _compData.position.y, _compData)) {
             placementTarget.mechComponentGrid.addComponent(_compData.position.x, _compData.position.y, _compData);
             component = undefined;
             placementTarget = undefined;
