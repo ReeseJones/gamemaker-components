@@ -1,4 +1,7 @@
 /// @description Insert description here
+
+//TODO Temp auto drawing a sprite, but need GUI drawing method
+/*
 // You can write your code in this editor
 if(is_defined(sprite_index) && sprite_index > 0 && is_defined(calculatedSize.width) && is_defined(calculatedSize.height)) {
     var _xx = calculatedSize.position.left;
@@ -9,3 +12,4 @@ if(is_defined(sprite_index) && sprite_index > 0 && is_defined(calculatedSize.wid
     //var _color = image_blend;
     draw_sprite_ext(sprite_index, 0, _xx,  _yy, _widthScale, _heightScale, image_angle, _color, image_alpha);
 }
+*/

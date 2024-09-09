@@ -53,4 +53,6 @@ function ElementProperties() : EventNode() constructor {
     sizeProperties = new ElementSizeDescription();
     calculatedSize = new ElementSizeProperties();
     textDescription = new UiTextDescription();
+    calculateSizeCallback = ui_calculate_element_size;
+    drawElement = ui_element_draw;
 }

@@ -41,7 +41,7 @@ function component_card_create(_mechComponentData) {
     _contentContainer.sizeProperties.width = 1;
     _contentContainer.sizeProperties.height = undefined;
     _contentContainer.visible = false;
-    
+
 
     node_append_child(_statContainer, _typeContainer);
     node_append_child(_statContainer, _dimensionContainer);
@@ -56,7 +56,7 @@ function component_card_create(_mechComponentData) {
     _graphicContainer.sizeProperties.height = 1;
     _graphicContainer.visible = true;
     _graphicContainer.sprite_index = spr_bg_panel_clear_1;
-    
+
     _graphic.sprite_index = _mechComponentData.spriteIndex;
     _graphic.sizeProperties.width = _mechComponentData.width * 16;
     _graphic.sizeProperties.height = _mechComponentData.height * 16;

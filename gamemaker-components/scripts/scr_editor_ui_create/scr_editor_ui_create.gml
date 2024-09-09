@@ -50,8 +50,7 @@ function editor_ui_create() {
     _editorMainPanelContent.sprite_index = spr_bg_slate;
     _editorMainPanelContent.visible = true;
     _editorMainPanelContent.image_blend = c_white;
-    
-    
+
     _createMechEditorButton.textDescription.text = "Start Mech Editor";
     _createMechEditorButton.textDescription.halign = fa_center;
     _createMechEditorButton.textDescription.valign = fa_middle;
@@ -61,19 +60,20 @@ function editor_ui_create() {
     _createMechEditorButton.image_blend = c_white;
     _createMechEditorButton.sizeProperties.padding = new Box(8, 8, 8, 8);
     event_add_listener(_createMechEditorButton, EVENT_CLICKED, function(_event) {
-        
+        show_debug_message("clicked mech edit button");
     });
 
     _editorLevelView.sizeProperties.height = 1
     _editorLevelView.sizeProperties.collides = false;
 
     _editorSubpanel.sizeProperties.width = 0.25;
-    _editorSubpanel.sizeProperties.height = 1;
+    _editorSubpanel.sizeProperties.height = 0.8;
+    _editorSubpanel.enableStencil = true;
     _editorSubpanel.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
     _editorSubpanel.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;
     _editorSubpanel.sprite_index = spr_bg_panel_clear_1;
     _editorSubpanel.visible = true;
-    _editorSubpanel.image_blend = c_white;
+    _editorSubpanel.image_blend = c_blue;
 
     _editorSubpanelTitle.sizeProperties.padding = new Box(8, 8, 8, 8);
     _editorSubpanelTitle.textDescription.text = "Editor Subpanel";

@@ -25,3 +25,8 @@ gameStateMode = GAME_STATE_MODE.PLAY;
 
 prevMouseElement = undefined;
 
+gpu_set_stencil_pass(stencilop_replace);
+gpu_set_stencil_fail(stencilop_keep);
+
+guiSurface = -1;
+

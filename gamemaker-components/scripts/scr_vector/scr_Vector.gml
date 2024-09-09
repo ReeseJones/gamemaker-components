@@ -62,6 +62,10 @@ function vector2d_scale(_v, _s) {
     }
 }
 
+function vector2d_length(_v) {
+    return sqrt(_v.x*_v.x + _v.y*_v.y);
+}
+
 function vector2d_inplace_scale(_v, _s) {
     _v.x *= _s;
     _v.y *= _s;

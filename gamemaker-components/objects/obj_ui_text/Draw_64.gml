@@ -1,3 +1,4 @@
+/*
 event_inherited();
 
 if(is_defined(textDescription.text) && is_defined(calculatedSize.width) && is_defined(calculatedSize.height)) {
@@ -37,3 +38,4 @@ if(is_defined(textDescription.text) && is_defined(calculatedSize.width) && is_de
     _yy = round(_yy);
     draw_text_ext(_xx, _yy, textDescription.text, textDescription.lineSpacing, calculatedSize.innerWidth);
 }
+*/

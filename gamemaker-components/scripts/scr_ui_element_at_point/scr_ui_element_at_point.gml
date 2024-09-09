@@ -4,7 +4,7 @@
 ///@returns {Struct.ElementProperties}
 function ui_element_at_point(_x, _y, _node) {
     var _nodePos = _node.calculatedSize.position;
-    var _childCount = array_length(_node.childNodes)
+    var _childCount = array_length(_node.childNodes);
     var _pointInNode = point_in_rectangle(_x, _y, _nodePos.left, _nodePos.top, _nodePos.right, _nodePos.bottom);
 
     if(!_pointInNode) {
