@@ -4,6 +4,7 @@ function ui_layout_flex_horizontal(_node) {
     var _childCount = array_length(_node.childNodes);
     var _currentDistributableWidth = _parentSize.innerWidth;
     var _dynamicElements = [];
+    _node.calculatedSize.contentSize = 0;
 
     _parentSize.needsRecalculated = false;
 
@@ -17,6 +18,7 @@ function ui_layout_flex_horizontal(_node) {
             array_push(_dynamicElements, _child);
         } else {
             _currentDistributableWidth -= _child.calculatedSize.width;
+            _node.calculatedSize.contentSize += _child.calculatedSize.width;
         }
     }
 
@@ -28,6 +30,7 @@ function ui_layout_flex_horizontal(_node) {
         var _childCalcSize = _child.calculatedSize;
         _childCalcSize.width = _distributedWidth;
         ui_calculate_inner_width(_childCalcSize);
+        _node.calculatedSize.contentSize += _distributedWidth;
     }
 
     var _currentPos = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;

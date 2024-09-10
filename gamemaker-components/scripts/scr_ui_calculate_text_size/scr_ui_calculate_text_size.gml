@@ -31,6 +31,9 @@ function ui_calculate_text_size(_node, _parentNode) {
     // Text controlled Height
     var _textDesc = _node.textDescription;
     if( is_string(_textDesc.text) ) {
+        draw_set_font(_textDesc.font);
+        draw_set_halign(_textDesc.halign);
+        draw_set_valign(_textDesc.valign);
         _nodeSrc.height = string_height_ext(_textDesc.text, _textDesc.lineSpacing, _childSize.innerWidth) + _edgeHeight;
     }
 

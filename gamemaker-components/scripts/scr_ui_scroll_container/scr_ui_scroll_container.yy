@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ui_scroll_container",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_scroll_container",
+  "parent":{
+    "name":"ScrollContainer",
+    "path":"folders/UI/ScrollContainer.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

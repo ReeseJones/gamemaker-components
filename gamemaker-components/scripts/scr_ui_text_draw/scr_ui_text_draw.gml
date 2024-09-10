@@ -51,7 +51,8 @@ function ui_text_draw(_XOrigin, _YOrigin, _node) {
                 draw_set_font(textDescription.font);
                 draw_set_halign(textDescription.halign);
                 draw_set_valign(textDescription.valign);
-            
+                
+
                 _xx = round(_xx);
                 _yy = round(_yy);
                 draw_text_ext(_xx, _yy, textDescription.text, textDescription.lineSpacing, calculatedSize.innerWidth);

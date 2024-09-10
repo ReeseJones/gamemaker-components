@@ -20,7 +20,7 @@ function component_card_create(_mechComponentData) {
     _root.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
     _root.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;
     _root.sizeProperties.width = 1;
-    _root.sizeProperties.height = 150;
+    _root.sizeProperties.height = 200;
     _root.sprite_index = spr_bg_slate;
     _root.visible = true;
 

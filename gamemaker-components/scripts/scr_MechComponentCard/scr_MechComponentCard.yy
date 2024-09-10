@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_MechComponentCard",
   "parent":{
-    "name":"Element",
-    "path":"folders/UI/Element.yy",
+    "name":"EditorUI",
+    "path":"folders/UI/EditorUI.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

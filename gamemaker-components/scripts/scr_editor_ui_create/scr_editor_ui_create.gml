@@ -10,6 +10,7 @@ function editor_ui_create() {
     var _editorLevelView = instance_create_depth(0, 0, _layerId, obj_ui_element);
     var _editorSubpanel = instance_create_depth(0, 0, _layerId, obj_ui_element);
     var _editorSubpanelTitle = instance_create_depth(0, 0, _layerId, obj_ui_text);
+    var _editorSubpanelContent = instance_create_depth(0, 0, _layerId, obj_ui_scroll_container);
     var _createMechEditorButton = instance_create_depth(0, 0, _layerId, obj_ui_text);
 
     _editorUiRoot.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
@@ -59,9 +60,12 @@ function editor_ui_create() {
     _createMechEditorButton.visible = true;
     _createMechEditorButton.image_blend = c_white;
     _createMechEditorButton.sizeProperties.padding = new Box(8, 8, 8, 8);
-    event_add_listener(_createMechEditorButton, EVENT_CLICKED, function(_event) {
+    event_add_listener(_createMechEditorButton, EVENT_CLICKED, method({editorSubpanel: _editorSubpanelContent}, function(_event) {
         show_debug_message("clicked mech edit button");
-    });
+        static toggle = false;
+        toggle = !toggle;
+        ui_scroll_container_set_layout(editorSubpanel, toggle ? ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL : ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL);
+    }));
 
     _editorLevelView.sizeProperties.height = 1
     _editorLevelView.sizeProperties.collides = false;
@@ -83,6 +87,13 @@ function editor_ui_create() {
     _editorSubpanelTitle.sprite_index = spr_bg_panel_metal;
     _editorSubpanelTitle.visible = true;
     _editorSubpanelTitle.image_blend = c_white;
+    
+    //_editorSubpanelContent.sizeProperties.padding = new Box(16, 16, 16, 16);
+    //_editorSubpanelContent.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
+    _editorSubpanelContent.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;
+    _editorSubpanelContent.sprite_index = spr_bg_slate;
+    _editorSubpanelContent.visible = true;
+    _editorSubpanelContent.image_blend = c_white;
 
     node_append_child(_editorUiRoot, _editorMenubar);
     node_append_child(_editorUiRoot, _editorContentArea);
@@ -97,6 +108,7 @@ function editor_ui_create() {
     node_append_child(_editorMainPanelContent, _createMechEditorButton);
     
     node_append_child(_editorSubpanel, _editorSubpanelTitle);
+    node_append_child(_editorSubpanel, _editorSubpanelContent);
     
     var _componentDataProvider = global.gameContainer.get("mechComponentProvider");
     var _componentsMap = _componentDataProvider.componentMap;
@@ -108,7 +120,7 @@ function editor_ui_create() {
         var _compData = _components[i];
     
         var _newButton = component_card_create(_compData);
-        node_append_child(_editorSubpanel, _newButton);
+        node_append_child(_editorSubpanelContent.contentContainer, _newButton);
     }
 
     /*
