@@ -4,7 +4,7 @@ function ui_layout_flex_horizontal(_node) {
     var _childCount = array_length(_node.childNodes);
     var _currentDistributableWidth = _parentSize.innerWidth;
     var _dynamicElements = [];
-    _node.calculatedSize.contentSize = 0;
+    _parentSize.contentSize = 0;
 
     _parentSize.needsRecalculated = false;
 
@@ -18,7 +18,7 @@ function ui_layout_flex_horizontal(_node) {
             array_push(_dynamicElements, _child);
         } else {
             _currentDistributableWidth -= _child.calculatedSize.width;
-            _node.calculatedSize.contentSize += _child.calculatedSize.width;
+            _parentSize.contentSize += _child.calculatedSize.width;
         }
     }
 
@@ -30,18 +30,34 @@ function ui_layout_flex_horizontal(_node) {
         var _childCalcSize = _child.calculatedSize;
         _childCalcSize.width = _distributedWidth;
         ui_calculate_inner_width(_childCalcSize);
-        _node.calculatedSize.contentSize += _distributedWidth;
+        _parentSize.contentSize += _distributedWidth;
     }
 
+    var _justification = _node.sizeProperties.justifyContent;
+    var _sizeDifference = _parentSize.innerWidth - _parentSize.contentSize;
     var _currentPos = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
+    switch(_justification) {
+        case LAYOUT_JUSTIFICATION.CENTER:
+            _currentPos += _sizeDifference / 2;
+        break;
+        case LAYOUT_JUSTIFICATION.END:
+            _currentPos += _sizeDifference;
+        break;
+        case LAYOUT_JUSTIFICATION.START:
+        default:
+        //Leave as is
+        break;
+    }
+    
     var _top = _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top;
+    var _alignment = _node.sizeProperties.alignment;
+    
     _childCount = array_length(_node.childNodes);
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
         var _childSize = _child.calculatedSize;
         var _positionDest = _child.calculatedSize.position;
-        // update vertical/size position
-        var _alignment = _node.sizeProperties.alignment;
+        
         switch(_alignment) {
             case LAYOUT_ALIGNMENT.CENTER:
                 var _centerOffset = (_parentSize.innerHeight - _childSize.height) / 2;

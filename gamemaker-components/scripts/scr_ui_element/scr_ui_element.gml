@@ -12,6 +12,12 @@ enum LAYOUT_ALIGNMENT {
     END,
 }
 
+enum LAYOUT_JUSTIFICATION {
+    START,
+    END,
+    CENTER
+}
+
 ///@param {real} _width A width equal to or less than 1.0 is interpreted as a percentage of the parents size
 // A number greater than or equal to 2 is interpreted as a gui pixel size
 // Undefined means something else calculates size
@@ -28,6 +34,7 @@ function ElementSizeDescription(_width = undefined, _height = undefined, _border
     position = _position;
     layout = ELEMENT_LAYOUT_TYPE.MANUAL;
     alignment = LAYOUT_ALIGNMENT.CENTER;
+    justifyContent = LAYOUT_JUSTIFICATION.START;
     collides = true;
 }
 

@@ -10,11 +10,12 @@ function ui_scroll_container_set_layout(_scrollContainer, _elementLayoutType) {
         scrollbarContainer.sizeProperties.width = _isVert ? scrollbarSize : 1;
         scrollbarContainer.sizeProperties.height = _isVert ? 1 : scrollbarSize;
         scrollbarContainer.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.MANUAL;
-        
+
         scrollbarHandle.sizeProperties.width = _isVert ? scrollbarSize : scrollbarSize  * 2;
         scrollbarHandle.sizeProperties.height = _isVert ? scrollbarSize  * 2 : scrollbarSize;
         scrollbarHandle.sizeProperties.position.left = 0;
         scrollbarHandle.sizeProperties.position.top = 0;
+        scrollbarHandle.image_angle = _isVert ? 0 : 90;
 
         contentContainer.sizeProperties.width = _isVert ? undefined : 1;
         contentContainer.sizeProperties.height = _isVert ? 1 : undefined;

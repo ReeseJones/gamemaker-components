@@ -72,7 +72,6 @@ function editor_ui_create() {
 
     _editorSubpanel.sizeProperties.width = 0.25;
     _editorSubpanel.sizeProperties.height = 0.8;
-    _editorSubpanel.enableStencil = true;
     _editorSubpanel.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
     _editorSubpanel.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;
     _editorSubpanel.sprite_index = spr_bg_panel_clear_1;
@@ -118,7 +117,7 @@ function editor_ui_create() {
     
     for(var i = 0; i < _compCount; i += 1) {
         var _compData = _components[i];
-    
+
         var _newButton = component_card_create(_compData);
         node_append_child(_editorSubpanelContent.contentContainer, _newButton);
     }

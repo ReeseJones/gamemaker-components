@@ -33,6 +33,7 @@ function component_card_create(_mechComponentData) {
     _title.textDescription.font = font_ui_large;
     _title.textDescription.halign = fa_center;
     _title.textDescription.valign = fa_middle;
+    show_debug_message($"spawning component card: {_mechComponentData.displayName}");
 
     node_append_child(_contentContainer, _statContainer);
     node_append_child(_contentContainer, _graphicContainer);
@@ -56,12 +57,13 @@ function component_card_create(_mechComponentData) {
     _graphicContainer.sizeProperties.height = 1;
     _graphicContainer.visible = true;
     _graphicContainer.sprite_index = spr_bg_panel_clear_1;
+    _graphicContainer.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL;
+    _graphicContainer.sizeProperties.justifyContent = LAYOUT_JUSTIFICATION.CENTER;
+    _graphicContainer.sizeProperties.alignment = LAYOUT_ALIGNMENT.CENTER;
 
     _graphic.sprite_index = _mechComponentData.spriteIndex;
     _graphic.sizeProperties.width = _mechComponentData.width * 16;
     _graphic.sizeProperties.height = _mechComponentData.height * 16;
-    _graphic.sizeProperties.position.top = 0.5;
-    _graphic.sizeProperties.position.left = 0.5;
     _graphic.visible = true;
 
 
