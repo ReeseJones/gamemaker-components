@@ -1,16 +1,17 @@
 ///@param {Struct.ElementProperties} _node
 function ui_layout_flex_vertical(_node) {
     var _parentSize = _node.calculatedSize;
+    var _childOffset = _parentSize.childOffset;
     var _childCount = array_length(_node.childNodes);
     var _currentDistributableHeight = _parentSize.innerHeight;
     var _dynamicElements = [];
+    _parentSize.contentSize = 0;
 
-    _parentSize.needsRecalculated = false;
+    _parentSize.needsRecalculated = false; 
 
     //TODO: Collect info on children size. Flex layout size will increase to accomodate children? Or save size vs required size?
     for( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];
-
         _child.calculateSizeCallback(_child, _node);
 
         // If elements do not have a defined height they are flexible. (even with padding/border)
@@ -18,6 +19,7 @@ function ui_layout_flex_vertical(_node) {
             array_push(_dynamicElements, _child);
         } else {
             _currentDistributableHeight -= _child.calculatedSize.height;
+            _parentSize.contentSize += _child.calculatedSize.height;
         }
     }
 
@@ -29,11 +31,27 @@ function ui_layout_flex_vertical(_node) {
         var _childCalcSize = _child.calculatedSize;
         _childCalcSize.height = _distributedHeight;
         ui_calculate_inner_height(_childCalcSize);
+        _parentSize.contentSize += _distributedHeight;
     }
 
-    var _top = _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top;
-    var _left = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
-    var _currentPos = _top;
+    var _justification = _node.sizeProperties.justifyContent;
+    var _sizeDifference = _parentSize.innerHeight - _parentSize.contentSize;
+    var _currentPos = _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top + _childOffset.y;
+    switch(_justification) {
+        case LAYOUT_JUSTIFICATION.CENTER:
+            _currentPos += _sizeDifference / 2;
+        break;
+        case LAYOUT_JUSTIFICATION.END:
+            _currentPos += _sizeDifference;
+        break;
+        case LAYOUT_JUSTIFICATION.START:
+        default:
+        //Leave as is
+        break;
+    }
+
+    var _left = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left + _childOffset.x;
+
     _childCount = array_length(_node.childNodes);
     for ( var i = 0; i < _childCount; i += 1 ) {
         var _child = _node.childNodes[i];

@@ -1,15 +1,10 @@
 event_inherited();
 
 isDraggable = false;
-
-sizeProperties = new ElementSizeDescription();
-calculatedSize = new ElementSizeProperties();
-calculateSizeCallback = ui_calculate_element_size;
-drawElement = ui_element_draw;
 enableStencil = true;
 
 // Scroll Content on left/top, scrollbar on side/bottom
-sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL;
+sizeProperties.layout = ELEMENT_LAYOUT_TYPE.MANUAL;
 
 ///Scroll related properties
 scrollbarSize = 32;

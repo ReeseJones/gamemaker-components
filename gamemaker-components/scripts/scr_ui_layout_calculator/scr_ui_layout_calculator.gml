@@ -34,7 +34,7 @@ function ui_calculate_layout(_element) {
         }
 
         _layoutScript(_current);
-        show_debug_message($"Recalculated ${_current} {object_get_name(_current.object_index)} {_current.nodeDepth}");
+        //show_debug_message($"Recalculated ${_current} {object_get_name(_current.object_index)} {_current.nodeDepth}");
     }
 }
 

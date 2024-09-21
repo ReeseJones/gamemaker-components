@@ -127,3 +127,11 @@ function node_foreach_parent(_node, _callback, _includeRoot = false) {
         node_foreach_parent(_node.parentNode, _callback, true);
     }
 }
+
+///@param {Struct.Node} _node
+function node_get_root(_node) {
+    while(is_defined(_node.parentNode)) {
+        _node = _node.parentNode;
+    }
+    return _node;
+}

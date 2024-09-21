@@ -182,6 +182,7 @@
     {"id":{"name":"scr_ui_layout_flex_horizontal","path":"scripts/scr_ui_layout_flex_horizontal/scr_ui_layout_flex_horizontal.yy",},},
     {"id":{"name":"scr_ui_layout_flex_vertical","path":"scripts/scr_ui_layout_flex_vertical/scr_ui_layout_flex_vertical.yy",},},
     {"id":{"name":"scr_ui_layout_manual","path":"scripts/scr_ui_layout_manual/scr_ui_layout_manual.yy",},},
+    {"id":{"name":"scr_ui_recalculate_all","path":"scripts/scr_ui_recalculate_all/scr_ui_recalculate_all.yy",},},
     {"id":{"name":"scr_ui_render_children","path":"scripts/scr_ui_render_children/scr_ui_render_children.yy",},},
     {"id":{"name":"scr_ui_render_root","path":"scripts/scr_ui_render_root/scr_ui_render_root.yy",},},
     {"id":{"name":"scr_ui_scroll_container_set_layout","path":"scripts/scr_ui_scroll_container_set_layout/scr_ui_scroll_container_set_layout.yy",},},

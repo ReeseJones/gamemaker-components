@@ -1,6 +1,7 @@
 ///@param {Struct.ElementProperties} _node
 function ui_layout_flex_horizontal(_node) {
     var _parentSize = _node.calculatedSize;
+    var _childOffset = _parentSize.childOffset;
     var _childCount = array_length(_node.childNodes);
     var _currentDistributableWidth = _parentSize.innerWidth;
     var _dynamicElements = [];
@@ -25,7 +26,7 @@ function ui_layout_flex_horizontal(_node) {
     _currentDistributableWidth = max(0, _currentDistributableWidth);
     _childCount = array_length(_dynamicElements);
     var _distributedWidth = _currentDistributableWidth / _childCount;
-    for( var i = 0; i < _childCount; i += 1 ) {
+    for ( var i = 0; i < _childCount; i += 1 ) {
         var _child = _dynamicElements[i];
         var _childCalcSize = _child.calculatedSize;
         _childCalcSize.width = _distributedWidth;
@@ -35,7 +36,7 @@ function ui_layout_flex_horizontal(_node) {
 
     var _justification = _node.sizeProperties.justifyContent;
     var _sizeDifference = _parentSize.innerWidth - _parentSize.contentSize;
-    var _currentPos = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left;
+    var _currentPos = _parentSize.position.left + _parentSize.border.left + _parentSize.padding.left + _childOffset.x;
     switch(_justification) {
         case LAYOUT_JUSTIFICATION.CENTER:
             _currentPos += _sizeDifference / 2;
@@ -48,8 +49,8 @@ function ui_layout_flex_horizontal(_node) {
         //Leave as is
         break;
     }
-    
-    var _top = _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top;
+
+    var _top = _parentSize.position.top + _parentSize.border.top + _parentSize.padding.top + _childOffset.y;
     var _alignment = _node.sizeProperties.alignment;
     
     _childCount = array_length(_node.childNodes);

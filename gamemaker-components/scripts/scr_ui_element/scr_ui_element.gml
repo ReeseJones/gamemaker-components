@@ -46,6 +46,9 @@ function ElementSizeDescription(_width = undefined, _height = undefined, _border
 ///@param {Struct.Box} _position
 function ElementSizeProperties(_width = undefined, _height = undefined, _border = new Box(), _padding = new Box(), _position = new Box() ) constructor {
     needsRecalculated = true;
+    contentSize = 0;
+    childOffset = new Vec2();
+
     width = _width;
     height = _height;
     innerWidth = _width;
