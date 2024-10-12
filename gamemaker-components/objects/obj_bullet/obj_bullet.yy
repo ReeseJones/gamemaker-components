@@ -1,18 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_keyboard_controller",
+  "%Name":"obj_bullet",
   "eventList":[],
-  "managed":true,
-  "name":"obj_keyboard_controller",
+  "managed":false,
+  "name":"obj_bullet",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Bullets",
+    "path":"folders/Bullets.yy",
   },
-  "parentObjectId":{
-    "name":"obj_controller",
-    "path":"objects/obj_controller/obj_controller.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -30,7 +27,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_mask_circle",
+    "path":"sprites/spr_mask_circle/spr_mask_circle.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

@@ -1,5 +1,9 @@
 #macro COPY_PARAMS var _params=[] for(var __i = 0; __i < argument_count; __i += 1) array_push(_params, argument[__i])
 
+function array_create_empty() {
+    return [];
+}
+
 /// @param {Array<any>}     _source
 /// @param {Array<any>}     _destination
 /// @param {Function}       _callback
@@ -166,4 +170,77 @@ function array_concat_ext(_arrayA, _arrayB, _arrayDest = undefined) {
     }
 
     return _arrayDest;
+}
+
+///@description Find the index of an element via a search on sorted elements
+///@param {array} _array
+///@param {any} _value
+function array_binary_search(_array, _value) {
+    var _start = 0;
+    var _end = array_length(_array) - 1;
+
+    // Iterate while start not meets end
+    while (_start <= _end) {
+
+        // Find the mid index
+        var _mid = floor((_start + _end) / 2);
+
+        // If element is present at 
+        // mid, return the index
+        if (_array[_mid] == _value) return _mid;
+
+        // Else look in left or 
+        // right half accordingly
+        else if (_array[_mid] < _value)
+            _start = _mid + 1;
+        else
+            _end = _mid - 1;
+    }
+
+    return -1;
+}
+
+///@desc Insert an element into a already sorted array.
+///@param {array} _array
+///@param {any} _value
+function array_insert_sorted(_array, _value) {
+    var _start = 0;
+    var _end = array_length(_array);
+
+    while (_start < _end) {
+        var _mid = floor((_start + _end) / 2);
+
+        if (_array[_mid] < _value) {
+            _start = _mid + 1;
+        } else { 
+            _end = _mid;
+        }
+    }
+
+    array_insert(_array, _start, _value);
+
+    return -1;
+}
+
+///@desc Insert an element into a already sorted array.
+///@param {array} _array
+///@param {any} _value
+function array_insert_sorted_unique(_array, _value) {
+    var _start = 0;
+    var _end = array_length(_array);
+
+    while (_start < _end) {
+        var _mid = floor((_start + _end) / 2);
+
+        if(_array[_mid] == _value) {
+            return false;
+        } else if (_array[_mid] < _value) {
+            _start = _mid + 1;
+        } else { 
+            _end = _mid;
+        }
+    }
+
+    array_insert(_array, _start, _value);
+    return true;
 }

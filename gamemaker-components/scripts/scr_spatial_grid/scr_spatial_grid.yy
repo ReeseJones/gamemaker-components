@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_spatial_grid",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_spatial_grid",
+  "parent":{
+    "name":"DataStructures",
+    "path":"folders/DataStructures.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

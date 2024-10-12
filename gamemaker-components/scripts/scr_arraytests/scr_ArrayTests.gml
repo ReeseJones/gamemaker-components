@@ -113,6 +113,13 @@ return [
 
             _testArguments("3", "2", "1", 1, 2, 3);
         });
+        it("array_insert_sorted_unique should preserve arrays sortedness", function() {
+            var _someArray = [1, 2, 3, 5];
+            var _expectedArray = [1, 2, 3, 4, 5];
+            array_insert_sorted_unique(_someArray, 4);
+
+            matcher_arrays_equal(_someArray, _expectedArray);
+        });
     })
 ];
 }

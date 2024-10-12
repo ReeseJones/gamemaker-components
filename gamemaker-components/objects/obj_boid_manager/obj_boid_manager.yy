@@ -1,15 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"obj_controller",
+  "%Name":"obj_boid_manager",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
-  "managed":false,
-  "name":"obj_controller",
+  "managed":true,
+  "name":"obj_boid_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Boids",
+    "path":"folders/Game/Boids.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -29,7 +31,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_boid_triangle",
+    "path":"sprites/spr_boid_triangle/spr_boid_triangle.yy",
+  },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

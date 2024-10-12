@@ -6,6 +6,16 @@ function vector2d_create_normal(_x, _y) {
     };
 }
 
+function vector2d_copy_to(_vecSrc, _vecDest) {
+    _vecDest.x = _vecSrc.x;
+    _vecDest.y = _vecSrc.y;
+}
+
+function vector2d_zero(_vecDest) {
+    _vecDest.x = 0;
+    _vecDest.y = 0;
+}
+
 function vector2d_normalize(_v) {
     var _length = sqrt(_v.x*_v.x + _v.y*_v.y);
     return {
@@ -64,6 +74,27 @@ function vector2d_scale(_v, _s) {
 
 function vector2d_length(_v) {
     return sqrt(_v.x*_v.x + _v.y*_v.y);
+}
+
+function vector2d_length_set(_v, _l) {
+    var _length = sqrt(_v.x*_v.x + _v.y*_v.y);
+    _v.x /= _length;
+    _v.y /= _length;
+ 
+    _v.x *= _l;
+    _v.y *= _l;
+    return _v;
+}
+
+function vector2d_length_limit(_v, _l) {
+    var _length = sqrt(_v.x*_v.x + _v.y*_v.y);
+    if(_length > _l) {
+        _v.x /= _length;
+        _v.y /= _length;
+        _v.x *= _l;
+        _v.y *= _l;
+    }
+    return _v;
 }
 
 function vector2d_inplace_scale(_v, _s) {

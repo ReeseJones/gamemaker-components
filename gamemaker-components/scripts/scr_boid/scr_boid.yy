@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_boid",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_boid",
+  "parent":{
+    "name":"Boids",
+    "path":"folders/Game/Boids.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -6,6 +6,10 @@
 #macro SERVICE_SCOPE_TRANSIENT "transient"
 #macro SERVICE_SCOPE_TREE "tree"
 
+function anything_constructor(_constructor, _p0 = undefined, _p1 = undefined, _p2 = undefined, _p3 = undefined, _p4 = undefined, _p5 = undefined, _p6 = undefined, _p7 = undefined, _p8 = undefined) {
+    return new _constructor(_p0, _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8);
+}
+
 ///@func  service(name, value)
 ///@param {String} _type
 ///@param {String} _name
@@ -121,13 +125,12 @@ function ServiceContainer() constructor {
                 var _deps = array_map(_serviceRegistration.dependencies, function(_depName) {
                     return getHelper(_depName);
                 });
-                
-                _serviceInstance = {};
-                var _serviceConstructorStatic = static_get(_serviceRegistration.value);
-                //Docs say this doesnt return anything
-                // Feather disable once GM2022
-                static_set(_serviceInstance, _serviceConstructorStatic);
-                method_call(method(_serviceInstance, _serviceRegistration.value), _deps);
+
+                if(array_length(_deps) > 8) {
+                    throw "This hacky constructor method only works with 8 dependencies or less.";
+                }
+                array_insert(_deps, 0, _serviceRegistration.value);
+                _serviceInstance = method_call(anything_constructor, _deps);
             } break;
             
             case SERVICE_TYPE_FACTORY: {
