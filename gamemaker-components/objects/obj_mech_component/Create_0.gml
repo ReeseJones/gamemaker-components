@@ -2,7 +2,7 @@ event_inherited();
 
 controlMode = MECH_CONTROL_MODE.EDIT;
 component = new MechComponent("doodad01");
-componentData = new MechComponentData(0, 1, 1, 0, []);
+componentData = new MechComponentData("doodad01", 1, 1, spr_mech_doodad04, []);
 placement = new MechComponentPlacementOptions();
 mechParent = undefined;
 

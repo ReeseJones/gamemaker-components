@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_display_util",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_display_util",
+  "parent":{
+    "name":"Display",
+    "path":"folders/Display.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

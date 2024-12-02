@@ -11,8 +11,9 @@ global.vectors = {
 
 ///@param {Struct.BoidSteeringProperties} _steeringProperties
 ///@param {Struct.Boid} _boid
+///@param {Array<real} _otherBoidsIds
 ///@param {Array<Struct.Boid>} _otherBoids
-function boid_calculate_velocity(_steeringProperties, _boid, _otherBoids) {
+function boid_calculate_velocity(_steeringProperties, _boid, _otherBoidsIds, _otherBoids) {
     var _spererationVec = global.vectors.seperationVec;
     var _alignmentVec = global.vectors.alignmentVec;
     var _cohesionVec = global.vectors.cohesionVec;
@@ -26,12 +27,12 @@ function boid_calculate_velocity(_steeringProperties, _boid, _otherBoids) {
     vector2d_zero(_alignmentVec);
     vector2d_zero(_averagePosition);
 
-    var _otherBoidCount = array_length(_otherBoids);
+    var _otherBoidCount = array_length(_otherBoidsIds);
     var _boidsInSeperationRange = 0;
     var _boidsInAlignmentRange = 0;
     var _boidsInCohesionRange = 0;
     for(var i = 0; i < _otherBoidCount; i += 1) {
-        var _otherBoid = _otherBoids[i];
+        var _otherBoid = _otherBoids[_otherBoidsIds[i]];
         _boidDirectionDiff.x = _boid.position.x - _otherBoid.position.x;
         _boidDirectionDiff.y = _boid.position.y - _otherBoid.position.y;
 

@@ -27,7 +27,7 @@ function editor_ui_create() {
     _editorContentArea.sizeProperties.alignment = LAYOUT_ALIGNMENT.CENTER;
     _editorContentArea.sizeProperties.collides = false;
 
-    _editorMainPanel.sizeProperties.width = 0.25;
+    _editorMainPanel.sizeProperties.width = 360;
     _editorMainPanel.sizeProperties.padding = new Box(16, 16, 16, 16);
     _editorMainPanel.sizeProperties.height = 0.8;
     _editorMainPanel.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
@@ -35,7 +35,7 @@ function editor_ui_create() {
     _editorMainPanel.sprite_index = spr_bg_panel_clear_1;
     _editorMainPanel.visible = true;
     _editorMainPanel.image_blend = c_white;
-    
+
     _editorMainPanelTitle.sizeProperties.padding = new Box(16, 16, 16, 16);
     _editorMainPanelTitle.textDescription.text = "Editor Main Panel but I have a lot of text you see. Good thing it wraps.";
     _editorMainPanelTitle.textDescription.halign = fa_left;
@@ -70,8 +70,8 @@ function editor_ui_create() {
     _editorLevelView.sizeProperties.height = 1
     _editorLevelView.sizeProperties.collides = false;
 
-    _editorSubpanel.sizeProperties.width = 0.25;
-    _editorSubpanel.sizeProperties.height = 0.8;
+    _editorSubpanel.sizeProperties.width = 450;
+    _editorSubpanel.sizeProperties.height = 0.6;
     _editorSubpanel.sizeProperties.layout = ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
     _editorSubpanel.sizeProperties.alignment = LAYOUT_ALIGNMENT.STRETCH;
     _editorSubpanel.sprite_index = spr_bg_panel_clear_1;

@@ -4,15 +4,16 @@ function Boid() constructor {
     velocity = new Vec2();
 }
 
+struct_save_static(nameof(BoidSteeringProperties), BoidSteeringProperties);
 function BoidSteeringProperties() constructor {
     maxSpeed = 2;
     maxForce = 0.03;
-    viewRadius = 100;
-    seperationDistance = 50;
-    alignmentDistance = 80;
+    viewRadius = 75;
+    seperationDistance = 55;
+    alignmentDistance = 70;
 
     weightForward = 1;
-    weightCohesion = 1.5;
-    weightSeparation = 1;
-    weightAlignment = 1;
+    weightCohesion = 0.4;
+    weightSeparation = 1.4;
+    weightAlignment = 0.7;
 }

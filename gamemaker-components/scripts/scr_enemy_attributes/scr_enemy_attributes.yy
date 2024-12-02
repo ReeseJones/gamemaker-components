@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_enemy_attributes",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_enemy_attributes",
+  "parent":{
+    "name":"Enemies",
+    "path":"folders/Game/Enemies.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

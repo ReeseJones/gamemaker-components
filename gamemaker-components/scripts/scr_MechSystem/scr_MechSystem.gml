@@ -13,8 +13,8 @@ function MechSystem(_gridWidth, _gridHeight, _components = []) constructor {
     componentPositionMap = {};
     
     
-    static dispose = function () {
-        mechComponentGrid.dispose();
+    static disposeFunc = function () {
+        mechComponentGrid.disposeFunc();
         delete mechComponentGrid;
         delete componentMap;
         delete componentPositionMap

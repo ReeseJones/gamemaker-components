@@ -1,2 +1,2 @@
-/// @description Insert description here
-// You can write your code in this editor
+state1.triggerWhenReady = false;
+state2.triggerWhenReady = false;

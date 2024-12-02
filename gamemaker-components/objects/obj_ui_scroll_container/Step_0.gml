@@ -25,26 +25,30 @@ if( isHandleGrabbed ) {
     var _innerSize = _isVert ? _contentSize.innerHeight : _contentSize.innerWidth;
     var _hiddenHeight = max(_contentSize.contentSize - _innerSize, 0);
     var _scrollbarMovingSpaceRatio = _hiddenHeight / _contentSize.contentSize;
+    var _scrollBarMovingSpace = _scrollbarMovingSpaceRatio * _innerSize;
     var _scrollBarSize = 1 - _scrollbarMovingSpaceRatio;
+    
+    if(_scrollBarMovingSpace < 1) {
+        return;
+    }
+
     scrollbarHandle.sizeProperties.width = _isVert ? scrollbarSize : _scrollBarSize * _contentSize.width;
     scrollbarHandle.sizeProperties.height = _isVert ? _scrollBarSize * _contentSize.height : scrollbarSize;
-    
+
     var _mouseGUIPosX = device_mouse_x_to_gui(0) - dragOffset.x;
     var _mouseGUIPosY = device_mouse_y_to_gui(0) - dragOffset.y;
     var _scrollPosX = _mouseGUIPosX - scrollbarContainer.calculatedSize.position.left;
     var _scrollPosY = _mouseGUIPosY - scrollbarContainer.calculatedSize.position.top;
 
-
     _scrollPosX = clamp(_scrollPosX, 0, scrollbarContainer.calculatedSize.width - scrollbarHandle.calculatedSize.width);
     _scrollPosY = clamp(_scrollPosY, 0, scrollbarContainer.calculatedSize.height - scrollbarHandle.calculatedSize.height);
     scrollbarHandle.sizeProperties.position.left = _scrollPosX;
     scrollbarHandle.sizeProperties.position.top = _scrollPosY;
-    
+
     // This prevents it being a number from 0 to 1
     scrollbarHandle.sizeProperties.position.left = scrollbarHandle.sizeProperties.position.left <= 1 ? 0 : scrollbarHandle.sizeProperties.position.left;
     scrollbarHandle.sizeProperties.position.top = scrollbarHandle.sizeProperties.position.top <= 1 ? 0 : scrollbarHandle.sizeProperties.position.top;
-    
-    var _scrollBarMovingSpace = _scrollbarMovingSpaceRatio * _innerSize;
+
     var _scrollPosPercent = _isVert ? _scrollPosY / _scrollBarMovingSpace : _scrollPosX / _scrollBarMovingSpace;
     var _scrollOffset = _hiddenHeight *_scrollPosPercent;
     //show_debug_message($"Scroll Percent: {_scrollPosPercent} ScrollOffset: {_scrollOffset}");

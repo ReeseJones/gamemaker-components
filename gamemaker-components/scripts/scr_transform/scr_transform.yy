@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_transform",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_transform",
+  "parent":{
+    "name":"Math",
+    "path":"folders/Math.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

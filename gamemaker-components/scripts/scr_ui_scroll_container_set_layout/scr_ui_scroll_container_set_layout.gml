@@ -4,7 +4,7 @@ function ui_scroll_container_set_layout(_scrollContainer, _elementLayoutType) {
     with(_scrollContainer) {
         
         ui_mark_tree_recaculate(_scrollContainer);
-        
+
         var _isVert = _elementLayoutType == ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;
         // Scroll container makes room for scrollbar // vertical scroll container means lay out content left to right horizontaly
         sizeProperties.layout =  _isVert ? ELEMENT_LAYOUT_TYPE.FLEX_HORIZONTAL : ELEMENT_LAYOUT_TYPE.FLEX_VERTICAL;

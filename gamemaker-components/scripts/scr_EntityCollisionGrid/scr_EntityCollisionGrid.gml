@@ -77,7 +77,7 @@ function EntityCollisionGrid(_width, _height) constructor {
         return _collisionVal < 1;
     }
     
-    static dispose = function() {
+    static disposeFunc = function() {
         ds_grid_destroy(collisionGrid);
         collisionGrid = undefined;
         ds_grid_destroy(idGrid);

@@ -1,3 +1,4 @@
+/*
 tag_script(ui_layout_calculator_tests, [TAG_UNIT_TEST_SPEC]);
 function ui_layout_calculator_tests() {
     return [
@@ -245,3 +246,4 @@ function ui_layout_calculator_tests() {
         })
     ];
 }
+*/

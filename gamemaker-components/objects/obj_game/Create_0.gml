@@ -1,10 +1,13 @@
 event_inherited();
 
+window_set_fullscreen(false);
+
 object_set_size(id, room_width, room_height);
 x = room_width / 2;
 y = room_height / 2;
 depth = 100;
 isDraggable = false;
+drawDebugOverlay = false;
 
 serviceContainer = global.gameContainer;
 
@@ -19,7 +22,8 @@ run_all_specs();
 // Moves from bootstrap screen to first room
 alarm[0] = 10;
 
-window_set_fullscreen(false);
+//window_set_fullscreen(false);
+
 
 gameStateMode = GAME_STATE_MODE.PLAY;
 
@@ -29,4 +33,5 @@ gpu_set_stencil_pass(stencilop_replace);
 gpu_set_stencil_fail(stencilop_keep);
 
 guiSurface = -1;
-
+particleTypeManager = new ParticleTypeManager();
+particleTypeGui = new ParticleTypeEditorGui(particleTypeManager);

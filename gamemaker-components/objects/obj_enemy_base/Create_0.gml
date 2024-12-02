@@ -1,2 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
+enemyAttributes = new EnemyAttributes();
+currentTarget = new Vec2();
+bloodParticles = part_system_create();

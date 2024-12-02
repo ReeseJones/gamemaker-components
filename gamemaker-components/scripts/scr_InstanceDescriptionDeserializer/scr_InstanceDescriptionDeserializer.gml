@@ -55,6 +55,7 @@ function instance_description_apply(_assetGroup, _assetGraph, _oldId, _newId) {
 
 ///@param {Struct.AssetGroup} _assetGroup
 ///@param {Struct.ValueDescription} _valueDescription
+///@return {Any}
 function instance_description_resolve_value(_assetGroup, _valueDescription) {
     if(!is_struct(_valueDescription)
         || !struct_exists(_valueDescription, "type")

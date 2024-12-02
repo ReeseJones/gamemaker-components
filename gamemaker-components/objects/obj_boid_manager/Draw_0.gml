@@ -1,6 +1,8 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+draw_grid(0, 0, spatialGrid.cellWidth, spatialGrid.cellHeight, spatialGrid.horizontalCells, spatialGrid.verticalCells);
+
 for( var i = 0; i < boidCount; i += 1) {
     var _boid = boidList[i];
     var _angle = point_direction(0, 0, _boid.velocity.x, _boid.velocity.y);
