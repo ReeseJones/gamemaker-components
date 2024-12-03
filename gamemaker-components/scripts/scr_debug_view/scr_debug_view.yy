@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_debug_view",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_debug_view",
+  "parent":{
+    "name":"Utility",
+    "path":"folders/Utility.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

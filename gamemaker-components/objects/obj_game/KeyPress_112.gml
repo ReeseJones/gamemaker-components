@@ -1,2 +1,2 @@
 drawDebugOverlay = !drawDebugOverlay;
-show_debug_overlay(drawDebugOverlay, false, 2);
+show_debug_overlay(drawDebugOverlay, true, 2);

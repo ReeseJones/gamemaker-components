@@ -34,4 +34,6 @@ gpu_set_stencil_fail(stencilop_keep);
 
 guiSurface = -1;
 particleTypeManager = new ParticleTypeManager();
-particleTypeGui = new ParticleTypeEditorGui(particleTypeManager);
+debugViewManager = new DebugViewManager();
+debugViewManager.manageView("Particle Manager", new ParticleManagerEditorGui(debugViewManager, particleTypeManager), false);
+

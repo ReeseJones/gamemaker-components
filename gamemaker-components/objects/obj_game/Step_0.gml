@@ -1,3 +1,4 @@
+debugViewManager.update();
 mouseManager.update();
 
 if(gameStateMode == GAME_STATE_MODE.EDITOR && is_defined(editorUi)) {
