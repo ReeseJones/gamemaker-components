@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_entity_pool",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_entity_pool",
+  "parent":{
+    "name":"DataStructures",
+    "path":"folders/DataStructures.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

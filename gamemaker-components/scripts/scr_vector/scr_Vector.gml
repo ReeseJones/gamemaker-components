@@ -72,6 +72,13 @@ function vector2d_scale(_v, _s) {
     }
 }
 
+function vector2d_scale2(_v, _v1) {
+    return {
+        x: _v.x * _v1.x,
+        y: _v.y * _v1.y
+    }
+}
+
 function vector2d_length(_v) {
     return sqrt(_v.x*_v.x + _v.y*_v.y);
 }
@@ -100,6 +107,12 @@ function vector2d_length_limit(_v, _l) {
 function vector2d_inplace_scale(_v, _s) {
     _v.x *= _s;
     _v.y *= _s;
+    return _v;
+}
+
+function vector2d_inplace_scale2(_v, _v1) {
+    _v.x *= _v1.x;
+    _v.y *= _v1.y;
     return _v;
 }
 

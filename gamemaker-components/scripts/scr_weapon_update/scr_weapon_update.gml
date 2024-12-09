@@ -5,7 +5,7 @@
 ///@desc weapon_update_state updates weapon state.
 ///@param {Struct.WeaponState} _state
 ///@param {Struct.WeaponAttributes} _attributes
-///@param {Struct.WeaponStyle}
+///@param {Struct.WeaponStyle} _style
 function weapon_update_state(_state, _attributes, _style) {
     var _frameDeltaTime = game_get_speed(gamespeed_microseconds) / MICROSECONDS_PER_SECOND;
     _state.triggerCooldown -= _frameDeltaTime;

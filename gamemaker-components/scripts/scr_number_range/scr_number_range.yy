@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_NumberInRange",
+  "%Name":"scr_number_range",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_NumberInRange",
+  "name":"scr_number_range",
   "parent":{
     "name":"Math",
     "path":"folders/Math.yy",

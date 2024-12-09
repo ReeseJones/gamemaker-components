@@ -8,7 +8,7 @@ function WeaponState(_trgCldn = 0, _shtCldwn = 0) : Disposable() constructor {
     projectileSpawnLocation = new Vec2();
     projectileSpawnAngle = 0;
     particleSystem = part_system_create();
-    part_system_depth(particleSystem, -100);
+    part_system_layer(particleSystem, layer_get_id("floorLow"));
     
     static disposeFunc = function() {
         part_system_destroy(particleSystem);

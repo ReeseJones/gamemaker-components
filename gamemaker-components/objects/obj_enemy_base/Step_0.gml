@@ -1,1 +1,6 @@
-enemy_update(id, enemyAttributes)
+
+if(!alive) {
+    return;
+}
+
+

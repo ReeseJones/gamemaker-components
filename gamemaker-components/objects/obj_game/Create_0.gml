@@ -1,6 +1,5 @@
 event_inherited();
 
-window_set_fullscreen(false);
 
 object_set_size(id, room_width, room_height);
 x = room_width / 2;
@@ -10,6 +9,8 @@ isDraggable = false;
 drawDebugOverlay = false;
 
 serviceContainer = global.gameContainer;
+
+vectorPool2d = new EntityPool(function() { return new Vec2()});
 
 inputDeviceManager = serviceContainer.get("inputDeviceManager");
 mouseManager = serviceContainer.get("mouseManager");
@@ -21,8 +22,6 @@ run_all_specs();
 
 // Moves from bootstrap screen to first room
 alarm[0] = 10;
-
-//window_set_fullscreen(false);
 
 
 gameStateMode = GAME_STATE_MODE.PLAY;
@@ -36,4 +35,4 @@ guiSurface = -1;
 particleTypeManager = new ParticleTypeManager();
 debugViewManager = new DebugViewManager();
 debugViewManager.manageView("Particle Manager", new ParticleManagerEditorGui(debugViewManager, particleTypeManager), false);
-
+enemyManager = new EnemyManager();
