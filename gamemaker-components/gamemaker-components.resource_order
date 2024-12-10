@@ -127,6 +127,7 @@
     {"name":"scr_particle_shapes","order":2,"path":"scripts/scr_particle_shapes/scr_particle_shapes.yy",},
     {"name":"scr_particle_type_manager","order":4,"path":"scripts/scr_particle_type_manager/scr_particle_type_manager.yy",},
     {"name":"scr_particle_type","order":1,"path":"scripts/scr_particle_type/scr_particle_type.yy",},
+    {"name":"scr_player_movement","order":1,"path":"scripts/scr_player_movement/scr_player_movement.yy",},
     {"name":"scr_PlayerInventoryData","order":15,"path":"scripts/scr_PlayerInventoryData/scr_PlayerInventoryData.yy",},
     {"name":"scr_ref","order":23,"path":"scripts/scr_ref/scr_ref.yy",},
     {"name":"scr_ReliableSequenceMath","order":3,"path":"scripts/scr_ReliableSequenceMath/scr_ReliableSequenceMath.yy",},

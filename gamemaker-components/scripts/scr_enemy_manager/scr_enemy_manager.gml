@@ -1,6 +1,7 @@
 function EnemyManager() constructor {
     enemies = [];
     enemyTarget = new Vec2();
+    tempVec = new Vec2();
     
     static step = function() {
         
@@ -21,19 +22,23 @@ function EnemyManager() constructor {
                 continue;
             }
             
-            var _vec = obj_game.vectorPool2d.getEntity();
-            
-            _vec.x = _target.x;
-            _vec.y = _target.y;
-            
-            vector2d_inplace_subtract(_vec, _enemy);
-            vector2d_inplace_normalize(_vec);
-            vector2d_inplace_scale(_vec, _attributes.movementSpeed * _dt);
-            
-            vector2d_inplace_add(_enemy, _vec);
-            _enemy.image_angle = point_direction(0, 0, _vec.x, _vec.y);
-            
-            obj_game.vectorPool2d.doneWithEntity(_vec);
+            tempVec.x = _target.x;
+            tempVec.y = _target.y;
+            tempVec.x -= _enemy.x;
+            tempVec.y -= _enemy.y;
+            var _length = sqrt(tempVec.x * tempVec.x + tempVec.y * tempVec.y);
+            tempVec.x /= _length;
+            tempVec.y /= _length;
+            var _stepLength = _attributes.movementSpeed * _dt;
+            tempVec.x *= _stepLength;
+            tempVec.y *= _stepLength;
+            //_enemy.x += tempVec.x;
+            //_enemy.y += tempVec.y;
+            _enemy.hspeed = tempVec.x;
+            _enemy.vspeed = tempVec.y;
+            _enemy.image_angle = point_direction(0, 0, tempVec.x, tempVec.y);
+
+
         }
     }
     
@@ -41,6 +46,7 @@ function EnemyManager() constructor {
         var _layerid = layer_get_id("Instances");
         var _newEnemy = instance_create_layer(random(room_width), random(room_height), _layerid, obj_enemy_base);
         array_push(enemies, _newEnemy);
+        show_debug_message($"Enemies: {array_length(enemies)}");
     }
 
 }

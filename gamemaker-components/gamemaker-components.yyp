@@ -166,6 +166,7 @@
     {"id":{"name":"scr_particle_type_editor_gui","path":"scripts/scr_particle_type_editor_gui/scr_particle_type_editor_gui.yy",},},
     {"id":{"name":"scr_particle_type_manager","path":"scripts/scr_particle_type_manager/scr_particle_type_manager.yy",},},
     {"id":{"name":"scr_particle_type","path":"scripts/scr_particle_type/scr_particle_type.yy",},},
+    {"id":{"name":"scr_player_movement","path":"scripts/scr_player_movement/scr_player_movement.yy",},},
     {"id":{"name":"scr_PlayerInventoryData","path":"scripts/scr_PlayerInventoryData/scr_PlayerInventoryData.yy",},},
     {"id":{"name":"scr_PlayerSaveData","path":"scripts/scr_PlayerSaveData/scr_PlayerSaveData.yy",},},
     {"id":{"name":"scr_ref","path":"scripts/scr_ref/scr_ref.yy",},},

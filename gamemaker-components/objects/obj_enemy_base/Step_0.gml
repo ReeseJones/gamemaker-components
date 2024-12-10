@@ -1,6 +1,0 @@
-
-if(!alive) {
-    return;
-}
-
-
