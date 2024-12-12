@@ -29,10 +29,11 @@ function weapon_update_state(_state, _attributes, _style) {
             part_system_position(_weaponPartSys, _pos.x, _pos.y);
             part_system_angle(_weaponPartSys, _state.projectileSpawnAngle);
             part_particles_burst(_weaponPartSys, 0, 0, prt_sys_muzzle_flash);
+            var _layerId = obj_game.layerManager.getLayer("instances");
 
             //Create projectiles for this shot
             for(var i = 0; i < _attributes.projectilesPerShot; i += 1) {
-                var _projectile = instance_create_layer(_pos.x, _pos.y, layer_get_id("instances"), _attributes.projectile);
+                var _projectile = instance_create_layer(_pos.x, _pos.y, _layerId, _attributes.projectile);
                 _projectile.direction = _state.projectileSpawnAngle;
                 _projectile.direction += random_range(-_attributes.projectileSpreadArc, _attributes.projectileSpreadArc);
                 _projectile.image_angle = _projectile.direction;

@@ -1,3 +1,4 @@
+///@desc This creates rather large ararays, so use sparingly.
 ///@param {Id.Layer} _layerId
 ///@param {Function} _method
 function layer_foreach_instance(_layerId, _method) {

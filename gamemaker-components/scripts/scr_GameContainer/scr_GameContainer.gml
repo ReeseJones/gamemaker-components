@@ -31,5 +31,6 @@ _gc.service("inputDeviceManager", InputDeviceManager);
 _gc.service("inputManager", InputManager, ["inputDeviceManager"]);
 _gc.service("debugLogger", LoggingService);
 _gc.service("mouseManager", MouseManager, ["debugLogger"]);
+_gc.service("particleTypeManager", ParticleTypeManager);
 
 _gc.service("realTimeProvider", TimeProvider);

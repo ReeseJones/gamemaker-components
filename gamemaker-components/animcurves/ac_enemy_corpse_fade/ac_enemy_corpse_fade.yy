@@ -1,0 +1,19 @@
+{
+  "$GMAnimCurve":"",
+  "%Name":"ac_enemy_corpse_fade",
+  "channels":[
+    {"$GMAnimCurveChannel":"","%Name":"Alpha","colour":4290799884,"name":"Alpha","points":[
+        {"th0":-0.25,"th1":0.0,"tv0":0.0,"tv1":0.0,"x":0.0,"y":1.0,},
+        {"th0":-0.0046227872,"th1":0.14726052,"tv0":0.0,"tv1":0.0,"x":0.80541563,"y":0.7825137,},
+        {"th0":-0.19397694,"th1":0.25,"tv0":0.0,"tv1":0.0,"x":1.0,"y":0.0,},
+      ],"resourceType":"GMAnimCurveChannel","resourceVersion":"2.0","visible":true,},
+  ],
+  "function":1,
+  "name":"ac_enemy_corpse_fade",
+  "parent":{
+    "name":"Enemies",
+    "path":"folders/Game/Enemies.yy",
+  },
+  "resourceType":"GMAnimCurve",
+  "resourceVersion":"2.0",
+}

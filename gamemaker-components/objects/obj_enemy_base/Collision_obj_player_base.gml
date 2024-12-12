@@ -1,8 +1,3 @@
-//Attempts to add stability to gittery enemies.
-if(collisionCount >= maxCollisionResponses) {
-    return;
-}
-
 // Self away from enemy;
 //A -> B means subtract B - A
 var _otherEnemey = other.id;
@@ -24,5 +19,3 @@ x += tempVec.x;
 y += tempVec.y;
 x -= hspeed / maxCollisionResponses;
 y -= vspeed / maxCollisionResponses;
-
-collisionCount += 1;

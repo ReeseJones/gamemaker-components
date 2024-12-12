@@ -7,9 +7,9 @@ function EnemyManager() constructor {
         
         var _dt = game_get_speed(gamespeed_microseconds) / MICROSECONDS_PER_SECOND;
         
-        if(instance_exists(obj_weapon)) {
-            enemyTarget.x = obj_weapon.x;
-            enemyTarget.y = obj_weapon.y;
+        if(instance_exists(obj_player_base)) {
+            enemyTarget.x = obj_player_base.x;
+            enemyTarget.y = obj_player_base.y;
         }
         
         for(var i = 0, _len = array_length(enemies); i < _len; i += 1) {
@@ -43,7 +43,7 @@ function EnemyManager() constructor {
     }
     
     static createEnemies = function() {
-        var _layerid = layer_get_id("Instances");
+        var _layerid = obj_game.layerManager.getLayer("instances");
         var _newEnemy = instance_create_layer(random(room_width), random(room_height), _layerid, obj_enemy_base);
         array_push(enemies, _newEnemy);
         show_debug_message($"Enemies: {array_length(enemies)}");

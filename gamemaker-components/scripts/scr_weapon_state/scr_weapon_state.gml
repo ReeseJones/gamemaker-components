@@ -7,8 +7,7 @@ function WeaponState(_trgCldn = 0, _shtCldwn = 0) : Disposable() constructor {
     triggerWhenReady = false;
     projectileSpawnLocation = new Vec2();
     projectileSpawnAngle = 0;
-    particleSystem = part_system_create();
-    part_system_layer(particleSystem, layer_get_id("floorLow"));
+    particleSystem = part_system_create_layer(obj_game.layerManager.getLayer("floorLow"), true);
     
     static disposeFunc = function() {
         part_system_destroy(particleSystem);

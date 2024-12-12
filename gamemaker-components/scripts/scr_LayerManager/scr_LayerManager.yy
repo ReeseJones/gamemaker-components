@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_LayerManager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_LayerManager",
+  "parent":{
+    "name":"Layers",
+    "path":"folders/Layers.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
