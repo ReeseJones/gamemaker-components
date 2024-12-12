@@ -27,18 +27,19 @@ function EnemyManager() constructor {
             tempVec.x -= _enemy.x;
             tempVec.y -= _enemy.y;
             var _length = sqrt(tempVec.x * tempVec.x + tempVec.y * tempVec.y);
-            tempVec.x /= _length;
-            tempVec.y /= _length;
-            var _stepLength = _attributes.movementSpeed * _dt;
-            tempVec.x *= _stepLength;
-            tempVec.y *= _stepLength;
-            //_enemy.x += tempVec.x;
-            //_enemy.y += tempVec.y;
-            _enemy.hspeed = tempVec.x;
-            _enemy.vspeed = tempVec.y;
-            _enemy.image_angle = point_direction(0, 0, tempVec.x, tempVec.y);
-
-
+            
+            if(_length > 0) {
+                tempVec.x /= _length;
+                tempVec.y /= _length;
+                var _stepLength = _attributes.movementSpeed * _dt;
+                tempVec.x *= _stepLength;
+                tempVec.y *= _stepLength;
+                //_enemy.x += tempVec.x;
+                //_enemy.y += tempVec.y;
+                _enemy.hspeed = tempVec.x;
+                _enemy.vspeed = tempVec.y;
+                _enemy.image_angle = point_direction(0, 0, tempVec.x, tempVec.y);
+            }
         }
     }
     

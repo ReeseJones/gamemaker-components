@@ -6,4 +6,6 @@ image_blend = c_yellow;
 speed = 12;
 alarm[0] = 120;
 collisionCount = 0;
+maxCollisions = 3;
 projectileDamage = 1;
+prevCollider = undefined;

@@ -20,8 +20,8 @@
     {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Game","folderPath":"folders/Game.yy","name":"Game","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Boids","folderPath":"folders/Game/Boids.yy","name":"Boids","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"Enemies","folderPath":"folders/Game/Enemies.yy","name":"Enemies","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Damage","folderPath":"folders/Game/Damage.yy","name":"Damage","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Enemies","folderPath":"folders/Game/Enemies.yy","name":"Enemies","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Player","folderPath":"folders/Game/Player.yy","name":"Player","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Weapon","folderPath":"folders/Game/Weapon.yy","name":"Weapon","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Input","folderPath":"folders/Input.yy","name":"Input","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -51,7 +51,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.1100.0.686",
+    "IDEVersion":"2024.1100.0.713",
   },
   "name":"gamemaker-components",
   "resources":[
@@ -238,6 +238,8 @@
     {"id":{"name":"scr_weapon_state","path":"scripts/scr_weapon_state/scr_weapon_state.yy",},},
     {"id":{"name":"scr_weapon_style","path":"scripts/scr_weapon_style/scr_weapon_style.yy",},},
     {"id":{"name":"scr_weapon_update","path":"scripts/scr_weapon_update/scr_weapon_update.yy",},},
+    {"id":{"name":"snd_blood_01","path":"sounds/snd_blood_01/snd_blood_01.yy",},},
+    {"id":{"name":"snd_blood_02","path":"sounds/snd_blood_02/snd_blood_02.yy",},},
     {"id":{"name":"snd_weapon_shoot_1","path":"sounds/snd_weapon_shoot_1/snd_weapon_shoot_1.yy",},},
     {"id":{"name":"spr_alien_bug","path":"sprites/spr_alien_bug/spr_alien_bug.yy",},},
     {"id":{"name":"spr_asphault","path":"sprites/spr_asphault/spr_asphault.yy",},},

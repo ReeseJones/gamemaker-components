@@ -11,3 +11,4 @@ if(!animcurve_exists(fadeOutCurve)) {
 }
 
 fadeOutCurveChannel = animcurve_get_channel(fadeOutCurve, "Alpha");
+audio_play_sound(choose(snd_blood_01, snd_blood_02), 1, false, 1, undefined, random_range(0.8, 1.2));

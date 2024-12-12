@@ -1,8 +1,11 @@
-
-if( collisionCount < 1) {
+if(other.id != prevCollider) {
+    prevCollider = other.id;
+    collisionCount += 1;
     enemy_apply_damage(other.id, projectileDamage);
-    instance_destroy();
+    
+    if(collisionCount >= maxCollisions) {
+        instance_destroy();
+    }
 }
 
 
-collisionCount += 1;
