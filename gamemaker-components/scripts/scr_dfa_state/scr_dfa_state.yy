@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_dfa_state",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_dfa_state",
+  "parent":{
+    "name":"Regex",
+    "path":"folders/Utility/Regex.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

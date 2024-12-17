@@ -11,7 +11,7 @@ function StructStaticData(_static, _constructor) constructor {
         if(struct_exists(_current, "__ssn")) {
             array_push(staticChain, string(_current.__ssn));
         } else {
-            show_debug_message("Parent of {_static.__ssn} does not have __ssn");
+            //show_debug_message($"Parent of {_static.__ssn} does not have __ssn");
             break;
         }
         _current = static_get(_current);

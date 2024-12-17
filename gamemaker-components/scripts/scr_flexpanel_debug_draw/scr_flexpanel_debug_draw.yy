@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_flexpanel_debug_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_flexpanel_debug_draw",
+  "parent":{
+    "name":"Flexpanel",
+    "path":"folders/Flexpanel.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

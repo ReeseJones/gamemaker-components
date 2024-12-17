@@ -24,7 +24,7 @@ function weapon_update_state(_state, _attributes, _style) {
             _state.currentShotCount -= 1;
             _state.shotCooldown = _attributes.shotCooldown;
             var _pos = _state.projectileSpawnLocation;
-            audio_play_sound(snd_weapon_shoot_1, 1, false, 0.8, undefined, random_range(0.7, 1.1));
+            audio_play_sound(snd_weapon_shoot_1, 1, false, random_range(0.6, 0.9), undefined, random_range(0.7, 1.1));
             var _weaponPartSys = _state.particleSystem;
             part_system_position(_weaponPartSys, _pos.x, _pos.y);
             part_system_angle(_weaponPartSys, _state.projectileSpawnAngle);

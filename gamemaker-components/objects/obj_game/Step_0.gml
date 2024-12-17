@@ -2,7 +2,9 @@ debugViewManager.update();
 mouseManager.update();
 enemyManager.step();
 
-if(gameStateMode == GAME_STATE_MODE.EDITOR && is_defined(editorUi)) {
+flexpanel_calculate_layout(root, window_get_width(), window_get_height(), flexpanel_direction.LTR);
+
+if(is_defined(editorUi)) {
     var _root = editorUi.root;
     ui_calculate_layout(_root);
 
