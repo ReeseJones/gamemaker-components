@@ -1,1 +1,8 @@
-./builds
+builds/**
+builds/gamemaker-components/imgui.ini
+sprites/Nature ShapeLib by RM2022.svg
+sprites/Sci_Fi ShapeLib by RM2022.svg
+builds/gamemaker-components/data.win
+builds/gamemaker-components.zip
+builds/gamemaker-components/gamemaker-components.exe
+builds/gamemaker-components/options.ini
