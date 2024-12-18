@@ -34,17 +34,24 @@ particleManagerView = undefined;
 // Moves from bootstrap screen to first room
 alarm[0] = 10;
 
-root = flexpanel_create_node({
-    name: "obj_game",
+
+root = new UIElement({
+    name: "root",
+    direction: "ltr",
+    position: "relative",
     width: "100%",
     height: "100%",
-    padding: 32,
-    data: id,
-    flex: 1,
     flexDirection: "column",
+    flexGrow: 1,
+    flexShrink: 1
 });
+
+editorUi = make_test_ui()
+
+root.append(editorUi);
 
 prevMouseElement = undefined;
 gpu_set_stencil_pass(stencilop_replace);
 gpu_set_stencil_fail(stencilop_keep);
 guiSurface = -1;
+debugDrawRelative = true;

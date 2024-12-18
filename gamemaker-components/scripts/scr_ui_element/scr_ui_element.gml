@@ -67,18 +67,53 @@ function ElementProperties() : EventNode() constructor {
     drawElement = ui_element_draw;
 }
 
+function UiElementAbsolutePositions() constructor {
+    left = 0;
+    right = 0;
+    bottom = 0;
+    right = 0;
+}
 
+///@param {Struct} _flexpanelStyle
+function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
+    
+    if(is_undefined(_flexpanelStyle)) {
+        _flexpanelStyle = {
+            name: "UIElement",
+            direction: "ltr",
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            flexDirection: "column",
+            flexGrow: 1,
+            flexShrink: 1
+        };
+    }
+    _flexpanelStyle.data = self;
 
-function UIElement() : EventNode() constructor {
-    flexNode = flexpanel_create_node({
-        data: self,
-        flex: 1,
-        flexDirection: flexpanel_flex_direction.column,
-    });
+    flexNode = flexpanel_create_node(_flexpanelStyle);
+
     isDraggable = false;
     isClickable = false;
     mouseIsOver = false;
+    interceptPointerEvents = true;
     nodeDepth = 0;
+    
+    left = 0;
+    top = 0;
+    right = 0;
+    bottom = 0;
+    
+    static draw = function() {
+        if(struct_exists(self, "spriteIndex")) {
+            var _col = c_white;
+            var _alpha = 1;
+            if(mouseIsOver) {
+                _col = c_red;
+            }
+            draw_sprite_stretched_ext(self[$ "spriteIndex"], 0, left, top, right - left, bottom - top, _col, _alpha);
+        }
+    }
     
     ///@param {Struct.UIElement} _uiElement
     ///@param {real} _position
@@ -108,6 +143,7 @@ function UIElement() : EventNode() constructor {
         return flexpanel_node_get_data(flexNode);
     }
     
+    ///@desc Disconnects this node from its parent if it has one.
     static remove = function() {
         var _parent = flexpanel_node_get_parent(flexNode);
         
@@ -117,6 +153,23 @@ function UIElement() : EventNode() constructor {
         }
     }
     
+    static removeAllChildren = function() {
+        var _childrenCount = flexpanel_node_get_num_children(flexNode);
+        var _tempChildren = [];
+        for(var i = 0; i < _childrenCount; i += 1) {
+            var _node = flexpanel_node_get_child(flexNode, i);
+            var _uiElement = flexpanel_node_get_data(_node);
+            array_push(_tempChildren, _uiElement);
+        }
+        flexpanel_node_remove_all_children(flexNode);
+        
+        for(var i = 0; i < _childrenCount; i += 1) {
+            var _child = _tempChildren[i];
+            ui_element_update_node_depth(_child);
+        }
+    }
+    
+    ///@desc Finds the root of this node.
     ///@return {Struct.UIElement}
     static getRoot = function() {
         var _currentElement = self;
@@ -130,10 +183,158 @@ function UIElement() : EventNode() constructor {
         return flexpanel_node_get_num_children(flexNode) > 0;
     }
     
+    ///@desc returns true if it has a parent. A root node will appear not connected.
     static isConnected = function() {
         return flexpanel_node_get_parent(flexNode) != undefined;
     }
     
+    ///@param {real} _width
+    ///@param {any} _unit flexpanel_unit
+    static width = function(_width, _unit) {
+        flexpanel_node_style_set_width(flexNode, _width, _unit);
+        return self;
+    }
+    
+    ///@param {real} _width
+    ///@param {any} _unit flexpanel_unit
+    static minWidth = function(_width, _unit) {
+        flexpanel_node_style_set_min_width(flexNode, _width, _unit);
+        return self;
+    }
+    
+    ///@param {real} _width
+    ///@param {any} _unit flexpanel_unit
+    static maxwidth = function(_width, _unit) {
+        flexpanel_node_style_set_max_width(flexNode, _width, _unit);
+        return self;
+    }
+    
+    ///@param {real} _width
+    ///@param {any} _unit flexpanel_unit
+    static height = function(_width, _unit) {
+        flexpanel_node_style_set_height(flexNode, _width, _unit);
+        return self;
+    }
+    
+    ///@param {real} _width
+    ///@param {any} _unit flexpanel_unit
+    static minHeight = function(_width, _unit) {
+        flexpanel_node_style_set_min_height(flexNode, _width, _unit);
+        return self;
+    }
+    
+    ///@param {real} _width
+    ///@param {any} _unit flexpanel_unit
+    static maxHeight = function(_width, _unit) {
+        flexpanel_node_style_set_max_height(flexNode, _width, _unit);
+        return self;
+    }
+    
+    ///@param {real} _ratio // ratio of width to height
+    static aspectRatio = function(_ratio) {
+        flexpanel_node_style_set_aspect_ratio(flexNode, _ratio);
+        return self;
+    }
+    
+    ///@param {any} _edge
+    ///@param {real} _value
+    ///@param {any} _unit flexpanel_unit
+    static position = function(_edge, _value, _unit ) {
+        flexpanel_node_style_set_position(flexNode, _edge, _value, _unit);
+        return self;
+    }
+    
+    ///@param {any} _edge
+    ///@param {any} _positionType flexpanel_position_type "relative" | "absolute" | "static"
+    static positionType = function(_edge, _positionType ) {
+        flexpanel_node_style_set_position_type(flexNode, _positionType);
+        return self;
+    }
+    
+    ///@param {any} _edge flexpanel_edge
+    ///@param {real} _value
+    static margin = function(_edge, _value) {
+        flexpanel_node_style_set_margin(flexNode, _edge, _value);
+        return self;
+    }
+    
+    ///@param {any} _edge flexpanel_edge
+    ///@param {real} _value
+    static padding = function(_edge, _value) {
+        flexpanel_node_style_set_padding(flexNode, _edge, _value);
+        return self;
+    }
+    
+    ///@param {any} _direction flexpanel_flex_direction
+    static flexDirection = function(_direction) {
+        flexpanel_node_style_set_flex_direction(flexNode, _direction);
+    }
+    
+    ///@param {any} _wrap flexpanel_wrap
+    static flexWrap = function(_wrap) {
+        flexpanel_node_style_set_flex_wrap(flexNode, _wrap);
+        return self;
+    }
+    
+    ///@param {real} _value
+    ///@param {any} _unit flexpanel_unit
+    static flexBasis = function(_value, _unit) {
+        flexpanel_node_style_set_flex_basis(flexNode, _value, _unit);
+        return self;
+    }
+    
+    ///@param {real} _value
+    static flexGrow = function(_value) {
+        flexpanel_node_style_set_flex_grow(flexNode, _value);
+        return self;
+    }
+    
+    ///@param {real} _value
+    static flexShrink = function(_value, _unit) {
+        flexpanel_node_style_set_flex_shrink(flexNode, _value);
+        return self;
+    }
+    
+    ///@param {any} _justify flexpanel_justify
+    static justifyContent = function(_justify) {
+        flexpanel_node_style_set_justify_content(flexNode, _justify);
+        return self;
+    }
+    
+    ///@param {any} _align flexpanel_align
+    static alignItems = function(_align) {
+        flexpanel_node_style_set_align_items(flexNode, _align);
+        return self;
+    }
+    
+    ///@param {any} _align flexpanel_align
+    static alignSelf = function(_align) {
+        flexpanel_node_style_set_align_self(flexNode, _align);
+        return self;
+    }
+    
+    ///@param {any} _justify flexpanel_justify
+    static alignContent = function(_justify) {
+        flexpanel_node_style_set_align_content(flexNode, _justify);
+        return self;
+    }
+    
+    ///@param {any} _display flexpanel_display "flex" | "none"
+    static display = function(_display) {
+        flexpanel_node_style_set_display(flexNode, _display);
+        return self;
+    }
+    
+    ///@param {string} _name
+    static nodeName = function(_name) {
+        flexpanel_node_set_name(flexNode, _name);
+        return self;
+    }
+    
+    static disposeFunc = function() {
+        flexpanel_delete_node(flexNode);
+        flexNode = undefined;
+    }
     
 }
 

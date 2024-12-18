@@ -159,10 +159,11 @@ function MouseManager(_logger) : EventNode()  constructor {
     }
 
     static handleInstanceMouseOver = function(_instanceRef) {
+        /*
         if(!object_is_ancestor(_instanceRef.object_index, obj_clickable)) {
             logger.log(LOG_LEVEL.IMPORTANT, "WARNING: handling MouseOver on non clickable object")
             return;
-        }
+        }*/
 
         ds_priority_add(instanceHoverList, _instanceRef, _instanceRef.nodeDepth);
 
@@ -170,10 +171,10 @@ function MouseManager(_logger) : EventNode()  constructor {
     }
 
     static handleInstanceMouseOut = function(_instanceRef) {
-        if(!object_is_ancestor(_instanceRef.object_index, obj_clickable)) {
+        /*if(!object_is_ancestor(_instanceRef.object_index, obj_clickable)) {
             logger.log(LOG_LEVEL.IMPORTANT, "WARNING: handling MouseOut on non clickable object")
             return;
-        }
+        }*/
 
         ds_priority_delete_value(instanceHoverList, _instanceRef);
 

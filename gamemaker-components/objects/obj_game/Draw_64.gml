@@ -5,4 +5,4 @@ if(surface_exists(guiSurface)) {
     draw_surface(guiSurface, 0, 0);
 }
 
-flexpanel_debug_draw_node(root);
+//flexpanel_debug_draw_node(root.flexNode);

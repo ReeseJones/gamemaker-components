@@ -17,7 +17,7 @@ function ui_element_draw(_XOrigin, _YOrigin, _node) {
 
             if (is_defined(sprite_index) && sprite_index > 0) {
                 var _xx = calculatedSize.position.left - _XOrigin;
-                var _yy = calculatedSize.position.top - _YOrigin ;
+                var _yy = calculatedSize.position.top - _YOrigin;
                 var _sprWidth = sprite_get_width(sprite_index);
                 var _sprHeight = sprite_get_height(sprite_index);
                 
