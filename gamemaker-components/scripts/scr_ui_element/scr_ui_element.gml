@@ -67,12 +67,6 @@ function ElementProperties() : EventNode() constructor {
     drawElement = ui_element_draw;
 }
 
-function UiElementAbsolutePositions() constructor {
-    left = 0;
-    right = 0;
-    bottom = 0;
-    right = 0;
-}
 
 ///@param {Struct} _flexpanelStyle
 function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
@@ -103,34 +97,43 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     top = 0;
     right = 0;
     bottom = 0;
+    width = 0;
+    height = 0;
+    hadOverflow = false;
+    contentWidth = 0;
+    contentHeight = 0;
     
     static draw = function() {
+        //gpu_set_stencil_ref(nodeDepth);
+        var _col = c_white;
+        var _alpha = 1;
+        if(mouseIsOver) {
+            _col = c_red;
+        }
+        
+        var _width = right - left;
+        var _height = bottom - top;
+        
         if(struct_exists(self, "spriteIndex")) {
-            var _col = c_white;
-            var _alpha = 1;
-            if(mouseIsOver) {
-                _col = c_red;
-            }
-            draw_sprite_stretched_ext(self[$ "spriteIndex"], 0, left, top, right - left, bottom - top, _col, _alpha);
+            draw_sprite_stretched_ext(self[$ "spriteIndex"], 0, left, top, _width, _height, _col, _alpha);
+        } else {
+            //gpu_set_colorwriteenable(false, false, false , false);
+            //draw_sprite_stretched_ext(spr_mask_rectangle, 0, left, top, right - left, bottom - top, _col, _alpha);
+            //gpu_set_colorwriteenable(true, true, true , true);
         }
     }
     
-    ///@param {Struct.UIElement} _uiElement
-    ///@param {real} _position
-    static append = function(_uiElement, _position = undefined) {
-        //First remove it from node its in.
-        _uiElement.remove();
-        
-        var _childrenCount = flexpanel_node_get_num_children(flexNode);
-        if(!is_real(_position)) {
-            _position = _childrenCount;
+    static append = function() {
+        var _insertionSpot = flexpanel_node_get_num_children(flexNode);
+        for(var i = 0; i < argument_count; i += 1) {
+            var _el = argument[i];
+            if( is_instanceof(_el, UIElement) ) {
+                _el.remove();
+                flexpanel_node_insert_child(flexNode, _el.flexNode, _insertionSpot);
+                ui_element_update_node_depth(_el);
+                _insertionSpot += 1;
+            }
         }
-        if(_position < 0 || _position > _childrenCount) {
-            throw $"Invalid position specified when appending child node: {_position}. Must be between 0 and {_childrenCount}";
-        }
-        
-        flexpanel_node_insert_child(flexNode, _uiElement.flexNode, _position);
-        ui_element_update_node_depth(_uiElement);
     }
     
     ///@return {Struct.UIElement}
@@ -190,48 +193,71 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
-    static width = function(_width, _unit) {
+    static setWidth = function(_width, _unit) {
         flexpanel_node_style_set_width(flexNode, _width, _unit);
         return self;
     }
     
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
-    static minWidth = function(_width, _unit) {
+    static setMinWidth = function(_width, _unit) {
         flexpanel_node_style_set_min_width(flexNode, _width, _unit);
         return self;
     }
     
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
-    static maxwidth = function(_width, _unit) {
+    static setMaxwidth = function(_width, _unit) {
         flexpanel_node_style_set_max_width(flexNode, _width, _unit);
         return self;
     }
     
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
-    static height = function(_width, _unit) {
+    static setHeight = function(_width, _unit) {
         flexpanel_node_style_set_height(flexNode, _width, _unit);
         return self;
     }
     
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
-    static minHeight = function(_width, _unit) {
+    static setMinHeight = function(_width, _unit) {
         flexpanel_node_style_set_min_height(flexNode, _width, _unit);
         return self;
     }
     
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
-    static maxHeight = function(_width, _unit) {
+    static setMaxHeight = function(_width, _unit) {
         flexpanel_node_style_set_max_height(flexNode, _width, _unit);
         return self;
     }
     
+    ///@desc Opposite of setting flex basis (size along flex axis), this sets the size along the cross axis.
+    ///@param {any} _flexDirection flexpanel_flex_direction
+    ///@param {real} _size
+    ///@param {any} _unit flexpanel_unit
+    static setCrossAxisSize = function(_flexDirection, _size, _unit) {
+        switch(_flexDirection) {
+            case flexpanel_flex_direction.row:
+            case "row":
+            case flexpanel_flex_direction.row_reverse:
+            case "row-reverse":
+                flexpanel_node_style_set_height(flexNode, _size, _unit);
+                break;
+            case flexpanel_flex_direction.column:
+            case "column":
+            case flexpanel_flex_direction.column_reverse:
+            case "column-reverse":
+                flexpanel_node_style_set_width(flexNode, _size, _unit);
+                break;
+            default: throw $"no direction: {_flexDirection}";
+        }
+        return self;
+    }
+    
     ///@param {real} _ratio // ratio of width to height
-    static aspectRatio = function(_ratio) {
+    static setAspectRatio = function(_ratio) {
         flexpanel_node_style_set_aspect_ratio(flexNode, _ratio);
         return self;
     }
@@ -239,94 +265,94 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     ///@param {any} _edge
     ///@param {real} _value
     ///@param {any} _unit flexpanel_unit
-    static position = function(_edge, _value, _unit ) {
+    static setPosition = function(_edge, _value, _unit ) {
         flexpanel_node_style_set_position(flexNode, _edge, _value, _unit);
         return self;
     }
     
-    ///@param {any} _edge
     ///@param {any} _positionType flexpanel_position_type "relative" | "absolute" | "static"
-    static positionType = function(_edge, _positionType ) {
+    static setPositionType = function(_positionType ) {
         flexpanel_node_style_set_position_type(flexNode, _positionType);
         return self;
     }
     
     ///@param {any} _edge flexpanel_edge
     ///@param {real} _value
-    static margin = function(_edge, _value) {
+    static setMargin = function(_edge, _value) {
         flexpanel_node_style_set_margin(flexNode, _edge, _value);
         return self;
     }
     
     ///@param {any} _edge flexpanel_edge
     ///@param {real} _value
-    static padding = function(_edge, _value) {
+    static setPadding = function(_edge, _value) {
         flexpanel_node_style_set_padding(flexNode, _edge, _value);
         return self;
     }
     
     ///@param {any} _direction flexpanel_flex_direction
-    static flexDirection = function(_direction) {
+    static setFlexDirection = function(_direction) {
         flexpanel_node_style_set_flex_direction(flexNode, _direction);
+        return self;
     }
     
     ///@param {any} _wrap flexpanel_wrap
-    static flexWrap = function(_wrap) {
+    static setFlexWrap = function(_wrap) {
         flexpanel_node_style_set_flex_wrap(flexNode, _wrap);
         return self;
     }
     
     ///@param {real} _value
     ///@param {any} _unit flexpanel_unit
-    static flexBasis = function(_value, _unit) {
+    static setFlexBasis = function(_value, _unit) {
         flexpanel_node_style_set_flex_basis(flexNode, _value, _unit);
         return self;
     }
     
     ///@param {real} _value
-    static flexGrow = function(_value) {
+    static setFlexGrow = function(_value) {
         flexpanel_node_style_set_flex_grow(flexNode, _value);
         return self;
     }
     
     ///@param {real} _value
-    static flexShrink = function(_value, _unit) {
+    static setFlexShrink = function(_value, _unit) {
         flexpanel_node_style_set_flex_shrink(flexNode, _value);
         return self;
     }
     
     ///@param {any} _justify flexpanel_justify
-    static justifyContent = function(_justify) {
+    static setJustifyContent = function(_justify) {
         flexpanel_node_style_set_justify_content(flexNode, _justify);
         return self;
     }
     
     ///@param {any} _align flexpanel_align
-    static alignItems = function(_align) {
+    static setAlignItems = function(_align) {
         flexpanel_node_style_set_align_items(flexNode, _align);
         return self;
     }
     
     ///@param {any} _align flexpanel_align
-    static alignSelf = function(_align) {
+    static setAlignSelf = function(_align) {
         flexpanel_node_style_set_align_self(flexNode, _align);
         return self;
     }
     
     ///@param {any} _justify flexpanel_justify
-    static alignContent = function(_justify) {
+    static setAlignContent = function(_justify) {
         flexpanel_node_style_set_align_content(flexNode, _justify);
         return self;
     }
     
     ///@param {any} _display flexpanel_display "flex" | "none"
-    static display = function(_display) {
+    static setDisplay = function(_display) {
         flexpanel_node_style_set_display(flexNode, _display);
         return self;
     }
     
     ///@param {string} _name
-    static nodeName = function(_name) {
+    static setNodeName = function(_name) {
         flexpanel_node_set_name(flexNode, _name);
         return self;
     }
@@ -336,6 +362,17 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         flexNode = undefined;
     }
     
+    static toString = function() {
+        var _name = "<UIElement>";
+        if(!is_undefined(flexNode)) {
+            var _nodeName = flexpanel_node_get_name(flexNode);
+            if(!is_undefined(_nodeName)) {
+                _name = $"<{_nodeName}>";
+            }
+        }
+        return _name;
+    }
+    
 }
 
 ///@description depth first node taversal. calls callback on all nodes
@@ -343,14 +380,14 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
 ///@param {function} _callback
 ///@param {bool} _includeRoot
 function ui_element_foreach(_uiElement, _callback, _includeRoot = false) {
-    if(_includeRoot) {
-        _callback(_uiElement);
-    }
     var _childLength = flexpanel_node_get_num_children(_uiElement.flexNode);
     for(var i = 0; i < _childLength; i += 1) {
         var _child = flexpanel_node_get_child(_uiElement.flexNode, i);
         var _childEl = flexpanel_node_get_data(_child);
         ui_element_foreach(_childEl, _callback, true);
+    }
+    if(_includeRoot) {
+        _callback(_uiElement);
     }
 }
 

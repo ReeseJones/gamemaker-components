@@ -51,7 +51,7 @@ editorUi = make_test_ui()
 root.append(editorUi);
 
 prevMouseElement = undefined;
-gpu_set_stencil_pass(stencilop_replace);
-gpu_set_stencil_fail(stencilop_keep);
+//gpu_set_stencil_pass(stencilop_incr);
+//gpu_set_stencil_fail(stencilop_keep);
 guiSurface = -1;
 debugDrawRelative = true;

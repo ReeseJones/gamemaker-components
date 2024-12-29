@@ -32,10 +32,12 @@ function MouseManager(_logger) : EventNode()  constructor {
     clickTarget = undefined;
 
     globalMouseInputList = [mb_left, mb_right, mb_middle, mb_side1, mb_side2];
+    
+    mousePrevPosition = new Vec2(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
+    mousePosition = new Vec2(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0));
 
-/// @function        dragInitiate()
-/// @description start the logic for detecting a drag action for clickable elements
-/// @param {Constant.MouseButton}    _button
+    /// @description start the logic for detecting a drag action for clickable elements
+    /// @param {Constant.MouseButton}    _button
     static dragInitiate = function(_button) {
         logger.log(LOG_LEVEL.INFORMATIONAL, $"Possibly starting drag on {hoverTarget}");
         state = DRAG_STATE.INITIATE;
@@ -45,8 +47,8 @@ function MouseManager(_logger) : EventNode()  constructor {
         dragStartPosition.y = device_mouse_y_to_gui(0);
     }
 
-/// @function checkForDragStart
-/// @description encapsulates the logic for checking if a drag has started
+
+    /// @description encapsulates the logic for checking if a drag has started
     static checkForDragStart = function() {
         var _mouseX = device_mouse_x_to_gui(0);
         var _mouseY = device_mouse_y_to_gui(0);
@@ -74,9 +76,12 @@ function MouseManager(_logger) : EventNode()  constructor {
         resetDragState();
     }
 
-/// @function update()
-/// @description update runs the logic for detecting drag actions and sending appropriate drag events.
+
+    /// @description update runs the logic for detecting drag actions and sending appropriate drag events.
     static update = function() {
+        mousePosition.x = device_mouse_x_to_gui(0);
+        mousePosition.y = device_mouse_y_to_gui(0);
+        
         switch(state) {
             case DRAG_STATE.INITIATE: {
                 checkForDragStart();
@@ -101,11 +106,15 @@ function MouseManager(_logger) : EventNode()  constructor {
                 handleGlobalReleased(_button);
             }
         }
+        
+        if(mousePosition.x != mousePrevPosition.x || mousePosition.y != mousePrevPosition.y) {
+            event_dispatch(self, new EventData(EVENT_MOUSE_MOVE, mousePosition));
+        }
     }
 
-/// @function handleGlobalPressed
-/// @description handles global mouse input to start clicks and fire events to UI
-/// @param {Constant.MouseButton}    _button
+
+    /// @description handles global mouse input to start clicks and fire events to UI
+    /// @param {Constant.MouseButton}    _button
     static handleGlobalPressed = function(_button) {
         clickTarget = undefined;
         clickButton = _button;
@@ -114,7 +123,7 @@ function MouseManager(_logger) : EventNode()  constructor {
             abortDrag();
         }
 
-        if(!is_undefined(hoverTarget) && instance_exists(hoverTarget)) {
+        if(!is_undefined(hoverTarget) && (instance_exists(hoverTarget) || is_struct(hoverTarget))) {
             clickTarget = hoverTarget;
             
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on press of {hoverTarget}");
@@ -143,7 +152,7 @@ function MouseManager(_logger) : EventNode()  constructor {
 
         event_dispatch(self, new MouseEvent(EVENT_RELEASED_GLOBAL, _button, _button));
 
-        if(!is_undefined(hoverTarget) && instance_exists(hoverTarget)) {
+        if(!is_undefined(hoverTarget) && (instance_exists(hoverTarget) || is_struct(hoverTarget))) {
             var _isClickTarget = clickTarget == hoverTarget;
             var _sameButton = clickButton == _button;
             
@@ -152,18 +161,13 @@ function MouseManager(_logger) : EventNode()  constructor {
             event_dispatch(hoverTarget, new MouseEvent(EVENT_RELEASED, _button, _button));
 
             if(_isClickTarget && _sameButton) {
-                logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on Clicked of target {hoverTarget.id}");
+                logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on Clicked of target {hoverTarget}");
                 event_dispatch(hoverTarget, new MouseEvent(EVENT_CLICKED, _button, _button));
             }
         }
     }
 
     static handleInstanceMouseOver = function(_instanceRef) {
-        /*
-        if(!object_is_ancestor(_instanceRef.object_index, obj_clickable)) {
-            logger.log(LOG_LEVEL.IMPORTANT, "WARNING: handling MouseOver on non clickable object")
-            return;
-        }*/
 
         ds_priority_add(instanceHoverList, _instanceRef, _instanceRef.nodeDepth);
 
@@ -171,10 +175,6 @@ function MouseManager(_logger) : EventNode()  constructor {
     }
 
     static handleInstanceMouseOut = function(_instanceRef) {
-        /*if(!object_is_ancestor(_instanceRef.object_index, obj_clickable)) {
-            logger.log(LOG_LEVEL.IMPORTANT, "WARNING: handling MouseOut on non clickable object")
-            return;
-        }*/
 
         ds_priority_delete_value(instanceHoverList, _instanceRef);
 

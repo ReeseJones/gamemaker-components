@@ -11,3 +11,5 @@
 #macro EVENT_DRAG_END "dragend"
 #macro EVENT_DRAG_ABORT "dragabort"
 #macro EVENT_DRAG_DROP_TARGET_CHANGE "dragdroptarget"
+
+#macro EVENT_MOUSE_MOVE "mousemove"

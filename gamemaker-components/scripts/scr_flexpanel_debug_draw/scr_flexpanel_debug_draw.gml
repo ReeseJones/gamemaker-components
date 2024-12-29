@@ -6,7 +6,6 @@ function flexpanel_debug_draw_node(_node, _depth = 0) {
     var _pos = flexpanel_node_layout_get_position(_node, false)
     var _name = flexpanel_node_get_name(_node);
     
-    
     var _bottom = _pos.top + _pos.height;
     var _right = _pos.left + _pos.width;
     
