@@ -1,4 +1,6 @@
 logger.log(LOG_LEVEL.INFORMATIONAL, $"Started Room: {room_get_name(room)}");
+ui_element_destroy_tree(root);
+root = new UIElement(rootElementStyle);
 
 switch (room) {
     case rm_init: {
@@ -10,7 +12,8 @@ switch (room) {
     } break;
     
     case rm_main_menu: {
-        
+        var _mainMenuButtons = main_menu_create();
+        root.append(_mainMenuButtons);
     } break;
     
     case rm_splash: {

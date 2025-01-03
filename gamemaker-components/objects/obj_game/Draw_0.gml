@@ -8,17 +8,10 @@ if(!surface_exists(guiSurface)) {
 surface_set_target(guiSurface);
 gpu_set_blendmode_ext_sepalpha(bm_src_alpha, bm_inv_src_alpha, bm_one, bm_one);
 draw_set_alpha(1);
-//gpu_set_stencil_enable(true);
-//gpu_set_stencil_ref(0);
-//gpu_set_stencil_func(cmpfunc_equal);
 draw_clear_alpha(c_black, 0);
-//draw_clear_stencil(0);
-
 ui_render_elements(root);
-//gpu_set_stencil_enable(false);
 surface_reset_target();
 gpu_set_blendmode(bm_normal);
-//gpu_set_depth(_origDepth);
 
 
 

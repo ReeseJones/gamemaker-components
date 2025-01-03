@@ -93,9 +93,18 @@ function make_test_ui() {
         name: "ScrollPanel",
         flexGrow: 1
     });
+    
+    var _scrollPanelNested = new UIScrollContainer({
+        name: "ScrollPanelNested",
+        flexGrow: 1
+    });
 
     _editorUiRoot.interceptPointerEvents = false;
     _editorMenubar.spriteIndex = spr_button_blue;
+    
+    _editorMenubar.textDescription.valign = fa_middle;
+    _editorMenubar.textDescription.halign = fa_left;
+    
     _editorContentArea.interceptPointerEvents = false;
     _editorMainPanel.spriteIndex = spr_bg_panel_clear_1;
     _editorMainPanelTitle.spriteIndex = spr_bg_panel_metal;
@@ -113,6 +122,8 @@ function make_test_ui() {
     _editorSubpanel.append(_editorSubpanelTitle, _scrollPanel);
     //_editorSubpanel.append(_scrollPanel);
     
+    var _leeroy = undefined;
+    
     for(var i = 0; i < 4; i += 1) {
         var _tempEl = new UIElement({
             name: $"Filler List Item: {i}",
@@ -124,7 +135,36 @@ function make_test_ui() {
         });
         _tempEl.spriteIndex = spr_bg_panel_metal;
         _scrollPanel.contentContainer.append(_tempEl);
+        _leeroy = _tempEl;
     }
+    
+    for(var i = 0; i < 4; i += 1) {
+        var _tempEl = new UIElement({
+            name: $"Filler List Item: {i}",
+            flexDirection: "row",
+            alignItems: "stretch",
+            height: 500,
+            padding: 8,
+            margin: 0,
+        });
+        _tempEl.spriteIndex = spr_bg_panel_metal;
+        _scrollPanelNested.contentContainer.append(_tempEl);
+    }
+    
+    _leeroy.append(_scrollPanelNested);
+    
+    
+    _editorMenubar.setText("Mech Game", false);
+    _editorMainPanelTitle.setText("Main Panel");
+    _editorMainPanelTitle.textDescription.valign = fa_middle;
+    _editorMainPanelTitle.textDescription.halign = fa_center;
+    _editorMainPanelTitle.textDescription.color = c_black;
+    _editorMainPanelTitle.textDescription.font = font_ui_large;
+    _editorSubpanelTitle.setText("Subpanel");
+    _editorSubpanelTitle.textDescription.valign = fa_middle;
+    _editorSubpanelTitle.textDescription.halign = fa_center;
+    _editorSubpanelTitle.textDescription.color = c_black;
+    _editorSubpanelTitle.textDescription.font = font_ui_large;
     
     return _editorUiRoot;
 }

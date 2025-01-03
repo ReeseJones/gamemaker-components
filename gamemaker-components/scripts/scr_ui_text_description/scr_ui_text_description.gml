@@ -1,6 +1,7 @@
 struct_save_static(nameof(UiTextDescription), UiTextDescription);
-function UiTextDescription() constructor {
-    text = "default";
+///@param {string} _text
+function UiTextDescription(_text = undefined) constructor {
+    text = _text;
     lineSpacing = TEXT_DEFAULT_LINE_HEIGHT;
     isSelectable = true;
     halign = fa_left;

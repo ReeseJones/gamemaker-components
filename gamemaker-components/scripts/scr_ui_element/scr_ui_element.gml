@@ -1,73 +1,3 @@
-enum ELEMENT_LAYOUT_TYPE {
-    NONE = 0,
-    MANUAL = 1,
-    FLEX_HORIZONTAL = 2,
-    FLEX_VERTICAL = 3
-}
-
-enum LAYOUT_ALIGNMENT {
-    CENTER,
-    STRETCH,
-    START,
-    END,
-}
-
-enum LAYOUT_JUSTIFICATION {
-    START,
-    END,
-    CENTER
-}
-
-///@param {real} _width A width equal to or less than 1.0 is interpreted as a percentage of the parents size
-// A number greater than or equal to 2 is interpreted as a gui pixel size
-// Undefined means something else calculates size
-// 0.0 - 1.0 | N >= 2 | undefined
-///@param {real} _height
-///@param {Struct.Box} _border
-///@param {Struct.Box} _padding
-///@param {Struct.Box} _position
-function ElementSizeDescription(_width = undefined, _height = undefined, _border = new Box(), _padding = new Box(), _position = new Box() ) constructor {
-    width = _width;
-    height = _height;
-    border = _border;
-    padding = _padding;
-    position = _position;
-    layout = ELEMENT_LAYOUT_TYPE.MANUAL;
-    alignment = LAYOUT_ALIGNMENT.CENTER;
-    justifyContent = LAYOUT_JUSTIFICATION.START;
-    collides = true;
-}
-
-///@description The caculated sizes derived from the ElementSizeDescription
-///@param {real} _width
-///@param {real} _height
-///@param {Struct.Box} _border
-///@param {Struct.Box} _padding
-///@param {Struct.Box} _position
-function ElementSizeProperties(_width = undefined, _height = undefined, _border = new Box(), _padding = new Box(), _position = new Box() ) constructor {
-    needsRecalculated = true;
-    contentSize = 0;
-    childOffset = new Vec2();
-
-    width = _width;
-    height = _height;
-    innerWidth = _width;
-    innerHeight = _height;
-    border = _border;
-    padding = _padding;
-    position = _position;
-}
-
-///@description DO NOT USE. Just for autocomplete.
-function ElementProperties() : EventNode() constructor {
-    sizeProperties = new ElementSizeDescription();
-    calculatedSize = new ElementSizeProperties();
-    textDescription = new UiTextDescription();
-    calculateSizeCallback = ui_calculate_element_size;
-    drawElement = ui_element_draw;
-}
-
-
 ///@param {Struct} _flexpanelStyle
 function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     
@@ -103,23 +33,59 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     contentWidth = 0;
     contentHeight = 0;
     
+    textDescription = new UiTextDescription();
+    
+    spriteIndex = undefined;
+    
     static draw = function() {
-        //gpu_set_stencil_ref(nodeDepth);
+
         var _col = c_white;
         var _alpha = 1;
         if(mouseIsOver) {
             _col = c_red;
         }
+
+        if(spriteIndex != undefined) {
+            draw_sprite_stretched_ext(spriteIndex, 0, left, top, width, height, _col, _alpha);
+        }
         
-        var _width = right - left;
-        var _height = bottom - top;
-        
-        if(struct_exists(self, "spriteIndex")) {
-            draw_sprite_stretched_ext(self[$ "spriteIndex"], 0, left, top, _width, _height, _col, _alpha);
-        } else {
-            //gpu_set_colorwriteenable(false, false, false , false);
-            //draw_sprite_stretched_ext(spr_mask_rectangle, 0, left, top, right - left, bottom - top, _col, _alpha);
-            //gpu_set_colorwriteenable(true, true, true , true);
+        if(is_string(textDescription.text)) {
+            var _xx = 0;
+            var _yy = 0;
+            switch(textDescription.halign) {
+                case fa_right:
+                    _xx = right;
+                break;
+                case fa_center:
+                    _xx = (left + right) / 2;
+                    break;
+                case fa_left:
+                default:
+                    _xx = left;
+                    break;
+            }
+            switch(textDescription.valign) {
+                case fa_bottom:
+                    _yy = bottom;
+                break;
+                case fa_middle:
+                    _yy = (top + bottom) / 2;
+                    break;
+                case fa_top:
+                default:
+                    _yy = top;
+                    break;
+            }
+            
+            draw_set_color(mouseIsOver ? c_white : textDescription.color);
+            draw_set_alpha(textDescription.alpha);
+            draw_set_font(textDescription.font);
+            draw_set_halign(textDescription.halign);
+            draw_set_valign(textDescription.valign);
+
+            _xx = round(_xx);
+            _yy = round(_yy);
+            draw_text_ext(_xx, _yy, textDescription.text, textDescription.lineSpacing, width);
         }
     }
     
@@ -191,6 +157,21 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         return flexpanel_node_get_parent(flexNode) != undefined;
     }
     
+    static setText = function(_text, _useTextHeight = false) {
+        textDescription.text = _text;
+        
+        if(is_string(textDescription.text) && _useTextHeight) {
+            draw_set_font(textDescription.font);
+            draw_set_halign(textDescription.halign);
+            draw_set_valign(textDescription.valign);
+            var _layout = flexpanel_node_layout_get_position(flexNode, false);
+            var _textHeight = string_height_ext(textDescription.text, textDescription.lineSpacing, _layout.width);
+            setHeight(_textHeight, flexpanel_unit.point);
+        }
+
+        return self;
+    }
+    
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
     static setWidth = function(_width, _unit) {
@@ -212,24 +193,24 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         return self;
     }
     
-    ///@param {real} _width
+    ///@param {real} _height
     ///@param {any} _unit flexpanel_unit
-    static setHeight = function(_width, _unit) {
-        flexpanel_node_style_set_height(flexNode, _width, _unit);
+    static setHeight = function(_height, _unit) {
+        flexpanel_node_style_set_height(flexNode, _height, _unit);
         return self;
     }
     
-    ///@param {real} _width
+    ///@param {real} _height
     ///@param {any} _unit flexpanel_unit
-    static setMinHeight = function(_width, _unit) {
-        flexpanel_node_style_set_min_height(flexNode, _width, _unit);
+    static setMinHeight = function(_height, _unit) {
+        flexpanel_node_style_set_min_height(flexNode, _height, _unit);
         return self;
     }
     
-    ///@param {real} _width
+    ///@param {real} _height
     ///@param {any} _unit flexpanel_unit
-    static setMaxHeight = function(_width, _unit) {
-        flexpanel_node_style_set_max_height(flexNode, _width, _unit);
+    static setMaxHeight = function(_height, _unit) {
+        flexpanel_node_style_set_max_height(flexNode, _height, _unit);
         return self;
     }
     
@@ -420,4 +401,19 @@ function ui_element_update_node_depth(_uiElement) {
         var _childUIElement = flexpanel_node_get_data(_childNode);
         ui_element_update_node_depth(_childUIElement);
     }
+}
+
+//Removes an element from a tree and calls all removed nodes dipsose function
+///@param {Struct.UIElement} _uiElement
+function ui_element_destroy_tree(_uiElement) {
+    
+    if( !is_instanceof(_uiElement, UIElement) ) {
+        throw "ui_element_destroy_tree was passed an object that was not a UIElement";
+    }
+    
+    _uiElement.remove();
+    
+    ui_element_foreach(_uiElement, method(undefined, function(_el) {
+        _el.disposeFunc();
+    }), true);
 }

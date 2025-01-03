@@ -11,10 +11,7 @@
     "name":"UI",
     "path":"folders/UI.yy",
   },
-  "parentObjectId":{
-    "name":"obj_ui_element",
-    "path":"objects/obj_ui_element/obj_ui_element.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

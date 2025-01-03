@@ -1,37 +1,3 @@
-/*
-///Breadth first
-///@param {Struct.UIElement} _root
-function ui_render_elements(_root) {
-    var _queue = ds_queue_create();
-    ds_queue_enqueue(_queue, _root);
-    
-    while( !ds_queue_empty(_queue) ) {
-        var _node = ds_queue_dequeue(_queue);
-        
-        // Queue child nodes for rendering.
-        var _flexNode = _node.flexNode;
-        var _children = flexpanel_node_get_num_children(_flexNode);
-        for(var i = 0; i < _children; i += 1) {
-            var _child = flexpanel_node_get_child(_flexNode, i);
-            var _data = flexpanel_node_get_data(_child);
-            ds_queue_enqueue(_queue, _data);
-        }
-        
-        if(struct_exists(_node, "draw")) {
-            if(is_callable(_node.draw)) {
-                _node.draw();
-            } else {
-                throw "node draw was not callable.";
-            }
-            
-        }
-    }
-    
-    ds_queue_destroy(_queue);
-}
-*/
-
-//depth first
 ///@param {Struct.UIElement} _root
 function ui_render_elements(_root) {
     var _childrenNum = flexpanel_node_get_num_children(_root.flexNode);
@@ -44,21 +10,43 @@ function ui_render_elements(_root) {
         }
     }
     
-    var _scissor = gpu_get_scissor();
+    var _scissor;
+    var _renderChildren = _childrenNum > 0;
     
-    if(_root.hadOverflow) {
-        var _width = _root.right - _root.left;
-        var _height = _root.bottom - _root.top;
-        gpu_set_scissor(_root.left, _root.top, _width, _height);
+    if(_root.hadOverflow && _renderChildren) {
+        _scissor = gpu_get_scissor();
+        var _sTop = _scissor.y;
+        var _sLeft = _scissor.x;
+        var _sBottom = _sTop + _scissor.h;
+        var _sRight = _sLeft + _scissor.w;
+        
+        
+        var _x5 = max(_root.left, _sLeft);
+        var _y5 = max(_root.top, _sTop);
+        var _x6 = min(_root.right, _sRight);
+        var _y6 = min(_root.bottom, _sBottom);
+        
+        var _width = _x6 - _x5;
+        var _height = _y6 - _y5;
+        
+        // Do not render children if they are not in the clipping rectangle at all
+        _renderChildren = rectangle_in_rectangle(_root.left, _root.top, _root.right, _root.bottom, _sLeft, _sTop, _sRight, _sBottom) != 0;
+        
+        if(_renderChildren) {
+            gpu_set_scissor(_x5, _y5, _width, _height);
+        }
     }
     
-    for(var i = 0; i < _childrenNum; i += 1) {
-        var _childNode = flexpanel_node_get_child(_root.flexNode, i);
-        var _childElement = flexpanel_node_get_data(_childNode);
-        ui_render_elements(_childElement);
+    if(_renderChildren) {
+        for(var i = 0; i < _childrenNum; i += 1) {
+          var _childNode = flexpanel_node_get_child(_root.flexNode, i);
+          var _childElement = flexpanel_node_get_data(_childNode);
+          ui_render_elements(_childElement);
+      }
     }
     
-    if(_root.hadOverflow) {
+    
+    if(_root.hadOverflow && _renderChildren) {
         gpu_set_scissor(_scissor);
     }
 }

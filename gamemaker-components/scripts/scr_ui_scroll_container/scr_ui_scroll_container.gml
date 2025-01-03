@@ -94,13 +94,8 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         scrollDir = _scrollDirection;
         var _perpDirection = scroll_get_perpindicular_direction(scrollDir);
         setFlexDirection(_perpDirection);
-        //setCrossAxisSize(_scrollDirection, 100, flexpanel_unit.percent);
-        
-        //contentAnchor.setFlexDirection(scrollDir);
         contentContainer.setFlexDirection(scrollDir);
-
         scrollbarContainer.setFlexDirection(scrollDir);
-        //scrollbarContainer.setFlexBasis(scrollbarSize, flexpanel_unit.point);
         
     }
     

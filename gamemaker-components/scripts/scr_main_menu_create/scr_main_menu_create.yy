@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ui_calculate_inner_size",
+  "%Name":"scr_main_menu_create",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ui_calculate_inner_size",
+  "name":"scr_main_menu_create",
   "parent":{
-    "name":"Layouts",
-    "path":"folders/UI/Layouts.yy",
+    "name":"MainMenu",
+    "path":"folders/MainMenu.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

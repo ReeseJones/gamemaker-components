@@ -35,7 +35,7 @@ particleManagerView = undefined;
 alarm[0] = 10;
 
 
-root = new UIElement({
+rootElementStyle = {
     name: "root",
     direction: "ltr",
     position: "relative",
@@ -43,15 +43,12 @@ root = new UIElement({
     height: "100%",
     flexDirection: "column",
     flexGrow: 1,
-    flexShrink: 1
-});
+    flexShrink: 1,
+    padding: 0,
+    margin: 0,
+};
 
-editorUi = make_test_ui()
-
-root.append(editorUi);
+root = new UIElement(rootElementStyle);
 
 prevMouseElement = undefined;
-//gpu_set_stencil_pass(stencilop_incr);
-//gpu_set_stencil_fail(stencilop_keep);
 guiSurface = -1;
-debugDrawRelative = true;
