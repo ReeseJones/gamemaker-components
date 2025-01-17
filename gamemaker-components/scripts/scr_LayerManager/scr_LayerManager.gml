@@ -24,5 +24,19 @@ function LayerManager(_layerBlueprint, _logger) constructor {
             throw $"_layerBlueprint is not a struct";
         }
         layerBlueprint = _layerBlueprint;
+        
+        updateLayers();
     }
+    
+    static updateLayers = function() {
+        var _layers = struct_get_names(layerBlueprint)
+
+        array_foreach(_layers, method(self, function(_layerName) {
+            var _layer = getLayer(_layerName);
+            var _layerDepth = struct_get(layerBlueprint, _layerName);
+            layer_depth(_layer, _layerDepth);
+        }));
+    }
+    
+    updateLayers();
 }

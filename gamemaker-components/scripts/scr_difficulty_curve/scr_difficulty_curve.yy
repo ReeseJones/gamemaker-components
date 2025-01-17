@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_GameStateMode",
+  "%Name":"scr_difficulty_curve",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_GameStateMode",
+  "name":"scr_difficulty_curve",
   "parent":{
-    "name":"Game",
-    "path":"folders/Game.yy",
+    "name":"Arena",
+    "path":"folders/Game/Arena.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

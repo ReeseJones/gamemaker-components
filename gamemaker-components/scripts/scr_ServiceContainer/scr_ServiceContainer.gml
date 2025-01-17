@@ -2,8 +2,11 @@
 #macro SERVICE_TYPE_SERVICE "service"
 #macro SERVICE_TYPE_FACTORY "factory"
 
+// One exists for all time.
 #macro SERVICE_SCOPE_SINGLETON "singleton"
+// Every time this instance is asked for it will be created
 #macro SERVICE_SCOPE_TRANSIENT "transient"
+// When asked for this instance will be created once per "get" call
 #macro SERVICE_SCOPE_TREE "tree"
 
 function anything_constructor(_constructor, _p0 = undefined, _p1 = undefined, _p2 = undefined, _p3 = undefined, _p4 = undefined, _p5 = undefined, _p6 = undefined, _p7 = undefined, _p8 = undefined) {

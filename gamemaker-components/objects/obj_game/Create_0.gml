@@ -16,15 +16,13 @@ y = room_height / 2;
 depth = 100;
 drawDebugOverlay = false;
 
-
 inputDeviceManager = serviceContainer.get("inputDeviceManager");
 mouseManager = serviceContainer.get("mouseManager");
-saveData = serviceContainer.get("gameSaveData");
-gameStaticData = serviceContainer.get("gameStaticData");
+playerSaveData = new PlayerSaveData();
 layerManager = new LayerManager(_layerBlueprint, logger);
 particleTypeManager = new ParticleTypeManager();
 debugViewManager = new DebugViewManager();
-enemyManager = new EnemyManager();
+
 cleanupManager = new CleanupManager();
 globalParticleManager = new GlobalParticleSystemManager(layerManager);
 particleManagerView = undefined;

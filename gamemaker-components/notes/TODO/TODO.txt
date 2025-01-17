@@ -1,71 +1,15 @@
-Left off: 
-    Made world system kernel and world factory
-    I need to update the entitySystem so that its not responsible for making components and doesnt need the world to do it.
-    or it can use the world but will delegate away some how
+## Gameplay Loop
+    1) Level starts and player sets up there base
+    2) Night falls and begin fighting bugs
+    3) bugs die and drop bug parts which players collect for cash
+    4) at the end of the night collect milk from cows
+    5) During the day upgrade mech, spend money, buy parts.
 
 
-1) Test events in world
-	- Determine new event system file (answer - scr_EventSystem - component-less event system)
-	- Finish Implementation of EventSystem which needs
-		- Finished subscription map helper subclass
-			- Get Event Subscribers
-			- Add Event Subscriber
-			- Test Methods
-		- Use cases
-			- Dispatch event to World
-			- Dispatch event to Entity in world
-			- Listen to events dispatched to world
-			- Listen to events dispatched to entity
-			- event queue queues events to be dispatched next iteration, or many iterations later.
-			
-			example dispatches
-			
-				obj_game.disptach(eventType, world_id, entity_id, data, world_sequence_number?);
-				world.dispatch(eventType, entity_id, data, world_sequence_number?);
-				eventSystem.dispatch(eventType, entity_id, data, world_sequence_number?);
-				
-				//Refernce versions
-				
-				obj_game.disptachRef(eventType, entityRef, data, world_sequence_number?);
-				world.dispatchRef(eventType, entityRef, data, world_sequence_number?);
-				eventSystem.dispatchRef(eventType, entityRef, data, world_sequence_number?);
-			
-					event_type - text string representing the ID of a unique event which may relay specific information about the event.
-					world_id - a real number indicating the ID of a world on which the event should be emitted
-					entity_id - a real number indicating the ID of an entity on which the event should be emitted.
-					worldSequenceNumber - a real number indicating when the event should be dispatched.
-										  defaults to the current world sequence number + 1, ie the next world update. 
-										  numbers less than or equal to tthe current world sequence throw an error. events can be
-										  scheduled for later sequence numbers to be dispatched at a later
-										  time.
-										  
-			example subscribes
-			
-			obj_game.subscribe(listener_world_id, listener_entity_id, method_address, eventType, emitter_world_id, emitter_entity_id);
-			world.subscribe(listener_entity_id, method_address, eventType, emitter_world_id, emitter_entity_id);
-			eventSystem.subscribe(listener_entity_id, method_address, eventType, emitter_world_id, emitter_entity_id);
-			
-			/// reference versions
-			
-			obj_game.subscribeRef(listenerEntityRef, method_address, eventType, emitterRef)
-			world.subscribeRef(listenerEntityRef, method_address, eventType, emitterRef)
-			eventSystem.subscribeRef(listenerEntityRef, method_address, eventType, emitterRef)
-			
-				event_type - text string representing the ID of a unique event which may relay specific information about the event.
-				listener_world_id - a real number indicating the ID of a world in which to look for a listener entity
-				listener_entity_id - a real number indicating the ID of an entity who should be notified o f an emitted event.
-				method_address - a string indicating the path of a callback ei "rectangleLayout.handleSizeChange"
-				emitter_world_id - a real number indicating the ID of a world in which to look for an emitted event on an entity
-				emitter_entity_id - a real number indicating the ID of an entity where a listener wants to watch for events.
-		
-		
-		/// A look at the data required to subscribe and dispatch events
-		disptach(eventType, world_id, entity_id, data, world_sequence_number?);
-		subscribe(listener_world_id, listener_entity_id, method_address, eventType, emitter_world_id, emitter_entity_id)
-		
-		world
-			eventSystem.subscriptionData is a
-				Map<eventType,
-					Map<emitterEntityId,
-						Array<subscriber info>>
-							where subscriber info has listenerWorldId, listenerEntityId, methodAddress
+
+
+##Enemy Waves 1-20
+### Wave 1
+ - a few small 1 shottable enemies with melee attacks
+### wave 2
+ - 

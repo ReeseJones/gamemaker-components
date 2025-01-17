@@ -49,5 +49,14 @@ function EnemyManager() constructor {
         array_push(enemies, _newEnemy);
         show_debug_message($"Enemies: {array_length(enemies)}");
     }
+    
+    static trackEnemy = function(_enemy) {
+        array_push(enemies, _enemy);
+        show_debug_message($"Enemies: {array_length(enemies)}");
+    }
+    
+    static untrackEnemy = function(_enemy) {
+        array_remove_first(obj_arena_manager.enemyManager.enemies, _enemy);
+    }
 
 }

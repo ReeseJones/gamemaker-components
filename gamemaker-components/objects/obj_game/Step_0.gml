@@ -4,7 +4,6 @@ ui_calculate_element_positions(root);
 
 debugViewManager.update();
 mouseManager.update();
-enemyManager.step();
 
 
 var _mouseX = device_mouse_x_to_gui(0);

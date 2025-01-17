@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_Root",
+  "%Name":"scr_gameplay_manager",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_Root",
+  "name":"scr_gameplay_manager",
   "parent":{
     "name":"Game",
     "path":"folders/Game.yy",
