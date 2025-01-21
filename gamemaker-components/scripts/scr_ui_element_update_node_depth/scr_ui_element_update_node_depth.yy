@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ui_element_update_node_depth",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_element_update_node_depth",
+  "parent":{
+    "name":"Element",
+    "path":"folders/UI/Element.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

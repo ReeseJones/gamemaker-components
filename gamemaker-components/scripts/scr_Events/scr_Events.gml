@@ -13,3 +13,5 @@
 #macro EVENT_DRAG_DROP_TARGET_CHANGE "dragdroptarget"
 
 #macro EVENT_MOUSE_MOVE "mousemove"
+
+#macro EVENT_FOCUS_CHANGED "focuschanged"

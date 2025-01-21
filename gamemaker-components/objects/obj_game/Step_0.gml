@@ -19,5 +19,3 @@ if (_currentMouseElement != prevMouseElement) {
     }
     prevMouseElement = _currentMouseElement;
 }
-
-

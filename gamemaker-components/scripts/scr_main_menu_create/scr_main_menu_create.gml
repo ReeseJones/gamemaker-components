@@ -32,11 +32,29 @@ function main_menu_create() {
     _startButton.textDescription.valign = fa_middle;
     event_add_listener(_startButton, EVENT_CLICKED, method(_startButton, function(_event) {
         show_debug_message("Start clicked");
-        room_goto(rm_arena);
+        //room_goto(rm_arena);
+        ui_focus(self);
+    }));
+    
+    var _textInputTest = new UITextInput({
+        name: "UITextInput",
+        width: "80%",
+        height: "14%",
+        alignItems: "center",
+    });
+    _textInputTest.spriteIndex = spr_bg_slate;
+    _textInputTest.textDescription.font = font_ui_large;
+    _textInputTest.textDescription.color = c_black;
+    _textInputTest.textDescription.halign = fa_center;
+    _textInputTest.textDescription.valign = fa_middle;
+    event_add_listener(_textInputTest, EVENT_CLICKED, method(_textInputTest, function(_event) {
+        show_debug_message("UITextInput clicked");
+        ui_focus(self);
     }));
     
     _root.append(_buttonPanel);
     _buttonPanel.append(_startButton);
+    _buttonPanel.append(_textInputTest);
     
     _startButton.setText("Start");
     

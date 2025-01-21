@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ui_button",
+  "%Name":"scr_ui_text_input_element",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ui_button",
+  "name":"scr_ui_text_input_element",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Text",
+    "path":"folders/UI/Text.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

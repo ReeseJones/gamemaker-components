@@ -1,3 +1,5 @@
+//Enable root game object to be an event target.
+event_make_event_node_like(id);
 serviceContainer = global.gameContainer;
 logger = serviceContainer.get("debugLogger");
 commandLineParams = new CommandLineParams(logger);
@@ -47,6 +49,8 @@ rootElementStyle = {
 };
 
 root = new UIElement(rootElementStyle);
+// Focus indicates which UI element has focus
+focus = root;
 
 prevMouseElement = undefined;
 guiSurface = -1;

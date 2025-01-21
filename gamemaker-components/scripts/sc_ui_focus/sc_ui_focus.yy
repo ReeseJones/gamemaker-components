@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_MouseManager",
+  "%Name":"sc_ui_focus",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_MouseManager",
+  "name":"sc_ui_focus",
   "parent":{
-    "name":"Input",
-    "path":"folders/Input.yy",
+    "name":"Element",
+    "path":"folders/UI/Element.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

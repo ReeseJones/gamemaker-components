@@ -45,13 +45,18 @@ function event_make_event_node_like(_target) {
     throw "Could not be made into event node";
 }
 
-///@param {Struct.EventNode} _target
+///@param {Struct.EventNode} _target An eventnode like object
 ///@param {Struct.EventData} _event
 function event_dispatch(_target, _event) {
     _event.target = _target;
 
     var _eventPath = [];
     var _currentNode = _target;
+    
+    if(_event.type == EVENT_FOCUS_CHANGED) {
+        var _isFocusChanged = true;
+    }
+    
 
     while(!is_undefined(_currentNode)) {
         array_push(_eventPath, _currentNode);

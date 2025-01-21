@@ -1,0 +1,11 @@
+{
+  "$GMNotes":"",
+  "%Name":"test",
+  "name":"test",
+  "parent":{
+    "name":"gamemaker-components",
+    "path":"gamemaker-components.yyp",
+  },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
+}

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_MouseManager",
+  "%Name":"scr_ui_element_foreach",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_MouseManager",
+  "name":"scr_ui_element_foreach",
   "parent":{
-    "name":"Input",
-    "path":"folders/Input.yy",
+    "name":"Element",
+    "path":"folders/UI/Element.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

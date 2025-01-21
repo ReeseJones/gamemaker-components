@@ -95,6 +95,8 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
             var _el = argument[i];
             if( is_instanceof(_el, UIElement) ) {
                 _el.remove();
+                _el.parentNode = self;
+                array_push(childNodes, _el);
                 flexpanel_node_insert_child(flexNode, _el.flexNode, _insertionSpot);
                 ui_element_update_node_depth(_el);
                 _insertionSpot += 1;
@@ -116,9 +118,12 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     static remove = function() {
         var _parent = flexpanel_node_get_parent(flexNode);
         
-        if(!is_undefined(_parent)) {
-           flexpanel_node_remove_child(_parent, flexNode);
+        if (!is_undefined(_parent)) {
+            flexpanel_node_remove_child(_parent, flexNode);
             ui_element_update_node_depth(self);
+            
+            array_remove_first(parentNode.childNodes, self);
+            parentNode = undefined;
         }
     }
     
@@ -135,7 +140,11 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         for(var i = 0; i < _childrenCount; i += 1) {
             var _child = _tempChildren[i];
             ui_element_update_node_depth(_child);
+            _uiElement.parentNode = undefined;
+            
         }
+        
+        childNodes = [];
     }
     
     ///@desc Finds the root of this node.
@@ -353,67 +362,5 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         }
         return _name;
     }
-    
-}
 
-///@description depth first node taversal. calls callback on all nodes
-///@param {Struct.UIElement} _uiElement
-///@param {function} _callback
-///@param {bool} _includeRoot
-function ui_element_foreach(_uiElement, _callback, _includeRoot = false) {
-    var _childLength = flexpanel_node_get_num_children(_uiElement.flexNode);
-    for(var i = 0; i < _childLength; i += 1) {
-        var _child = flexpanel_node_get_child(_uiElement.flexNode, i);
-        var _childEl = flexpanel_node_get_data(_child);
-        ui_element_foreach(_childEl, _callback, true);
-    }
-    if(_includeRoot) {
-        _callback(_uiElement);
-    }
-}
-
-///@param {Struct.UIElement} _uiElement
-///@param {function} _callback
-///@param {bool} _includeRoot
-function ui_element_foreach_parent(_uiElement, _callback, _includeRoot = false) {
-    if(_includeRoot) {
-        _callback(_uiElement);
-    }
-    var _parent = _uiElement.parent();
-    if(!is_undefined(_parent)) {
-        ui_element_foreach_parent(_parent, _callback, true);
-    }
-}
-
-///@param {Struct.UIElement} _uiElement
-function ui_element_update_node_depth(_uiElement) {
-
-    var _parent = _uiElement.parent();
-    if(is_undefined(_parent)) {
-        _uiElement.nodeDepth = 0;
-    } else {
-        _uiElement.nodeDepth = _parent.nodeDepth + 1;
-    }
-    
-    var _childCount = flexpanel_node_get_num_children(_uiElement.flexNode);
-    for(var i = 0; i < _childCount; i += 1) {
-        var _childNode = flexpanel_node_get_child(_uiElement.flexNode, i);
-        var _childUIElement = flexpanel_node_get_data(_childNode);
-        ui_element_update_node_depth(_childUIElement);
-    }
-}
-
-//Removes an element from a tree and calls all removed nodes dipsose function
-///@param {Struct.UIElement} _uiElement
-function ui_element_destroy_tree(_uiElement) {
-    
-    if( !is_instanceof(_uiElement, UIElement) ) {
-        throw "ui_element_destroy_tree was passed an object that was not a UIElement";
-    }
-    
-    _uiElement.remove();
-    
-    ui_element_foreach(_uiElement, method(undefined, function(_el) {
-        _el.disposeFunc();
-    }), true);
 }
