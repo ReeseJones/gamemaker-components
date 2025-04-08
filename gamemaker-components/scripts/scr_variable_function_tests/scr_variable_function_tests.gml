@@ -1,5 +1,5 @@
-tag_script(variable_is_handle_test, [TAG_UNIT_TEST_SPEC]);
-function variable_is_handle_test() {
+tag_script(scr_variable_function_tests, [TAG_UNIT_TEST_SPEC]);
+function scr_variable_function_tests() {
     return [
         describe("is_handle", function() {
             before_each(function() {

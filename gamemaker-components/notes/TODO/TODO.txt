@@ -19,19 +19,19 @@
 ## Enemy Wave  Planner
 - Enemy Wave Type
   - Cluster Count: Number of clusters of enemies to spawn around map per wave spawn
-  - Cluster Count Time Scalar: Scalar * level time % (x * (0 - 1))
+  - Cluster Count Time Scalar: Scalar * level time % (x * (0 - 1)) // percentage of way through level * scalar
   - Cluster Count Day Scalar: Scalar * Day (1 - 20)
   - Cluster Count Wave Spawn Increment: X * Spawn Number. Per level every time this wave is spanwed temporairly increase cluster count
   - Clusters To Spawn = cluster_count_base + cluster_time_scalar * timeDelta + cluster_day_scalar * current_day + 
-  
+
   - Cluster Size Base - number of enemies in a cluster
   - Cluster Size Time Scalar
   - Cluster Size Day Multiplier
   - Cluster Spawn Rate
 
 - Enemy Health Scaler
-  - Enemy Sprite
-  - Enemy Movement Type
-  - Enemy Speed
-  - Enemy Attack Type
-  - Enemy Damage
+- Enemy Sprite
+- Enemy Movement Type
+- Enemy Speed
+- Enemy Attack Type
+- Enemy Damage
