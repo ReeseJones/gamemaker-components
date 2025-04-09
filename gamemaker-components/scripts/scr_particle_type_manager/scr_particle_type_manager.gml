@@ -55,7 +55,7 @@ function ParticleTypeManager() : Disposable() constructor {
         return ds_map_keys_to_array(particleTypesMap);
     }
     
-    static disposeFunc = function() {
+    static dispose = function() {
         if(ds_exists(particleTypesMap, ds_type_map)) {
             ds_map_destroy(particleTypesMap);
             particleTypesMap = undefined;

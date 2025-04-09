@@ -9,6 +9,6 @@ function ui_element_destroy_tree(_uiElement) {
     _uiElement.remove();
     
     ui_element_foreach(_uiElement, method(undefined, function(_el) {
-        _el.disposeFunc();
+        _el.dispose();
     }), true);
 }

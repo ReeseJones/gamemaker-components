@@ -119,7 +119,6 @@
     {"name":"scr_LayerManager","order":1,"path":"scripts/scr_LayerManager/scr_LayerManager.yy",},
     {"name":"scr_Logger","order":12,"path":"scripts/scr_Logger/scr_Logger.yy",},
     {"name":"scr_main_menu_create","order":2,"path":"scripts/scr_main_menu_create/scr_main_menu_create.yy",},
-    {"name":"scr_MechComponentCard","order":4,"path":"scripts/scr_MechComponentCard/scr_MechComponentCard.yy",},
     {"name":"scr_MechComponentData","order":11,"path":"scripts/scr_MechComponentData/scr_MechComponentData.yy",},
     {"name":"scr_MechComponentDataProvider","order":10,"path":"scripts/scr_MechComponentDataProvider/scr_MechComponentDataProvider.yy",},
     {"name":"scr_MechComponentFactory","order":12,"path":"scripts/scr_MechComponentFactory/scr_MechComponentFactory.yy",},

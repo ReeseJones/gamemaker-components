@@ -22,7 +22,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     mouseIsOver = false;
     interceptPointerEvents = true;
     nodeDepth = 0;
-    
+
     left = 0;
     top = 0;
     right = 0;
@@ -34,9 +34,9 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     contentHeight = 0;
     
     textDescription = new UiTextDescription();
-    
+
     spriteIndex = undefined;
-    
+
     static draw = function() {
 
         var _col = c_white;
@@ -347,7 +347,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         return self;
     }
     
-    static disposeFunc = function() {
+    static dispose = function() {
         flexpanel_delete_node(flexNode);
         flexNode = undefined;
     }

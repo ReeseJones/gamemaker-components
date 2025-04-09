@@ -1,5 +1,5 @@
 disposeableManager = new DisposableManager();
-disposeFunc = method(disposeableManager, disposeableManager.disposeFunc);
+dispose = method(disposeableManager, disposeableManager.dispose);
 
 weaponAttributes = new WeaponAttributes();
 style = new WeaponStyle();

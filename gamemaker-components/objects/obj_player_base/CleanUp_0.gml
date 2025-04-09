@@ -1,1 +1,1 @@
-disposeFunc();
+dispose();

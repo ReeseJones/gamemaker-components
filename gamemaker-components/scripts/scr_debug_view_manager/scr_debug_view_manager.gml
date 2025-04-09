@@ -41,7 +41,7 @@ function DebugViewManager() : Disposable() constructor {
         _debugView.initialViewSettings = undefined;
         _debugView.needsReRender = false;
         _debugView.viewManager = undefined;
-        _debugView.disposeFunc();
+        _debugView.dispose();
     }
     
     static update = function() {
@@ -89,7 +89,7 @@ function DebugViewManager() : Disposable() constructor {
         return array_contains(views, _debugView);
     }
     
-    static disposeFunc = function() {
+    static dispose = function() {
         array_foreach(views, method(self, function(_view) {
             deleteView(_view);
         }));

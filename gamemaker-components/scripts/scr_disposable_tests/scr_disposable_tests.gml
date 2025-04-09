@@ -12,10 +12,10 @@ function disposable_tests() {
                 
                 matcher_value_equal(_disposableManager.isDisposed, false);
             });
-            it("should be disposed after calling disposeFunc.", function() {
+            it("should be disposed after calling dispose.", function() {
                 var _disposableManager = new DisposableManager();
                 
-                _disposableManager.disposeFunc();
+                _disposableManager.dispose();
                 
                 matcher_value_equal(_disposableManager.isDisposed, true);
             });
