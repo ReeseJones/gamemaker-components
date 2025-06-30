@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_mech_doodad03",
   "bboxMode":0,
   "bbox_bottom":63,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"7ae8d71f-6280-4190-abc7-0a8c6cf6fd88","name":"7ae8d71f-6280-4190-abc7-0a8c6cf6fd88","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7ae8d71f-6280-4190-abc7-0a8c6cf6fd88","name":"7ae8d71f-6280-4190-abc7-0a8c6cf6fd88","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

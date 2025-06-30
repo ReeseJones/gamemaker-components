@@ -1,7 +1,7 @@
 ///@param {Struct} _flexpanelStyle
 function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
-    
-    if(is_undefined(_flexpanelStyle)) {
+
+    if(!is_struct(_flexpanelStyle)) {
         _flexpanelStyle = {
             name: "UIElement",
             direction: "ltr",
@@ -22,6 +22,9 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     mouseIsOver = false;
     interceptPointerEvents = true;
     nodeDepth = 0;
+    isDisposed = false;
+    // Whether this node is connected to the game root.
+    isConnected = false;
 
     left = 0;
     top = 0;
@@ -32,63 +35,22 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     hadOverflow = false;
     contentWidth = 0;
     contentHeight = 0;
-    
+
     textDescription = new UiTextDescription();
 
     spriteIndex = undefined;
+    blendColor = c_white;
 
-    static draw = function() {
+    static draw = ui_element_draw_default;
 
-        var _col = c_white;
-        var _alpha = 1;
-        if(mouseIsOver) {
-            _col = c_red;
-        }
+    static onConnected = function() {
+        show_debug_message($"{self} connected");
+    };
 
-        if(spriteIndex != undefined) {
-            draw_sprite_stretched_ext(spriteIndex, 0, left, top, width, height, _col, _alpha);
-        }
-        
-        if(is_string(textDescription.text)) {
-            var _xx = 0;
-            var _yy = 0;
-            switch(textDescription.halign) {
-                case fa_right:
-                    _xx = right;
-                break;
-                case fa_center:
-                    _xx = (left + right) / 2;
-                    break;
-                case fa_left:
-                default:
-                    _xx = left;
-                    break;
-            }
-            switch(textDescription.valign) {
-                case fa_bottom:
-                    _yy = bottom;
-                break;
-                case fa_middle:
-                    _yy = (top + bottom) / 2;
-                    break;
-                case fa_top:
-                default:
-                    _yy = top;
-                    break;
-            }
-            
-            draw_set_color(mouseIsOver ? c_white : textDescription.color);
-            draw_set_alpha(textDescription.alpha);
-            draw_set_font(textDescription.font);
-            draw_set_halign(textDescription.halign);
-            draw_set_valign(textDescription.valign);
+    static onDisconnected = function() {
+        show_debug_message($"{self} diconnected");
+    };
 
-            _xx = round(_xx);
-            _yy = round(_yy);
-            draw_text_ext(_xx, _yy, textDescription.text, textDescription.lineSpacing, width);
-        }
-    }
-    
     static append = function() {
         var _insertionSpot = flexpanel_node_get_num_children(flexNode);
         for(var i = 0; i < argument_count; i += 1) {
@@ -98,7 +60,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
                 _el.parentNode = self;
                 array_push(childNodes, _el);
                 flexpanel_node_insert_child(flexNode, _el.flexNode, _insertionSpot);
-                ui_element_update_node_depth(_el);
+                ui_element_update_depth_connections(_el);
                 _insertionSpot += 1;
             }
         }
@@ -106,12 +68,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     
     ///@return {Struct.UIElement}
     static parent = function() {
-        var _parent = flexpanel_node_get_parent(flexNode);
-        
-        if(is_undefined(_parent)) {
-            return _parent;
-        }
-        return flexpanel_node_get_data(flexNode);
+        return parentNode;
     }
     
     ///@desc Disconnects this node from its parent if it has one.
@@ -120,13 +77,13 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         
         if (!is_undefined(_parent)) {
             flexpanel_node_remove_child(_parent, flexNode);
-            ui_element_update_node_depth(self);
+            ui_element_update_depth_connections(self);
             
             array_remove_first(parentNode.childNodes, self);
             parentNode = undefined;
         }
     }
-    
+
     static removeAllChildren = function() {
         var _childrenCount = flexpanel_node_get_num_children(flexNode);
         var _tempChildren = [];
@@ -139,11 +96,11 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         
         for(var i = 0; i < _childrenCount; i += 1) {
             var _child = _tempChildren[i];
-            ui_element_update_node_depth(_child);
+            ui_element_update_depth_connections(_child);
             _uiElement.parentNode = undefined;
             
         }
-        
+
         childNodes = [];
     }
     
@@ -156,16 +113,16 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         }
         return flexpanel_node_get_data(_currentElement.flexNode);
     }
-    
+
     static hasChildren = function() {
         return flexpanel_node_get_num_children(flexNode) > 0;
     }
-    
+
     ///@desc returns true if it has a parent. A root node will appear not connected.
-    static isConnected = function() {
-        return flexpanel_node_get_parent(flexNode) != undefined;
+    static isAttached = function() {
+        return is_defined(flexNode) && flexpanel_node_get_parent(flexNode) != undefined;
     }
-    
+
     static setText = function(_text, _useTextHeight = false) {
         textDescription.text = _text;
         
@@ -346,10 +303,13 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         flexpanel_node_set_name(flexNode, _name);
         return self;
     }
-    
+
     static dispose = function() {
+        show_debug_message($"disposing: {self}");
         flexpanel_delete_node(flexNode);
         flexNode = undefined;
+        event_remove_all_listeners(self);
+        isDisposed = true;
     }
     
     static toString = function() {
@@ -363,4 +323,13 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         return _name;
     }
 
+}
+
+///@self UIElement
+function ui_element_draw_default() {
+    if(spriteIndex != undefined) {
+        draw_sprite_stretched_ext(spriteIndex, 0, left, top, width, height, blendColor, 1);
+    }
+
+    ui_element_draw_text_helper();
 }

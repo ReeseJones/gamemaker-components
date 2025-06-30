@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_mech_rocketpod01",
   "bboxMode":0,
   "bbox_bottom":31,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"3f13a150-3565-42eb-ba8e-eaef60a0a635","name":"3f13a150-3565-42eb-ba8e-eaef60a0a635","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"3f13a150-3565-42eb-ba8e-eaef60a0a635","name":"3f13a150-3565-42eb-ba8e-eaef60a0a635","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":8,
   "gridY":8,

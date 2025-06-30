@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_tileset_flameville_topdown",
   "bboxMode":0,
   "bbox_bottom":223,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"dcc6884b-d3ce-4e9b-9f74-7140ae0e5571","name":"dcc6884b-d3ce-4e9b-9f74-7140ae0e5571","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"dcc6884b-d3ce-4e9b-9f74-7140ae0e5571","name":"dcc6884b-d3ce-4e9b-9f74-7140ae0e5571","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

@@ -1,15 +1,17 @@
 {
-  "$GMSound":"",
+  "$GMSound":"v2",
   "%Name":"snd_weapon_shoot_1",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
   },
   "bitDepth":1,
-  "bitRate":128,
+  "channelFormat":0,
   "compression":2,
+  "compressionQuality":4,
   "conversionMode":0,
   "duration":0.534167,
+  "exportDir":"",
   "name":"snd_weapon_shoot_1",
   "parent":{
     "name":"Weapon",
@@ -20,6 +22,5 @@
   "resourceVersion":"2.0",
   "sampleRate":44100,
   "soundFile":"snd_weapon_shoot_1.wav",
-  "type":0,
   "volume":0.72,
 }

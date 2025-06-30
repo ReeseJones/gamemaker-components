@@ -19,8 +19,7 @@ function ui_render_elements(_root) {
         var _sLeft = _scissor.x;
         var _sBottom = _sTop + _scissor.h;
         var _sRight = _sLeft + _scissor.w;
-        
-        
+
         var _x5 = max(_root.left, _sLeft);
         var _y5 = max(_root.top, _sTop);
         var _x6 = min(_root.right, _sRight);

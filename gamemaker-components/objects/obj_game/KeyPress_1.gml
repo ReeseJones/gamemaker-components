@@ -1,4 +1,4 @@
-// Handle typing into keyboard
+//TODO: Handle typing into keyboard. this is debug print output for testing text inputs
 if( !is_instanceof(focus, UITextInput)) {
     return;
 }

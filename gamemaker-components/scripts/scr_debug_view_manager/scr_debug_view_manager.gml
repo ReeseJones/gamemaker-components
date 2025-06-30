@@ -88,7 +88,7 @@ function DebugViewManager() : Disposable() constructor {
     static viewExists = function(_debugView) {
         return array_contains(views, _debugView);
     }
-    
+
     static dispose = function() {
         array_foreach(views, method(self, function(_view) {
             deleteView(_view);

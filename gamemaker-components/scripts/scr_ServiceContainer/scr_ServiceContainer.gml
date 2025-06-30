@@ -13,31 +13,6 @@ function anything_constructor(_constructor, _p0 = undefined, _p1 = undefined, _p
     return new _constructor(_p0, _p1, _p2, _p3, _p4, _p5, _p6, _p7, _p8);
 }
 
-///@func  service(name, value)
-///@param {String} _type
-///@param {String} _name
-///@param {Any} _value
-///@param {Array<String>} _dependencies
-function ServiceRegistration(_type, _name, _value, _dependencies = [], _scope = SERVICE_SCOPE_SINGLETON) constructor {
-    type = _type;
-    name = _name;
-    value = _value;
-    dependencies = _dependencies;
-    scope = _scope;
-
-    static inSingletonScope = function in_singleton_scope() {
-        scope = SERVICE_SCOPE_SINGLETON;
-    }
-
-    static inTransientScope = function in_transient_scope() {
-        scope = SERVICE_SCOPE_TRANSIENT;
-    }
-
-    static inTreeScope = function in_transient_scope() {
-        scope = SERVICE_SCOPE_TREE;
-    }
-}
-
 function ServiceContainer() constructor {
     valueRegistrationMap = {};
     instanceMap = {};
@@ -50,10 +25,10 @@ function ServiceContainer() constructor {
             throw "Existing value already bound to " + _name;
         }
     }
-    
+
     ///@func  validateServiceIsUnbound(_name)
     ///@param {Struct.ServiceRegistration} _options
-    static bind = function bind(_options) {
+    static bind = function(_options) {
          if(is_undefined(_options) || !is_string(_options.name)) {
              throw "Must provide valid options object to bind with valid name";
          }
@@ -65,7 +40,7 @@ function ServiceContainer() constructor {
     ///@param {String} _name
     ///@param {Any} _value
     ///@returns {Struct.ServiceRegistration}
-    static value = function value(_name, _value) {
+    static value = function(_name, _value) {
         validateServiceIsUnbound(_name);
         valueRegistrationMap[$ _name] = new ServiceRegistration(SERVICE_TYPE_VALUE, _name, _value);
         return valueRegistrationMap[$ _name];
@@ -76,7 +51,7 @@ function ServiceContainer() constructor {
     ///@param {Function} _constructor
     ///@param {Array<String>} _dependencies
     ///@returns {Struct.ServiceRegistration}
-    static service = function service(_name, _constructor, _dependencies = undefined) {
+    static service = function(_name, _constructor, _dependencies = undefined) {
         validateServiceIsUnbound(_name);
         valueRegistrationMap[$ _name] = new ServiceRegistration(SERVICE_TYPE_SERVICE, _name, _constructor, _dependencies);
         return valueRegistrationMap[$ _name];
@@ -87,7 +62,7 @@ function ServiceContainer() constructor {
     ///@param {Function} _function
     ///@param {Array<String>} _dependencies
     ///@returns {Struct.ServiceRegistration}
-    static factory = function factory(_name, _function, _dependencies = undefined) {
+    static factory = function(_name, _function, _dependencies = undefined) {
         validateServiceIsUnbound(_name);
         valueRegistrationMap[$ _name] = new ServiceRegistration(SERVICE_TYPE_FACTORY, _name, _function, _dependencies);
         return valueRegistrationMap[$ _name];
@@ -96,7 +71,7 @@ function ServiceContainer() constructor {
     ///@func  get(name)
     ///@param {String} _name
     ///@returns {Any}
-    static get = function get(_name) {
+    static get = function(_name) {
         delete treeInstanceMap;
         treeInstanceMap = {}
         return getHelper(_name);
@@ -116,7 +91,7 @@ function ServiceContainer() constructor {
         if(!variable_struct_exists(valueRegistrationMap, _name)) {
             throw "Nothing bound to name: " + _name;
         }
-        
+
         var _serviceRegistration = valueRegistrationMap[$ _name];
         var _serviceInstance = undefined;
         switch(_serviceRegistration.type) {

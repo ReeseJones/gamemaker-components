@@ -2,7 +2,7 @@
 function UITextInput(_flexpanelStyle): UIElement(_flexpanelStyle) constructor {
     cursorPosition = 1;
     textEnd = "";
-    
+
     handleFocusChanged = method(self, function(_event) {
         if(_event.data.currentFocus != self) {
             updateTextInput();
@@ -42,21 +42,22 @@ function UITextInput(_flexpanelStyle): UIElement(_flexpanelStyle) constructor {
         }
         show_debug_message($"cursor changed: {_position}, ks: {keyboard_string}, textEnd: {textEnd}");
     }
-    
-    static draw = function() {
 
-        var _col = c_white;
-        var _alpha = 1;
-        if(mouseIsOver) {
-            draw_sprite_stretched_ext(spriteIndex, 0, left, top, width, height, _col, _alpha);
-        }
-        
+    static draw = function() {
         var _isFocused = obj_game.focus == self;
         var _text =  _isFocused ? keyboard_string + textEnd : textDescription.text;
         var _isString = is_string(_text);
         var _textWidth = _isString ? string_width(_text) : string_width("O");
         var _textHeight = _isString ? string_height(_text) : string_height("O");
         var _cursorHorizontalOffset = string_width(textEnd);
+        
+        var _col = c_white;
+        var _alpha = 1;
+        if(mouseIsOver && !_isFocused) {
+            _col = merge_color(c_white, c_black, 0.2);
+        }
+
+        draw_sprite_stretched_ext(spriteIndex, 0, left, top, width, height, _col, _alpha);
 
         if(_isFocused) {
             draw_set_color(c_black);
@@ -101,7 +102,7 @@ function UITextInput(_flexpanelStyle): UIElement(_flexpanelStyle) constructor {
         
         _xx = round(_xx);
         _yy = round(_yy);
-        
+
         draw_set_color(mouseIsOver ? c_white : textDescription.color);
         draw_set_alpha(textDescription.alpha);
         draw_set_font(textDescription.font);

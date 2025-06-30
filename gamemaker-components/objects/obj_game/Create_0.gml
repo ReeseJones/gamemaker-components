@@ -49,6 +49,7 @@ rootElementStyle = {
 };
 
 root = new UIElement(rootElementStyle);
+root.isConnected = true;
 // Focus indicates which UI element has focus
 focus = root;
 

@@ -1,6 +1,4 @@
-//Make sure UI is layed out first.
-flexpanel_calculate_layout(root.flexNode, window_get_width(), window_get_height(), flexpanel_direction.LTR);
-ui_calculate_element_positions(root);
+game_calculate_ui();
 
 debugViewManager.update();
 mouseManager.update();

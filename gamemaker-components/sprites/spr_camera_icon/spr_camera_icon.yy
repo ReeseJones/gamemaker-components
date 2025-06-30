@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_camera_icon",
   "bboxMode":0,
   "bbox_bottom":63,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"9b81ebfa-9ef5-4953-9956-302ee1fb7da1","name":"9b81ebfa-9ef5-4953-9956-302ee1fb7da1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"9b81ebfa-9ef5-4953-9956-302ee1fb7da1","name":"9b81ebfa-9ef5-4953-9956-302ee1fb7da1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

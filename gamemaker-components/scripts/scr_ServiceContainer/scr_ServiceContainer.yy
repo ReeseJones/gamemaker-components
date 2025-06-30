@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_ServiceContainer",
   "parent":{
-    "name":"Game",
-    "path":"folders/Game.yy",
+    "name":"Services",
+    "path":"folders/Services.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

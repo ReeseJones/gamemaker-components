@@ -56,7 +56,6 @@ function event_dispatch(_target, _event) {
     if(_event.type == EVENT_FOCUS_CHANGED) {
         var _isFocusChanged = true;
     }
-    
 
     while(!is_undefined(_currentNode)) {
         array_push(_eventPath, _currentNode);

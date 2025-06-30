@@ -20,7 +20,7 @@ function scroll_get_perpindicular_direction(_scrollDir) {
 ///@param {Struct} _flexpanelStyle
 function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constructor {
     scrollbarSize = 32;
-    
+
     dragOffset = new Vec2();
     isHandleGrabbed = false;
     scrollDir = flexpanel_flex_direction.column;
@@ -28,25 +28,29 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
     setAlignItems(flexpanel_align.stretch);
     
     spriteIndex = spr_bg_panel_blue_1;
-    
+
+    // The gutter for the scrollbar handle.
     scrollbarContainer = new UIElement({
         name: "scrollbar container",
         alignItems: "stretch",
         flexBasis: scrollbarSize,
     });
     scrollbarContainer.spriteIndex = spr_bg_slate;
-    
-    scrollbarHandle = new UIElement({
+
+    scrollbarHandle = new UIButton({
         name: "scrollbar handle",
         flexBasis: scrollbarSize,
     });
     scrollbarHandle.spriteIndex = spr_bar_vertical_orange;
-    
+
+    // Container for the content Window and scrollbar. Used for layout purposes.
+    // It dynamically sizes the content window and scrollbar gutter.
     contentAnchor = new UIElement({
         name: "scroll content anchor",
         flexGrow: 1,
     });
-    
+
+    // The viewable dimensions of the scrollable container
     contentWindow = new UIElement({
         name: "contentWindow",
         position: "absolute",
@@ -58,6 +62,7 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         maxHeight: "100%",
     });
     
+    // Where content actually goes in the scroll container.
     contentContainer = new UIElement({
         name: "content container",
         alignItems: "stretch",
@@ -86,8 +91,21 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         event_remove_listener(obj_game.mouseManager, EVENT_MOUSE_MOVE, onMouseMoveHandler);
     });
 
-    event_add_listener(scrollbarHandle, EVENT_PRESSED, onDragStartHandler);
-    event_add_listener(obj_game.mouseManager, EVENT_RELEASED_GLOBAL, onDragEndHandler);
+    static onConnected = function() {
+        show_debug_message($"{self} connected");
+        game_calculate_ui();
+        updateHandlePosition();
+        
+        event_add_listener(scrollbarHandle, EVENT_PRESSED, onDragStartHandler);
+        event_add_listener(obj_game.mouseManager, EVENT_RELEASED_GLOBAL, onDragEndHandler);
+    }
+
+    static onDisconnected = function() {
+        show_debug_message($"{self} disconnected");
+        
+        event_remove_listener(scrollbarHandle, EVENT_PRESSED, onDragStartHandler);
+        event_remove_listener(obj_game.mouseManager, EVENT_RELEASED_GLOBAL, onDragEndHandler);
+    }
     
     ///@param {any} _scrollDirection
     static setScrollDirection = function(_scrollDirection) {
@@ -98,19 +116,26 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         scrollbarContainer.setFlexDirection(scrollDir);
         
     }
-    
+
     static updateHandlePosition = function () {
         var _isVert = scrollDir == flexpanel_flex_direction.column || scrollDir == flexpanel_flex_direction.column_reverse;
         var _size = _isVert ? contentWindow.height : contentWindow.width;
         var _contentSize = _isVert ? contentContainer.height : contentContainer.width;
         var _hiddenHeight = max(_contentSize - _size, 0);
 
-        var _hiddenContentRatio = _hiddenHeight / _contentSize;
-        var _scrollBarSize = (1 - _hiddenContentRatio) * _size;
+        var _noContent = _contentSize < 1;
+
+        var _scrollBarSize = 32; 
+        if( _noContent) {
+            _scrollBarSize = _size;
+        } else {
+            var _hiddenContentRatio = _hiddenHeight / _contentSize;
+            _scrollBarSize = (1 - _hiddenContentRatio) * _size;
+        }
 
         scrollbarHandle.setFlexBasis(_scrollBarSize, flexpanel_unit.point);
-        
-        if(_hiddenHeight == 0) {
+
+        if(_hiddenHeight < 1) {
             scrollbarHandle.setMargin(flexpanel_edge.all_edges, 0);
             contentContainer.setPosition(flexpanel_edge.all_edges,0, flexpanel_unit.point);
             return;
@@ -136,6 +161,6 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         contentContainer.setPosition(flexpanel_edge.left, _isVert ? 0 : -_scrollOffset, flexpanel_unit.point);
         contentContainer.setPosition(flexpanel_edge.top, _isVert ? -_scrollOffset : 0, flexpanel_unit.point);
     }
-    
+
     setScrollDirection(scrollDir);
 }

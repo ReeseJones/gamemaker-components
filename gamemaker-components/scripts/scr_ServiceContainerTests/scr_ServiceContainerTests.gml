@@ -8,7 +8,7 @@ function ComplexTestConstructor(_stuffConst, _secondOption) constructor {
     stuffConst = _stuffConst;
     testMethod = method(self, _secondOption);
     // Feather restore GM2017
-   
+
     static doStuff = function() {
         mango = stuffConst;
     }

@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_mech_lasergun01",
   "bboxMode":0,
   "bbox_bottom":7,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"2bcf5bbd-7e6d-4c62-b824-63968aabe4c4","name":"2bcf5bbd-7e6d-4c62-b824-63968aabe4c4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"2bcf5bbd-7e6d-4c62-b824-63968aabe4c4","name":"2bcf5bbd-7e6d-4c62-b824-63968aabe4c4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

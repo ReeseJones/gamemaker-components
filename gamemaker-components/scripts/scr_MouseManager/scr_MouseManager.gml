@@ -123,7 +123,7 @@ function MouseManager(_logger) : EventNode()  constructor {
             abortDrag();
         }
 
-        if(!is_undefined(hoverTarget) && (instance_exists(hoverTarget) || is_struct(hoverTarget))) {
+        if(!is_undefined(hoverTarget) && (is_struct(hoverTarget) || ( is_real(hoverTarget) && instance_exists(hoverTarget)))) {
             clickTarget = hoverTarget;
             
             logger.log(LOG_LEVEL.INFORMATIONAL, $"Performing on press of {hoverTarget}");
@@ -152,7 +152,7 @@ function MouseManager(_logger) : EventNode()  constructor {
 
         event_dispatch(self, new MouseEvent(EVENT_RELEASED_GLOBAL, _button, _button));
 
-        if(!is_undefined(hoverTarget) && (instance_exists(hoverTarget) || is_struct(hoverTarget))) {
+        if(!is_undefined(hoverTarget) && (is_struct(hoverTarget) || ( is_real(hoverTarget) && instance_exists(hoverTarget)))) {
             var _isClickTarget = clickTarget == hoverTarget;
             var _sameButton = clickButton == _button;
             
