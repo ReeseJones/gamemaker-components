@@ -1,4 +1,4 @@
-tag_script(instance_variables_test, [TAG_UNIT_TEST_SPEC]);
+tag_asset(instance_variables_test, [TAG_UNIT_TEST_SPEC]);
 function instance_variables_test() {
     return [
         describe("instance_variables_test", function() {

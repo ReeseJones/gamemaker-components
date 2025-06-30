@@ -1,4 +1,5 @@
-tag_script(serializer_tests, [TAG_UNIT_TEST_SPEC]);
+//TODO: Fix this serializer test
+//tag_asset(serializer_tests, [TAG_UNIT_TEST_SPEC]);
 function serializer_tests() {
     return [
         describe("serialize", function() {

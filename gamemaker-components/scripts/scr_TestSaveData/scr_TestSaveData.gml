@@ -1,4 +1,4 @@
-tag_script(test_save_data_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(test_save_data_tests, [TAG_UNIT_TEST_SPEC]);
 function test_save_data_tests() {
     return [
         describe("game save data", function() {

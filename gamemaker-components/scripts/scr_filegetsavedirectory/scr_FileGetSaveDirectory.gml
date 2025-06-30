@@ -10,7 +10,6 @@ function file_get_save_directory() {
       case os_linux: return working_directory;
       case os_macosx: return working_directory;
       case os_ios: return working_directory;
-      case os_winphone: return working_directory;
       default: return working_directory;
     }
 }

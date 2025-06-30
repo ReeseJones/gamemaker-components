@@ -9,7 +9,7 @@ function TestOnlyPotion () : TestOnlyItem () constructor {
     static testString = "test123";
 }
 
-tag_script(game_maker_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(game_maker_tests, [TAG_UNIT_TEST_SPEC]);
 function game_maker_tests() {
     return [
         describe("GameMaker", function() {

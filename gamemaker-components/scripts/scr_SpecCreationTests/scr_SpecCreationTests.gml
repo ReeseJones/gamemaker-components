@@ -1,4 +1,4 @@
-tag_script(spec_creation_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(spec_creation_tests, [TAG_UNIT_TEST_SPEC]);
 function spec_creation_tests() {
     return [
         describe("A spec", function() {

@@ -1,4 +1,4 @@
-//tag_script(regex_tests, [TAG_UNIT_TEST_SPEC]);
+//tag_asset(regex_tests, [TAG_UNIT_TEST_SPEC]);
 function regex_tests() {
     return [
         describe("regex", function() {

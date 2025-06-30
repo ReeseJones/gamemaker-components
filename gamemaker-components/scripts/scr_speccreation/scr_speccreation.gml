@@ -144,7 +144,7 @@ function visit_all_test_suites(_testSuite, _beforeStack = [], _afterStack = [], 
         return _testResults;
     }
 
-tag_script(run_all_specs, [TAG_COMMAND]);
+tag_asset(run_all_specs, [TAG_COMMAND]);
 function run_all_specs() {
     var _unitTests = get_script_ids(TAG_UNIT_TEST_SPEC);
     var _allTestSuites = [];

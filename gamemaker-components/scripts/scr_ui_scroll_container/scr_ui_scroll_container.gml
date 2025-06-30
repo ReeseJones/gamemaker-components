@@ -67,8 +67,11 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         name: "content container",
         alignItems: "stretch",
     });
+    
+    var _originalAppend = static_get(UIElement).append;
+    var _boundAppend = method(self, _originalAppend);
 
-    append(contentAnchor, scrollbarContainer);
+    _boundAppend(contentAnchor, scrollbarContainer);
     scrollbarContainer.append(scrollbarHandle);
     contentAnchor.append(contentWindow);
     contentWindow.append(contentContainer);
@@ -105,6 +108,12 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         
         event_remove_listener(scrollbarHandle, EVENT_PRESSED, onDragStartHandler);
         event_remove_listener(obj_game.mouseManager, EVENT_RELEASED_GLOBAL, onDragEndHandler);
+    }
+
+    static append = function() {
+       COPY_PARAMS;
+       var _internalAppend = method(contentContainer, contentContainer.append);
+       method_call( _internalAppend, _params );
     }
     
     ///@param {any} _scrollDirection

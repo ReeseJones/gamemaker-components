@@ -1,4 +1,4 @@
-tag_script(scr_variable_function_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(scr_variable_function_tests, [TAG_UNIT_TEST_SPEC]);
 function scr_variable_function_tests() {
     return [
         describe("is_handle", function() {

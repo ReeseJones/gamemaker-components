@@ -42,7 +42,7 @@ global.eventTypeNameMap[? EVENT_TYPE.GAMEPAD_CONNECTED] = "GAMEPAD_CONNECTED";
 global.eventTypeNameMap[? EVENT_TYPE.GAMEPAD_DISCONNECTED] = "GAMEPAD_DISCONNECTED";
 global.eventTypeNameMap[? EVENT_TYPE.WORLD_CREATED] = "WORLD_CREATED";
 
-tag_script(event_name);
+tag_asset(event_name);
 /// @function event_name(eventType)
 /// @desc Returns the name of an EVENT_TYPE
 /// @param {Real} _eventType The EventType constant to get the string name of

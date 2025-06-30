@@ -29,7 +29,7 @@ cleanupManager = new CleanupManager();
 globalParticleManager = new GlobalParticleSystemManager(layerManager);
 particleManagerView = undefined;
 
-//run_all_specs();
+run_all_specs();
 
 // Moves from bootstrap screen to first room
 alarm[0] = 10;

@@ -1,4 +1,4 @@
-tag_script(rect_get_rotated, [TAG_MATH, TAG_GEOMETRY])
+tag_asset(rect_get_rotated, [TAG_MATH, TAG_GEOMETRY])
 function rect_get_rotated(_x, _y, _halfWidth, _halfHeight, _angleDeg) {
     var _rads = degtorad(-_angleDeg);
     var _c = cos(_rads);

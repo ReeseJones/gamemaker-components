@@ -1,4 +1,4 @@
-tag_script(disposable_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(disposable_tests, [TAG_UNIT_TEST_SPEC]);
 function disposable_tests() {
     return [
         describe("disposable manager", function() {

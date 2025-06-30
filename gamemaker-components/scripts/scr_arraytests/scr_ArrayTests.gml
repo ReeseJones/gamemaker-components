@@ -1,4 +1,4 @@
-tag_script(array_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(array_tests, [TAG_UNIT_TEST_SPEC]);
 function array_tests() {
 return [
     describe("Arrays", function() {
@@ -112,6 +112,19 @@ return [
             }
 
             _testArguments("3", "2", "1", 1, 2, 3);
+        });
+        it("can pass 'arguments' array directly to method_call as array", function() {
+            var _testArguments = function() {
+                COPY_PARAMS;
+                matcher_is_array(_params);
+                matcher_arrays_equal(_params, ["3", "2", "1", 1, 2, 3]);
+            }
+            
+            var _passThrough = function() {
+                method_call(_testArguments, argument, 0, argument_count);
+            }
+
+            _passThrough("3", "2", "1", 1, 2, 3);
         });
         it("array_insert_sorted_unique should preserve arrays sortedness", function() {
             var _someArray = [1, 2, 3, 5];

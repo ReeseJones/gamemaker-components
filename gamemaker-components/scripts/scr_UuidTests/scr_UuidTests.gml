@@ -1,4 +1,4 @@
-tag_script(test_uuid_generator_tests, [TAG_UNIT_TEST_SPEC]);
+tag_asset(test_uuid_generator_tests, [TAG_UNIT_TEST_SPEC]);
 function test_uuid_generator_tests() {
     return [
         describe("uuid generator", function() {

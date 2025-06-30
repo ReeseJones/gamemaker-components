@@ -1,4 +1,4 @@
-tag_script(variable_foreach_test, [TAG_UNIT_TEST_SPEC]);
+tag_asset(variable_foreach_test, [TAG_UNIT_TEST_SPEC]);
 function variable_foreach_test() {
     return [
         describe("variable_foreach", function() {
