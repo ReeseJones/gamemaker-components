@@ -6,3 +6,5 @@ builds/gamemaker-components/data.win
 builds/gamemaker-components.zip
 builds/gamemaker-components/gamemaker-components.exe
 builds/gamemaker-components/options.ini
+**/node_modules/**
+/node_scripts/dist/**

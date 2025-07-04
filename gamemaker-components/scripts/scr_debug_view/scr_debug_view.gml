@@ -4,7 +4,7 @@
 // The debugViewManager will call the DebugView's disposeMethod to cleanup and resources when its closed.
 
 function DebugView() : Disposable() constructor {
-    
+
     needsReRender = true;
     view = undefined;
     viewName = "";
@@ -16,7 +16,7 @@ function DebugView() : Disposable() constructor {
         width: undefined,
         height: undefined
     }
-    
+
     static update = function() {
         
     }

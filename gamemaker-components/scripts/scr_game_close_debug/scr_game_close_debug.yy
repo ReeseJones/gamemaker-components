@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_game_close_debug",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_game_close_debug",
+  "parent":{
+    "name":"Game",
+    "path":"folders/Game.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

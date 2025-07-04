@@ -1,6 +1,8 @@
 ///@param {Struct} _flexpanelStyle
 function UIButton(_flexpanelStyle) : UIElement(_flexpanelStyle) constructor {
 
+    spriteIndex = spr_menu_button_default;
+    
     static draw = function() {
         var _col = c_white;
         var _alpha = 1;

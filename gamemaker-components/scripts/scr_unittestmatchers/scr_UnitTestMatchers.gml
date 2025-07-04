@@ -91,6 +91,14 @@ function matcher_is_defined(_a) {
     }
 }
 
+function matcher_is_undefined(_a) {
+    var _callbackString = get_debug_callstack_string();
+
+    if(!is_undefined(_a)) {
+        throw "_a is undefined." + _callbackString;
+    }
+}
+
 function matcher_struct_property_exists(_struct, _propName, _not = false) {
     var _callbackString = get_debug_callstack_string();
 

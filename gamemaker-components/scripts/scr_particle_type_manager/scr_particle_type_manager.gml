@@ -27,7 +27,7 @@ function ParticleTypeManager() : Disposable() constructor {
         if(ds_map_exists(particleTypesMap, _name)) {
             throw $"Particle with name: {_name} already exists. Please choose unique name.";
         }
-        
+
         var _newParticleIndex = part_type_create();
         var _newPartModel = new ParticleType(_newParticleIndex, _name);
         _newPartModel.applyProperties();

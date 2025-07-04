@@ -1,3 +1,10 @@
+enum TEXT_SIZE_METHOD {
+    NONE, // uses default flow and element sizing.
+    EXACT,
+    WIDTH,
+    WRAPPED
+ }
+
 ///@param {Struct} _flexpanelStyle
 function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
 
@@ -70,7 +77,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     static parent = function() {
         return parentNode;
     }
-    
+
     ///@desc Disconnects this node from its parent if it has one.
     static remove = function() {
         var _parent = flexpanel_node_get_parent(flexNode);
@@ -78,7 +85,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         if (!is_undefined(_parent)) {
             flexpanel_node_remove_child(_parent, flexNode);
             ui_element_update_depth_connections(self);
-            
+
             array_remove_first(parentNode.childNodes, self);
             parentNode = undefined;
         }
@@ -123,21 +130,44 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         return is_defined(flexNode) && flexpanel_node_get_parent(flexNode) != undefined;
     }
 
-    static setText = function(_text, _useTextHeight = false) {
+    static setText = function(_text, _elementSizingMethod = TEXT_SIZE_METHOD.NONE) {
         textDescription.text = _text;
         
-        if(is_string(textDescription.text) && _useTextHeight) {
-            draw_set_font(textDescription.font);
-            draw_set_halign(textDescription.halign);
-            draw_set_valign(textDescription.valign);
-            var _layout = flexpanel_node_layout_get_position(flexNode, false);
-            var _textHeight = string_height_ext(textDescription.text, textDescription.lineSpacing, _layout.width);
-            setHeight(_textHeight, flexpanel_unit.point);
+        if(!is_string(_text) || _text == "") {
+           return self;
+        }
+
+        draw_set_font(textDescription.font);
+        draw_set_halign(textDescription.halign);
+        draw_set_valign(textDescription.valign);
+        
+        switch(_elementSizingMethod) {
+            case TEXT_SIZE_METHOD.EXACT: {
+                var _textWidth = string_width(textDescription.text);
+                var _textHeight = string_height(textDescription.text);
+                setWidth(_textWidth, flexpanel_unit.point);
+                setHeight(_textHeight, flexpanel_unit.point);
+                break;
+            }
+            case TEXT_SIZE_METHOD.WIDTH: {
+                var _textWidth = string_width(textDescription.text);
+                setWidth(_textWidth, flexpanel_unit.point);
+                break;
+            }
+            case TEXT_SIZE_METHOD.WRAPPED: {
+                var _layout = flexpanel_node_layout_get_position(flexNode, false);
+                var _textHeight = string_height_ext(textDescription.text, textDescription.lineSpacing, _layout.width);
+                setHeight(_textHeight, flexpanel_unit.point);
+                break;
+            }
+            case TEXT_SIZE_METHOD.NONE:
+            default:
+            return self;
         }
 
         return self;
     }
-    
+
     ///@param {real} _width
     ///@param {any} _unit flexpanel_unit
     static setWidth = function(_width, _unit) {
@@ -232,8 +262,8 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     
     ///@param {any} _edge flexpanel_edge
     ///@param {real} _value
-    static setPadding = function(_edge, _value) {
-        flexpanel_node_style_set_padding(flexNode, _edge, _value);
+    static setPadding = function(_edge, _value, _unit = flexpanel_unit.point) {
+        flexpanel_node_style_set_padding(flexNode, _edge, _value, _unit);
         return self;
     }
     

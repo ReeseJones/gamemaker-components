@@ -1,15 +1,19 @@
 
 root = new UIElement({
     name: "root",
-    direction: "ltr",
-    position: "relative",
     width: "100%",
     height: "100%",
-    flexDirection: "row",
+    flexDirection: "column",
     flexGrow: 1,
     flexShrink: 1,
     padding: 0,
     margin: 0,
+});
+
+mainContentArea = new UIElement({
+    name: "MainContentArea",
+    flexDirection: "row",
+    flex: 1,
 });
 
 uiElementListContainer = new UIElement({
@@ -22,7 +26,6 @@ uiElementListContainer = new UIElement({
     padding: 0,
     margin: 0,
 });
-uiElementListContainer.spriteIndex = spr_bg_slate;
 
 uiElementListTitle = new UIElement({
     name: "uiElementListTitle",
@@ -36,8 +39,8 @@ uiElementListTitle = new UIElement({
 uiElementListTitle.textDescription.font = font_ui_small;
 uiElementListTitle.textDescription.halign = fa_center;
 uiElementListTitle.textDescription.valign = fa_middle;
-uiElementListTitle.setText("UI Element List", true);
-uiElementListTitle.spriteIndex = spr_bg_panel_clear_1;
+uiElementListTitle.setText("UI Element List", TEXT_SIZE_METHOD.WRAPPED);
+uiElementListTitle.spriteIndex = spr_bg_menu_panel;
 
 uiElementListScrollContainer = new UIScrollContainer({
     name: "uiElementListScrollContainer",
@@ -51,7 +54,6 @@ uiElementListScrollContainer = new UIScrollContainer({
     padding: 0,
     margin: 0,
 });
-uiElementListScrollContainer.spriteIndex = spr_bg_slate;
 
 uiRenderingContainer = new UIElement({
     name: "uiRenderingContainer",
@@ -66,16 +68,19 @@ uiRenderingContainer = new UIElement({
     margin: 0,
 });
 
-uiRenderingContainer.spriteIndex = spr_mask_rectangle;
+uiRenderingContainer.spriteIndex = spr_bg_menu_panel;
 uiRenderingContainer.blendColor = merge_color(c_white, c_black, 0.9);
 
-root.append(uiRenderingContainer, uiElementListContainer);
+toolBarElement = ui_make_menubar();
+
+root.append(toolBarElement, mainContentArea);
+mainContentArea.append(uiRenderingContainer, uiElementListContainer);
 uiElementListContainer.append(uiElementListTitle, uiElementListScrollContainer);
 
 
 for(var i = 0; i < 100; i += 1) {
     var _temp = new UIElement({
-        name: "_temp",
+        name: $"_temp {i}",
         direction: "ltr",
         position: "relative",
         width: "100%",
@@ -86,7 +91,7 @@ for(var i = 0; i < 100; i += 1) {
     _temp.textDescription.font = font_ui_small;
     _temp.textDescription.halign = fa_center;
     _temp.textDescription.valign = fa_middle;
-    _temp.setText("UI Element List", true);
-    _temp.spriteIndex = spr_bg_panel_clear_1;
-    uiElementListScrollContainer.contentContainer.append(_temp);
+    _temp.setText($"UI Element List {i}", TEXT_SIZE_METHOD.WRAPPED);
+    //_temp.spriteIndex = spr_bg_panel_clear_1;
+    uiElementListScrollContainer.append(_temp);
  }

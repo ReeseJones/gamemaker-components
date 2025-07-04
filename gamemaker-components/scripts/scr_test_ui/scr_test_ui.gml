@@ -101,10 +101,10 @@ function make_test_ui() {
 
     _editorUiRoot.interceptPointerEvents = false;
     _editorMenubar.spriteIndex = spr_button_blue;
-    
+
     _editorMenubar.textDescription.valign = fa_middle;
     _editorMenubar.textDescription.halign = fa_left;
-    
+
     _editorContentArea.interceptPointerEvents = false;
     _editorMainPanel.spriteIndex = spr_bg_panel_clear_1;
     _editorMainPanelTitle.spriteIndex = spr_bg_panel_metal;
@@ -134,7 +134,7 @@ function make_test_ui() {
             margin: 0,
         });
         _tempEl.spriteIndex = spr_bg_panel_metal;
-        _scrollPanel.contentContainer.append(_tempEl);
+        _scrollPanel.append(_tempEl);
         _leeroy = _tempEl;
     }
     
@@ -148,13 +148,13 @@ function make_test_ui() {
             margin: 0,
         });
         _tempEl.spriteIndex = spr_bg_panel_metal;
-        _scrollPanelNested.contentContainer.append(_tempEl);
+        _scrollPanelNested.append(_tempEl);
     }
     
     _leeroy.append(_scrollPanelNested);
     
     
-    _editorMenubar.setText("Mech Game", false);
+    _editorMenubar.setText("Mech Game");
     _editorMainPanelTitle.setText("Main Panel");
     _editorMainPanelTitle.textDescription.valign = fa_middle;
     _editorMainPanelTitle.textDescription.halign = fa_center;

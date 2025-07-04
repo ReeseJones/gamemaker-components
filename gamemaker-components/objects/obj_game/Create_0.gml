@@ -2,7 +2,10 @@
 event_make_event_node_like(id);
 serviceContainer = global.gameContainer;
 logger = serviceContainer.get("debugLogger");
-commandLineParams = new CommandLineParams(logger);
+cmdLineParamRetriever = new CmdLineParamsRetriever();
+commandLineParams = new CmdLineParamsParser(logger, cmdLineParamRetriever);
+dialog_initialize();
+
 
 var _layerBlueprint = {
     editorUiLayer: 0,
@@ -35,23 +38,9 @@ run_all_specs();
 alarm[0] = 10;
 
 
-rootElementStyle = {
-    name: "root",
-    direction: "ltr",
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    flexDirection: "column",
-    flexGrow: 1,
-    flexShrink: 1,
-    padding: 0,
-    margin: 0,
-};
-
-root = new UIElement(rootElementStyle);
-root.isConnected = true;
-// Focus indicates which UI element has focus
+root = new UIElement();
 focus = root;
+game_ui_reset_root();
 
 prevMouseElement = undefined;
 guiSurface = -1;

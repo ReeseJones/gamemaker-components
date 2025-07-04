@@ -26,8 +26,8 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
     scrollDir = flexpanel_flex_direction.column;
 
     setAlignItems(flexpanel_align.stretch);
-    
-    spriteIndex = spr_bg_panel_blue_1;
+
+    spriteIndex = spr_bg_menu_panel;
 
     // The gutter for the scrollbar handle.
     scrollbarContainer = new UIElement({
@@ -35,13 +35,13 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         alignItems: "stretch",
         flexBasis: scrollbarSize,
     });
-    scrollbarContainer.spriteIndex = spr_bg_slate;
+    scrollbarContainer.spriteIndex = spr_bg_menu_panel;
 
     scrollbarHandle = new UIButton({
         name: "scrollbar handle",
         flexBasis: scrollbarSize,
     });
-    scrollbarHandle.spriteIndex = spr_bar_vertical_orange;
+    scrollbarHandle.spriteIndex = spr_menu_scrollbar_handle;
 
     // Container for the content Window and scrollbar. Used for layout purposes.
     // It dynamically sizes the content window and scrollbar gutter.
@@ -67,7 +67,7 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         name: "content container",
         alignItems: "stretch",
     });
-    
+
     var _originalAppend = static_get(UIElement).append;
     var _boundAppend = method(self, _originalAppend);
 
@@ -79,7 +79,10 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
     onMouseMoveHandler = method(self, function(_mouseMoveEvent) {
         updateHandlePosition();
     });
-    
+
+    // Overwrite append to directly the content container append.
+    internalBoundAppend = method(contentContainer, contentContainer.append);
+
     onDragStartHandler = method(self, function(_dragEvent) {
          isHandleGrabbed = true;
          dragOffset.x = device_mouse_x_to_gui(0) - scrollbarHandle.left;
@@ -96,9 +99,12 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
 
     static onConnected = function() {
         show_debug_message($"{self} connected");
-        game_calculate_ui();
+        game_ui_calculate();
+        //Update the drag offset so it starts at 0 when initially connected
+        dragOffset.x = device_mouse_x_to_gui(0) - scrollbarHandle.left;
+        dragOffset.y = device_mouse_y_to_gui(0) - scrollbarHandle.top;
         updateHandlePosition();
-        
+
         event_add_listener(scrollbarHandle, EVENT_PRESSED, onDragStartHandler);
         event_add_listener(obj_game.mouseManager, EVENT_RELEASED_GLOBAL, onDragEndHandler);
     }
@@ -112,10 +118,9 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
 
     static append = function() {
        COPY_PARAMS;
-       var _internalAppend = method(contentContainer, contentContainer.append);
-       method_call( _internalAppend, _params );
+       method_call( internalBoundAppend, _params );
     }
-    
+
     ///@param {any} _scrollDirection
     static setScrollDirection = function(_scrollDirection) {
         scrollDir = _scrollDirection;
@@ -123,7 +128,6 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
         setFlexDirection(_perpDirection);
         contentContainer.setFlexDirection(scrollDir);
         scrollbarContainer.setFlexDirection(scrollDir);
-        
     }
 
     static updateHandlePosition = function () {
@@ -144,7 +148,7 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
 
         scrollbarHandle.setFlexBasis(_scrollBarSize, flexpanel_unit.point);
 
-        if(_hiddenHeight < 1) {
+        if(_noContent || _hiddenHeight < 1) {
             scrollbarHandle.setMargin(flexpanel_edge.all_edges, 0);
             contentContainer.setPosition(flexpanel_edge.all_edges,0, flexpanel_unit.point);
             return;

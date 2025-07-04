@@ -94,7 +94,7 @@ function DebugViewManager() : Disposable() constructor {
             deleteView(_view);
         }));
         views = [];
-        
+
         isDisposed = true;
     }
 

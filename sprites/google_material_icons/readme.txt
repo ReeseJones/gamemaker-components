@@ -1,0 +1,1 @@
+See: https://fonts.google.com/icons?selected=Material+Symbols+Outlined:filter_arrow_right:FILL@0;wght@400;GRAD@0;opsz@24&icon.size=24&icon.color=%23FFFFFF

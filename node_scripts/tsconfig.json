@@ -1,0 +1,13 @@
+{
+  //"extends": "@tsconfig/node-lts/tsconfig.json", // Example: extends a base config for Node LTS
+  "compilerOptions": {
+     "noEmit": true, // Optional - see note below
+     "target": "esnext",
+     "module": "nodenext",
+     "rewriteRelativeImportExtensions": true,
+     "erasableSyntaxOnly": true,
+     "verbatimModuleSyntax": true
+  },
+  "include": ["src/**/*"], // Files to include in the compilation
+  "exclude": ["node_modules", "**/*.spec.ts"] // Files to exclude
+}

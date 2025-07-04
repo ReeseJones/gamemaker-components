@@ -1,4 +1,4 @@
-game_calculate_ui();
+game_ui_calculate();
 
 debugViewManager.update();
 mouseManager.update();

@@ -113,16 +113,18 @@ return [
 
             _testArguments("3", "2", "1", 1, 2, 3);
         });
-        it("can pass 'arguments' array directly to method_call as array", function() {
+        //Note: argument is not an array and cannot be used in method_call param
+        it("can pass copy of argument as array to method_call", function() {
             var _testArguments = function() {
                 COPY_PARAMS;
                 matcher_is_array(_params);
                 matcher_arrays_equal(_params, ["3", "2", "1", 1, 2, 3]);
             }
-            
-            var _passThrough = function() {
-                method_call(_testArguments, argument, 0, argument_count);
-            }
+
+            var _passThrough = method({testFunc: _testArguments}, function() {
+                COPY_PARAMS;
+                method_call(testFunc, _params);
+            });
 
             _passThrough("3", "2", "1", 1, 2, 3);
         });

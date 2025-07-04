@@ -17,7 +17,7 @@ function ParticleTypeEditorGui(_particleType) : DebugView() constructor {
             //needsReRender = true;
         }
     }
-    
+
     static renderViewControls = function() {
           var _shapesString = "Use sprite:-1," + array_join(global.particleShapes, ",");
           partManagementSection = dbg_section("Particle Management", true);

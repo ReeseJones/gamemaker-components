@@ -1,11 +1,7 @@
 logger.log(LOG_LEVEL.INFORMATIONAL, $"Started Room: {room_get_name(room)}");
 //At the start of every room make sure correct layers are there.
 layerManager.updateLayers();
-var _oldRoot = root;
-root = new UIElement(rootElementStyle);
-root.isConnected = true;
-ui_element_destroy_tree(_oldRoot);
-
+game_ui_reset_root();
 
 switch (room) {
     case rm_init: {

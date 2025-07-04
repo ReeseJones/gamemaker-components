@@ -102,8 +102,8 @@
   "swatchColours":null,
   "swfPrecision":2.525,
   "textureGroupId":{
-    "name":"Default",
-    "path":"texturegroups/Default",
+    "name":"ui_assets",
+    "path":"texturegroups/ui_assets",
   },
   "type":0,
   "VTile":false,
