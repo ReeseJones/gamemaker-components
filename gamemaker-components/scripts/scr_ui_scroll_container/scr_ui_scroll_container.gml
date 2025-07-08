@@ -40,8 +40,17 @@ function UIScrollContainer(_flexpanelStyle) : UIElement(_flexpanelStyle) constru
     scrollbarHandle = new UIButton({
         name: "scrollbar handle",
         flexBasis: scrollbarSize,
+        justifyContent: "center",
+        alignItems: "stretch",
     });
     scrollbarHandle.spriteIndex = spr_menu_scrollbar_handle;
+    var _handleIcon = new UIElement({
+        width: 24,
+        height: 24,
+        margin: (32 - 24) / 2,
+    });
+    _handleIcon.spriteIndex = spr_icon_drag_handle;
+    scrollbarHandle.append(_handleIcon);
 
     // Container for the content Window and scrollbar. Used for layout purposes.
     // It dynamically sizes the content window and scrollbar gutter.

@@ -9,16 +9,7 @@ enum TEXT_SIZE_METHOD {
 function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
 
     if(!is_struct(_flexpanelStyle)) {
-        _flexpanelStyle = {
-            name: "UIElement",
-            direction: "ltr",
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            flexDirection: "column",
-            flexGrow: 1,
-            flexShrink: 1
-        };
+        _flexpanelStyle = {};
     }
     _flexpanelStyle.data = self;
 
@@ -341,7 +332,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         event_remove_all_listeners(self);
         isDisposed = true;
     }
-    
+
     static toString = function() {
         var _name = "<UIElement>";
         if(!is_undefined(flexNode)) {

@@ -7,20 +7,19 @@ function ui_make_button_text(_buttonText, _onClick, _name = "button") {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "stretch",
-        //padding: 32,
-        //margin: 32,
     });
     _button.append(_buttonTextElement);
-    
+
     _buttonTextElement.textDescription.font = font_ui_small;
     _buttonTextElement.textDescription.halign = fa_center;
     _buttonTextElement.textDescription.valign = fa_middle;
     _buttonTextElement.setText(_buttonText, TEXT_SIZE_METHOD.EXACT);
     _buttonTextElement.interceptPointerEvents = false;
 
-    _button.setPadding(flexpanel_edge.all_edges, 16);
+    _button.setPadding(flexpanel_edge.vertical, 6);
+    _button.setPadding(flexpanel_edge.horizontal, 16);
     _button.spriteIndex = spr_menu_button_default;
-    
+
     if(is_callable(_onClick)) {
         event_add_listener(_button, EVENT_CLICKED, _onClick);
     }

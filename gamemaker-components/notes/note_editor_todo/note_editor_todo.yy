@@ -1,0 +1,11 @@
+{
+  "$GMNotes":"v1",
+  "%Name":"note_editor_todo",
+  "name":"note_editor_todo",
+  "parent":{
+    "name":"UIEditor",
+    "path":"folders/UI/UIEditor.yy",
+  },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
+}

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_ui_menu_bar",
   "parent":{
-    "name":"Element",
-    "path":"folders/UI/Element.yy",
+    "name":"UIEditor",
+    "path":"folders/UI/UIEditor.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

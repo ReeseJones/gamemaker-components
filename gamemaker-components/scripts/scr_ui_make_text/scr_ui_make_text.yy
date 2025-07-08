@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ui_make_text",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_make_text",
+  "parent":{
+    "name":"Element",
+    "path":"folders/UI/Element.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

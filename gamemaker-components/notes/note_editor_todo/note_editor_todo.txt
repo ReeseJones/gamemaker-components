@@ -1,0 +1,25 @@
+- Inspector for an element
+    - name
+    - set Width (and min and max)
+    - set Height  (and min and max)
+    - set aspect ratio
+    - set position type
+    - set Margin
+    - flexDirection
+    - flexWrap
+    - flexBasis
+    - flexGrow
+    - flexShrink
+    - JustifyContent
+    - alignItems
+    - alignSelf
+    - alignContent
+    - display
+- UI Element List Display (what elements are in the tree view)
+- Tool bar for adding more elements
+    - Add Button
+        - Text
+        - Sprite
+    - Add Text
+    - Add Element
+    - Add Scroll Container
