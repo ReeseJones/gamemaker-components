@@ -133,6 +133,7 @@
     {"id":{"name":"scr_DrawGrid","path":"scripts/scr_DrawGrid/scr_DrawGrid.yy",},},
     {"id":{"name":"scr_ds_grid","path":"scripts/scr_ds_grid/scr_ds_grid.yy",},},
     {"id":{"name":"scr_DsMap","path":"scripts/scr_DsMap/scr_DsMap.yy",},},
+    {"id":{"name":"scr_editor_ui_element_controller","path":"scripts/scr_editor_ui_element_controller/scr_editor_ui_element_controller.yy",},},
     {"id":{"name":"scr_enemy_apply_damage","path":"scripts/scr_enemy_apply_damage/scr_enemy_apply_damage.yy",},},
     {"id":{"name":"scr_enemy_attributes","path":"scripts/scr_enemy_attributes/scr_enemy_attributes.yy",},},
     {"id":{"name":"scr_enemy_manager","path":"scripts/scr_enemy_manager/scr_enemy_manager.yy",},},

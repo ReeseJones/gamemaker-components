@@ -49,6 +49,7 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
         show_debug_message($"{self} diconnected");
     };
 
+    ///@param {Struct.UIElement} ...values
     static append = function() {
         var _insertionSpot = flexpanel_node_get_num_children(flexNode);
         for(var i = 0; i < argument_count; i += 1) {
@@ -63,7 +64,21 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
             }
         }
     }
-    
+
+    ///@param {Struct.UIElement} ...values
+    static prepend = function() {
+        for(var i = 0; i < argument_count; i += 1) {
+            var _el = argument[argument_count - i - 1];
+            if( is_instanceof(_el, UIElement) ) {
+                _el.remove();
+                _el.parentNode = self;
+                array_insert(childNodes, 0, _el);
+                flexpanel_node_insert_child(flexNode, _el.flexNode, 0);
+                ui_element_update_depth_connections(_el);
+            }
+        }
+    }
+
     ///@return {Struct.UIElement}
     static parent = function() {
         return parentNode;
@@ -323,6 +338,10 @@ function UIElement(_flexpanelStyle = undefined) : EventNode() constructor {
     static setNodeName = function(_name) {
         flexpanel_node_set_name(flexNode, _name);
         return self;
+    }
+
+    static getNodeName = function() {
+        return flexpanel_node_get_name(flexNode);
     }
 
     static dispose = function() {

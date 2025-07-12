@@ -1,3 +1,4 @@
+///@return {Struct.UIButton}
 function ui_make_button_text(_buttonText, _onClick, _name = "button") {
     var _buttonTextElement = new UIElement({
         name: _name + "Text"
@@ -27,6 +28,7 @@ function ui_make_button_text(_buttonText, _onClick, _name = "button") {
     return _button;
 }
 
+///@return {Struct.UIButton}
 function ui_make_button_sprite(_foregroundSprite, _backgroundSprite, _onClick, _padding, _name = "button") {
     var _foreground = new UIElement({
         name: _name + "Icon",

@@ -4,9 +4,9 @@ import { glob } from 'glob';
 import path from 'path';
 import readline from 'node:readline/promises';
 
-//google_material_icons/**/*.png
-//(.*)\_24dp_FFFFFF.*.png
-//"spr_icon_$1"
+//files to rename pattern: google_material_icons/**/*.png
+//filename match pattern example: (.*)\_24dp_FFFFFF.*.png
+//replace pattern example: spr_icon_$1
 //file pattern
 const filePattern = argv[2];
 const newNamePattern = argv[3];

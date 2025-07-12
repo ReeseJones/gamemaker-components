@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_editor_ui_element_controller",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_editor_ui_element_controller",
+  "parent":{
+    "name":"UIEditor",
+    "path":"folders/UI/UIEditor.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
